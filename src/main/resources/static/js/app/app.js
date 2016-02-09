@@ -10,6 +10,9 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers' ])
         }).when('/login', {
             templateUrl : 'login.html',
             controller: 'navigation'
+        }).when('/dashboard', {
+            templateUrl : 'views/dashboard.html',
+            controller: 'dashboard'
         }).otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';

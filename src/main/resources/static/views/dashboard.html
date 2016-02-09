@@ -1,0 +1,19 @@
+<div class="row" >
+    <div class="">
+        <h1>GameName: Dashboard</h1>
+        <table class="table table-responsive">
+            <tr>
+                <th>Rank</th>
+                <th>Team Name</th>
+                <th>Score</th>
+                <th>Likes</th>
+            </tr>
+            <tr ng-repeat="team in teams track by $index">
+                <td>#{{$index+1}}</td>
+                <td>{{team.name}}</td>
+                <td>{{team.score}}</td>
+                <td>{{team.likes}}</td>
+            </tr>
+        </table>
+    </div>
+</div>

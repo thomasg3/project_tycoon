@@ -50,4 +50,14 @@ angular.module('projecttycoonControllers', [])
                     $location.path("/");
                 });
             }
-        });
+        })
+    .controller('dashboard', function($rootScope, $scope, $http, $location){
+        $scope.teams = [
+            {name: "Team name",
+            score: 55,
+            likes: 3},
+            {name: "Ueam name",
+            score: 30,
+            likes: 0}
+        ];
+    });
