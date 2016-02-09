@@ -39,7 +39,6 @@ public class Team extends User{
 
     public void setTeamImage(String path){
         if(path!=null)
-        //this.teamImage = ImageIO.read(new File(path));
         this.teamImage=path;
     }
 
