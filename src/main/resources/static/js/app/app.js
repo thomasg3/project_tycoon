@@ -16,5 +16,4 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers' ])
         }).otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-        $locationProvider.html5Mode(true);
     });
