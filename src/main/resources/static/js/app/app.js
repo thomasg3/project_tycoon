@@ -2,7 +2,7 @@
  * Created by thomas on 09/02/16.
  */
 angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers' ])
-    .config(function($routeProvider, $httpProvider, $locationProvider) {
+    .config(function($routeProvider, $httpProvider) {
 
         $routeProvider.when('/', {
             templateUrl : 'home.html',
