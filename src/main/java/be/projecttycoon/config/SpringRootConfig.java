@@ -1,4 +1,4 @@
-package be.projecttycoon.db;
+package be.projecttycoon.config;
 
 import org.hsqldb.util.DatabaseManagerSwing;
 import org.springframework.beans.factory.annotation.Autowired;
