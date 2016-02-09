@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div ng-controller="teamController">
+    <table>
+        <tr ng-repeat="team in teamList">
+            <td>{{ team.id }}</td>
+            <td>{{ team.teamName }}</td>
+        </tr>
+    </table>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
+<script>
+    var app = angular.module('teams', []);
+    app.controller('teamController', function($scope, $http) {
+        $http.get("getTeams")
+                .success(function (response) {$scope.teamList = response.teams;});
+    });
+</script>
+</body>
+</html>
