@@ -1,5 +1,6 @@
 package be.projecttycoon.db;
 
+import org.hsqldb.util.DatabaseManagerSwing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,5 +24,14 @@ public class SpringRootConfig {
     @Bean
     public JdbcTemplate getJdbcTemplate() {
         return new JdbcTemplate(dataSource);
+    }
+
+    @PostConstruct
+    public void startDBManager() {
+
+        //hsqldb
+        //DatabaseManagerSwing.main(new String[] { "--url", "jdbc:hsqldb:mem:tycoondb", "--user", "sa", "--password", "" });
+
+
     }
 }
