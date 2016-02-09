@@ -30,6 +30,10 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
         return userRepository;
     }
 
+
+
+
+
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;

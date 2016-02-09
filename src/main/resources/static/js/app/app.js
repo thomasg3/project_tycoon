@@ -2,7 +2,7 @@
  * Created by thomas on 09/02/16.
  */
 angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers' ])
-    .config(function($routeProvider, $httpProvider) {
+    .config(function($routeProvider, $httpProvider, $locationProvider) {
 
         $routeProvider.when('/', {
             templateUrl : 'home.html',
@@ -16,5 +16,5 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers' ])
         }).otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-
+        $locationProvider.html5Mode(true);
     });
