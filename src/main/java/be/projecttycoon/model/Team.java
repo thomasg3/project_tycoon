@@ -1,10 +1,8 @@
 package be.projecttycoon.model;
 
-import javax.imageio.ImageIO;
+
 import javax.validation.constraints.NotNull;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+
 
 /**
  * Created by thomas on 08/02/16.
@@ -13,13 +11,16 @@ public class Team {
 
     private int id;
     private String teamName,password;
-    private Image teamImage;
+    private String teamImage;
+    private int score, likes;
     private boolean registered;
+
+    //todo score, likes - errors/bean validation
 
     //constructors
     public Team(){}
 
-    public Team(int id,String teamName, String password, String path) throws IOException{
+    public Team(int id,String teamName, String password, String path){
         setId(id);
         setTeamName(teamName);
         setPassword(password);
@@ -33,9 +34,10 @@ public class Team {
         this.id = id;
     }
 
-    public void setTeamImage(String path) throws IOException{
-
-        this.teamImage = ImageIO.read(new File(path));
+    public void setTeamImage(String path){
+        if(path!=null)
+        //this.teamImage = ImageIO.read(new File(path));
+        this.teamImage=path;
     }
     public void setTeamName(@NotNull String teamName) {
         this.teamName = teamName;
@@ -60,14 +62,14 @@ public class Team {
         return password;
     }
 
-    public Image getTeamImage() {
+    public String getTeamImage() {
         return teamImage;
     }
     public boolean isRegistered(){
         return this.registered;
     }
 
-    public void register(String password,String path) throws IOException{
+    public void register(String password,String path){
         setPassword(password);
         setTeamImage(path);
         setRegistered(true);
