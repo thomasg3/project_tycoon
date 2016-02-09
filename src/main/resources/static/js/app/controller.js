@@ -47,6 +47,7 @@ angular.module('projecttycoonControllers', [])
                     $location.path("/");
                 }).error(function(){
                     $rootScope.authenticated = false;
+                    $location.path("/");
                 });
             }
         });
