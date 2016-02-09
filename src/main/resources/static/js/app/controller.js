@@ -1,26 +1,13 @@
-angular.module('hello', [ 'ngRoute' ])
-    .config(function($routeProvider, $httpProvider) {
-
-        $routeProvider.when('/', {
-            templateUrl : 'home.html',
-            controller : 'home'
-        }).when('/login', {
-            templateUrl : 'login.html',
-            controller : 'navigation'
-        }).otherwise('/');
-
-        $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-
-    })
+/**
+ * Created by thomas on 09/02/16.
+ */
+angular.module('projecttycoonControllers', [])
     .controller('home', function($scope, $http) {
         $http.get('/resource/').success(function(data) {
             $scope.greeting = data;
         })
     })
-    .controller('navigation',
-
-        function($rootScope, $scope, $http, $location) {
-
+    .controller('navigation', function($rootScope, $scope, $http, $location) {
             var authenticate = function(credentials, callback) {
 
                 var headers = credentials ? {authorization : "Basic "
@@ -39,7 +26,7 @@ angular.module('hello', [ 'ngRoute' ])
                     callback && callback();
                 });
 
-            }
+            };
 
             authenticate();
             $scope.credentials = {};
@@ -60,6 +47,7 @@ angular.module('hello', [ 'ngRoute' ])
                     $location.path("/");
                 }).error(function(){
                     $rootScope.authenticated = false;
+                    $location.path("/");
                 });
             }
         });
