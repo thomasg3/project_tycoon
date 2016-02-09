@@ -8,7 +8,7 @@ angular.module('projecttycoonControllers', [])
         })
     })
     .controller('navigation', function($rootScope, $scope, $http, $location) {
-            var authenticate = function(credentials, callback) {
+            authenticate = function(credentials, callback) {
 
                 var headers = credentials ? {authorization : "Basic "
                 + btoa(credentials.username + ":" + credentials.password)
