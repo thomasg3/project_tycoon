@@ -1,7 +1,9 @@
 <!doctype html>
 <html>
 <head>
-    <title>Hello AngularJS</title>
+    <title>ProjectTycoon</title>
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
     <link href="css/angular-bootstrap.css" rel="stylesheet">
     <style type="text/css">
         [ng\:cloak], [ng-cloak], .ng-cloak {
@@ -27,8 +29,8 @@
             </div>
 
             <div class="collapse navbar-collapse" id="bs-main-navbar-collapse">
-                <ul class="nav navbar-nav">
-
+                <ul class="nav navbar-nav" ng-show="authenticated">
+                    <li><a href="#/dashboard">Dashboard</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-show="!authenticated"><a href="#/login">Login</a></li>

@@ -1,16 +1,25 @@
 package be.projecttycoon.model;
 
 
-import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 
 /**
  * Created by thomas on 08/02/16.
  */
-@Entity
-public class Team extends User{
 
+@Entity
+public class Team{
+
+    @Id
+    @GeneratedValue
+    private long id;
+
+    private String teamname;
+    private String password;
 
     private String teamImage;
     private int score, likes;
@@ -19,14 +28,42 @@ public class Team extends User{
     //todo errors/bean validation
 
     //constructors
-    public Team(){
-        super();
+    public Team() {super();}
+
+    public Team(String teamname, String password){
+        setPassword(password);
+        setTeamname(teamname);
     }
 
-    public Team(String teamName, String password, String path){
-        super(password,teamName);
+    public Team(int id,String teamName, String password, String path){
+        setPassword(password);
+        setTeamname(teamName);
         setTeamImage(path);
         setRegistered(false);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getTeamname() {
+        return teamname;
+    }
+
+    public void setTeamname(String teamname) {
+        this.teamname = teamname;
     }
 
 
@@ -63,7 +100,8 @@ public class Team extends User{
         return likes;
     }
 
-    public void register(String password, String path){
+    public void register(String password, String teamname, String path){
+        setTeamname(teamname);
         setPassword(password);
         setTeamImage(path);
         setRegistered(true);
@@ -89,5 +127,19 @@ public class Team extends User{
         result = 31 * result + getLikes();
         result = 31 * result + (isRegistered() ? 1 : 0);
         return result;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "id=" + id +
+                ", teamname='" + teamname + '\'' +
+                ", password='" + password + '\'' +
+                ", teamImage='" + teamImage + '\'' +
+                ", score=" + score +
+                ", likes=" + likes +
+                ", registered=" + registered +
+                '}';
     }
 }

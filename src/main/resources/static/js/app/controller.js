@@ -46,12 +46,25 @@ angular.module('projecttycoonControllers', [])
 
             };
 
+            var isRegisterd = function(credentials){
+                $http.get('/isRegisterdTeam/' + credentials.username).success(function(data) {
+                    return data;
+                }).error(function(){
+                    return false;
+                });
+            };
+
             authenticate();
             $scope.credentials = {};
             $scope.login = function() {
                 authenticate($scope.credentials, function() {
                     if ($rootScope.authenticated) {
-                        $location.path("/");
+                        alert(isRegisterd($scope.credentials));
+                        if(isRegisterd($scope.credentials)){
+                            $location.path("/");
+                        }else{
+                            $location.path("/registerTeam/" + $scope.credentials.username);
+                        }
                         $scope.error = false;
                     } else {
                         $location.path("/login");
@@ -68,4 +81,38 @@ angular.module('projecttycoonControllers', [])
                     $location.path("/");
                 });
             }
-        });
+        })
+    .controller('dashboard', function($rootScope, $scope, $http, $location){
+        $scope.teams = [
+            {name: "Team name",
+            score: 55,
+            likes: 3},
+            {name: "Ueam name",
+            score: 30,
+            likes: 0}
+        ];
+    })
+    .controller('registration', function($rootScope, $scope, $http, $routeParams,$location) {
+        $scope.oldUsername = $routeParams.username;
+
+        $scope.initTeam = function(){
+
+            var data = {
+                "oldUsername": $scope.oldUsername,
+                "oldPassword": $scope.credentials.oldPassword,
+                "newUsername": $scope.credentials.username,
+                "newPassword": $scope.credentials.password
+            };
+
+            alert(JSON.stringify(data));
+
+
+            $http.post('/initTeam', data).success(function(){
+                $location.path('/');
+            }).error(function(){
+                alert("post error")
+            });
+
+        }
+    });
+
