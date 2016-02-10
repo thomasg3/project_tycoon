@@ -28,6 +28,7 @@ public class Game {
     public Game(String name, int teams) {
         this();
         setName(name);
+        this.teams = new HashSet<Team>(teams);
         for(int i=0;i<teams;i++){
             this.teams.add(new Team("Team"+(i+1),"ThisIsTheMostAwesomePasswordEver","http://i.imgur.com/IhewUTH.jpg"));
         }

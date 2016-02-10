@@ -16,27 +16,22 @@ import java.util.Set;
  */
 @RestController
 public class GameController {
-
+    //TODO errorhandling
     @Autowired
     private GameRepository gameRepository;
     @Autowired
     private TeamRepository teamRepository;
     @RequestMapping("/game/{id}")
     public Game showGame(@PathVariable long id ){
-
-        System.out.println("the id is: "+id);
        // Game g2 = new Game("Demo Game",3);
         Game g=gameRepository.findById(id);
-        System.out.println(g.getId());
         return g;
     }
 
     @RequestMapping("/createGame")
     public Game createGame(@RequestParam(value="gameName") String name,@RequestParam(value="teamAmounts") int amount){
         Game g = new Game(name,amount);
-
         g=gameRepository.save(g);
-        System.out.println(g);
         return g;
     }
 }
