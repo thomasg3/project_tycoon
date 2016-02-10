@@ -22,23 +22,24 @@ public class Team{
 
     private String teamImage;
     private int score, likes;
-    private boolean registered;
+    private TeamState state;
 
     //todo errors/bean validation
 
     //constructors
-    public Team() {super();}
+    public Team() {
+        state = TeamState.UNREGISTERED;
+    }
 
     public Team(String teamname, String password){
+        this();
         setPassword(password);
         setTeamname(teamname);
     }
 
-    public Team(int id,String teamName, String password, String path){
-        setPassword(password);
-        setTeamname(teamName);
+    public Team(String teamName, String password, String path){
+        this(teamName, password);
         setTeamImage(path);
-        setRegistered(false);
     }
 
     public long getId() {
@@ -65,13 +66,24 @@ public class Team{
         this.teamname = teamname;
     }
 
+    public int getScore() {
+        return score;
+    }
 
     public void setScore(int score) {
         this.score = score;
     }
 
+    public int getLikes() {
+        return likes;
+    }
+
     public void setLikes(int likes) {
         this.likes = likes;
+    }
+
+    public String getTeamImage() {
+        return teamImage;
     }
 
     public void setTeamImage(String path){
@@ -79,24 +91,21 @@ public class Team{
         this.teamImage=path;
     }
 
-    public void setRegistered(boolean registered){
-        this.registered=registered;
-    }
-
-
-    public String getTeamImage() {
-        return teamImage;
-    }
     public boolean isRegistered(){
-        return this.registered;
+        return state != TeamState.UNREGISTERED;
     }
 
-    public int getScore() {
-        return score;
+    public void setRegistered(boolean registered){
+        if(state == TeamState.UNREGISTERED)
+            state = TeamState.TEAM;
     }
 
-    public int getLikes() {
-        return likes;
+    public boolean isAdmin(){
+        return state == TeamState.ADMIN;
+    }
+
+    public void setAdmin(boolean admin){
+        state = TeamState.ADMIN;
     }
 
     public void register(String password, String teamname, String path){
@@ -105,7 +114,6 @@ public class Team{
         setTeamImage(path);
         setRegistered(true);
     }
-
 
     @Override
     public String toString() {
@@ -116,7 +124,7 @@ public class Team{
                 ", teamImage='" + teamImage + '\'' +
                 ", score=" + score +
                 ", likes=" + likes +
-                ", registered=" + registered +
+                ", registered=" + isRegistered() +
                 '}';
     }
 }
