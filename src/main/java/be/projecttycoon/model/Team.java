@@ -1,10 +1,16 @@
 package be.projecttycoon.model;
 
 
-import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 
 /**
@@ -14,32 +20,38 @@ import javax.persistence.Id;
 @Entity
 public class Team{
 
+    private static PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+
     @Id
     @GeneratedValue
     private long id;
 
     private String teamname;
+    @JsonIgnore
     private String password;
 
     private String teamImage;
     private int score, likes;
-    private boolean registered;
+    private TeamState state;
+
 
     //todo errors/bean validation
 
     //constructors
-    public Team() {super();}
+    public Team() {
+        state = TeamState.UNREGISTERED;
+    }
 
     public Team(String teamname, String password){
+        this();
         setPassword(password);
         setTeamname(teamname);
     }
 
     public Team(String teamName, String password, String path){
-        setPassword(password);
-        setTeamname(teamName);
+        this(teamName, password);
         setTeamImage(path);
-        setRegistered(false);
     }
 
     public long getId() {
@@ -55,12 +67,10 @@ public class Team{
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = passwordEncoder.encode(password);
     }
 
-    public String getTeamname() {
-        return teamname;
-    }
+
 
     public void setTeamname(String teamname) {
         this.teamname = teamname;
@@ -81,17 +91,13 @@ public class Team{
     }
 
     public void setRegistered(boolean registered){
-        this.registered=registered;
-    }
+        if(state == TeamState.UNREGISTERED)
+            state = TeamState.TEAM;
 
-
-    public String getTeamImage() {
-        return teamImage;
     }
-    public boolean isRegistered(){
-        return this.registered;
+    public String getTeamname() {
+        return teamname;
     }
-
     public int getScore() {
         return score;
     }
@@ -99,7 +105,21 @@ public class Team{
     public int getLikes() {
         return likes;
     }
+    public String getTeamImage() {
+        return teamImage;
+    }
+    public boolean isRegistered(){
+        return state != TeamState.UNREGISTERED;
+    }
 
+
+    public boolean isAdmin(){
+        return state == TeamState.ADMIN;
+    }
+
+    public void setAdmin(boolean admin){
+        state = TeamState.ADMIN;
+    }
     public void register(String password, String teamname, String path){
         setTeamname(teamname);
         setPassword(password);
@@ -139,7 +159,7 @@ public class Team{
                 ", teamImage='" + teamImage + '\'' +
                 ", score=" + score +
                 ", likes=" + likes +
-                ", registered=" + registered +
+                ", registered=" + isRegistered() +
                 '}';
     }
 }
