@@ -28,22 +28,14 @@ public class Game {
         setName(name);
         this.teams = new HashSet<Team>(teams);
         for(int i=0;i<teams;i++){
-            Team t = new Team("Team"+(i+1),"ThisIsTheMostAwesomePasswordEver","http://i.imgur.com/IhewUTH.jpg");
-
-
+            Team t = new Team("Team"+(i+1),"ThisIsTheMostAwesomePasswordEver","http://images.sodahead.com/polls/003891485/confession-bear-117545016295_xlarge.png");
 
             this.teams.add(t);
         }
     }
-
+    //todo check if it is a good url
     public void setName(String name) {
-        try {
-            URL url = new URL("http://www.google.com/" + name);
             this.name = name;
-        }catch(MalformedURLException ex){
-            //todo throw or catch
-            System.out.println("not a valid name");
-        }
 
     }
 
@@ -72,6 +64,10 @@ public class Game {
 
         return getId() == game.getId();
 
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override

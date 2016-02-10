@@ -73,7 +73,7 @@ angular.module('projecttycoonControllers', [])
                 });
             };
             $scope.logout = function() {
-                $http.post('logout', {}).success(function(){
+                $http.post('/logout', {}).success(function(){
                     $rootScope.authenticated = false;
                     $location.path("/");
                 }).error(function(){
@@ -83,14 +83,10 @@ angular.module('projecttycoonControllers', [])
             }
         })
     .controller('dashboard', function($rootScope, $scope, $http, $location){
-        $scope.teams = [
-            {name: "Team name",
-            score: 55,
-            likes: 3},
-            {name: "Ueam name",
-            score: 30,
-            likes: 0}
-        ];
+
+        $http.get("/game/1").success(function(data){
+            $scope.game = data;
+        })
     })
     .controller('registration', function($rootScope, $scope, $http, $routeParams,$location) {
         $scope.oldUsername = $routeParams.username;
