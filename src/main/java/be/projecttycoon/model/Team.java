@@ -1,6 +1,7 @@
 package be.projecttycoon.model;
 
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
 
@@ -8,8 +9,8 @@ import javax.validation.constraints.NotNull;
  * Created by thomas on 08/02/16.
  */
 
+@Entity
 public class Team extends User{
-
 
     private String teamImage;
     private int score, likes;
@@ -18,8 +19,10 @@ public class Team extends User{
     //todo errors/bean validation
 
     //constructors
-    public Team(){
-        super();
+    public Team() {super();}
+
+    public Team(String username, String password){
+        super(password, username);
     }
 
     public Team(int id,String teamName, String password, String path){
@@ -62,9 +65,19 @@ public class Team extends User{
         return likes;
     }
 
-    public void register(String password, String path){
+    public void register(String password, String username, String path){
         setPassword(password);
         setTeamImage(path);
         setRegistered(true);
+    }
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "teamImage='" + teamImage + '\'' +
+                ", score=" + score +
+                ", likes=" + likes +
+                ", registered=" + registered +
+                '}';
     }
 }

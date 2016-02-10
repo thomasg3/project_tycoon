@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <h3>please change your default teamname, password and teampicture</h3>
+        <hr>
+        <form role="form" ng-submit="initTeam()">
+
+
+            <p>Old credentials:</p>
+            <div class="form-group">
+                <input type="text" class="form-control"  id="oldUsername" name="username" ng-model="oldUsername" readonly>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Enter your old password" id="oldPassword" name="username" ng-model="credentials.oldPassword">
+            </div>
+            <hr>
+
+            <p>New credentials:</p>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="New Teamname" id="username" name="username" ng-model="credentials.username">
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="New Password" id="password" name="password" ng-model="credentials.password">
+            </div>
+
+            <div class="col-sm-6 col-sm-offset-3">
+                <img style="width: 100%; height: 300px; padding-bottom: 20px;" src="http://75025.de/comics/0000.png" alt="Team Picture" />
+            </div>
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
