@@ -41,7 +41,7 @@ public class TeamResource  {
         return getTeamByTeamname(teamname).isRegistered();
     }
 
-    @RequestMapping(value="/{id}", method = RequestMethod.POST)
+    @RequestMapping(value="/{id}", method = RequestMethod.PUT)
     public void updateTeam(@PathVariable long id, @RequestBody TeamBean updateTeam){
         Team team = teamRepository.findOne(id);
         team.register(updateTeam.getNewPassword(), updateTeam.getNewUsername(), null);
