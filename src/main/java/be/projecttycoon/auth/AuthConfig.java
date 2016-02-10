@@ -42,7 +42,7 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
             .httpBasic()
         .and()
             .authorizeRequests()
-                .antMatchers("/index.html", "/home.html", "/login.html", "/").permitAll()
+                .antMatchers("/views/public/**", "/").permitAll()
                 .anyRequest().authenticated()
         .and()
                 .logout()
