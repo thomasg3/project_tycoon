@@ -4,6 +4,7 @@
         <table class="table table-responsive">
             <tr>
                 <th>Rank</th>
+                <th>Team image</th>
                 <th colspan="2">Team Name</th>
                 <th>Score</th>
                 <th>Likes</th>
@@ -11,7 +12,7 @@
             <tr ng-repeat="team in teams track by $index">
                 <td><strong>#{{$index+1}}</strong></td>
                 <td><img width="80px" class="img-circle" src="https://c2.staticflickr.com/4/3884/14485059353_8d009d4eb3_b.jpg"></td>
-                <td>{{team.name}}</td>
+                <td>{{team.teamname}}</td>
                 <td>{{team.score}}</td>
                 <td>{{team.likes}}</td>
             </tr>

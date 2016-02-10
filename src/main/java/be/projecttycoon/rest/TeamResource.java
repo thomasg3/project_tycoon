@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Produces;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * Created by thomas on 10/02/16.
@@ -42,8 +44,8 @@ public class TeamResource  {
 
     @RequestMapping(value="/search/{teamname}/registered", method = RequestMethod.GET)
     @Produces("application/json")
-    public boolean isRegisteredTeamByTeamname(@PathVariable String teamname){
-        return getTeamByTeamname(teamname).isRegistered();
+    public Map<String, Boolean> isRegisteredTeamByTeamname(@PathVariable String teamname){
+        return Collections.singletonMap("registerd", getTeamByTeamname(teamname).isRegistered());
     }
 
     @RequestMapping(value="/{id}", method = RequestMethod.PUT)

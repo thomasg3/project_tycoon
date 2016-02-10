@@ -7,7 +7,7 @@ angular.module('projecttycoonControllers', [])
             $scope.greeting = data;
         })
     })
-    .controller('navigation', function($rootScope, $scope, $http, $location) {
+    .controller('navigation', function($rootScope, $scope, $http, $location, TeamResource) {
             var authenticate = function(credentials, callback) {
 
                 var headers = credentials ? {authorization : "Basic "
@@ -28,26 +28,22 @@ angular.module('projecttycoonControllers', [])
 
             };
 
-            var isRegisterd = function(credentials){
-                $http.get('/isRegisterdTeam/' + credentials.username).success(function(data) {
-                    return data;
-                }).error(function(){
-                    return false;
-                });
-            };
-
             authenticate();
             $scope.credentials = {};
             $scope.login = function() {
                 authenticate($scope.credentials, function() {
                     if ($rootScope.authenticated) {
-                        alert(isRegisterd($scope.credentials));
-                        if(isRegisterd($scope.credentials)){
-                            $location.path("/");
-                        }else{
-                            $location.path("/registerTeam/" + $scope.credentials.username);
-                        }
-                        $scope.error = false;
+                        TeamResource.isRegisterd({teamname: $scope.credentials.username}, function(data) {
+                            console.log(data);
+                            alert(JSON.stringify(data));
+                            if(data.registerd){
+                                $location.path("/");
+                            }else{
+                                $location.path("/registerTeam/" + $scope.credentials.username);
+                            }
+                            $scope.error = false;
+                        });
+
                     } else {
                         $location.path("/login");
                         $scope.error = true;
@@ -64,19 +60,11 @@ angular.module('projecttycoonControllers', [])
                 });
             }
         })
-    .controller('dashboard', function($rootScope, $scope, $http, $location){
-        $scope.teams = [
-            {name: "Team name",
-            score: 55,
-            likes: 3},
-            {name: "Ueam name",
-            score: 30,
-            likes: 0}
-        ];
+    .controller('dashboard', function($rootScope, $scope, $http, $location, TeamResource){
+        $scope.teams = TeamResource.getAll();
     })
-    .controller('registration', function($rootScope, $scope, $http, $routeParams,$location) {
+    .controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource) {
         $scope.oldUsername = $routeParams.username;
-
         $scope.initTeam = function(){
 
             var data = {
@@ -85,9 +73,6 @@ angular.module('projecttycoonControllers', [])
                 "newUsername": $scope.credentials.username,
                 "newPassword": $scope.credentials.password
             };
-
-            alert(JSON.stringify(data));
-
 
             $http.post('/initTeam', data).success(function(){
                 $location.path('/');

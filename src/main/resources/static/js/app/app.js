@@ -1,7 +1,7 @@
 /**
  * Created by thomas on 09/02/16.
  */
-angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers' ])
+angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngResource' ])
     .config(function($routeProvider, $httpProvider) {
 
         $routeProvider.when('/', {
@@ -13,7 +13,7 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers' ])
         }).when('/dashboard', {
             templateUrl : 'views/dashboard.html',
             controller: 'dashboard'
-        }).when('/registerTeam/:username', {
+        }).when('/registerTeam/:id', {
             templateUrl : 'teamRegistration.html',
             controller: 'registration'
         }).otherwise('/');
