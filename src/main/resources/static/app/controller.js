@@ -73,7 +73,7 @@ angular.module('projecttycoonControllers', [])
                 });
             };
             $scope.logout = function() {
-                $http.post('logout', {}).success(function(){
+                $http.post('/logout', {}).success(function(){
                     $rootScope.authenticated = false;
                     $location.path("/");
                 }).error(function(){

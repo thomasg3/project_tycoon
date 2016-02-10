@@ -41,11 +41,11 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
         http
             .httpBasic()
         .and()
-            .authorizeRequests()
-                .antMatchers("/views/public/**", "/").permitAll()
-                .anyRequest().authenticated()
+            .logout().logoutSuccessUrl("/")
         .and()
-                .logout()
+            .authorizeRequests()
+                .antMatchers("/views/public/**", "/app/**","/bower_components/**","/").permitAll()
+                .anyRequest().authenticated()
         .and()
             .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
             .csrf().csrfTokenRepository(csrfTokenRepository());
