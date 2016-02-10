@@ -59,7 +59,7 @@ angular.module('projecttycoonControllers', [])
             $scope.login = function() {
                 authenticate($scope.credentials, function() {
                     if ($rootScope.authenticated) {
-                        alert(isRegisterd($scope.credentials));
+
                         if(isRegisterd($scope.credentials)){
                             $location.path("/");
                         }else{
