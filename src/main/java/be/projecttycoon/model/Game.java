@@ -22,19 +22,18 @@ public class Game {
 
 
     public Game() {
+        this.teams = new HashSet<>();
     }
 
     public Game(String name, int teams) {
+        this();
         setName(name);
-        this.teams = new HashSet<Team>(teams);
         for(int i=0;i<teams;i++){
-            Team t = new Team("Team"+(i+1),"ThisIsTheMostAwesomePasswordEver","http://i.imgur.com/IhewUTH.jpg");
-
-
-
-            this.teams.add(t);
+            this.teams.add(new Team("Team"+(i+1),"ThisIsTheMostAwesomePasswordEver","http://i.imgur.com/IhewUTH.jpg"));
         }
     }
+
+    public String getName(){return name;}
 
     public void setName(String name) {
         try {
