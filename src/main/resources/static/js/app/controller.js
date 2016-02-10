@@ -73,7 +73,6 @@ angular.module('projecttycoonControllers', [])
             score: 30,
             likes: 0}
         ];
-    });
     })
     .controller('registration', function($rootScope, $scope, $http, $routeParams,$location) {
         $scope.oldUsername = $routeParams.username;
@@ -87,9 +86,10 @@ angular.module('projecttycoonControllers', [])
                 "newPassword": $scope.credentials.password
             };
 
+            alert(JSON.stringify(data));
+
 
             $http.post('/initTeam', data).success(function(){
-                alert("Post succes");
                 $location.path('/');
             }).error(function(){
                 alert("post error")

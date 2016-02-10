@@ -2,7 +2,8 @@ package be.projecttycoon.model;
 
 
 import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 
 /**
@@ -10,7 +11,14 @@ import javax.validation.constraints.NotNull;
  */
 
 @Entity
-public class Team extends User{
+public class Team{
+
+    @Id
+    @GeneratedValue
+    private long id;
+
+    private String teamname;
+    private String password;
 
     private String teamImage;
     private int score, likes;
@@ -21,14 +29,40 @@ public class Team extends User{
     //constructors
     public Team() {super();}
 
-    public Team(String username, String password){
-        super(password, username);
+    public Team(String teamname, String password){
+        setPassword(password);
+        setTeamname(teamname);
     }
 
     public Team(int id,String teamName, String password, String path){
-        super(password,teamName);
+        setPassword(password);
+        setTeamname(teamName);
         setTeamImage(path);
         setRegistered(false);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getTeamname() {
+        return teamname;
+    }
+
+    public void setTeamname(String teamname) {
+        this.teamname = teamname;
     }
 
 
@@ -65,16 +99,21 @@ public class Team extends User{
         return likes;
     }
 
-    public void register(String password, String username, String path){
+    public void register(String password, String teamname, String path){
+        setTeamname(teamname);
         setPassword(password);
         setTeamImage(path);
         setRegistered(true);
     }
 
+
     @Override
     public String toString() {
         return "Team{" +
-                "teamImage='" + teamImage + '\'' +
+                "id=" + id +
+                ", teamname='" + teamname + '\'' +
+                ", password='" + password + '\'' +
+                ", teamImage='" + teamImage + '\'' +
                 ", score=" + score +
                 ", likes=" + likes +
                 ", registered=" + registered +

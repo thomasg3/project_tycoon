@@ -1,15 +1,12 @@
 package be.projecttycoon.controller;
 
-import be.projecttycoon.db.UserRepository;
+import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Team;
-import be.projecttycoon.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.jaas.AuthorityGranter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Console;
 import java.security.Principal;
 import java.util.*;
 
@@ -19,18 +16,18 @@ import java.util.*;
 @RestController
 public class TestController {
 
-    private UserRepository userRepository;
+    private TeamRepository teamRepository;
 
-    public UserRepository getUserRepository() {
-        return userRepository;
+    public TeamRepository getTeamRepository() {
+        return teamRepository;
     }
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public void setTeamRepository(TeamRepository teamRepository) {
+        this.teamRepository = teamRepository;
         List<GrantedAuthority> auths = new ArrayList<>();
         auths.add(new SimpleGrantedAuthority("USER"));
         Team team = new Team("jos", "jos");
-        team = userRepository.save(team);
+        team = teamRepository.save(team);
         System.out.println(team.getId());
     }
 
@@ -44,7 +41,7 @@ public class TestController {
 
     @RequestMapping("/isRegisterdTeam/{teamName}")
     public boolean isRegisterdTeam(@PathVariable String teamName) {
-        Team team = userRepository.findByUsername(teamName);
+        Team team = teamRepository.findByTeamname(teamName);
         System.out.println(team.toString());
         return team.isRegistered();
     }
@@ -52,10 +49,10 @@ public class TestController {
     @RequestMapping(value = "/initTeam", method = RequestMethod.POST)
     public void initTeam(@RequestBody UpdateTeam updateTeam){
 
-        Team t = userRepository.findByUsername(updateTeam.oldUsername);
+        Team t = teamRepository.findByTeamname(updateTeam.oldUsername);
         t.register(updateTeam.newPassword, updateTeam.newUsername, null);
-        userRepository.save(t);
-}
+        teamRepository.save(t);
+    }
 
     @RequestMapping("/user")
     public Principal user(Principal user) {
