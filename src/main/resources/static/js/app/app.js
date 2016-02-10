@@ -10,6 +10,9 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers' ])
         }).when('/login', {
             templateUrl : 'login.html',
             controller: 'navigation'
+        }).when('/createGame', {
+            templateUrl : 'createGameForm.html',
+            controller : 'gameController'
         }).otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';

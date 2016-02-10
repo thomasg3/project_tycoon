@@ -1,13 +1,14 @@
 package be.projecttycoon.model;
 
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
 
 /**
  * Created by thomas on 08/02/16.
  */
-
+@Entity
 public class Team extends User{
 
 
@@ -22,7 +23,7 @@ public class Team extends User{
         super();
     }
 
-    public Team(int id,String teamName, String password, String path){
+    public Team(String teamName, String password, String path){
         super(password,teamName);
         setTeamImage(path);
         setRegistered(false);
@@ -66,5 +67,27 @@ public class Team extends User{
         setPassword(password);
         setTeamImage(path);
         setRegistered(true);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Team)) return false;
+
+        Team team = (Team) o;
+
+        if(team.getId()==this.getId()){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getTeamImage() != null ? getTeamImage().hashCode() : 0;
+        result = 31 * result + getScore();
+        result = 31 * result + getLikes();
+        result = 31 * result + (isRegistered() ? 1 : 0);
+        return result;
     }
 }
