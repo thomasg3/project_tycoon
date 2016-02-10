@@ -1,7 +1,11 @@
 package be.projecttycoon.controller;
 
+import be.projecttycoon.db.GameRepository;
+import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Game;
 import be.projecttycoon.model.Team;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,15 +17,26 @@ import java.util.Set;
 @RestController
 public class GameController {
 
-    @RequestMapping("/game/*")
-    public Set<Team> showGame(){
-        //todo get correct game out DB
-        Game g = new Game("Demo Game",3);
-        return g.getTeams();
+    @Autowired
+    private GameRepository gameRepository;
+    @Autowired
+    private TeamRepository teamRepository;
+    @RequestMapping("/game/{id}")
+    public Game showGame(@PathVariable long id ){
+
+        System.out.println("the id is: "+id);
+       // Game g2 = new Game("Demo Game",3);
+        Game g=gameRepository.findById(id);
+        System.out.println(g.getId());
+        return g;
     }
+
     @RequestMapping("/createGame")
     public Game createGame(@RequestParam(value="gameName") String name,@RequestParam(value="teamAmounts") int amount){
         Game g = new Game(name,amount);
+
+        g=gameRepository.save(g);
+        System.out.println(g);
         return g;
     }
 }

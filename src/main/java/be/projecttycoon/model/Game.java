@@ -16,7 +16,7 @@ public class Game {
     private long id;
     private String name;
 
-    @OneToMany(orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private Set<Team> teams;
     //gametype?
 
@@ -29,9 +29,9 @@ public class Game {
         this.teams = new HashSet<Team>(teams);
         for(int i=0;i<teams;i++){
             Team t = new Team("Team"+(i+1),"ThisIsTheMostAwesomePasswordEver","http://i.imgur.com/IhewUTH.jpg");
-            //this is for testing since the id isnt autoincrementing atm
-            //todo change this
-            t.setId(new Long(i));
+
+
+
             this.teams.add(t);
         }
     }
@@ -77,5 +77,14 @@ public class Game {
     @Override
     public int hashCode() {
         return (int) (getId() ^ (getId() >>> 32));
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", teams=" + teams +
+                '}';
     }
 }

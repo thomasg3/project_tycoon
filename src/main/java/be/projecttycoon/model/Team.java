@@ -35,7 +35,7 @@ public class Team{
         setTeamname(teamname);
     }
 
-    public Team(int id,String teamName, String password, String path){
+    public Team(String teamName, String password, String path){
         setPassword(password);
         setTeamname(teamName);
         setTeamImage(path);
@@ -114,7 +114,7 @@ public class Team{
 
         Team team = (Team) o;
 
-        if(team.getId()==this.getId()){
+        if(team.getId()==this.getId()&&team.getTeamname().equals(this.getTeamname())){
             return true;
         }
         return false;
