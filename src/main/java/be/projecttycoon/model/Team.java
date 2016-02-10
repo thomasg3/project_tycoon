@@ -2,10 +2,15 @@ package be.projecttycoon.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 
 /**
@@ -15,16 +20,21 @@ import javax.persistence.Id;
 @Entity
 public class Team{
 
+    private static PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+
     @Id
     @GeneratedValue
     private long id;
 
     private String teamname;
+    @JsonIgnore
     private String password;
 
     private String teamImage;
     private int score, likes;
     private TeamState state;
+
 
     //todo errors/bean validation
 
@@ -57,7 +67,7 @@ public class Team{
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = passwordEncoder.encode(password);
     }
 
     public String getTeamname() {
