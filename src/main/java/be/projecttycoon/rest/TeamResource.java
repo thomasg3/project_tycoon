@@ -62,10 +62,10 @@ public class TeamResource  {
     public void updateTeam(Principal currentUser, @PathVariable long id, @RequestBody TeamBean updateTeam){
         Team team = teamRepository.findOne(id);
         String oldName = team.getTeamname();
-        team.register(updateTeam.getNewPassword(), updateTeam.getNewUsername(), null);
+        team.register(updateTeam.getTeamname(), updateTeam.getPassword(), updateTeam.getTeamImage());
         teamRepository.save(team);
         if(oldName.equals(currentUser.getName())){
-            UserDetails details = userService.loadUserByUsername(updateTeam.getNewUsername());
+            UserDetails details = userService.loadUserByUsername(updateTeam.getTeamname());
             Authentication authentication = new UsernamePasswordAuthenticationToken(details.getUsername(), details.getPassword(), details.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
