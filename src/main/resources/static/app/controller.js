@@ -16,7 +16,7 @@ angular.module('projecttycoonControllers', [])
             } })
             .success(function (response) {
                 //navigate to the game?
-                $location.path ( "/game/"+response.id);
+                $location.path ( "/dashboard/"+response.id);
             });
     }
 })
@@ -110,5 +110,24 @@ angular.module('projecttycoonControllers', [])
             });
 
         }
-    });
+    }).controller('updateTeam',function($rootScope, $scope, $http, $routeParams,$location){
+            //onload get the selected team
+            angular.element(document).ready(function () {
+                $http.get('/api/teams/'+$routeParams.id).success(function(data){
+                    $scope.team=data;
+                })
+            })
+            $scope.editTeam = function(){
+                $scope.updateTeam = {
+                    "oldUsername": $scope.team.teamname,
+                    "oldPassword": "jos",
+                    "newUsername" : $scope.teamname,
+                    "newPassword" : $scope.password
+                };
+                console.log($scope.updateTeam);
+                $http.put('/api/teams/'+$routeParams.id,$scope.updateTeam).succes(function (){
+                    console.log('Succes: '+$scope.team);
+                })
+            }
+});
 

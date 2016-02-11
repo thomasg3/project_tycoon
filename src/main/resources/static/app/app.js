@@ -19,7 +19,11 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers' ])
         }).when('/registerTeam/:username', {
             templateUrl : 'views/teamRegistration.html',
             controller: 'registration'
-        }).otherwise('/');
+        }).when('/editTeam/:id',{
+            templateUrl : 'views/adminUpdateTeam.html',
+            controller : 'updateTeam'
+        })
+            .otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 
