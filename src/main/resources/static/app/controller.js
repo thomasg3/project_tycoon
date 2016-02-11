@@ -121,7 +121,7 @@ angular.module('projecttycoonControllers', [])
             });
         }
     }).controller('updateTeam',function($rootScope, $scope, $http, $routeParams,$location,TeamResource){
-            console.log($rootScope.MainUser.admin);
+          
 
     TeamResource.search({teamname : $routeParams.teamname},function(data){
                 if(($rootScope.MainUser.admin&&data.id!=null)||$rootScope.MainUser.teamname ==  $routeParams.teamname){
