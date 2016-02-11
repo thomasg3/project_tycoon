@@ -20,7 +20,7 @@ angular.module('projecttycoonControllers', [])
                 });
         }
     })
-    .controller('home', function($scope, $http) {
+    .controller('home', function($scope, $http, GameResource) {
         $http.get('/resource/').success(function(data) {
             $scope.greeting = data;
         })
@@ -77,7 +77,6 @@ angular.module('projecttycoonControllers', [])
             }
         })
     .controller('dashboard', function($rootScope, $scope, $http, GameResource, $routeParams){
-
         GameResource.get({id : $routeParams.id}, function(data){
             $scope.game = data;
         });

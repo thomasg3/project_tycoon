@@ -11,6 +11,10 @@ angular.module('projecttycoon').factory('GameResource', function($resource) {
         },
         save: {
             method: 'POST'
+        },
+        getGameByUsername:{
+            method: 'GET',
+            url: '/api/games/game/:teamname'
         }
     });
 
