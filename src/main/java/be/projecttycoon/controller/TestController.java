@@ -28,7 +28,10 @@ public class TestController {
         auths.add(new SimpleGrantedAuthority("USER"));
         Team team = new Team("jos", "jos");
         team = teamRepository.save(team);
-        System.out.println(team.getId());
+
+        Team team2 = new Team("jef", "jef");
+        team2.setRegistered(true);
+        team2 = teamRepository.save(team2);
     }
 
     @RequestMapping("/resource")

@@ -5,6 +5,10 @@
         <form role="form" ng-submit="initTeam()">
 
 
+            <div class="alert alert-danger" ng-show="error">
+                There was a problem logging in. Please try again.
+            </div>
+
             <p>Old credentials:</p>
             <div class="form-group">
                 <input type="text" class="form-control"  id="oldUsername" name="username" ng-model="oldUsername" readonly>

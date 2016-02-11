@@ -1,7 +1,7 @@
 /**
  * Created by thomas on 09/02/16.
  */
-angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers' ])
+angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngResource' ])
     .config(function($routeProvider, $httpProvider) {
 
         $routeProvider.when('/', {
@@ -22,5 +22,4 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers' ])
         }).otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-
     });
