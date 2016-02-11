@@ -7,10 +7,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -30,9 +29,13 @@ public class Team{
     private String teamname;
     @JsonIgnore
     private String password;
-
     private String teamImage;
-    private int score, likes;
+
+    private int likes;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TeamLevelPrestation> teamLevelPrestations;
+
     private TeamState state;
 
 
@@ -41,23 +44,26 @@ public class Team{
     //constructors
     public Team() {
         state = TeamState.UNREGISTERED;
+        teamLevelPrestations = new ArrayList<>();
     }
 
-    public Team(String teamname, String password){
+    public Team(String teamname, String password, List<Level> levels){
         this();
         setPassword(password);
         setTeamname(teamname);
+        for(Level level : levels){
+            teamLevelPrestations.add(new TeamLevelPrestation(level));
+        }
     }
 
-    public Team(String teamName, String password, String path){
-        this(teamName, password);
+    public Team(String teamName, String password, List<Level> levels ,String path){
+        this(teamName, password, levels);
         setTeamImage(path);
     }
 
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
@@ -65,49 +71,38 @@ public class Team{
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = passwordEncoder.encode(password);
     }
 
-
-
-    public void setTeamname(String teamname) {
-        this.teamname = teamname;
+    public String getTeamImage() {
+        return teamImage;
     }
-
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
-
     public void setTeamImage(String path){
         if(path!=null)
         this.teamImage=path;
     }
 
-    public void setRegistered(boolean registered){
-        if(state == TeamState.UNREGISTERED)
-            state = TeamState.TEAM;
 
-    }
     public String getTeamname() {
         return teamname;
     }
+    public void setTeamname(String teamname) {
+        this.teamname = teamname;
+    }
+
     public int getScore() {
-        return score;
+        return teamLevelPrestations.stream().map(tlp -> tlp.getLevelScore()).reduce(0, (x,y) -> x + y);
     }
 
     public int getLikes() {
         return likes;
     }
-    public String getTeamImage() {
-        return teamImage;
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
+
+
     public boolean isRegistered(){
         return state != TeamState.UNREGISTERED;
     }
@@ -115,14 +110,27 @@ public class Team{
     public TeamState getState() {
         return state;
     }
+    public void setRegistered(boolean registered){
+        if(registered && state == TeamState.UNREGISTERED)
+            state = TeamState.TEAM;
+    }
 
     public boolean isAdmin(){
         return state == TeamState.ADMIN;
     }
-
     public void setAdmin(boolean admin){
-        state = TeamState.ADMIN;
+        if(admin)
+            state = TeamState.ADMIN;
     }
+
+    public List<TeamLevelPrestation> getTeamLevelPrestations() {
+        return teamLevelPrestations;
+    }
+
+    public void setTeamLevelPrestations(List<TeamLevelPrestation> teamLevelPrestations) {
+        this.teamLevelPrestations = teamLevelPrestations;
+    }
+
     public void register(String password, String teamname, String path){
         setTeamname(teamname);
         setPassword(password);
@@ -160,7 +168,7 @@ public class Team{
                 ", teamname='" + teamname + '\'' +
                 ", password='" + password + '\'' +
                 ", teamImage='" + teamImage + '\'' +
-                ", score=" + score +
+                ", score=" + getScore() +
                 ", likes=" + likes +
                 ", registered=" + isRegistered() +
                 '}';
