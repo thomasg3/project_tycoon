@@ -4,22 +4,22 @@
 angular.module('projecttycoonControllers', [])
     .controller('gameController', function($scope, $http,$location) {
 
-    $scope.SendData=function() {
+        $scope.SendData=function() {
 
-        $http({
-            method: "post",
-            url:"/createGame?gameName="+$scope.gameName+"&teamAmounts="+$scope.teamAmounts,
-            'headers': {'Content-Type' : 'application/json'},
-            data : {
-            "gameName": $scope.gameName,
-            "teamAmounts" : $scope.teamAmounts
-            } })
-            .success(function (response) {
-                //navigate to the game?
-                $location.path ( "/game/"+response.id);
-            });
-    }
-})
+            $http({
+                method: "post",
+                url:"/createGame?gameName="+$scope.gameName+"&teamAmounts="+$scope.teamAmounts,
+                'headers': {'Content-Type' : 'application/json'},
+                data : {
+                "gameName": $scope.gameName,
+                "teamAmounts" : $scope.teamAmounts
+                } })
+                .success(function (response) {
+                    //navigate to the game?
+                    $location.path ( "/game/"+response.id);
+                });
+        }
+    })
     .controller('home', function($scope, $http) {
         $http.get('/resource/').success(function(data) {
             $scope.greeting = data;
@@ -78,7 +78,7 @@ angular.module('projecttycoonControllers', [])
         })
     .controller('dashboard', function($rootScope, $scope, $http, $location){
 
-        $http.get("/game/1").success(function(data){
+        $http.get("/api/games/1").success(function(data){
             $scope.game = data;
         })
     })
