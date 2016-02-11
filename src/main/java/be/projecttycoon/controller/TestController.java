@@ -27,6 +27,7 @@ public class TestController {
         List<GrantedAuthority> auths = new ArrayList<>();
         auths.add(new SimpleGrantedAuthority("USER"));
         Team team = new Team("jos", "jos");
+        team.setAdmin(true);
         team = teamRepository.save(team);
 
         Team team2 = new Team("jef", "jef");
@@ -34,13 +35,14 @@ public class TestController {
         team2 = teamRepository.save(team2);
     }
 
+    /*
     @RequestMapping("/resource")
     public Map<String,Object> home() {
         Map<String,Object> model = new HashMap<String,Object>();
         model.put("id", UUID.randomUUID().toString());
         model.put("content", "Hello World");
         return model;
-    }
+    }*/
 
     @RequestMapping("/isRegisterdTeam/{teamName}")
     public boolean isRegisterdTeam(@PathVariable String teamName) {

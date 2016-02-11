@@ -42,8 +42,7 @@ public class TeamResource  {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @Produces("application/json")
     public Team getTeamById(@PathVariable long id){
-        return teamRepository.findOne(id);
-    }
+        return teamRepository.findOne(id);}
 
     @RequestMapping(value = "/search/{teamname}", method = RequestMethod.GET)
     @Produces("application/json")
@@ -62,7 +61,7 @@ public class TeamResource  {
     public void updateTeam(Principal currentUser, @PathVariable long id, @RequestBody TeamBean updateTeam){
         Team team = teamRepository.findOne(id);
         String oldName = team.getTeamname();
-        team.register(updateTeam.getTeamname(), updateTeam.getPassword(), updateTeam.getTeamImage());
+        team.register(updateTeam.getPassword(), updateTeam.getTeamname(), updateTeam.getTeamImage());
         teamRepository.save(team);
         if(oldName.equals(currentUser.getName())){
             UserDetails details = userService.loadUserByUsername(updateTeam.getTeamname());

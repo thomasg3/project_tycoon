@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <h3>Modify Team: {{team.teamname}}</h3>
+        <hr>
+        <form role="form" ng-submit="editTeam()">
+            <div class="alert alert-danger" ng-show="error">
+                The passwords dont match.
+            </div>
+
+            <p>New credentials:</p>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="New Teamname" id="name" name="name" ng-model="teamname">
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="New Password" id="password" name="password" ng-model="password">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Repeat Password" id="passwordRepeat" name="passwordRepeat" ng-model="passwordRepeat">
+            </div>
+
+            <div class="col-sm-6 col-sm-offset-3">
+                <img style="width: 100%; height: 300px; padding-bottom: 20px;" src="http://75025.de/comics/0000.png" alt="Team Picture" />
+            </div>
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
