@@ -14,14 +14,15 @@ angular.module('projecttycoon').factory('TeamResource', function($resource) {
             url: '/api/teams/search/:teamname',
             isArray: false
         },
-        isRegisterd: {
+        isRegistered: {
             method: 'GET',
             url: '/api/teams/search/:teamname/registered',
             isArray: false,
             responseType: 'json'
         },
         update: {
-            method: 'PUT'
+            method: 'PUT',
+            URL: '/api/teams/:id'
         }
     });
 

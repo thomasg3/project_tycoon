@@ -51,8 +51,11 @@ angular.module('projecttycoonControllers', [])
             $scope.login = function() {
                 $rootScope.authenticate($scope.credentials, function() {
                     if ($rootScope.authenticated) {
-                        TeamResource.isRegisterd({teamname: $scope.credentials.username}, function(data) {
-                            if(data.registerd){
+                        TeamResource.search({teamname: $scope.credentials.username},function(data){
+                            $rootScope.MainUser = data;
+                        })
+                        TeamResource.isRegistered({teamname: $scope.credentials.username}, function(data) {
+                            if(data.registered){
                                 $location.path("/");
                             }else{
                                 $location.path("/registerTeam/" + $scope.credentials.username);
@@ -109,24 +112,41 @@ angular.module('projecttycoonControllers', [])
                 }
             });
         }
-    }).controller('updateTeam',function($rootScope, $scope, $http, $routeParams,$location){
+    }).controller('updateTeam',function($rootScope, $scope, $http, $routeParams,$location,TeamResource){
+
+        //if the user is an admin or if the user is the same user as he wants to edit he can proceed
+        if($rootScope.MainUser.admin || $rootScope.MainUser.teamname ==  $routeParams.teamname){
             //onload get the selected team
             angular.element(document).ready(function () {
-                $http.get('/api/teams/'+$routeParams.id).success(function(data){
-                    $scope.team=data;
-                })
+                $scope.team = TeamResource.search({teamname : $routeParams.teamname});
+
             })
             $scope.editTeam = function(){
-                $scope.updateTeam = {
-                    "oldUsername": $scope.team.teamname,
-                    "oldPassword": "jos",
-                    "newUsername" : $scope.teamname,
-                    "newPassword" : $scope.password
-                };
-                console.log($scope.updateTeam);
-                $http.put('/api/teams/'+$routeParams.id,$scope.updateTeam).succes(function (){
-                    console.log('Succes: '+$scope.team);
-                })
+                $scope.updateTeam = TeamResource.search({teamname : $routeParams.teamname},function(updateTeam){
+                    if($scope.password==$scope.passwordRepeat){
+                        updateTeam.teamname =$scope.teamname;
+                        updateTeam.password = $scope.password;
+                            if($rootScope.MainUser.state!="Admin") {
+                                updateTeam.state = "TEAM";
+                            }
+                        TeamResource.update({id:updateTeam.id},updateTeam).$promise.then(function(value){
+                            $location.path('/');
+                        });
+                        //if the user changed its team change the team in the rootScope
+                        if($rootScope.MainUser.teamname ==  $routeParams.teamname)
+                            $rootScope.MainUser = updateTeam;
+                    }
+                    else{
+                        $scope.error=true;
+                    }
+
+                });
+
             }
+        }
+        else{
+            alert("you cant do this. You will be redirected to your edit page.\nMake this nice pls error handling or some shit.");
+            $location.path('/editTeam/'+$rootScope.MainUser.teamname);
+        }
 });
 

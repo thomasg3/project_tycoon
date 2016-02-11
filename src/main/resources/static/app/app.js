@@ -19,8 +19,8 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngReso
         }).when('/registerTeam/:username', {
             templateUrl : 'views/teamRegistration.html',
             controller: 'registration'
-        }).when('/editTeam/:id',{
-            templateUrl : 'views/adminUpdateTeam.html',
+        }).when('/editTeam/:teamname',{
+            templateUrl : 'views/updateTeam.html',
             controller : 'updateTeam'
         })
             .otherwise('/');

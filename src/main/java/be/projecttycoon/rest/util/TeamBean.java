@@ -82,5 +82,16 @@ public class TeamBean {
         this.state = state;
     }
 
-
+    @Override
+    public String toString() {
+        return "TeamBean{" +
+                "id=" + id +
+                ", teamname='" + teamname + '\'' +
+                ", password='" + password + '\'' +
+                ", teamImage='" + teamImage + '\'' +
+                ", score=" + score +
+                ", likes=" + likes +
+                ", state=" + state +
+                '}';
+    }
 }

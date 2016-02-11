@@ -27,6 +27,7 @@ public class TestController {
         List<GrantedAuthority> auths = new ArrayList<>();
         auths.add(new SimpleGrantedAuthority("USER"));
         Team team = new Team("jos", "jos");
+        team.setAdmin(true);
         team = teamRepository.save(team);
 
         Team team2 = new Team("jef", "jef");
