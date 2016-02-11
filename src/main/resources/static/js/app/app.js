@@ -13,7 +13,7 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngReso
         }).when('/dashboard', {
             templateUrl : 'views/dashboard.html',
             controller: 'dashboard'
-        }).when('/registerTeam/:id', {
+        }).when('/registerTeam/:username', {
             templateUrl : 'teamRegistration.html',
             controller: 'registration'
         }).otherwise('/');

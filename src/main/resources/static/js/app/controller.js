@@ -8,7 +8,7 @@ angular.module('projecttycoonControllers', [])
         })
     })
     .controller('navigation', function($rootScope, $scope, $http, $location, TeamResource) {
-            var authenticate = function(credentials, callback) {
+            $rootScope.authenticate = function(credentials, callback) {
 
                 var headers = credentials ? {authorization : "Basic "
                 + btoa(credentials.username + ":" + credentials.password)
@@ -28,14 +28,12 @@ angular.module('projecttycoonControllers', [])
 
             };
 
-            authenticate();
+        $rootScope.authenticate();
             $scope.credentials = {};
             $scope.login = function() {
-                authenticate($scope.credentials, function() {
+                $rootScope.authenticate($scope.credentials, function() {
                     if ($rootScope.authenticated) {
                         TeamResource.isRegisterd({teamname: $scope.credentials.username}, function(data) {
-                            console.log(data);
-                            alert(JSON.stringify(data));
                             if(data.registerd){
                                 $location.path("/");
                             }else{
@@ -67,19 +65,27 @@ angular.module('projecttycoonControllers', [])
         $scope.oldUsername = $routeParams.username;
         $scope.initTeam = function(){
 
-            var data = {
-                "oldUsername": $scope.oldUsername,
-                "oldPassword": $scope.credentials.oldPassword,
-                "newUsername": $scope.credentials.username,
-                "newPassword": $scope.credentials.password
-            };
-
-            $http.post('/initTeam', data).success(function(){
-                $location.path('/');
+            $http.post('logout', {}).success(function(){
+                $rootScope.authenticated = false;
             }).error(function(){
-                alert("post error")
+                $rootScope.authenticated = false;
             });
 
+            var oldCredentials = {username : $scope.oldUsername, password : $scope.credentials.oldPassword};
+            $rootScope.authenticate(oldCredentials, function(){
+                if ($rootScope.authenticated) {
+                    TeamResource.search({teamname : $scope.oldUsername}, function(updateTeam){
+                        updateTeam.teamname = $scope.credentials.username;
+                        updateTeam.password = $scope.credentials.password;
+                        updateTeam.$update({id : updateTeam.id});
+                        $location.path('/');
+                    });
+                    $scope.error = false;
+                } else {
+                    $scope.error = true;
+                    $location.path('/registerTeam/' + $scope.oldUsername);
+                }
+            });
         }
     });
 

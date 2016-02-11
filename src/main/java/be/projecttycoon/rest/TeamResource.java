@@ -52,7 +52,7 @@ public class TeamResource  {
     @Produces("application/json")
     public void updateTeam(@PathVariable long id, @RequestBody TeamBean updateTeam){
         Team team = teamRepository.findOne(id);
-        team.register(updateTeam.getNewPassword(), updateTeam.getNewUsername(), null);
+        team.register(updateTeam.getPassword(), updateTeam.getTeamname(), null);
         teamRepository.save(team);
     }
 
