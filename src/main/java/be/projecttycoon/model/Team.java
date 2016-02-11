@@ -7,10 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -30,9 +28,13 @@ public class Team{
     private String teamname;
     @JsonIgnore
     private String password;
-
     private String teamImage;
+
     private int score, likes;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TeamLevelPrestation> teamLevelPrestations;
+
     private TeamState state;
 
 
@@ -72,9 +74,6 @@ public class Team{
 
 
 
-    public void setTeamname(String teamname) {
-        this.teamname = teamname;
-    }
 
 
     public void setScore(int score) {
@@ -85,19 +84,22 @@ public class Team{
         this.likes = likes;
     }
 
+    public String getTeamImage() {
+        return teamImage;
+    }
     public void setTeamImage(String path){
         if(path!=null)
         this.teamImage=path;
     }
 
-    public void setRegistered(boolean registered){
-        if(state == TeamState.UNREGISTERED)
-            state = TeamState.TEAM;
 
-    }
     public String getTeamname() {
         return teamname;
     }
+    public void setTeamname(String teamname) {
+        this.teamname = teamname;
+    }
+
     public int getScore() {
         return score;
     }
@@ -105,21 +107,23 @@ public class Team{
     public int getLikes() {
         return likes;
     }
-    public String getTeamImage() {
-        return teamImage;
-    }
+
     public boolean isRegistered(){
         return state != TeamState.UNREGISTERED;
     }
-
+    public void setRegistered(boolean registered){
+        if(registered && state == TeamState.UNREGISTERED)
+            state = TeamState.TEAM;
+    }
 
     public boolean isAdmin(){
         return state == TeamState.ADMIN;
     }
-
     public void setAdmin(boolean admin){
-        state = TeamState.ADMIN;
+        if(admin)
+            state = TeamState.ADMIN;
     }
+
     public void register(String password, String teamname, String path){
         setTeamname(teamname);
         setPassword(password);

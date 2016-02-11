@@ -42,17 +42,28 @@ public class Game {
     }
 
 
-    public String getName(){return name;}
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<Level> getLevels() {
+        return levels;
+    }
+
+    public void setLevels(List<Level> levels) {
+        this.levels = levels;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public void setName(String name) {
-        try {
-            URL url = new URL("http://www.google.com/" + name);
-            this.name = name;
-        }catch(MalformedURLException ex){
-            //todo throw or catch
-            System.out.println("not a valid name");
-        }
-
+        this.name = name;
     }
 
     public Set<Team> getTeams() {
@@ -61,14 +72,6 @@ public class Game {
 
     public void setTeams(Set<Team> teams) {
         this.teams = teams;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public boolean containsTeam(Team t){
