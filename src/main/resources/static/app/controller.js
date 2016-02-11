@@ -20,7 +20,7 @@ angular.module('projecttycoonControllers', [])
                 });
         }
     })
-    .controller('home', function($scope, $http) {
+    .controller('home', function($scope, $http, GameResource) {
         $http.get('/resource/').success(function(data) {
             $scope.greeting = data;
         })
@@ -76,11 +76,10 @@ angular.module('projecttycoonControllers', [])
                 });
             }
         })
-    .controller('dashboard', function($rootScope, $scope, $http, $location){
-
-        $http.get("/api/games/1").success(function(data){
+    .controller('dashboard', function($rootScope, $scope, $http, GameResource, $routeParams){
+        GameResource.get({id : $routeParams.id}, function(data){
             $scope.game = data;
-        })
+        });
     })
     .controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource) {
         $scope.oldUsername = $routeParams.username;
@@ -109,5 +108,15 @@ angular.module('projecttycoonControllers', [])
                 }
             });
         }
+    }).controller('adminOverview', function($scope, $http,$location, GameResource) {
+        GameResource.getAll().$promise.then(function(data){
+            $scope.games = data;
+            console.log($scope.games);
+        });
+
+        $scope.getGame = function(id){
+            $location.path('/dashboard/' + id);
+        }
+
     });
 

@@ -1,0 +1,13 @@
+<div class="row" >
+    <h1>ADMIN OVERVIEW</h1>
+    <table class="table table-responsive">
+        <tr>
+            <th>#</th>
+            <th colspan="2">Team Name</th>
+        </tr>
+        <tr ng-repeat="game in games" ng-click="getGame(game.id)">
+            <td><strong>#{{$index+1}}</strong></td>
+            <td>{{game.name}}</td>
+        </tr>
+    </table>
+</div>

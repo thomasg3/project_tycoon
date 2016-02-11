@@ -17,8 +17,18 @@ import java.util.Set;
 @RestController
 public class GameController {
     //TODO errorhandling
-    @Autowired
+
     private GameRepository gameRepository;
+
+    @Autowired
+    public void setGameRepository(GameRepository gameRepository){
+        this.gameRepository = gameRepository;
+        Game game = new Game("testgame1",3);
+        gameRepository.save(game);
+        Game game2 = new Game("testgame2",2);
+        gameRepository.save(game2);
+    }
+
     @Autowired
     private TeamRepository teamRepository;
     @RequestMapping("/game/{id}")

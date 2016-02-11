@@ -22,6 +22,8 @@ public class Game {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Level> levels;
 
+    public static int count;
+
 
     public Game() {
         this.teams = new HashSet<>();
@@ -30,12 +32,15 @@ public class Game {
 
     public Game(String name, int teams) {
         this();
+        count +=teams;
         setName(name);
         this.teams = new HashSet<Team>(teams);
-        for(int i=0;i<teams;i++){
+        for(int i=count; i<teams+count;i++){
             this.teams.add(new Team("Team"+(i+1),"ThisIsTheMostAwesomePasswordEver","http://i.imgur.com/IhewUTH.jpg"));
         }
+        count++;
     }
+
 
     public String getName(){return name;}
 
@@ -64,6 +69,10 @@ public class Game {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean containsTeam(Team t){
+        return teams.contains(t);
     }
 
     @Override
