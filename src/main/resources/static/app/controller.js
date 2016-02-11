@@ -3,9 +3,7 @@
  */
 angular.module('projecttycoonControllers', [])
     .controller('gameController', function($scope, $http,$location) {
-
         $scope.SendData=function() {
-
             $http({
                 method: "post",
                 url:"/createGame?gameName="+$scope.gameName+"&teamAmounts="+$scope.teamAmounts,
@@ -20,10 +18,8 @@ angular.module('projecttycoonControllers', [])
                 });
         }
     })
-    .controller('home', function($scope, $http, GameResource) {
-        $http.get('/resource/').success(function(data) {
-            $scope.greeting = data;
-        })
+    .controller('home', function($scope, $http, $rootScope) {
+        $scope.data = $rootScope.MainUser;
     })
     .controller('navigation', function($rootScope, $scope, $http, $location, TeamResource) {
             $rootScope.authenticate = function(credentials, callback) {
@@ -51,15 +47,17 @@ angular.module('projecttycoonControllers', [])
             $scope.login = function() {
                 $rootScope.authenticate($scope.credentials, function() {
                     if ($rootScope.authenticated) {
-                        TeamResource.isRegisterd({teamname: $scope.credentials.username}, function(data) {
-                            if(data.registerd){
-                                $location.path("/");
-                            }else{
-                                $location.path("/registerTeam/" + $scope.credentials.username);
-                            }
-                            $scope.error = false;
+                        TeamResource.search({teamname : $scope.credentials.username}, function(data){
+                            $rootScope.MainUser = data;
+                            TeamResource.isRegisterd({teamname: $scope.credentials.username}, function(data) {
+                                if(data.registerd){
+                                    $location.path("/");
+                                }else{
+                                    $location.path("/registerTeam/" + $scope.credentials.username);
+                                }
+                                $scope.error = false;
+                            });
                         });
-
                     } else {
                         $location.path("/login");
                         $scope.error = true;
@@ -77,35 +75,45 @@ angular.module('projecttycoonControllers', [])
             }
         })
     .controller('dashboard', function($rootScope, $scope, $http, GameResource, $routeParams){
-        GameResource.get({id : $routeParams.id}, function(data){
-            $scope.game = data;
-        });
+        if($routeParams.id !== undefined){
+            GameResource.get({id : $routeParams.id}, function(data){
+                $scope.game = data;
+            });
+        }else{
+            GameResource.getGameByUsername({teamname : $rootScope.MainUser.teamname}, function(data){
+                $scope.game = data;
+            });
+        }
     })
     .controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource) {
         $scope.oldUsername = $routeParams.username;
 
         $scope.initTeam = function(){
 
+            var oldCredentials = {username : $scope.oldUsername, password : $scope.credentials.oldPassword};
+
             $http.post('logout', {}).success(function(){
                 $rootScope.authenticated = false;
+                $rootScope.authenticate(oldCredentials, function(){
+                    if ($rootScope.authenticated) {
+                        TeamResource.search({teamname : $scope.oldUsername}, function(updateTeam){
+                            updateTeam.teamname = $scope.credentials.username;
+                            updateTeam.password = $scope.credentials.password;
+                            updateTeam.$update({id : updateTeam.id}, function(){
+                                TeamResource.get({id: updateTeam.id}, function(data){
+                                    $rootScope.MainUser = data;
+                                    $location.path('/');
+                                });
+                            });
+                        });
+                        $scope.error = false;
+                    } else {
+                        $scope.error = true;
+                        $location.path('/registerTeam/' + $scope.oldUsername);
+                    }
+                });
             }).error(function(){
                 $rootScope.authenticated = false;
-            });
-
-            var oldCredentials = {username : $scope.oldUsername, password : $scope.credentials.oldPassword};
-            $rootScope.authenticate(oldCredentials, function(){
-                if ($rootScope.authenticated) {
-                    TeamResource.search({teamname : $scope.oldUsername}, function(updateTeam){
-                        updateTeam.teamname = $scope.credentials.username;
-                        updateTeam.password = $scope.credentials.password;
-                        updateTeam.$update({id : updateTeam.id});
-                        $location.path('/');
-                    });
-                    $scope.error = false;
-                } else {
-                    $scope.error = true;
-                    $location.path('/registerTeam/' + $scope.oldUsername);
-                }
             });
         }
     }).controller('adminOverview', function($scope, $http,$location, GameResource) {

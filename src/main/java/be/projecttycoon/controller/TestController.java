@@ -34,13 +34,14 @@ public class TestController {
         team2 = teamRepository.save(team2);
     }
 
+    /*
     @RequestMapping("/resource")
     public Map<String,Object> home() {
         Map<String,Object> model = new HashMap<String,Object>();
         model.put("id", UUID.randomUUID().toString());
         model.put("content", "Hello World");
         return model;
-    }
+    }*/
 
     @RequestMapping("/isRegisterdTeam/{teamName}")
     public boolean isRegisterdTeam(@PathVariable String teamName) {
