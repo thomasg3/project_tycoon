@@ -112,6 +112,9 @@ public class Team{
         return state != TeamState.UNREGISTERED;
     }
 
+    public TeamState getState() {
+        return state;
+    }
 
     public boolean isAdmin(){
         return state == TeamState.ADMIN;

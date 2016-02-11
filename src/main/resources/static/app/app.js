@@ -22,6 +22,9 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngReso
         }).when('/registerTeam/:username', {
             templateUrl : 'views/teamRegistration.html',
             controller: 'registration'
+        }).when('/editTeam/:teamname',{
+            templateUrl : 'views/updateTeam.html',
+            controller : 'updateTeam'
         }).when('/adminOverview', {
             templateUrl : 'views/adminOverview.html',
             controller: 'adminOverview'

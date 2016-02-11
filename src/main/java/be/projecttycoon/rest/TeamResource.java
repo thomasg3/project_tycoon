@@ -53,7 +53,7 @@ public class TeamResource  {
     @RequestMapping(value="/search/{teamname}/registered", method = RequestMethod.GET)
     @Produces("application/json")
     public Map<String, Boolean> isRegisteredTeamByTeamname(@PathVariable String teamname){
-        return Collections.singletonMap("registerd", getTeamByTeamname(teamname).isRegistered());
+        return Collections.singletonMap("registered", getTeamByTeamname(teamname).isRegistered());
     }
 
     @RequestMapping(value="/{id}", method = RequestMethod.PUT)

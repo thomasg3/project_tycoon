@@ -3,7 +3,9 @@
  */
 angular.module('projecttycoonControllers', [])
     .controller('gameController', function($scope, $http,$location) {
+
         $scope.SendData=function() {
+
             $http({
                 method: "post",
                 url:"/createGame?gameName="+$scope.gameName+"&teamAmounts="+$scope.teamAmounts,
@@ -47,17 +49,19 @@ angular.module('projecttycoonControllers', [])
             $scope.login = function() {
                 $rootScope.authenticate($scope.credentials, function() {
                     if ($rootScope.authenticated) {
-                        TeamResource.search({teamname : $scope.credentials.username}, function(data){
+
+                        TeamResource.search({teamname: $scope.credentials.username},function(data){
                             $rootScope.MainUser = data;
-                            TeamResource.isRegisterd({teamname: $scope.credentials.username}, function(data) {
-                                if(data.registerd){
-                                    $location.path("/");
-                                }else{
-                                    $location.path("/registerTeam/" + $scope.credentials.username);
-                                }
-                                $scope.error = false;
-                            });
+                        })
+                        TeamResource.isRegistered({teamname: $scope.credentials.username}, function(data) {
+                            if(data.registered){
+                                $location.path("/");
+                            }else{
+                                $location.path("/registerTeam/" + $scope.credentials.username);
+                            }
+                            $scope.error = false;
                         });
+
                     } else {
                         $location.path("/login");
                         $scope.error = true;
@@ -110,6 +114,45 @@ angular.module('projecttycoonControllers', [])
                 $rootScope.authenticated = false;
             });
         }
+    }).controller('updateTeam',function($rootScope, $scope, $http, $routeParams,$location,TeamResource){
+          
+
+    TeamResource.search({teamname : $routeParams.teamname},function(data){
+                if(($rootScope.MainUser.admin&&data.id!=null)||$rootScope.MainUser.teamname ==  $routeParams.teamname){
+                    angular.element(document).ready(function () {
+                        $scope.team = TeamResource.search({teamname : $routeParams.teamname});
+
+                    })
+                    $scope.editTeam = function(){
+                        $scope.updateTeam = TeamResource.search({teamname : $routeParams.teamname},function(updateTeam){
+                            if($scope.password==$scope.passwordRepeat){
+                                updateTeam.teamname =$scope.teamname;
+                                updateTeam.password = $scope.password;
+                                if($rootScope.MainUser.state!="Admin") {
+                                    updateTeam.state = "TEAM";
+                                }
+                                TeamResource.update({id:updateTeam.id},updateTeam).$promise.then(function(value){
+                                    $location.path('/');
+                                });
+                                //if the user changed its team change the team in the rootScope
+                                if($rootScope.MainUser.teamname ==  $routeParams.teamname)
+                                    $rootScope.MainUser = updateTeam;
+                            }
+                            else{
+                                $scope.error=true;
+                            }
+
+                        });
+
+                    }
+                }
+                else{
+                    alert("you cant do this. You will be redirected to your edit page.\nMake this nice pls error handling or some shit.");
+                    $location.path('/editTeam/'+$rootScope.MainUser.teamname);
+                }
+            });
+
+
     }).controller('adminOverview', function($scope, $http,$location, GameResource) {
         GameResource.getAll().$promise.then(function(data){
             $scope.games = data;
