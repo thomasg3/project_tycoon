@@ -18,11 +18,14 @@ public class Game {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private Set<Team> teams;
-    //gametype?
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Level> levels;
 
 
     public Game() {
         this.teams = new HashSet<>();
+        this.levels = new ArrayList<>();
     }
 
     public Game(String name, int teams) {
