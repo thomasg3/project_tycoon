@@ -75,15 +75,9 @@ angular.module('projecttycoonControllers', [])
             }
         })
     .controller('dashboard', function($rootScope, $scope, $http, GameResource, $routeParams){
-        if($routeParams.id !== undefined){
-            GameResource.get({id : $routeParams.id}, function(data){
-                $scope.game = data;
-            });
-        }else{
-            GameResource.getGameByUsername({teamname : $rootScope.MainUser.teamname}, function(data){
-                $scope.game = data;
-            });
-        }
+        GameResource.get({id : $routeParams.id}, function(data){
+            $scope.game = data;
+        });
     })
     .controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource) {
         $scope.oldUsername = $routeParams.username;
@@ -126,5 +120,10 @@ angular.module('projecttycoonControllers', [])
             $location.path('/dashboard/' + id);
         }
 
-    });
+    }).controller('overviewDashboard',function($scope, $http,$location, $rootScope, GameResource){
+        GameResource.getGameByUsername({teamname : $rootScope.MainUser.teamname}, function(data){
+            $scope.game = data;
+        });
+
+});
 

@@ -18,7 +18,7 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngReso
             controller: 'dashboard'
         }).when('/dashboard', {
             templateUrl : 'views/dashboard.html',
-            controller: 'dashboard'
+            controller: 'overviewDashboard'
         }).when('/registerTeam/:username', {
             templateUrl : 'views/teamRegistration.html',
             controller: 'registration'
