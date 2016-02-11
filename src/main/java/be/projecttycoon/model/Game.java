@@ -33,7 +33,7 @@ public class Game {
         setName(name);
         this.teams = new HashSet<Team>(teams);
         for(int i=count; i<teams+count;i++){
-            this.teams.add(new Team("Team"+(i+1),"ThisIsTheMostAwesomePasswordEver","http://i.imgur.com/IhewUTH.jpg"));
+            this.teams.add(new Team("Team"+(i+1),"test","http://i.imgur.com/IhewUTH.jpg"));
         }
         count++;
     }
