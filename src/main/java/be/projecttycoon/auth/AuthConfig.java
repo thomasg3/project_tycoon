@@ -25,15 +25,24 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
 
 
     private TeamRepository teamRepository;
+    private UserService userService;
 
     public TeamRepository getTeamRepository() {
         return teamRepository;
     }
 
-
     @Autowired
     public void setTeamRepository(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -45,6 +54,8 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
         .and()
             .authorizeRequests()
                 .antMatchers("/views/public/**", "/app/**","/bower_components/**","/").permitAll()
+                .antMatchers("/api/teams", "/api/teams/**").hasAuthority(SecurityAuths.UNREGISTERED.toString())
+                .antMatchers("/api/**").hasAuthority(SecurityAuths.TEAM.toString())
                 .anyRequest().authenticated()
         .and()
             .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
