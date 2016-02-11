@@ -22,8 +22,6 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngReso
         }).when('/editTeam/:teamname',{
             templateUrl : 'views/updateTeam.html',
             controller : 'updateTeam'
-        })
-            .otherwise('/');
         }).when('/adminOverview', {
             templateUrl : 'views/adminOverview.html',
             controller: 'adminOverview'

@@ -112,42 +112,44 @@ angular.module('projecttycoonControllers', [])
             });
         }
     }).controller('updateTeam',function($rootScope, $scope, $http, $routeParams,$location,TeamResource){
+            console.log($rootScope.MainUser.admin);
 
-        //if the user is an admin or if the user is the same user as he wants to edit he can proceed
-        if($rootScope.MainUser.admin || $rootScope.MainUser.teamname ==  $routeParams.teamname){
-            //onload get the selected team
-            angular.element(document).ready(function () {
-                $scope.team = TeamResource.search({teamname : $routeParams.teamname});
+    TeamResource.search({teamname : $routeParams.teamname},function(data){
+                if(($rootScope.MainUser.admin&&data.id!=null)||$rootScope.MainUser.teamname ==  $routeParams.teamname){
+                    angular.element(document).ready(function () {
+                        $scope.team = TeamResource.search({teamname : $routeParams.teamname});
 
-            })
-            $scope.editTeam = function(){
-                $scope.updateTeam = TeamResource.search({teamname : $routeParams.teamname},function(updateTeam){
-                    if($scope.password==$scope.passwordRepeat){
-                        updateTeam.teamname =$scope.teamname;
-                        updateTeam.password = $scope.password;
-                            if($rootScope.MainUser.state!="Admin") {
-                                updateTeam.state = "TEAM";
+                    })
+                    $scope.editTeam = function(){
+                        $scope.updateTeam = TeamResource.search({teamname : $routeParams.teamname},function(updateTeam){
+                            if($scope.password==$scope.passwordRepeat){
+                                updateTeam.teamname =$scope.teamname;
+                                updateTeam.password = $scope.password;
+                                if($rootScope.MainUser.state!="Admin") {
+                                    updateTeam.state = "TEAM";
+                                }
+                                TeamResource.update({id:updateTeam.id},updateTeam).$promise.then(function(value){
+                                    $location.path('/');
+                                });
+                                //if the user changed its team change the team in the rootScope
+                                if($rootScope.MainUser.teamname ==  $routeParams.teamname)
+                                    $rootScope.MainUser = updateTeam;
                             }
-                        TeamResource.update({id:updateTeam.id},updateTeam).$promise.then(function(value){
-                            $location.path('/');
+                            else{
+                                $scope.error=true;
+                            }
+
                         });
-                        //if the user changed its team change the team in the rootScope
-                        if($rootScope.MainUser.teamname ==  $routeParams.teamname)
-                            $rootScope.MainUser = updateTeam;
-                    }
-                    else{
-                        $scope.error=true;
-                    }
 
-                });
+                    }
+                }
+                else{
+                    alert("you cant do this. You will be redirected to your edit page.\nMake this nice pls error handling or some shit.");
+                    $location.path('/editTeam/'+$rootScope.MainUser.teamname);
+                }
+            });
 
-            }
-        }
-        else{
-            alert("you cant do this. You will be redirected to your edit page.\nMake this nice pls error handling or some shit.");
-            $location.path('/editTeam/'+$rootScope.MainUser.teamname);
-        }
-});
+         
     }).controller('adminOverview', function($scope, $http,$location, GameResource) {
         GameResource.getAll().$promise.then(function(data){
             $scope.games = data;
