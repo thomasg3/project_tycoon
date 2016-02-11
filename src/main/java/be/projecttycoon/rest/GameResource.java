@@ -1,12 +1,15 @@
 package be.projecttycoon.rest;
 
 import be.projecttycoon.db.GameRepository;
+import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Game;
+import be.projecttycoon.model.Team;
 import be.projecttycoon.rest.util.GameBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Produces;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -17,10 +20,12 @@ import java.util.Collection;
 public class GameResource {
 
     private final GameRepository gameRepository;
+    private final TeamRepository teamRepository;
 
     @Autowired
-    public GameResource(GameRepository gameRepository){
+    public GameResource(GameRepository gameRepository, TeamRepository teamRepository){
         this.gameRepository = gameRepository;
+        this.teamRepository = teamRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -43,4 +48,12 @@ public class GameResource {
         return game;
     }
 
+    @RequestMapping(value="/game/{teamname}" ,method = RequestMethod.GET)
+    @Produces("application/json")
+    public Game getGameForTeam(@PathVariable String teamname) {
+        Team team = teamRepository.findByTeamname(teamname);
+        return gameRepository.findAll().stream()
+                .filter(g -> g.containsTeam(team))
+                .findFirst().get();
+    }
 }

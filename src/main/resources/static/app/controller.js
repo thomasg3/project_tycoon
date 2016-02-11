@@ -4,23 +4,23 @@
 angular.module('projecttycoonControllers', [])
     .controller('gameController', function($scope, $http,$location) {
 
-    $scope.SendData=function() {
+        $scope.SendData=function() {
 
-        $http({
-            method: "post",
-            url:"/createGame?gameName="+$scope.gameName+"&teamAmounts="+$scope.teamAmounts,
-            'headers': {'Content-Type' : 'application/json'},
-            data : {
-            "gameName": $scope.gameName,
-            "teamAmounts" : $scope.teamAmounts
-            } })
-            .success(function (response) {
-                //navigate to the game?
-                $location.path ( "/dashboard/"+response.id);
-            });
-    }
-})
-    .controller('home', function($scope, $http) {
+            $http({
+                method: "post",
+                url:"/createGame?gameName="+$scope.gameName+"&teamAmounts="+$scope.teamAmounts,
+                'headers': {'Content-Type' : 'application/json'},
+                data : {
+                "gameName": $scope.gameName,
+                "teamAmounts" : $scope.teamAmounts
+                } })
+                .success(function (response) {
+                    //navigate to the game?
+                    $location.path ( "/game/"+response.id);
+                });
+        }
+    })
+    .controller('home', function($scope, $http, GameResource) {
         $http.get('/resource/').success(function(data) {
             $scope.greeting = data;
         })
@@ -79,11 +79,10 @@ angular.module('projecttycoonControllers', [])
                 });
             }
         })
-    .controller('dashboard', function($rootScope, $scope, $http, $location){
-
-        $http.get("/game/1").success(function(data){
+    .controller('dashboard', function($rootScope, $scope, $http, GameResource, $routeParams){
+        GameResource.get({id : $routeParams.id}, function(data){
             $scope.game = data;
-        })
+        });
     })
     .controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource) {
         $scope.oldUsername = $routeParams.username;
@@ -149,4 +148,15 @@ angular.module('projecttycoonControllers', [])
             $location.path('/editTeam/'+$rootScope.MainUser.teamname);
         }
 });
+    }).controller('adminOverview', function($scope, $http,$location, GameResource) {
+        GameResource.getAll().$promise.then(function(data){
+            $scope.games = data;
+            console.log($scope.games);
+        });
+
+        $scope.getGame = function(id){
+            $location.path('/dashboard/' + id);
+        }
+
+    });
 

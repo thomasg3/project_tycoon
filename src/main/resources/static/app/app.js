@@ -13,7 +13,7 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngReso
         }).when('/createGame', {
             templateUrl : 'views/createGameForm.html',
             controller : 'gameController'
-        }).when('/dashboard', {
+        }).when('/dashboard/:id', {
             templateUrl : 'views/dashboard.html',
             controller: 'dashboard'
         }).when('/registerTeam/:username', {
@@ -24,6 +24,10 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngReso
             controller : 'updateTeam'
         })
             .otherwise('/');
+        }).when('/adminOverview', {
+            templateUrl : 'views/adminOverview.html',
+            controller: 'adminOverview'
+        }).otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     });

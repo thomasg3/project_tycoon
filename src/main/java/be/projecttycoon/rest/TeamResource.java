@@ -1,12 +1,19 @@
 package be.projecttycoon.rest;
 
+import be.projecttycoon.auth.UserService;
 import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Team;
 import be.projecttycoon.rest.util.TeamBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Produces;
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -18,10 +25,12 @@ import java.util.Map;
 @RequestMapping(value = "/api/teams")
 public class TeamResource  {
     private final TeamRepository teamRepository;
+    private final UserService userService;
 
     @Autowired
-    public TeamResource(TeamRepository teamRepository){
+    public TeamResource(TeamRepository teamRepository, UserService userService){
         this.teamRepository = teamRepository;
+        this.userService = userService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -50,10 +59,16 @@ public class TeamResource  {
 
     @RequestMapping(value="/{id}", method = RequestMethod.PUT)
     @Produces("application/json")
-    public void updateTeam(@PathVariable long id, @RequestBody TeamBean updateTeam){
+    public void updateTeam(Principal currentUser, @PathVariable long id, @RequestBody TeamBean updateTeam){
         Team team = teamRepository.findOne(id);
-        team.register(updateTeam.getPassword(), updateTeam.getTeamname(), null);
+        String oldName = team.getTeamname();
+        team.register(updateTeam.getTeamname(), updateTeam.getPassword(), updateTeam.getTeamImage());
         teamRepository.save(team);
+        if(oldName.equals(currentUser.getName())){
+            UserDetails details = userService.loadUserByUsername(updateTeam.getTeamname());
+            Authentication authentication = new UsernamePasswordAuthenticationToken(details.getUsername(), details.getPassword(), details.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
     }
 
 
