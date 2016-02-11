@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,7 +31,7 @@ public class Team{
     private String password;
     private String teamImage;
 
-    private int score, likes;
+    private int likes;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TeamLevelPrestation> teamLevelPrestations;
@@ -43,23 +44,26 @@ public class Team{
     //constructors
     public Team() {
         state = TeamState.UNREGISTERED;
+        teamLevelPrestations = new ArrayList<>();
     }
 
-    public Team(String teamname, String password){
+    public Team(String teamname, String password, List<Level> levels){
         this();
         setPassword(password);
         setTeamname(teamname);
+        for(Level level : levels){
+            teamLevelPrestations.add(new TeamLevelPrestation(level));
+        }
     }
 
-    public Team(String teamName, String password, String path){
-        this(teamName, password);
+    public Team(String teamName, String password, List<Level> levels ,String path){
+        this(teamName, password, levels);
         setTeamImage(path);
     }
 
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
@@ -67,21 +71,8 @@ public class Team{
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = passwordEncoder.encode(password);
-    }
-
-
-
-
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
     }
 
     public String getTeamImage() {
@@ -101,12 +92,16 @@ public class Team{
     }
 
     public int getScore() {
-        return score;
+        return teamLevelPrestations.stream().map(tlp -> tlp.getLevelScore()).reduce(0, (x,y) -> x + y);
     }
 
     public int getLikes() {
         return likes;
     }
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
 
     public boolean isRegistered(){
         return state != TeamState.UNREGISTERED;
@@ -122,6 +117,14 @@ public class Team{
     public void setAdmin(boolean admin){
         if(admin)
             state = TeamState.ADMIN;
+    }
+
+    public List<TeamLevelPrestation> getTeamLevelPrestations() {
+        return teamLevelPrestations;
+    }
+
+    public void setTeamLevelPrestations(List<TeamLevelPrestation> teamLevelPrestations) {
+        this.teamLevelPrestations = teamLevelPrestations;
     }
 
     public void register(String password, String teamname, String path){
@@ -161,7 +164,7 @@ public class Team{
                 ", teamname='" + teamname + '\'' +
                 ", password='" + password + '\'' +
                 ", teamImage='" + teamImage + '\'' +
-                ", score=" + score +
+                ", score=" + getScore() +
                 ", likes=" + likes +
                 ", registered=" + isRegistered() +
                 '}';

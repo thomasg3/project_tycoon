@@ -55,4 +55,8 @@ public class TeamLevelPrestation {
     public void setKnowledgeAreaScores(List<KnowledgeAreaScore> knowledgeAreaScores) {
         this.knowledgeAreaScores = knowledgeAreaScores;
     }
+
+    public int getLevelScore(){
+        return knowledgeAreaScores.stream().map(kas -> kas.getScore()).reduce(0, (x,y) -> x + y);
+    }
 }

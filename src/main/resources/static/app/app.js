@@ -11,8 +11,12 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngReso
             templateUrl : 'views/public/login.html',
             controller: 'navigation'
         }).when('/createGame', {
-            templateUrl : 'views/createGameForm.html',
-            controller : 'gameController'
+            templateUrl : 'views/game/edit.html',
+            controller : 'newGameController'
+        }).when('/:gamename', {
+            templateUrl: 'views/public/gamedetails.html',
+            controller: 'detailGameController'
+
         }).when('/dashboard/:id', {
             templateUrl : 'views/dashboard.html',
             controller: 'dashboard'

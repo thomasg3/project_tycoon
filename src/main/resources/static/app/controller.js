@@ -118,5 +118,15 @@ angular.module('projecttycoonControllers', [])
             $location.path('/dashboard/' + id);
         }
 
+    }).controller('newGameController', function($scope, $location ,KnowledgeAreaResource, GameResource){
+        $scope.knowledgeareas = KnowledgeAreaResource.query();
+        $scope.game = new GameResource();
+        $scope.submit = function(){
+            $scope.game.$save(function(){
+                $location.path('/'+$scope.game.name).replace();
+            });
+        };
+    }).controller('detailGameController', function($scope, $location ,KnowledgeAreaResource, GameResource){
+
     });
 

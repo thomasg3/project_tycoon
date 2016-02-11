@@ -11,11 +11,14 @@ public class KnowledgeArea {
     @Id
     private String name;
 
+    private int elementNumber;
+
     public KnowledgeArea() {
     }
 
-    public KnowledgeArea(String name) {
+    public KnowledgeArea(String name, int elementNumber) {
         this.name = name;
+        this.elementNumber = elementNumber;
     }
 
     public String getName() {
@@ -24,6 +27,14 @@ public class KnowledgeArea {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getElementNumber() {
+        return elementNumber;
+    }
+
+    public void setElementNumber(int elementNumber) {
+        this.elementNumber = elementNumber;
     }
 
     @Override

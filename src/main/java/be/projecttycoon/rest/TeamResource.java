@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Produces;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -31,6 +32,13 @@ public class TeamResource  {
     public TeamResource(TeamRepository teamRepository, UserService userService){
         this.teamRepository = teamRepository;
         this.userService = userService;
+        generateAdmin();
+    }
+
+    private void generateAdmin() {
+        Team admin = new Team("admin", "admin", new ArrayList<>());
+        admin.setAdmin(true);
+        teamRepository.save(admin);
     }
 
     @RequestMapping(method = RequestMethod.GET)

@@ -22,7 +22,7 @@ public class Game {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Level> levels;
 
-    public static int count;
+    private static int count = 1;
 
 
     public Game() {
@@ -30,15 +30,21 @@ public class Game {
         this.levels = new ArrayList<>();
     }
 
-    public Game(String name, int teams) {
+    public Game(String name, int teams, int levels, List<KnowledgeArea> knowledgeAreas) {
         this();
-        count +=teams;
         setName(name);
-        this.teams = new HashSet<Team>(teams);
-        for(int i=count; i<teams+count;i++){
-            this.teams.add(new Team("Team"+(i+1),"ThisIsTheMostAwesomePasswordEver","http://i.imgur.com/IhewUTH.jpg"));
+        generateGame(teams, levels, knowledgeAreas);
+
+    }
+
+    private void generateGame(int teams, int levels, List<KnowledgeArea> knowledgeAreas){
+        for(int i = 1; i<=levels; i++){
+            this.levels.add(new Level("Level "+ i, i, knowledgeAreas));
         }
-        count++;
+        for(int i = count; count<i + teams;count++){
+            this.teams.add(new Team("Team"+(count),"ThisIsTheMostAwesomePasswordEver",this.levels,"http://i.imgur.com/IhewUTH.jpg"));
+        }
+
     }
 
 
