@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -26,12 +27,6 @@ public class SpringRootConfig {
         return new JdbcTemplate(dataSource);
     }
 
-    @PostConstruct
-    public void startDBManager() {
-        
-        //hsqldb
-        //DatabaseManagerSwing.main(new String[] { "--url", "jdbc:hsqldb:mem:tycoondb", "--user", "sa", "--password", "" });
 
 
-    }
 }

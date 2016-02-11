@@ -70,32 +70,19 @@ public class Team{
         this.password = passwordEncoder.encode(password);
     }
 
-    public String getTeamname() {
-        return teamname;
-    }
+
 
     public void setTeamname(String teamname) {
         this.teamname = teamname;
     }
 
-    public int getScore() {
-        return score;
-    }
 
     public void setScore(int score) {
         this.score = score;
     }
 
-    public int getLikes() {
-        return likes;
-    }
-
     public void setLikes(int likes) {
         this.likes = likes;
-    }
-
-    public String getTeamImage() {
-        return teamImage;
     }
 
     public void setTeamImage(String path){
@@ -103,14 +90,28 @@ public class Team{
         this.teamImage=path;
     }
 
+    public void setRegistered(boolean registered){
+        if(state == TeamState.UNREGISTERED)
+            state = TeamState.TEAM;
+
+    }
+    public String getTeamname() {
+        return teamname;
+    }
+    public int getScore() {
+        return score;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+    public String getTeamImage() {
+        return teamImage;
+    }
     public boolean isRegistered(){
         return state != TeamState.UNREGISTERED;
     }
 
-    public void setRegistered(boolean registered){
-        if(state == TeamState.UNREGISTERED)
-            state = TeamState.TEAM;
-    }
 
     public boolean isAdmin(){
         return state == TeamState.ADMIN;
@@ -119,13 +120,35 @@ public class Team{
     public void setAdmin(boolean admin){
         state = TeamState.ADMIN;
     }
-
     public void register(String password, String teamname, String path){
         setTeamname(teamname);
         setPassword(password);
         setTeamImage(path);
         setRegistered(true);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Team)) return false;
+
+        Team team = (Team) o;
+
+        if(team.getId()==this.getId()&&team.getTeamname().equals(this.getTeamname())){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getTeamImage() != null ? getTeamImage().hashCode() : 0;
+        result = 31 * result + getScore();
+        result = 31 * result + getLikes();
+        result = 31 * result + (isRegistered() ? 1 : 0);
+        return result;
+    }
+
 
     @Override
     public String toString() {
