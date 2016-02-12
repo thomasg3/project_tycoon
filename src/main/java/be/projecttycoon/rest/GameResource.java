@@ -31,14 +31,14 @@ public class GameResource {
         this.gameRepository = gameRepository;
         this.teamRepository = teamRepository;
         this.knowledgeAreaRepository = knowledgeAreaRepository;
-        Game game = new Game("A Game",2,0, Collections.emptyList());
+        Game game = new Game("ProjectFun2016",2,4, knowledgeAreaRepository.findAll());
         ArrayList<Team> teams= new ArrayList<Team>();
         teams.addAll(game.getTeams());
-        teams.get(0).setTeamname("jos");
-        teams.get(0).setPassword("jos");
+        teams.get(0).setTeamname("joskes");
+        teams.get(0).setPassword("joskes");
         teams.get(0).setRegistered(false);
-        teams.get(1).setTeamname("jef");
-        teams.get(1).setPassword("jef");
+        teams.get(1).setTeamname("jefkes");
+        teams.get(1).setPassword("jefkes");
         teams.get(1).setRegistered(true);
 
         Game testgame = new Game("testGame123", 5,5, knowledgeAreaRepository.findAll());
@@ -49,6 +49,7 @@ public class GameResource {
         teams2.get(0).setRegistered(true);
         gameRepository.save(testgame);
 
+        gameRepository.save(game);
     }
 
     @RequestMapping(method = RequestMethod.GET)

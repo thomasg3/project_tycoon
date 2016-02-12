@@ -1,0 +1,33 @@
+<!--
+
+1. per level tabel van team scores expand and contractable
+
+-->
+
+<h1>GameScore Details</h1>
+
+<div class="panel panel-default" ng-repeat="level in game.levels track by $index">
+    <div class="panel-heading" data-toggle="collapse" data-target="#{{$index}}" aria-expanded="false" aria-controls="{{$index}}">
+        <h2>{{level.round}}. {{level.name}}</h2>
+        <table class="table">
+            <tr>
+                <td ng-repeat="team in game.teams">{{team.teamname}} : {{team.teamLevelPrestations[$index].levelScore}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="panel-body" class="collapse panel-collapse in" id="{{$index}}" aria-expanded="false">
+        <table class="table">
+            <tr>
+                <th>Team</th>
+                <th ng-repeat="ka in level.knowledgeAreas">{{ka.name}}</th>
+                <th>Total</th>
+            </tr>
+            <tr ng-repeat="team in game.teams">
+                <td>{{team.teamname}}</td>
+                <td ng-repeat="kas in team.teamLevelPrestations[$index].knowledgeAreaScores">{{kas.score}}</td>
+                <td>{{team.teamLevelPrestations[$index].levelScore}}</td>
+            </tr>
+        </table>
+    </div>
+
+</div>

@@ -29,12 +29,12 @@
             <ul class="list-group">
                 <li class="list-group-item text-center" ng-repeat="knowledgearea in knowledgeareas | orderBy:'elementNumber'">
                     {{knowledgearea.name}}
-                </li>s
+                </li>
             </ul>
             <div class="list-group">
-                <a href="#/admin/knowledgeareas/edit" class="list-group-item text-center">Edit Knowledge Areas</a>
+                <a href="#/admin/knowledgeareas/edit" ng-disabled="freeze" class="list-group-item text-center">Edit Knowledge Areas</a>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button ng-disabled="freeze" type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </div>
