@@ -1,29 +1,36 @@
 package be.projecttycoon;
 
-
 import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.model.Game;
 import be.projecttycoon.model.Team;
+import be.projecttycoon.rest.GameResource;
 import com.jayway.restassured.RestAssured;
+import com.jayway.restassured.specification.RequestSpecification;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.Collections;
+
+import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  * Created by kiwi on 11/02/2016.
  */
 
-/*
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ProjecttycoonApplication.class)
 @WebAppConfiguration
 public class GameRestTest extends SuperTest{
 
-    @Autowired
+   @Autowired
     private GameRepository gameRepository;
 
 
@@ -40,6 +47,8 @@ public class GameRestTest extends SuperTest{
         RestAssured.basePath = "/api/games";
     }
 
+
+
     @Test
     public void getAllGamesWhenRegistered(){
         AuthorizedRegisteredRequestSpecification.expect().statusCode(ALLOWED).when().get();
@@ -47,7 +56,7 @@ public class GameRestTest extends SuperTest{
 
     @Test
     public void getAllGamesWhenAuthenticatedButNotRegisteredShouldBeBlocked(){
-        UnregisteredRequestSpecification.expect().statusCode(FORBIDDEN).when().get();
+        UnregisteredRequestSpecification.expect().statusCode(UNAUTHORIZED).when().get();
     }
 
     @Test
@@ -63,7 +72,7 @@ public class GameRestTest extends SuperTest{
 
     @Test
     public void getGameByIdWhenAuthenticatedButNotRegisteredShouldBeBlocked(){
-        UnregisteredRequestSpecification.expect().statusCode(FORBIDDEN).when().get("/1");
+        UnregisteredRequestSpecification.expect().statusCode(UNAUTHORIZED).when().get("/1");
     }
 
     @Test
@@ -74,7 +83,7 @@ public class GameRestTest extends SuperTest{
 
     @Test
     public void createGameAndGetItWhileUnauthenticatedShouldBeBlocked(){
-        Game game = new Game("A game",4);
+        Game game = new Game("A game",4,0, Collections.emptyList());
         game = gameRepository.save(game);
         UnauthorizedRequestSpecification.expect().statusCode(UNAUTHORIZED).when().get("/"+game.getId());
 
@@ -82,14 +91,14 @@ public class GameRestTest extends SuperTest{
 
     @Test
     public void createGameAndGetItWhileUnregisteredShouldBeBlocked(){
-        Game game = new Game("AnotherGame",5);
+        Game game = new Game("AnotherGame",5,0, Collections.emptyList());
         game = gameRepository.save(game);
-        UnregisteredRequestSpecification.expect().statusCode(FORBIDDEN).when().get("/"+game.getId());
+        UnregisteredRequestSpecification.expect().statusCode(UNAUTHORIZED).when().get("/"+game.getId());
     }
 
     @Test
     public void createGameAndGetItWhileRegisteredShouldBeBlocked(){
-        Game game = new Game("YetAnotherGame",5);
+        Game game = new Game("YetAnotherGame",5,0, Collections.emptyList());
         game = gameRepository.save(game);
         AuthorizedRegisteredRequestSpecification.expect().statusCode(ALLOWED).when().get("/"+game.getId());
     }
@@ -99,7 +108,7 @@ public class GameRestTest extends SuperTest{
     //Bypassing REST api via GameRepo isn't a good idea. And gives misleading test results.
     @Test
     public void createGameAndCheckIfUsersAreInGame(){
-        Game game = new Game("Final Game",3);
+        Game game = new Game("Final Game",3,0, Collections.emptyList());
         game = getGameRepository().save(game);
         System.out.println("The id of the game is:" + game.getId());
         System.out.println("Het aantal teams is: " +game.getTeams().size());
@@ -118,4 +127,3 @@ public class GameRestTest extends SuperTest{
         }
     }
 }
-*/

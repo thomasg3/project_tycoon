@@ -52,7 +52,7 @@ angular.module('projecttycoonControllers', [])
 
                         TeamResource.search({teamname: $scope.credentials.username},function(data){
                             $rootScope.MainUser = data;
-                        });
+                        })
                         TeamResource.isRegistered({teamname: $scope.credentials.username}, function(data) {
                             if(data.registered){
                                 $location.path("/");
@@ -128,9 +128,7 @@ angular.module('projecttycoonControllers', [])
                             if($scope.password==$scope.passwordRepeat){
                                 updateTeam.teamname =$scope.teamname;
                                 updateTeam.password = $scope.password;
-                                if($rootScope.MainUser.state!="Admin") {
-                                    updateTeam.state = "TEAM";
-                                }
+
                                 TeamResource.update({id:updateTeam.id},updateTeam).$promise.then(function(value){
                                     $location.path('/');
                                 });
@@ -151,6 +149,8 @@ angular.module('projecttycoonControllers', [])
                     $location.path('/editTeam/'+$rootScope.MainUser.teamname);
                 }
             });
+
+
     }).controller('adminOverview', function($scope, $http,$location, GameResource) {
         GameResource.getAll().$promise.then(function(data){
             $scope.games = data;
@@ -160,21 +160,6 @@ angular.module('projecttycoonControllers', [])
         $scope.getGame = function(id){
             $location.path('/dashboard/' + id);
         }
-
-    }).controller('overviewDashboard',function($scope, $http,$location, $rootScope, GameResource){
-        GameResource.getGameByUsername({teamname : $rootScope.MainUser.teamname}, function(data){
-            $scope.game = data;
-        });
-
-    }).controller('newGameController', function($scope, $location ,KnowledgeAreaResource, GameResource){
-        $scope.knowledgeareas = KnowledgeAreaResource.query();
-        $scope.game = new GameResource();
-        $scope.submit = function(){
-            $scope.game.$save(function(){
-                $location.path('/'+$scope.game.name).replace();
-            });
-        };
-    }).controller('detailGameController', function($scope, $location ,KnowledgeAreaResource, GameResource){
 
     }).controller('newGameController', function($scope, $location ,KnowledgeAreaResource, GameResource){
         $scope.knowledgeareas = KnowledgeAreaResource.query();

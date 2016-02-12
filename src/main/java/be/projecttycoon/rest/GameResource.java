@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.ws.rs.Produces;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Created by thomas on 10/02/16.
@@ -29,6 +30,17 @@ public class GameResource {
         this.gameRepository = gameRepository;
         this.teamRepository = teamRepository;
         this.knowledgeAreaRepository = knowledgeAreaRepository;
+        Game game = new Game("A Game",2,0, Collections.emptyList());
+        ArrayList<Team> teams= new ArrayList<Team>();
+        teams.addAll(game.getTeams());
+        teams.get(0).setTeamname("jos");
+        teams.get(0).setPassword("jos");
+        teams.get(0).setRegistered(false);
+        teams.get(1).setTeamname("jef");
+        teams.get(1).setPassword("jef");
+        teams.get(1).setRegistered(true);
+
+
     }
 
     @RequestMapping(method = RequestMethod.GET)
