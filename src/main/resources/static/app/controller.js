@@ -52,8 +52,6 @@ angular.module('projecttycoonControllers', [])
 
                         TeamResource.search({teamname: $scope.credentials.username},function(data){
                             $rootScope.MainUser = data;
-                        })
-                        TeamResource.isRegistered({teamname: $scope.credentials.username}, function(data) {
                             if(data.registered){
                                 $location.path("/");
                             }else{
@@ -134,9 +132,7 @@ angular.module('projecttycoonControllers', [])
                             if($scope.password==$scope.passwordRepeat){
                                 updateTeam.teamname =$scope.teamname;
                                 updateTeam.password = $scope.password;
-                                if($rootScope.MainUser.state!="Admin") {
-                                    updateTeam.state = "TEAM";
-                                }
+
                                 TeamResource.update({id:updateTeam.id},updateTeam).$promise.then(function(value){
                                     $location.path('/');
                                 });
