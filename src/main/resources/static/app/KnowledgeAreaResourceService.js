@@ -3,7 +3,16 @@
  */
 
 angular.module('projecttycoon').factory('KnowledgeAreaResource', function($resource) {
-    return $resource('/api/knowledgeareas', {}, {
+    return $resource('/api/knowledgeareas/:id', {id: '@id'}, {
+        update: {
+            method: 'PUT'
+        },
+        saveAll : {
+            method: 'POST',
+            url: '/api/knowledgeareas/multiple',
+            isArray: true
+        }
+
 
     });
 
