@@ -17,6 +17,7 @@ public class Level {
     @GeneratedValue
     private long id;
 
+
     private int round;
     private String name;
 

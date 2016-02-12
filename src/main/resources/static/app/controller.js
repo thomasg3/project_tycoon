@@ -52,7 +52,7 @@ angular.module('projecttycoonControllers', [])
 
                         TeamResource.search({teamname: $scope.credentials.username},function(data){
                             $rootScope.MainUser = data;
-                        })
+                        });
                         TeamResource.isRegistered({teamname: $scope.credentials.username}, function(data) {
                             if(data.registered){
                                 $location.path("/");
@@ -166,7 +166,6 @@ angular.module('projecttycoonControllers', [])
             $scope.game = data;
         });
 
-});
     }).controller('newGameController', function($scope, $location ,KnowledgeAreaResource, GameResource){
         $scope.knowledgeareas = KnowledgeAreaResource.query();
         $scope.game = new GameResource();

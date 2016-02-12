@@ -1,5 +1,6 @@
 package be.projecttycoon;
 
+
 import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.model.Game;
 import be.projecttycoon.model.Team;
@@ -44,8 +45,6 @@ public class GameRestTest extends SuperTest{
     public GameRestTest() {
         RestAssured.basePath = "/api/games";
     }
-
-
 
     @Test
     public void getAllGamesWhenRegistered(){
