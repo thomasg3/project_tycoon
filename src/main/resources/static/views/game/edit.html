@@ -1,14 +1,16 @@
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
         <h1>Game</h1>
-        <form ng-submit="submit()">
+        <form ng-submit="submit()" name="form" class="css-form" novalidate>
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="Name" id="name" name="name" ng-model="game.name">
             </div>
             <div class="form-group">
                 <label for="amount">Number of teams</label>
-                <input type="number" class="form-control" placeholder="4" id="amount" name="amount" ng-model="game.amount">
+                <input type="number" class="form-control" placeholder="4" id="amount" name="amount" ng-model="game.amount" min="0" max="20">
             </div>
+            <span class="alert alert-danger" ng-show="form.amount.$error.integer">The value is not a valid integer!</span>
+            <span class="alert alert-danger" ng-show="form.amount.$error.min || form.amount.$error.max">The value must be in range 0 to 20</span>
             <div class="form-group">
                 <label for="levels">Number of levels</label>
                 <input type="number" class="form-control" placeholder="3" id="levels" name="levels" ng-model="game.levels">
