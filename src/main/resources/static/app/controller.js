@@ -122,7 +122,7 @@ angular.module('projecttycoonControllers', [])
                     angular.element(document).ready(function () {
                         $scope.team = TeamResource.search({teamname : $routeParams.teamname});
 
-                    })
+                    });
                     $scope.editTeam = function(){
                         $scope.updateTeam = TeamResource.search({teamname : $routeParams.teamname},function(updateTeam){
                             if($scope.password==$scope.passwordRepeat){
@@ -151,8 +151,6 @@ angular.module('projecttycoonControllers', [])
                     $location.path('/editTeam/'+$rootScope.MainUser.teamname);
                 }
             });
-
-
     }).controller('adminOverview', function($scope, $http,$location, GameResource) {
         GameResource.getAll().$promise.then(function(data){
             $scope.games = data;

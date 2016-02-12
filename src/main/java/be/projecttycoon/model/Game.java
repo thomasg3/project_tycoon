@@ -1,6 +1,9 @@
 package be.projecttycoon.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -14,6 +17,9 @@ public class Game {
     @Id
     @GeneratedValue
     private long id;
+    @NotNull
+    @Size(min = 6, message = "Your gamename must be at least 4 characters")
+    @Pattern(regexp = "^[A-Za-z0-9]*$", message="Your gamename can only contain characters and numbers")
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)

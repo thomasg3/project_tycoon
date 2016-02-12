@@ -11,6 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -27,7 +30,13 @@ public class Team{
     @GeneratedValue
     private long id;
 
+    @NotNull
+    @Size(min = 6, message = "Your teamname must be at least 6 characters")
+    @Pattern(regexp = "^[A-Za-z]*$", message="Your teamname can only contain characters")
     private String teamname;
+
+    @NotNull
+    @Size(min = 6, message = "Your password must be at least 6 characters")
     @JsonIgnore
     private String password;
 
