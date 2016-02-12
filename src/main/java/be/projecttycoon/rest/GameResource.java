@@ -41,6 +41,13 @@ public class GameResource {
         teams.get(1).setPassword("jef");
         teams.get(1).setRegistered(true);
 
+        Game testgame = new Game("testGame123", 5,5, knowledgeAreaRepository.findAll());
+        ArrayList<Team> teams2= new ArrayList<Team>();
+        teams2.addAll(testgame.getTeams());
+        teams2.get(0).setTeamname("Team123");
+        teams2.get(0).setPassword("azerty");
+        teams2.get(0).setRegistered(true);
+        gameRepository.save(testgame);
 
     }
 
