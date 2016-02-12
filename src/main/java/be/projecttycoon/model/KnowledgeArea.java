@@ -1,6 +1,7 @@
 package be.projecttycoon.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
@@ -9,8 +10,10 @@ import javax.persistence.Id;
 @Entity
 public class KnowledgeArea {
     @Id
-    private String name;
+    @GeneratedValue
+    private long id;
 
+    private String name;
     private int elementNumber;
 
     public KnowledgeArea() {
@@ -19,6 +22,14 @@ public class KnowledgeArea {
     public KnowledgeArea(String name, int elementNumber) {
         this.name = name;
         this.elementNumber = elementNumber;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

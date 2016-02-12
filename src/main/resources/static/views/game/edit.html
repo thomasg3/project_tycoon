@@ -15,10 +15,13 @@
             </div>
             <h2>The {{knowledgeareas.length}} Knowledge Areas</h2>
             <ul class="list-group">
-                <li class="list-group-item" ng-repeat="knowledgearea in knowledgeareas | orderBy:'elementNumber'">
+                <li class="list-group-item text-center" ng-repeat="knowledgearea in knowledgeareas | orderBy:'elementNumber'">
                     {{knowledgearea.name}}
                 </li>
             </ul>
+            <div class="list-group">
+                <a href="#/admin/knowledgeareas/edit" class="list-group-item text-center">Edit Knowledge Areas</a>
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
