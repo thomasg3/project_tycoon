@@ -32,8 +32,9 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngReso
                 controller : 'updateTeam'
             })
             //##### game pages #####
-            .when('/game/details',{
-                templateUrl : 'views/game/details.html'
+            .when('/games/:id/details',{
+                templateUrl : 'views/game/details.html',
+                controller : 'detailGameController'
             })
             //##### admin pages #####
             .when('/adminOverview', {
