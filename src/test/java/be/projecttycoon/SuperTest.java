@@ -28,6 +28,8 @@ public class SuperTest {
     protected RequestSpecification UnauthorizedRequestSpecification;
     protected RequestSpecification UnregisteredRequestSpecification;
     protected RequestSpecification AuthorizedRegisteredRequestSpecification;
+    protected RequestSpecification AdminRequestSpecification;
+
 
    @Before
     public void setUp(){
@@ -37,6 +39,12 @@ public class SuperTest {
         UnauthorizedRequestSpecification = createUnauthorizedRequestSpecification();
         UnregisteredRequestSpecification =createUnregisteredRequestSpecification();
         AuthorizedRegisteredRequestSpecification=createRegisteredRequestSpecification();
+        AdminRequestSpecification = createAdminRequestSpecification();
+    }
+
+    private RequestSpecification createAdminRequestSpecification(){
+        //Unregistered user!!!
+        return given().auth().basic("admin", "admin").contentType("application/json");
     }
 
     private RequestSpecification createUnregisteredRequestSpecification(){

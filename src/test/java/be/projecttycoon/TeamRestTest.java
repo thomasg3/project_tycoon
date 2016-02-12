@@ -1,6 +1,6 @@
 package be.projecttycoon;
 
-import be.projecttycoon.controller.TestController;
+//import be.projecttycoon.controller.TestController;
 import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Team;
 import be.projecttycoon.rest.GameResource;
