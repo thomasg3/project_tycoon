@@ -154,7 +154,6 @@ angular.module('projecttycoonControllers', [])
     }).controller('adminOverview', function($scope, $http,$location, GameResource) {
         GameResource.getAll().$promise.then(function(data){
             $scope.games = data;
-            console.log($scope.games);
         });
 
         $scope.getGame = function(id){
@@ -165,8 +164,8 @@ angular.module('projecttycoonControllers', [])
         $scope.knowledgeareas = KnowledgeAreaResource.query();
         $scope.game = new GameResource();
         $scope.submit = function(){
-            $scope.game.$save(function(){
-                $location.path('/'+$scope.game.name).replace();
+            $scope.game.$save(function(data){
+                $location.path('/dashboard/'+data.id).replace();
             });
         };
     }).controller('detailGameController', function($scope, $location ,KnowledgeAreaResource, GameResource){
