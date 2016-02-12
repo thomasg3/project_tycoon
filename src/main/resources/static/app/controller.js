@@ -79,15 +79,9 @@ angular.module('projecttycoonControllers', [])
             }
         })
     .controller('dashboard', function($rootScope, $scope, $http, GameResource, $routeParams){
-        if($routeParams.id !== undefined){
-            GameResource.get({id : $routeParams.id}, function(data){
-                $scope.game = data;
-            });
-        }else{
-            GameResource.getGameByUsername({teamname : $rootScope.MainUser.teamname}, function(data){
-                $scope.game = data;
-            });
-        }
+        GameResource.get({id : $routeParams.id}, function(data){
+            $scope.game = data;
+        });
     })
     .controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource) {
         $scope.oldUsername = $routeParams.username;
@@ -128,15 +122,13 @@ angular.module('projecttycoonControllers', [])
                     angular.element(document).ready(function () {
                         $scope.team = TeamResource.search({teamname : $routeParams.teamname});
 
-                    })
+                    });
                     $scope.editTeam = function(){
                         $scope.updateTeam = TeamResource.search({teamname : $routeParams.teamname},function(updateTeam){
                             if($scope.password==$scope.passwordRepeat){
                                 updateTeam.teamname =$scope.teamname;
                                 updateTeam.password = $scope.password;
-                                if($rootScope.MainUser.state!="Admin") {
-                                    updateTeam.state = "TEAM";
-                                }
+
                                 TeamResource.update({id:updateTeam.id},updateTeam).$promise.then(function(value){
                                     $location.path('/');
                                 });
@@ -162,7 +154,6 @@ angular.module('projecttycoonControllers', [])
     }).controller('adminOverview', function($scope, $http,$location, GameResource) {
         GameResource.getAll().$promise.then(function(data){
             $scope.games = data;
-            console.log($scope.games);
         });
 
         $scope.getGame = function(id){
@@ -173,11 +164,27 @@ angular.module('projecttycoonControllers', [])
         $scope.knowledgeareas = KnowledgeAreaResource.query();
         $scope.game = new GameResource();
         $scope.submit = function(){
-            $scope.game.$save(function(){
-                $location.path('/'+$scope.game.name).replace();
+            $scope.game.$save(function(data){
+                $location.path('/dashboard/'+data.id).replace();
             });
         };
-    }).controller('detailGameController', function($scope, $location ,KnowledgeAreaResource, GameResource){
-
+    }).controller('editKnowledgeAreasController', function($scope, $location, KnowledgeAreaResource){
+        $scope.knowledgeareas = KnowledgeAreaResource.query();
+        $scope.newarea = new KnowledgeAreaResource();
+        $scope.toadds = [];
+        $scope.todeletes = [];
+        $scope.add = function(){
+            toadd = new KnowledgeAreaResource();
+            toadd.name = $scope.newarea.name;
+            toadd.elementNumber = $scope.knowledgeareas.length + $scope.toadds.length;
+            $scope.toadds.push(toadd);
+            $scope.newarea.name = "";
+        }
+        $scope.save = function(){
+            KnowledgeAreaResource.saveAll($scope.toadds, function(){
+                $scope.toadds = [];
+                $scope.knowledgeareas = KnowledgeAreaResource.query();
+            })
+        }
     });
 

@@ -9,6 +9,7 @@ import be.projecttycoon.rest.util.GameBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.ws.rs.Produces;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,7 +58,7 @@ public class GameResource {
 
     @RequestMapping(method = RequestMethod.POST)
     @Produces("application/json")
-    public Game createGame(@RequestBody GameBean inputGame){
+    public Game createGame(@Valid @RequestBody GameBean inputGame){
         Game game = new Game(inputGame.getName(),inputGame.getAmount(), inputGame.getLevels(), knowledgeAreaRepository.findAll());
         game = gameRepository.save(game);
         return game;

@@ -1,16 +1,27 @@
 package be.projecttycoon.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * Created by thomas on 11/02/16.
  */
 @Entity
 public class KnowledgeArea {
+
     @Id
+    @GeneratedValue
+    private long id;
+
+    @NotNull
     private String name;
 
+    @Min(value = 0, message = "please enter a value higher than 0")
     private int elementNumber;
 
     public KnowledgeArea() {
@@ -19,6 +30,14 @@ public class KnowledgeArea {
     public KnowledgeArea(String name, int elementNumber) {
         this.name = name;
         this.elementNumber = elementNumber;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -2,6 +2,10 @@ package be.projecttycoon.model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +21,11 @@ public class Level {
     @GeneratedValue
     private long id;
 
+    @Min(value = 0, message = "The round number needs to be higher than 0")
     private int round;
+    @NotNull
+    @Size(min = 6, message = "The name of the knowledge area must be at least 6 characters long")
+    @Pattern(regexp = "^[A-Za-z0-9\\s]*$", message="Your levelname can only contain characters, numbers and spaces")
     private String name;
 
     @ManyToMany

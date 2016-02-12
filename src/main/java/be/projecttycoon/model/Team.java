@@ -2,12 +2,16 @@ package be.projecttycoon.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,12 +25,18 @@ public class Team{
 
     private static PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-
     @Id
     @GeneratedValue
     private long id;
 
+    @NotNull
+    @Size(min = 5, message = "Your teamname must be at least 5 characters")
+    @Pattern(regexp = "^[A-Za-z0-9]*$", message="Your teamname can only contain characters")
+    @SafeHtml(whitelistType = SafeHtml.WhiteListType.RELAXED, message = "Please enter a name that compliance with html url standards")
     private String teamname;
+
+    @NotNull
+    @Size(min = 6, message = "Your password must be at least 6 characters")
     @JsonIgnore
     private String password;
     private String teamImage;

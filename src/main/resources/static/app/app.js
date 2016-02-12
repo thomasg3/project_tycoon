@@ -18,7 +18,7 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngReso
             controller: 'dashboard'
         }).when('/dashboard', {
             templateUrl : 'views/dashboard.html',
-            controller: 'dashboard'
+            controller: 'overviewDashboard'
         }).when('/registerTeam/:username', {
             templateUrl : 'views/teamRegistration.html',
             controller: 'registration'
@@ -28,7 +28,11 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngReso
         }).when('/adminOverview', {
             templateUrl : 'views/adminOverview.html',
             controller: 'adminOverview'
-        }).otherwise('/');
+        }).when('/admin/knowledgeareas/edit', {
+            templateUrl : 'views/knowledgearea/edit.html',
+            controller : 'editKnowledgeAreasController'
+        }
+        ).otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     });
