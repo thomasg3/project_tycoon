@@ -25,7 +25,7 @@ public class Level {
     private int round;
     @NotNull
     @Size(min = 6, message = "The name of the knowledge area must be at least 6 characters long")
-    @Pattern(regexp = "^[A-Za-z0-9//s]*$", message="Your gamename can only contain characters, numbers and spaces")
+    @Pattern(regexp = "^[A-Za-z0-9\\s]*$", message="Your levelname can only contain characters, numbers and spaces")
     private String name;
 
     @ManyToMany

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.ws.rs.Produces;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 /**
  * Created by thomas on 10/02/16.
@@ -57,7 +56,7 @@ public class GameResource {
 
     @RequestMapping(method = RequestMethod.POST)
     @Produces("application/json")
-    public Game createGame(@RequestBody GameBean inputGame){
+    public Game createGame(@Valid @RequestBody GameBean inputGame){
         Game game = new Game(inputGame.getName(),inputGame.getAmount(), inputGame.getLevels(), knowledgeAreaRepository.findAll());
         game = gameRepository.save(game);
         return game;
