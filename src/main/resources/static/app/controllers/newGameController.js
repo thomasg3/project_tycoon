@@ -10,7 +10,6 @@ angular.module('projecttycoonControllers')
             $scope.freeze = true;
             $scope.game.$save(function(data){
                 $location.path('/dashboard/'+data.id).replace();
-
             }, function(err){$scope.freeze = false;});
         };
     });
