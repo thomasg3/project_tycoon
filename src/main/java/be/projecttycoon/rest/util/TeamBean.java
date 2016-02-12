@@ -1,6 +1,11 @@
 package be.projecttycoon.rest.util;
 
 import be.projecttycoon.model.TeamState;
+import org.hibernate.validator.constraints.SafeHtml;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * Created by thomas on 10/02/16.
@@ -8,7 +13,13 @@ import be.projecttycoon.model.TeamState;
 public class TeamBean {
     private long id;
 
+    @NotNull
+    @Size(min = 5, message = "Your teamname must be at least 5 characters")
+    @Pattern(regexp = "^[A-Za-z0-9]*$", message="Your teamname can only contain characters")
+    @SafeHtml(whitelistType = SafeHtml.WhiteListType.RELAXED, message = "Please enter a name that compliance with html url standards")
     private String teamname;
+    @NotNull
+    @Size(min = 6, message = "Your password must be at least 6 characters")
     private String password;
     private String teamImage;
     private int score, likes;

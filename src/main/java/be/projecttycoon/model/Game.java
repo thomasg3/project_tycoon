@@ -19,7 +19,7 @@ public class Game {
     private long id;
     @NotNull(message = "Please enter a gamename")
     @Size(min = 6, message = "Your gamename must be at least 4 characters")
-    @Pattern(regexp = "^[A-Za-z0-9]*$", message="Your gamename can only contain characters and numbers")
+    @Pattern(regexp = "^[A-Za-z0-9\\s]*$", message="Your gamename can only contain characters and numbers")
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)

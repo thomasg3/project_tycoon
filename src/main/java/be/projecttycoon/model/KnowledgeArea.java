@@ -15,8 +15,6 @@ public class KnowledgeArea {
 
     @Id
     @NotNull
-    @Size(min = 6, message = "The name of the knowledge area must be at least 6 characters long")
-    @Pattern(regexp = "^[A-Za-z0-9//s]*$", message="Your gamename can only contain characters, numbers and spaces")
     private String name;
 
     @Min(value = 0, message = "please enter a value higher than 0")

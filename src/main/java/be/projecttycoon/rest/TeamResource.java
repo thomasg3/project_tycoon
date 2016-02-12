@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.ws.rs.Produces;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class TeamResource  {
 
     @RequestMapping(value="/{id}", method = RequestMethod.PUT)
     @Produces("application/json")
-    public void updateTeam(Principal currentUser, @PathVariable long id, @RequestBody TeamBean updateTeam){
+    public void updateTeam(Principal currentUser, @PathVariable long id, @Valid @RequestBody TeamBean updateTeam){
         Team team = teamRepository.findOne(id);
         String oldName = team.getTeamname();
         team.register(updateTeam.getPassword(), updateTeam.getTeamname(), updateTeam.getTeamImage());
