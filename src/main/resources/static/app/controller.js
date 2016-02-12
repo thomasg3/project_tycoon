@@ -149,8 +149,6 @@ angular.module('projecttycoonControllers', [])
                     $location.path('/editTeam/'+$rootScope.MainUser.teamname);
                 }
             });
-
-
     }).controller('adminOverview', function($scope, $http,$location, GameResource) {
         GameResource.getAll().$promise.then(function(data){
             $scope.games = data;
@@ -160,6 +158,13 @@ angular.module('projecttycoonControllers', [])
             $location.path('/dashboard/' + id);
         }
 
+    }).controller('overviewDashboard', function($scope,$rootScope, $http, TeamResource, GameResource) {
+        TeamResource.get({id : $rootScope.MainUser.id}, function(data){
+            GameResource.getGameByUsername({teamname: $rootScope.MainUser.teamname}, function(game){
+                $scope.game = game;
+            })
+            $scope.team = data;
+        });
     }).controller('newGameController', function($scope, $location ,KnowledgeAreaResource, GameResource){
         $scope.knowledgeareas = KnowledgeAreaResource.query();
         $scope.game = new GameResource();

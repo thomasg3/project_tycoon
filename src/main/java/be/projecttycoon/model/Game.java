@@ -48,7 +48,7 @@ public class Game {
             this.levels.add(new Level("Level "+ i, i, knowledgeAreas));
         }
         for(int i = count; count<i + teams;count++){
-            this.teams.add(new Team("Team"+(count),"ThisIsTheMostAwesomePasswordEver",this.levels,"http://i.imgur.com/IhewUTH.jpg"));
+            this.teams.add(new Team("Team"+(count),"test",this.levels,"http://i.imgur.com/IhewUTH.jpg"));
         }
 
     }

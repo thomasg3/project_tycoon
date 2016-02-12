@@ -9,8 +9,8 @@
                 <label for="amount">Number of teams</label>
                 <input type="number" class="form-control" placeholder="4" id="amount" name="amount" ng-model="game.amount" min="0" max="20">
             </div>
-            <span class="alert alert-danger" ng-show="form.amount.$error.integer">The value is not a valid integer!</span>
-            <span class="alert alert-danger" ng-show="form.amount.$error.min || form.amount.$error.max">The value must be in range 0 to 20</span>
+            <div class="alert alert-danger" ng-show="form.amount.$error.integer">The value is not a valid integer!</div>
+            <div class="alert alert-danger" ng-show="form.amount.$error.min || form.amount.$error.max">The value must be in range 0 to 20</div>
             <div class="form-group">
                 <label for="levels">Number of levels</label>
                 <input type="number" class="form-control" placeholder="3" id="levels" name="levels" ng-model="game.levels">
