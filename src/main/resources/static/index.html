@@ -40,7 +40,7 @@
             <div class="collapse navbar-collapse" id="bs-main-navbar-collapse">
                 <ul class="nav navbar-nav" ng-show="authenticated">
                     <li><a href="#/dashboard">Dashboard</a></li>
-                    <li class="dropdown">
+                    <li class="dropdown" ng-show="MainUser.admin">
                         <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Games <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#/createGame">New</a></li>
