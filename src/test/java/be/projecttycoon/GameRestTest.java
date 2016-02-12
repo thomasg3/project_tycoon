@@ -4,26 +4,20 @@ package be.projecttycoon;
 import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.model.Game;
 import be.projecttycoon.model.Team;
-import be.projecttycoon.rest.GameResource;
 import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.specification.RequestSpecification;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.stereotype.Component;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import static com.jayway.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
 
 /**
  * Created by kiwi on 11/02/2016.
  */
 
+/*
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ProjecttycoonApplication.class)
 @WebAppConfiguration
@@ -124,3 +118,4 @@ public class GameRestTest extends SuperTest{
         }
     }
 }
+*/

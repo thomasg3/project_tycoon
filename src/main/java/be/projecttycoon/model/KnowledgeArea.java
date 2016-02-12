@@ -14,12 +14,12 @@ import javax.validation.constraints.Size;
 public class KnowledgeArea {
 
     @Id
-    @NotNull(message = "Please enter a name for the knowledge area")
-    @Size(min=6, message="Minimum length is 6 characters")
-    @Pattern(regexp = "^[A-Za-z0-9\\s]*$", message = "The knowledge area can only contain characters, numbers and spaces")
+    @NotNull
+    @Size(min = 6, message = "The name of the knowledge area must be at least 6 characters long")
+    @Pattern(regexp = "^[A-Za-z0-9//s]*$", message="Your gamename can only contain characters, numbers and spaces")
     private String name;
 
-    @Min(value = 0, message = "Enter a value higher than 0")
+    @Min(value = 0, message = "please enter a value higher than 0")
     private int elementNumber;
 
     public KnowledgeArea() {

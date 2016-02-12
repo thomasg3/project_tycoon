@@ -2,6 +2,7 @@ package be.projecttycoon.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,7 +25,6 @@ public class Team{
 
     private static PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-
     @Id
     @GeneratedValue
     private long id;
@@ -32,6 +32,7 @@ public class Team{
     @NotNull
     @Size(min = 6, message = "Your teamname must be at least 6 characters")
     @Pattern(regexp = "^[A-Za-z]*$", message="Your teamname can only contain characters")
+    @SafeHtml(message = "The teamname needs to have characters that can be used in an url")
     private String teamname;
 
     @NotNull
