@@ -24,38 +24,58 @@ public class Game {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private Set<Team> teams;
-    //gametype?
 
-    public static int count;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Level> levels;
+
+    private static int count = 1;
 
 
     public Game() {
         this.teams = new HashSet<>();
+        this.levels = new ArrayList<>();
     }
 
-    public Game(String name, int teams) {
+    public Game(String name, int teams, int levels, List<KnowledgeArea> knowledgeAreas) {
         this();
-        count +=teams;
         setName(name);
-        this.teams = new HashSet<Team>(teams);
-        for(int i=count; i<teams+count;i++){
-            this.teams.add(new Team("Team"+(i+1),"test","http://i.imgur.com/IhewUTH.jpg"));
+        generateGame(teams, levels, knowledgeAreas);
+
+    }
+
+    private void generateGame(int teams, int levels, List<KnowledgeArea> knowledgeAreas){
+        for(int i = 1; i<=levels; i++){
+            this.levels.add(new Level("Level "+ i, i, knowledgeAreas));
         }
-        count++;
+        for(int i = count; count<i + teams;count++){
+            this.teams.add(new Team("Team"+(count),"ThisIsTheMostAwesomePasswordEver",this.levels,"http://i.imgur.com/IhewUTH.jpg"));
+        }
+
     }
 
 
-    public String getName(){return name;}
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<Level> getLevels() {
+        return levels;
+    }
+
+    public void setLevels(List<Level> levels) {
+        this.levels = levels;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public void setName(String name) {
-        try {
-            URL url = new URL("http://www.google.com/" + name);
-            this.name = name;
-        }catch(MalformedURLException ex){
-            //todo throw or catch
-            System.out.println("not a valid name");
-        }
-
+        this.name = name;
     }
 
     public Set<Team> getTeams() {
@@ -64,14 +84,6 @@ public class Game {
 
     public void setTeams(Set<Team> teams) {
         this.teams = teams;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public boolean containsTeam(Team t){
