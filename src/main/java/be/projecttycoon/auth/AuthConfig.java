@@ -58,9 +58,14 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/teams", "/api/teams/**").hasAuthority(SecurityAuths.UNREGISTERED.toString())
                 .antMatchers("/api/**").hasAuthority(SecurityAuths.TEAM.toString())
                 .anyRequest().authenticated()
+
         .and()
             .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
             .csrf().csrfTokenRepository(csrfTokenRepository());
+        /**
+        .and()
+                .csrf().disable();
+         */
     }
 
 

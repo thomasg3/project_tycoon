@@ -1,0 +1,21 @@
+<h1>Edit Knowledge Areas</h1>
+<ul class="list-group">
+    <li class="list-group-item text-center" ng-repeat="knowledgearea in knowledgeareas | orderBy:'elementNumber'">
+        {{knowledgearea.name}}
+    </li>
+    <li class="list-group-item text-center" ng-repeat="knowledgearea in toadds | orderBy:'elementNumber'">
+        {{knowledgearea.name}}
+    </li>
+</ul>
+
+<div class="input-group">
+    <input type="text" class="form-control" placeholder="Knowledge Area Name" id="name" name="name" ng-model="newarea.name">
+    <span class="input-group-btn">
+        <button type="submit" class="btn btn-default" ng-click="add()">Add</button>
+    </span>
+</div>
+<div class="text-center">
+    <br/>
+    <button class="btn btn-primary btn-lg" ng-click="save()">Save</button>
+</div>
+
