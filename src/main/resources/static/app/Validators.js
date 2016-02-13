@@ -9,11 +9,15 @@ function MinLengthValidator(){
         require: 'ngModel',
         link: function($scope, $elm, $attrs, ctrl) {
             $scope.$watch($attrs.ngModel, function(data) {
-                if(data && $attrs.min){
-                    if(data.length  >= $attrs.min){
-                        ctrl.$setValidity($attrs.name + "length", true);
-                    }else{
-                        ctrl.$setValidity($attrs.name + "length", false);
+                if(ctrl.$dirty){
+                    if($attrs.min){
+                        if(data.length  >= $attrs.min){
+                            ctrl.$setValidity($attrs.name + "length", true);
+                            ctrl.$valid = true;
+                        }else{
+                            ctrl.$setValidity($attrs.name + "length", false);
+                            ctrl.$valid = false;
+                        }
                     }
                 }
             });
@@ -27,12 +31,16 @@ function RegexValidator(){
         require: 'ngModel',
         link: function($scope, $elm, $attrs, ctrl) {
             $scope.$watch($attrs.ngModel, function(data) {
-                if($attrs.regex && data){
-                    var regex = new RegExp($attrs.regex);
-                    if(regex.test(data)){
-                        ctrl.$setValidity($attrs.name + "validregex", true);
-                    }else{
-                        ctrl.$setValidity($attrs.name + "validregex", false);
+                if(ctrl.$dirty){
+                    if($attrs.regex && data){
+                        var regex = new RegExp($attrs.regex);
+                        if(regex.test(data)){
+                            ctrl.$setValidity($attrs.name + "validregex", true);
+                            ctrl.$valid = true;
+                        }else{
+                            ctrl.$setValidity($attrs.name + "validregex", false);
+                            ctrl.$valid = false;
+                        }
                     }
                 }
             });
