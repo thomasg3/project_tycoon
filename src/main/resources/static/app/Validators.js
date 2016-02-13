@@ -1,76 +1,45 @@
 /**
  * Created by Jeroen on 12-2-2016.
  */
+//var GAMENAME_REGEXP = /^[A-Za-z0-9\s]*$/;
 
-var GAMENAME_REGEXP = /^[A-Za-z0-9\s]*$/;
-function GameNameValidator(){
+function MinLengthValidator(){
     return {
         restrict: 'A',
         require: 'ngModel',
         link: function($scope, $elm, $attrs, ctrl) {
             $scope.$watch($attrs.ngModel, function(data) {
-                if(data.length  > 4){
-                    ctrl.$setValidity("gamenamelength", true);
-                }else{
-                    ctrl.$setValidity("gamenamelength", false);
+                if(data && $attrs.min){
+                    if(data.length  >= $attrs.min){
+                        ctrl.$setValidity($attrs.name + "length", true);
+                    }else{
+                        ctrl.$setValidity($attrs.name + "length", false);
+                    }
                 }
             });
         }
     };
 }
 
-angular
-    .module('projecttycoon')
-    .directive('gameNameValidator', GameNameValidator);
-
-/*
-var GAMENAME_REGEXP = /^[A-Za-z0-9\s]*$/;
-angular.module('projecttycoon').directive('gameNameValidator', function(){
+function RegexValidator(){
     return {
-                    restrict: 'A',
-                    require: 'ngModel',
-                    scope: {
-                        gameNameValidator: '='
-                    },
-                    link: function(scope, elm, attrs, ctrl) {
-
-                        var gameNameValidation = function(modelValue){
-                            if(!modelValue || modelValue.length > 4){
-                                ctrl.$setValidity('validgamenamelength', true);
-                            }
-                            else{
-                                ctrl.$setValidity('validgamenamelength', false);
-                            }
-
-                            if(GAMENAME_REGEXP.test(modelValue)){
-                                ctrl.$setValidity('validgamename', true);
-                            }
-                            else{
-                    ctrl.$setValidity('validgamename', false);
-                }
-            };
-
-            ctrl.$parsers.unshift(gameNameValidation);
-
-
-        }
-    };
-});
-*/
-var INTEGER_REGEXP = /^[0-9]+$/;
-angular.module('projecttycoon').directive('integer', function(){
-    return {
+        restrict: 'A',
         require: 'ngModel',
-        link: function(scope, elm, attrs, ctrl) {
-            ctrl.$parsers.unshift(function(modelValue){
-                if(!modelValue){
-                    ctrl.$setValidity('validint', false);
-                } else if (INTEGER_REGEXP.test(modelValue)) {
-                    ctrl.$setValidity('validint', true);
-                } else {
-                    ctrl.$setValidity('validint', false);
+        link: function($scope, $elm, $attrs, ctrl) {
+            $scope.$watch($attrs.ngModel, function(data) {
+                if($attrs.regex && data){
+                    var regex = new RegExp($attrs.regex);
+                    if(regex.test(data)){
+                        ctrl.$setValidity($attrs.name + "validregex", true);
+                    }else{
+                        ctrl.$setValidity($attrs.name + "validregex", false);
+                    }
                 }
             });
         }
     };
-});
+}
+
+angular.module('projecttycoon').directive('minLengthValidator', MinLengthValidator);
+angular.module('projecttycoon').directive('regexValidator', RegexValidator);
+
