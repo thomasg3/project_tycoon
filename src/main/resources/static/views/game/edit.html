@@ -4,34 +4,37 @@
         <form ng-submit="submit()" name="form" class="css-form" novalidate>
             <div class="form-group">
                 <label for="name">Gamename</label>
-                <input type="text" class="form-control" placeholder="Name" id="name" name="name" min="4" ng-model="game.name" required min-length-validator min="4" regex-validator regex="^[A-Za-z0-9\s]*$">
+                <input type="text" class="form-control" placeholder="Name" id="name" name="name" min="4" ng-model="game.name"  min-length-validator min="4" regex-validator regex="^[A-Za-z0-9\s]*$" required>
             </div>
 
-            <div class="alert alert-danger" ng-show="form.name.$error.namelength || form.name.$error.namevalidregex">
+            <div class="alert alert-danger" ng-show="form.name.$error.namelength || form.name.$error.namevalidregex || form.password.$error.required && form.password.$touched">
                 <ul class="">
                     <li ng-show="form.name.$error.namelength">The length of the gamename need to be min 4 characters </br></li>
                     <li ng-show="form.name.$error.namevalidregex">The gamename can only contain numbers, letters and spaces</li>
+                    <li ng-show="form.password.$error.required">Field required</li>
                 </ul>
             </div>
             <div class="form-group">
                 <label for="amount">Number of teams</label>
-                <input type="number" class="form-control" placeholder="4" id="amount" name="amount" ng-model="game.amount" min="1" max="20">
+                <input type="number" class="form-control" placeholder="4" id="amount" name="amount" ng-model="game.amount" min="1" max="20" required>
             </div>
 
-            <div class="alert alert-danger" ng-show="form.amount.$error.min || form.amount.$error.max">
+            <div class="alert alert-danger" ng-show="form.amount.$error.min || form.amount.$error.max || form.password.$error.required && form.password.$touched">
                 <ul class="">
-                    <li ng-show="form.amount.$error.min || form.amount.$error.max"> The value must be in range 0 to 20</li>
+                    <li ng-show="form.amount.$error.min || form.amount.$error.max"> The value must be in range 1 to 20</li>
+                    <li ng-show="form.password.$error.required">Field required</li>
                 </ul>
             </div>
 
             <div class="form-group">
                 <label for="levels">Number of levels</label>
-                <input type="number" class="form-control" placeholder="3" id="levels" name="levels" ng-model="game.levels" min="1" max="20">
+                <input type="number" class="form-control" placeholder="3" id="levels" name="levels" ng-model="game.levels" min="1" max="20" required>
             </div>
 
-            <div class="alert alert-danger" ng-show="form.levels.$error.min || form.levels.$error.max">
+            <div class="alert alert-danger" ng-show="form.levels.$error.min || form.levels.$error.max || form.password.$error.required && form.password.$touched">
                 <ul class="">
-                    <li ng-show="form.levels.$error.min || form.levels.$error.max"> The value must be in range 0 to 20</li>
+                    <li ng-show="form.levels.$error.min || form.levels.$error.max"> The value must be in range 1 to 20</li>
+                    <li ng-show="form.password.$error.required">Field required</li>
                 </ul>
             </div>
 
