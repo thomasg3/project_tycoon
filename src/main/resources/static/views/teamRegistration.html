@@ -2,7 +2,7 @@
     <div class="col-sm-6 col-sm-offset-3">
         <h3>please change your default teamname, password and teampicture</h3>
         <hr>
-        <form role="form" ng-submit="initTeam()">
+        <form role="form" ng-submit="initTeam()" class="css-form" novalidate name="form">
 
 
             <div class="alert alert-danger" ng-show="error">
@@ -21,18 +21,43 @@
 
             <p>New credentials:</p>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="New Teamname" id="username" name="username" ng-model="credentials.username">
+                <input type="text" class="form-control" placeholder="New Teamname" id="username" name="username" ng-model="credentials.username" minLength="5" regex-validator regex="^[\d\w]*$" required>
+            </div>
+
+            <div class="alert alert-danger" ng-show="form.username.$error.usernamevalidregex ||form.username.$error.minlength || form.username.$error.required && form.username.$touched">
+                <ul class="">
+                    <li ng-show="form.username.$error.minlength">The length of your teamname needs to be min 5 characters </br></li>
+                    <li ng-show="form.username.$error.usernamevalidregex">Your teamname can only contain numbers and letters</li>
+                    <li ng-show="form.username.$error.required">Field required</li>
+                </ul>
             </div>
 
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="New Password" id="password" name="password" ng-model="credentials.password">
+                <input type="password" class="form-control" placeholder="New Password" id="password" name="password" ng-model="credentials.password"  minLength="6"  required>
             </div>
 
+            <div class="alert alert-danger" ng-show="form.password.$error.minlength || form.password.$error.required && form.password.$touched">
+                <ul class="">
+                    <li ng-show="form.password.$error.minlength">Your password needs to be min 6 characters long</li>
+                    <li ng-show="form.password.$error.required">Field required</li>
+                </ul>
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Confirm Password" id="verify" name="verify" ng-model="credentials.passwordconfirm" password-confirm  password="{{credentials.password}}" required>
+            </div>
+
+            <div class="alert alert-danger" ng-show="form.verify.$error.verifyconfirmPassword || form.password.$error.required && form.password.$touched">
+                <ul>
+                    <li ng-show="form.verify.$error.verifyconfirmPassword">Repeat your new password</li>
+                    <li ng-show="form.password.$error.required">Field required</li>
+                </ul>
+            </div>
             <div class="col-sm-6 col-sm-offset-3">
                 <img style="width: 100%; height: 300px; padding-bottom: 20px;" src="http://75025.de/comics/0000.png" alt="Team Picture" />
             </div>
             <div class="col-sm-12">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button ng-disabled="form.$invalid" type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
     </div>
