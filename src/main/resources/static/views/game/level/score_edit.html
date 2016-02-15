@@ -1,2 +1,17 @@
 <!-- form to change scores of a level per cat, per team -->
 <h1>{{game.name}} : {{level.name}}</h1>
+<table class="table">
+    <tr>
+        <th>Team</th>
+        <th ng-repeat="ka in level.knowledgeAreas">{{ka.name}}</th>
+    </tr>
+    <tr ng-repeat="team in game.teams">
+        <td>{{team.teamname}}</td>
+        <td ng-repeat="kas in team.teamLevelPrestations[levelindex].knowledgeAreaScores">
+            <input type="number" class="form-control" ng-model="kas.score" ng-disabeled="saving">
+        </td>
+    </tr>
+</table>
+<button class="btn btn-primary" ng-click="save()">
+    Save
+</button>
