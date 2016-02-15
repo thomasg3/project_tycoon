@@ -22,6 +22,9 @@ angular.module('projecttycoon').factory('GameResource', function($resource) {
         deleteTeam: {
             method: 'DELETE',
             url: '/api/games/team/:id'
+        },
+        update:{
+            method: 'PUT'
         }
     });
 
