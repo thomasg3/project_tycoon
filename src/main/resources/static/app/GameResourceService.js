@@ -18,6 +18,10 @@ angular.module('projecttycoon').factory('GameResource', function($resource) {
         },
         delete:{
             method: 'DELETE'
+        },
+        deleteTeam: {
+            method: 'DELETE',
+            url: '/api/games/team/:id'
         }
     });
 

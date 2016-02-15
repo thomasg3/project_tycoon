@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 /**
  * Created by thomas on 10/02/16.
@@ -84,7 +85,18 @@ public class GameResource {
     @RequestMapping (value="/{id}", method = RequestMethod.DELETE)
     @Produces("application/json")
     public void deleteGame(@PathVariable long id){
-        System.out.println("joepie");
         gameRepository.delete(id);
+
+    }
+
+    @RequestMapping(value = "/team/{id}", method=RequestMethod.DELETE)
+    @Produces("application/json")
+    public void deleteTeam(@PathVariable long id){
+        Team t = teamRepository.findOne(id);
+        System.out.println("hoera");
+        Game g = getGameForTeam(t.getTeamname());
+        Set<Team> teams= g.getTeams();
+        teams.remove(t);
+        gameRepository.save(g);
     }
 }
