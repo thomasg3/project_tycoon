@@ -19,6 +19,14 @@ public class KnowledgeAreaScore {
     public KnowledgeAreaScore() {
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public KnowledgeAreaScore(KnowledgeArea knowledgeArea) {
         this.knowledgeArea = knowledgeArea;
     }
