@@ -7,7 +7,7 @@ angular.module('projecttycoonControllers')
     GameResource.get({id : $routeParams.id}, function(data){
         $scope.game = data;
     });
-    
+
     $scope.deleteTeam = function (id) {
         GameResource.deleteTeam({id : id}).$promise.then(function(){
             GameResource.get({id : $routeParams.id}, function(data){

@@ -1,0 +1,44 @@
+<h1>GameScore Details</h1>
+<div class="row">
+    <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+        </div>
+    </form>
+</div>
+
+<div class="panel panel-default" ng-repeat="level in game.levels track by $index">
+    <div class="panel-heading" data-toggle="collapse" data-target="#{{$index}}" aria-expanded="false" aria-controls="{{$index}}">
+        <h2>{{level.name}}</h2>
+        <table class="table">
+            <tr>
+                <td ng-repeat="question in level.questions">{{question.question}}</td>
+            </tr>
+        </table>
+
+        <!--
+        <div>
+            <form ng-submit="addQuestion(level.id)" name="form" class="css-form" novalidate>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Question" id="question" name="question" ng-model="question.question">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Answer" id="answer" name="answer" ng-model="question.answer">
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
+
+            </form>
+        </div>-->
+    </div>
+</div>
+
+<form ng-submit="addLevel()" name="form" class="css-form" novalidate>
+    <div class="form-group">
+        <input type="number" class="form-control" placeholder="Round" id="round" name="round" ng-model="level.round">
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Name" id="name" name="name" ng-model="level.name">
+    </div>
+    <button type="submit" class="btn btn-primary">Add</button>
+
+</form>

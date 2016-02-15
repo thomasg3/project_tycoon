@@ -1,15 +1,24 @@
 <div class="row" >
     <div class="">
         <h1>GameName: {{game.name}}</h1> <a href="#/games/{{game.id}}/details" class="btn btn-info">Score Details</a>
+
+        <div class="row">
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+                </div>
+            </form>
+        </div>
+
         <table class="table table-responsive">
             <tr>
                 <th>Rank</th>
                 <th></th>
-                <th colspan="2">Team Name</th>
+                <th>Team Name</th>
                 <th>Score</th>
                 <th>Likes</th>
             </tr>
-            <tr ng-repeat="team in game.teams  | orderBy:'-score' track by $index">
+            <tr ng-repeat="team in game.teams  | filter: searchText | orderBy:'-score' track by $index">
                 <td><strong>#{{$index+1}}</strong></td>
                 <td><img width="80px" class="img-circle" src="{{team.teamImage}}"></td>
                 <td>{{team.teamname}}</td>

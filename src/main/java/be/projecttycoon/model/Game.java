@@ -53,6 +53,13 @@ public class Game {
 
     }
 
+    public void addLevels(List<Level> levels){
+        for (Level l: levels) {
+            if(!this.levels.contains(l)){
+                this.levels.add(l);
+            }
+        }
+    }
 
     public long getId() {
         return id;
