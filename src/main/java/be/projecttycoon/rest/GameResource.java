@@ -95,9 +95,12 @@ public class GameResource {
     @Produces("application/json")
     public Game getGameForTeam(@PathVariable String teamname) {
         Team team = teamRepository.findByTeamname(teamname);
-        return gameRepository.findAll().stream()
+        Game game =  gameRepository.findAll().stream()
                 .filter(g -> g.containsTeam(team))
-                .findFirst().orElseThrow(() -> {throw new NotFoundException();});
+                .findFirst().orElse(null);
+        if(game == null)
+            throw new NotFoundException();
+        return game;
     }
 
     @RequestMapping (value="/{id}", method = RequestMethod.DELETE)
