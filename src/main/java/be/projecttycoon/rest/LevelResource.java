@@ -20,7 +20,7 @@ public class LevelResource {
         this.levelRepository = levelRepository;
     }
 
-    @RequestMapping(value="{id}", method = RequestMethod.POST)
+    @RequestMapping(value="{id}", method = RequestMethod.GET)
     public Level findOneLevel(@PathVariable long id){
         Level level = levelRepository.findOne(id);
         if(level == null)
@@ -33,6 +33,12 @@ public class LevelResource {
         findOneLevel(id);
         level.setId(id);
         return levelRepository.save(level);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public Level addLevel(@RequestBody Level level){
+        level = levelRepository.save(level);
+        return level;
     }
 
 }

@@ -6,14 +6,21 @@ import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Game;
 import be.projecttycoon.model.Team;
 import be.projecttycoon.rest.util.GameBean;
+import be.projecttycoon.rest.util.TeamBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.ws.rs.Produces;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 /**
  * Created by thomas on 10/02/16.
@@ -72,6 +79,14 @@ public class GameResource {
         return game;
     }
 
+    @RequestMapping(value="/{id}", method = RequestMethod.PUT)
+    @Produces("application/json")
+    public Game updateTeam(Principal currentUser, @PathVariable long id, @Valid @RequestBody Game newGame){
+        Game game = gameRepository.findOne(newGame.getId());
+        newGame.setTeams(game.getTeams());
+        return gameRepository.save(newGame);
+    }
+
     @RequestMapping(value="/game/{teamname}" ,method = RequestMethod.GET)
     @Produces("application/json")
     public Game getGameForTeam(@PathVariable String teamname) {
@@ -79,5 +94,23 @@ public class GameResource {
         return gameRepository.findAll().stream()
                 .filter(g -> g.containsTeam(team))
                 .findFirst().get();
+    }
+
+    @RequestMapping (value="/{id}", method = RequestMethod.DELETE)
+    @Produces("application/json")
+    public void deleteGame(@PathVariable long id){
+        gameRepository.delete(id);
+
+    }
+
+    @RequestMapping(value = "/team/{id}", method=RequestMethod.DELETE)
+    @Produces("application/json")
+    public void deleteTeam(@PathVariable long id){
+        Team t = teamRepository.findOne(id);
+        System.out.println("hoera");
+        Game g = getGameForTeam(t.getTeamname());
+        Set<Team> teams= g.getTeams();
+        teams.remove(t);
+        gameRepository.save(g);
     }
 }
