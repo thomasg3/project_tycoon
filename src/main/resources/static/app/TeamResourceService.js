@@ -25,6 +25,5 @@ angular.module('projecttycoon').factory('TeamResource', function($resource) {
             URL: '/api/teams/:id'
         }
     });
-
 });
 

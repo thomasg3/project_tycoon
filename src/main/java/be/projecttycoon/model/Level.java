@@ -8,9 +8,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.BinaryOperator;
-
 /**
  * Created by thomas on 11/02/16.
  */
@@ -27,11 +24,11 @@ public class Level {
     @Size(min = 6, message = "The name of the knowledge area must be at least 6 characters long")
     @Pattern(regexp = "^[A-Za-z0-9\\s]*$", message="Your levelname can only contain characters, numbers and spaces")
     private String name;
+    @OneToMany
+    private List<Question> questions;
 
     @ManyToMany
     private List<KnowledgeArea> knowledgeAreas;
-
-
 
     public Level() {
     }

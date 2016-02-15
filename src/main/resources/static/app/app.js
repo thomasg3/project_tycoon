@@ -53,6 +53,10 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngReso
                 templateUrl : 'views/knowledgearea/edit.html',
                 controller : 'editKnowledgeAreasController'
             })
+            .when('/admin/:id/levels', {
+                templateUrl : 'views/levelOverview.html',
+                controller : 'levelOverview'
+            })
             .otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
