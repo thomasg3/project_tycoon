@@ -3,7 +3,7 @@
  */
 
 angular.module('projecttycoonControllers')
-.controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource) {
+.controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource, GameResource) {
     $scope.oldUsername = $routeParams.username;
 
     $scope.initTeam = function(){

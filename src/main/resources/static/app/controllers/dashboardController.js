@@ -8,3 +8,5 @@ angular.module('projecttycoonControllers')
         $scope.game = data;
     });
 });
+
+
