@@ -3,8 +3,25 @@
  */
 
 angular.module('projecttycoonControllers')
-.controller('updateTeam',function($rootScope, $scope, $http, $routeParams,$location,TeamResource){
+.controller('updateTeam',function($rootScope, $scope, $http, $routeParams,$location,TeamResource, Upload){
 
+
+
+    $scope.onFileSelect= function($files) {
+
+        var formData=new FormData();
+        formData.append("file",$files[0]);
+        $http.post('/api/image/upload', formData, {
+            transformRequest: function(data, headersGetterFunction) {
+                return data;
+            },
+            headers: { 'Content-Type': undefined }
+        }).success(function(data, status) {
+            console.log("Success" + data + " " + status)
+        }).error(function(data, status) {
+            console.log("Error" + data + " " + status)
+        });
+    }
 
     TeamResource.search({teamname : $routeParams.teamname},function(data){
         if(($rootScope.MainUser.admin&&data.id!=null)||$rootScope.MainUser.teamname ==  $routeParams.teamname){

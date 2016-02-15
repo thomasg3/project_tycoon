@@ -56,9 +56,15 @@
             <div class="col-sm-6 col-sm-offset-3">
                 <img style="width: 100%; height: 300px; padding-bottom: 20px;" src="http://75025.de/comics/0000.png" alt="Team Picture" />
             </div>
+
             <div class="col-sm-12">
                 <button ng-disabled="form.$invalid" type="submit" class="btn btn-primary">Submit</button>
             </div>
+
+            <div>
+                <input type="file" ngf-select="onFileSelect($files)" multiple>
+            </div>
+
         </form>
     </div>
 </div>

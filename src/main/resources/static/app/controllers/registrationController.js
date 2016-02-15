@@ -3,8 +3,26 @@
  */
 
 angular.module('projecttycoonControllers')
-.controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource, GameResource) {
+.controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource, GameResource, Upload) {
     $scope.oldUsername = $routeParams.username;
+
+
+    $scope.onFileSelect= function($files) {
+
+        var formData=new FormData();
+        formData.append("file",$files[0]);
+        $http.post('/api/image/upload', formData, {
+            transformRequest: function(data, headersGetterFunction) {
+                return data;
+            },
+            headers: { 'Content-Type': undefined }
+        }).success(function(data, status) {
+            console.log("Success" + data + " " + status)
+        }).error(function(data, status) {
+            console.log("Error" + data + " " + status)
+        });
+    }
+
 
     $scope.initTeam = function(){
 

@@ -1,6 +1,8 @@
 package be.projecttycoon.rest;
 
+import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Team;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -8,6 +10,7 @@ import javax.ws.rs.Produces;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.security.Principal;
 import java.util.Collection;
 
 /**
@@ -19,22 +22,34 @@ import java.util.Collection;
 @RequestMapping(value = "/api/image")
 public class ImageController {
 
-    @RequestMapping(value="/upload", method=RequestMethod.POST)
-    public @ResponseBody
-    String handleFileUpload(@RequestBody MultipartFile file){
-        if (!file.isEmpty()) {
+    @Autowired
+    TeamRepository teamrep;
+
+
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String handleFileUpload(@RequestParam(value = "file") MultipartFile file,Principal user) {
+        if (file !=null && !file.isEmpty() && file.getOriginalFilename().contains(".")) {
+            String[] filenameAndExtension=file.getOriginalFilename().split("\\.");
+            String extension = "."+filenameAndExtension[filenameAndExtension.length-1];
+
             try {
                 byte[] bytes = file.getBytes();
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File("file")));
+                String filename=user.getName()+"_"+System.currentTimeMillis()+extension;
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream("src/main/resources/static/img/profiles/"+filename));
                 stream.write(bytes);
-                stream.close();
-                return "You successfully uploaded ";
+
+                return "img/profiles/"+filename;
             } catch (Exception e) {
-                return "You failed to upload " + "=> " + e.getMessage();
+                e.printStackTrace();
             }
-        } else {
-            return "You failed to upload because the file was empty.";
         }
+        return null;
     }
+
+
+
+
+
 }
