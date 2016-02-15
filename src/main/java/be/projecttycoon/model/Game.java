@@ -119,6 +119,7 @@ public class Game {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", teams=" + teams +
+                ", levels=" + levels +
                 '}';
     }
 }

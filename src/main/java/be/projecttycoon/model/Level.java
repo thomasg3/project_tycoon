@@ -24,7 +24,7 @@ public class Level {
     @Size(min = 6, message = "The name of the knowledge area must be at least 6 characters long")
     @Pattern(regexp = "^[A-Za-z0-9\\s]*$", message="Your levelname can only contain characters, numbers and spaces")
     private String name;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions;
 
     @ManyToMany
@@ -65,6 +65,14 @@ public class Level {
 
     public List<KnowledgeArea> getKnowledgeAreas() {
         return knowledgeAreas;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 
     public void setKnowledgeAreas(List<KnowledgeArea> knowledgeAreas) {
