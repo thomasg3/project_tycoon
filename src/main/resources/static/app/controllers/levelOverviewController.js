@@ -3,25 +3,17 @@
  */
 
 angular.module('projecttycoonControllers')
-    .controller('levelOverview', function($rootScope, $scope, $http, LevelResource, GameResource, $routeParams){
+    .controller('levelOverview', function($location, $rootScope, $scope, $http, GameResource, $routeParams){
         $scope.game = new GameResource();
         GameResource.get({id : $routeParams.id}, function(data){
             $scope.game = data;
         });
-        $scope.level = new LevelResource();
 
-        /*/
-        $scope.addQuestion = function(id){
-            $scope.question.$save(function(data){
-                alert(JSON.stringify(data));
-            });
-        };*/
 
         $scope.addLevel = function(){
-            $scope.game.
-
-            $scope.level.$save(function(data){
-                alert(JSON.stringify(data));
+            $scope.game.levels.push($scope.level);
+            $scope.game.$update({id : $scope.game.id},function(data){
+                $location.reload();
             });
         }
     });

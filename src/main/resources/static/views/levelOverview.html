@@ -7,7 +7,7 @@
     </form>
 </div>
 
-<div class="panel panel-default" ng-repeat="level in game.levels track by $index" ng-controller="levelOverview">
+<div class="panel panel-default" ng-repeat="level in game.levels track by $index">
     <div class="panel-heading" data-toggle="collapse" data-target="#{{$index}}" aria-expanded="false" aria-controls="{{$index}}">
         <h2>{{level.name}}</h2>
         <table class="table">
