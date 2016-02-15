@@ -9,9 +9,6 @@ angular.module('projecttycoon').factory('GameResource', function($resource) {
             url: '/api/games',
             isArray: true
         },
-        save: {
-            method: 'POST'
-        },
         getGameByUsername:{
             method: 'GET',
             url: '/api/games/game/:teamname'
