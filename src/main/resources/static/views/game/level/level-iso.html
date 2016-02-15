@@ -6,13 +6,12 @@
                     <th>Question</th>
                     <th>Answer<tr>
                 </tr>
-                <tr ng-repeat="question in my_level.questions">
-                    <td>{{question.question}}</td>
-                    <td>{{question.answer}}</td>
+                <tr ng-repeat="q in my_level.questions">
+                    <td>{{q.question}}</td>
+                    <td>{{q.answer}}</td>
                 </tr>
             </table>
             <div>
-
                 <form ng-submit="addQuestion()" name="form" class="css-form" novalidate>
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Question" id="question" name="question" ng-model="newquestion.question">

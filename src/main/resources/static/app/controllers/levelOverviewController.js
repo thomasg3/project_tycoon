@@ -12,10 +12,12 @@ angular.module('projecttycoonControllers')
 
 
         $scope.addLevel = function(){
-            $scope.game.levels.push($scope.level);
-            $scope.game.$update({id : $scope.game.id},function(data){
-                $location.path("/admin/" + $scope.game.id + "/levels");
-
+            GameResource.get({id : $scope.game.id}, function(game){
+                game.levels.push($scope.level);
+                game.$update({id : $scope.game.id},function(){
+                    $scope.game = game;
+                    $scope.newQuestions = new Array($scope.game.levels);
+                });
             });
         }
     }).directive('myLevel', function($http, GameResource) {
@@ -36,15 +38,18 @@ angular.module('projecttycoonControllers')
                                 if(!game.levels[index].questions){
                                     game.levels[index].questions = [];
                                 }
+                                if(!$scope.my_level.questions){
+                                    $scope.my_level.questions = [];
+                                }
                                 game.levels[index].questions.push($scope.newquestion);
+                                $scope.my_level.questions.push($scope.newquestion);
+                                $scope.newquestion = null;
                             }
                         }
                         game.$update({id: game.id}, function(data){
-
-                            location.reload();
                         });
                     });
-                    return $scope.my_level;
+                    //return $scope.my_level;
                 };
             }
         };
