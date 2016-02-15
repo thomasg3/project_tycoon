@@ -80,4 +80,11 @@ public class GameResource {
                 .filter(g -> g.containsTeam(team))
                 .findFirst().get();
     }
+
+    @RequestMapping (value="/{id}", method = RequestMethod.DELETE)
+    @Produces("application/json")
+    public void deleteGame(@PathVariable long id){
+        System.out.println("joepie");
+        gameRepository.delete(id);
+    }
 }

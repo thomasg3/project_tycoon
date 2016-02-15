@@ -3,11 +3,12 @@
     <table class="table table-responsive">
         <tr>
             <th>#</th>
-            <th colspan="2">Team Name</th>
+            <th colspan="2">Game Name</th>
         </tr>
-        <tr ng-repeat="game in games" ng-click="getGame(game.id)">
+        <tr ng-repeat="game in games" >
             <td><strong>#{{$index+1}}</strong></td>
-            <td>{{game.name}}</td>
+            <td><a ng-click="getGame(game.id)" role="button">{{game.name}}</a></td>
+            <td><button class="btn-danger" ng-click="deleteGame(game.id)">delete</button></td>
         </tr>
     </table>
 </div>

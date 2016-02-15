@@ -11,5 +11,14 @@ angular.module('projecttycoonControllers')
     $scope.getGame = function(id){
         $location.path('/dashboard/' + id);
     }
+    $scope.deleteGame = function(id){
+        GameResource.delete({id : id}).$promise.then(function(){
+            //refresh the view
+            GameResource.getAll().$promise.then(function(data){
+                $scope.games = data;
+            });
+            // $location.path('/adminOverview'); seems logical but doesnt work for some reason
+        });
 
+    }
 });
