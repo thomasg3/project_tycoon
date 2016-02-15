@@ -54,7 +54,7 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
             .logout().logoutSuccessUrl("/")
         .and()
             .authorizeRequests()
-                .antMatchers("/views/public/**", "/app/**","/bower_components/**","/").permitAll()
+                .antMatchers("/views/public/**", "/views/error/**","/app/**","/bower_components/**","/").permitAll()
                 .antMatchers("/api/teams", "/api/teams/**").hasAuthority(SecurityAuths.UNREGISTERED.toString())
                 .antMatchers("/api/**").hasAuthority(SecurityAuths.TEAM.toString())
                 .anyRequest().authenticated()
