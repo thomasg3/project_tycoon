@@ -70,4 +70,19 @@ public class Level {
     public void setKnowledgeAreas(List<KnowledgeArea> knowledgeAreas) {
         this.knowledgeAreas = knowledgeAreas;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Level)) return false;
+
+        Level level = (Level) o;
+
+        if (getId() != level.getId()) return false;
+        if (getRound() != level.getRound()) return false;
+        if (getName() != null ? !getName().equals(level.getName()) : level.getName() != null) return false;
+        if (questions != null ? !questions.equals(level.questions) : level.questions != null) return false;
+        return getKnowledgeAreas() != null ? getKnowledgeAreas().equals(level.getKnowledgeAreas()) : level.getKnowledgeAreas() == null;
+
+    }
 }

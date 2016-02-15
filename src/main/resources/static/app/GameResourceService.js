@@ -15,6 +15,9 @@ angular.module('projecttycoon').factory('GameResource', function($resource) {
         getGameByUsername:{
             method: 'GET',
             url: '/api/games/game/:teamname'
+        },
+        update:{
+            method: 'PUT'
         }
     });
 
