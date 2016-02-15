@@ -35,4 +35,10 @@ public class LevelResource {
         return levelRepository.save(level);
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    public Level addLevel(@RequestBody Level level){
+        level = levelRepository.save(level);
+        return level;
+    }
+
 }
