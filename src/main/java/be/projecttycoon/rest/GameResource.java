@@ -5,6 +5,7 @@ import be.projecttycoon.db.KnowledgeAreaRepository;
 import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Game;
 import be.projecttycoon.model.Team;
+import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.GameBean;
 import be.projecttycoon.rest.util.TeamBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,10 @@ public class GameResource {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @Produces("application/json")
     public Game showGame(@PathVariable long id ){
-        return gameRepository.findOne(id);
+        Game game = gameRepository.findOne(id);
+        if(game == null)
+            throw new NotFoundException();
+        return game;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -93,12 +97,13 @@ public class GameResource {
         Team team = teamRepository.findByTeamname(teamname);
         return gameRepository.findAll().stream()
                 .filter(g -> g.containsTeam(team))
-                .findFirst().get();
+                .findFirst().orElseThrow(() -> {throw new NotFoundException();});
     }
 
     @RequestMapping (value="/{id}", method = RequestMethod.DELETE)
     @Produces("application/json")
     public void deleteGame(@PathVariable long id){
+        showGame(id);
         gameRepository.delete(id);
 
     }
@@ -107,7 +112,8 @@ public class GameResource {
     @Produces("application/json")
     public void deleteTeam(@PathVariable long id){
         Team t = teamRepository.findOne(id);
-        System.out.println("hoera");
+        if(t==null)
+            throw new NotFoundException();
         Game g = getGameForTeam(t.getTeamname());
         Set<Team> teams= g.getTeams();
         teams.remove(t);
