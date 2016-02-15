@@ -1,7 +1,7 @@
 /**
  * Created by thomas on 09/02/16.
  */
-angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngResource' ])
+angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngResource','ngFileUpload' ])
     .config(function($routeProvider, $httpProvider) {
 
         $routeProvider
