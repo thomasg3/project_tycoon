@@ -2,23 +2,46 @@
  * Created by Jeroen on 12-2-2016.
  */
 
-var INTEGER_REGEXP = /^\-?\d+$/;
-angular.module('projecttycoon').directive('integer', function() {
+
+function RegexValidator(){
     return {
+        restrict: 'A',
         require: 'ngModel',
-        link: function(scope, elm, attrs, ctrl) {
-            ctrl.$validators.integer = function(modelValue, viewValue) {
-                if (ctrl.$isEmpty(modelValue)) {
-                    // consider empty models to be valid
-                    return true;
+        link: function($scope, $elm, $attrs, ctrl) {
+            $scope.$watch($attrs.ngModel, function(data) {
+                if(ctrl.$dirty || ctrl.$touched){
+                    if($attrs.regex && data){
+                        var regex = new RegExp($attrs.regex);
+                        if(regex.test(data)){
+                            ctrl.$setValidity($attrs.name + "validregex", true);
+                        }else{
+                            ctrl.$setValidity($attrs.name + "validregex", false);
+                        }
+                    }
                 }
-                if (INTEGER_REGEXP.test(viewValue)) {
-                    // it is valid
-                    return true;
-                }
-                // it is invalid
-                return false;
-            };
+            });
         }
     };
-});
+}
+
+function PasswordConfirm() {
+    return {
+        restrict: 'A',
+        require: "ngModel",
+        link: function ($scope, $element, $attrs, ctrl) {
+            $scope.$watch(function () {
+                if(ctrl.$dirty || ctrl.$touched) {
+                    if ($attrs.password === ctrl.$viewValue) {
+                        ctrl.$setValidity($attrs.name + "confirmPassword", true);
+                    } else {
+                        ctrl.$setValidity($attrs.name + "confirmPassword", false);
+                    }
+                }
+            });
+        }
+    };
+}
+
+angular.module('projecttycoon').directive('passwordConfirm', PasswordConfirm);
+angular.module('projecttycoon').directive('regexValidator', RegexValidator);
+

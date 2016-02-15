@@ -18,7 +18,7 @@ public class Game {
     @GeneratedValue
     private long id;
     @NotNull(message = "Please enter a gamename")
-    @Size(min = 6, message = "Your gamename must be at least 4 characters")
+    @Size(min = 4, message = "Your gamename must be at least 4 characters")
     @Pattern(regexp = "^[A-Za-z0-9\\s]*$", message="Your gamename can only contain characters and numbers")
     private String name;
 
@@ -48,7 +48,7 @@ public class Game {
             this.levels.add(new Level("Level "+ i, i, knowledgeAreas));
         }
         for(int i = count; count<i + teams;count++){
-            this.teams.add(new Team("Team"+(count),"ThisIsTheMostAwesomePasswordEver",this.levels,"http://i.imgur.com/IhewUTH.jpg"));
+            this.teams.add(new Team("Team"+(count),"testtest",this.levels,"http://i.imgur.com/IhewUTH.jpg"));
         }
 
     }

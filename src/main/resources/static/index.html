@@ -10,6 +10,8 @@
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/form-error-colors.css">
+
     <!--
     <link rel="stylesheet" type="text/css" href="css/theme.min.css">
     -->
@@ -40,7 +42,7 @@
             <div class="collapse navbar-collapse" id="bs-main-navbar-collapse">
                 <ul class="nav navbar-nav" ng-show="authenticated">
                     <li><a href="#/dashboard">Dashboard</a></li>
-                    <li class="dropdown">
+                    <li class="dropdown" ng-show="MainUser.admin">
                         <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Games <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#/createGame">New</a></li>
@@ -68,8 +70,20 @@
     <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
 
-    <script type="text/javascript" src="app/controller.js"></script>
     <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="app/controllers/controller.js"></script>
+    <script type="text/javascript" src="app/controllers/newGameController.js"></script>
+    <script type="text/javascript" src="app/controllers/homeController.js"></script>
+    <script type="text/javascript" src="app/controllers/adminOverviewController.js"></script>
+    <script type="text/javascript" src="app/controllers/dashboardController.js"></script>
+    <script type="text/javascript" src="app/controllers/editKnowledgeAreasController.js"></script>
+    <script type="text/javascript" src="app/controllers/navigationController.js"></script>
+    <script type="text/javascript" src="app/controllers/overviewDashboardController.js"></script>
+    <script type="text/javascript" src="app/controllers/registrationController.js"></script>
+    <script type="text/javascript" src="app/controllers/updateTeamController.js"></script>
+    <script type="text/javascript" src="app/controllers/detailGameController.js"></script>
+
+    <script src="app/Validators.js" type="text/javascript"></script>
     <script src="app/TeamResourceService.js" type="text/javascript"></script>
     <script src="app/GameResourceService.js" type="text/javascript"></script>
     <script src="app/KnowledgeAreaResourceService.js" type="text/javascript"></script>
