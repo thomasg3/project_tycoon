@@ -1,9 +1,6 @@
 package be.projecttycoon.social;
 
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.User;
+import twitter4j.*;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.OAuthAuthorization;
 import twitter4j.auth.RequestToken;
@@ -16,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -27,6 +25,7 @@ public class TwitterUpload {
     private String userAccessSecret;
     private String consumerKey;
     private String keySecret;
+    private Twitter twitter;
 
     public TwitterUpload() throws TwitterException{
         /*todo move to a better place!!!!! + change to production twitter channel*/
@@ -40,7 +39,7 @@ public class TwitterUpload {
         this.setUserAccessSecret(USERACCESSSECRET);
         this.setUserAccessToken(USERACCESSTOKEN);
 
-        Twitter twitter = new TwitterFactory().getInstance();
+        this.setTwitter(new TwitterFactory().getSingleton());
         twitter.setOAuthConsumer(this.getConsumerKey(),this.getKeySecret());
         RequestToken requestToken = twitter.getOAuthRequestToken();
 
@@ -71,15 +70,26 @@ public class TwitterUpload {
      *                 be posted
      * @param message is a simple string containing a message
      * @param hashtags is a collection of strings starting with a number sign (#) and followed by a tag i.e. #lol
-     * @return the url to the created post on twitter
+     * @return the url to image/mediatype you posted. If it is a message without image, this method returns null.
      * @throws TwitterException
      */
     public String postImageAndText(File file, String message, Collection<String> hashtags) throws TwitterException{
-        return getUploader().upload(file, generateMessage(message,hashtags));
+        String[] url = (getUploader().upload(file, generateMessage(message,hashtags)).split(" "));
+
+
+        String value = file == null ? null :  url[url.length-1];
+        return value;
     }
 
 
 
+    private Twitter getTwitter() {
+        return twitter;
+    }
+
+    private void setTwitter(Twitter twitter) {
+        this.twitter = twitter;
+    }
 
     private String generateMessage(String message, Collection<String> hashtags){
         StringBuilder strbuilder=new StringBuilder(message);
@@ -102,6 +112,7 @@ public class TwitterUpload {
 
         OAuthAuthorization auth = new OAuthAuthorization(conf);
         return new ImageUploadFactory(conf).getInstance(auth);
+
     }
 
 
