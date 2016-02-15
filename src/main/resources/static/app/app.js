@@ -36,6 +36,10 @@ angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngReso
                 templateUrl : 'views/game/details.html',
                 controller : 'detailGameController'
             })
+            .when('/games/:gameid/levels/:levelid/editscores', {
+                templateUrl : 'views/game/level/score_edit.html',
+                controller : 'editLevelScoreController'
+            })
             //##### admin pages #####
             .when('/adminOverview', {
                 templateUrl : 'views/adminOverview.html',
