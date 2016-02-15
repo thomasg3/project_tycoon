@@ -2,7 +2,6 @@
  * Created by Jeroen on 12-2-2016.
  */
 
-
 function RegexValidator(){
     return {
         restrict: 'A',

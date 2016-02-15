@@ -5,6 +5,13 @@
 -->
 
 <h1>GameScore Details</h1>
+<div class="row">
+    <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+        </div>
+    </form>
+</div>
 
 <div class="panel panel-default" ng-repeat="level in game.levels track by $index">
     <div class="panel-heading" data-toggle="collapse" data-target="#{{$index}}" aria-expanded="false" aria-controls="{{$index}}">
@@ -22,7 +29,7 @@
                 <th ng-repeat="ka in level.knowledgeAreas">{{ka.name}}</th>
                 <th>Total</th>
             </tr>
-            <tr ng-repeat="team in game.teams">
+            <tr ng-repeat="team in game.teams | filter: searchText">
                 <td>{{team.teamname}}</td>
                 <td ng-repeat="kas in team.teamLevelPrestations[$index].knowledgeAreaScores">{{kas.score}}</td>
                 <td>{{team.teamLevelPrestations[$index].levelScore}}</td>
