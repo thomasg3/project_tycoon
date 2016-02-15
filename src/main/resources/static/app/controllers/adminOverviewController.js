@@ -12,4 +12,8 @@ angular.module('projecttycoonControllers')
         $location.path('/dashboard/' + id);
     }
 
+    $scope.getLevels = function(id){
+        $location.path('/admin/' + id + '/levels');
+    }
+
 });

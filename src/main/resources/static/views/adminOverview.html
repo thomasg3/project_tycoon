@@ -13,9 +13,10 @@
             <th>#</th>
             <th colspan="2">Team Name</th>
         </tr>
-        <tr ng-repeat="game in games | filter: searchText" ng-click="getGame(game.id)">
+        <tr ng-repeat="game in games | filter: searchText">
             <td><strong>#{{$index+1}}</strong></td>
-            <td>{{game.name}}</td>
+            <td><a ng-click="getGame(game.id)" role="button">{{game.name}}</a></td>
+            <td><a ng-click="getLevels(game.id)" class="btn btn-default" role="button">Levels</a></td>
         </tr>
     </table>
 </div>
