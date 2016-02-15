@@ -11,7 +11,14 @@ angular.module('projecttycoonControllers')
     $scope.getGame = function(id){
         $location.path('/dashboard/' + id);
     }
+    $scope.deleteGame = function(id){
+        GameResource.delete({id : id}).$promise.then(function(){
+            GameResource.getAll().$promise.then(function(data){
+                $scope.games = data;
+            });
+        });
 
+    }
     $scope.getLevels = function(id){
         $location.path('/admin/' + id + '/levels');
     }
