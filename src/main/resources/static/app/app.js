@@ -6,7 +6,6 @@ var app = angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers
 app.factory('httpInterceptor', ['$q', '$location', '$log', function($q, $location, $log){
     return {
         response: function(response){
-            $log.debug(response);
             return response;
         },
         responseError: function(response){
