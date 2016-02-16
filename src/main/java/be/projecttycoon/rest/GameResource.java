@@ -9,6 +9,7 @@ import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.GameBean;
 import be.projecttycoon.rest.util.TeamBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -60,12 +61,14 @@ public class GameResource {
         gameRepository.save(game);
     }
 
+    @Secured({"ADMIN"})
     @RequestMapping(method = RequestMethod.GET)
     @Produces("application/json")
     public Collection<Game> getAllGames(){
         return gameRepository.findAll();
     }
 
+    @Secured({"TEAM", "ADMIN"})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @Produces("application/json")
     public Game showGame(@PathVariable long id ){
@@ -75,6 +78,7 @@ public class GameResource {
         return game;
     }
 
+    @Secured({"ADMIN"})
     @RequestMapping(method = RequestMethod.POST)
     @Produces("application/json")
     public Game createGame(@Valid @RequestBody GameBean inputGame){
@@ -83,14 +87,16 @@ public class GameResource {
         return game;
     }
 
+    @Secured({"ADMIN"})
     @RequestMapping(value="/{id}", method = RequestMethod.PUT)
     @Produces("application/json")
-    public Game updateTeam(Principal currentUser, @PathVariable long id, @Valid @RequestBody Game newGame){
+    public Game updateGame(@PathVariable long id, @Valid @RequestBody Game newGame){
         Game game = gameRepository.findOne(newGame.getId());
         newGame.setTeams(game.getTeams());
         return gameRepository.save(newGame);
     }
 
+    @Secured({"ADMIN", "TEAM"})
     @RequestMapping(value="/game/{teamname}" ,method = RequestMethod.GET)
     @Produces("application/json")
     public Game getGameForTeam(@PathVariable String teamname) {
@@ -103,6 +109,7 @@ public class GameResource {
         return game;
     }
 
+    @Secured({"ADMIN"})
     @RequestMapping (value="/{id}", method = RequestMethod.DELETE)
     @Produces("application/json")
     public void deleteGame(@PathVariable long id){
@@ -111,6 +118,7 @@ public class GameResource {
 
     }
 
+    @Secured({"ADMIN"})
     @RequestMapping(value = "/team/{id}", method=RequestMethod.DELETE)
     @Produces("application/json")
     public void deleteTeam(@PathVariable long id){
