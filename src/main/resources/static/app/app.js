@@ -65,7 +65,7 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/updateTeam.html',
                 controller : 'updateTeam'
             })
-            .when('/team/:id', {
+            .when('/games/:gameid/teams/:id', {
                 templateUrl : 'views/team/details.html',
                 controller : 'detailTeamController'
             })
