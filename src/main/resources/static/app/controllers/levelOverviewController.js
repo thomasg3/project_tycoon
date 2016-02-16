@@ -30,6 +30,22 @@ angular.module('projecttycoonControllers')
             templateUrl: "views/game/level/level-iso.html",
             link: function ($scope) {
 
+                $scope.addAnswer = function(receiver) {
+                    $scope.receivers.push({value:""});
+                }
+
+                $scope.deleteAnswer = function(receiver) {
+                    for(var i=0; i<$scope.receivers.length; i++) {
+                        if($scope.receivers[i] === receiver) {
+                            $scope.receivers.splice(i, 1);
+                            break;
+                        }
+                    }
+                }
+
+
+
+                /*
                 $scope.addQuestion = function(){
                     GameResource.get({id : $scope.my_gameid}, function(game){
                         var index;
@@ -50,7 +66,7 @@ angular.module('projecttycoonControllers')
                         });
                     });
                     //return $scope.my_level;
-                };
+                };*/
             }
         };
     });

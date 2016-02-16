@@ -24,19 +24,18 @@ public class Level {
     @Size(min = 6, message = "The name of the knowledge area must be at least 6 characters long")
     @Pattern(regexp = "^[A-Za-z0-9\\s]*$", message="Your levelname can only contain characters, numbers and spaces")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Question> questions;
 
-    @ManyToMany
-    private List<KnowledgeArea> knowledgeAreas;
+    @ManyToMany(cascade=CascadeType.ALL)
+    private List<LevelKnowledgeArea> levelKnowledgeAreas;
 
     public Level() {
+        this.levelKnowledgeAreas = new ArrayList<>();
     }
 
-    public Level(String name, int round, List<KnowledgeArea> knowledgeAreas) {
+    public Level(String name, int round, List<LevelKnowledgeArea> levelKnowledgeAreas) {
         this.name = name;
         this.round = round;
-        this.knowledgeAreas = knowledgeAreas;
+        this.levelKnowledgeAreas = levelKnowledgeAreas;
     }
 
     public long getId() {
@@ -63,20 +62,12 @@ public class Level {
         this.round = round;
     }
 
-    public List<KnowledgeArea> getKnowledgeAreas() {
-        return knowledgeAreas;
+    public List<LevelKnowledgeArea> getLevelKnowledgeAreas() {
+        return levelKnowledgeAreas;
     }
 
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
-
-    public void setKnowledgeAreas(List<KnowledgeArea> knowledgeAreas) {
-        this.knowledgeAreas = knowledgeAreas;
+    public void setLevelKnowledgeAreas(List<LevelKnowledgeArea> levelKnowledgeAreas) {
+        this.levelKnowledgeAreas = levelKnowledgeAreas;
     }
 
     @Override
@@ -89,8 +80,26 @@ public class Level {
         if (getId() != level.getId()) return false;
         if (getRound() != level.getRound()) return false;
         if (getName() != null ? !getName().equals(level.getName()) : level.getName() != null) return false;
-        if (questions != null ? !questions.equals(level.questions) : level.questions != null) return false;
-        return getKnowledgeAreas() != null ? getKnowledgeAreas().equals(level.getKnowledgeAreas()) : level.getKnowledgeAreas() == null;
+        return getLevelKnowledgeAreas() != null ? getLevelKnowledgeAreas().equals(level.getLevelKnowledgeAreas()) : level.getLevelKnowledgeAreas() == null;
 
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + getRound();
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (getLevelKnowledgeAreas() != null ? getLevelKnowledgeAreas().hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Level{" +
+                "id=" + id +
+                ", round=" + round +
+                ", name='" + name + '\'' +
+                ", levelKnowledgeAreas=" + levelKnowledgeAreas +
+                '}';
     }
 }

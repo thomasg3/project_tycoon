@@ -7,7 +7,7 @@ import be.projecttycoon.model.Game;
 import be.projecttycoon.model.Team;
 import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.GameBean;
-import be.projecttycoon.rest.util.TeamBean;
+import be.projecttycoon.rest.KnowledgeAreaResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,12 +33,14 @@ public class GameResource {
     private final GameRepository gameRepository;
     private final TeamRepository teamRepository;
     private final KnowledgeAreaRepository knowledgeAreaRepository;
+    private final KnowledgeAreaResource k;
 
     @Autowired
     public GameResource(GameRepository gameRepository, TeamRepository teamRepository, KnowledgeAreaRepository knowledgeAreaRepository){
         this.gameRepository = gameRepository;
         this.teamRepository = teamRepository;
         this.knowledgeAreaRepository = knowledgeAreaRepository;
+        k = new KnowledgeAreaResource(knowledgeAreaRepository);
         Game game = new Game("ProjectFun2016",2,4, knowledgeAreaRepository.findAll());
         ArrayList<Team> teams= new ArrayList<Team>();
         teams.addAll(game.getTeams());
@@ -55,8 +57,8 @@ public class GameResource {
         teams2.get(0).setTeamname("Team123");
         teams2.get(0).setPassword("azerty");
         teams2.get(0).setRegistered(true);
-        gameRepository.save(testgame);
 
+        gameRepository.save(testgame);
         gameRepository.save(game);
     }
 
