@@ -39,6 +39,7 @@ public class Team{
     @Size(min = 6, message = "Your password must be at least 6 characters")
     @JsonIgnore
     private String password;
+    @Column(length = 2147483647)
     private String teamImage;
 
     private int likes;

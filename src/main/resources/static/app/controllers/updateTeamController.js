@@ -11,17 +11,17 @@ angular.module('projecttycoonControllers')
 
         var formData=new FormData();
         formData.append("file",$files[0]);
-        $http.post('/api/image/upload', formData, {
+        $http.post('/api/image/upload/'+$routeParams.teamname, formData, {
             transformRequest: function(data, headersGetterFunction) {
                 return data;
             },
             headers: { 'Content-Type': undefined }
         }).success(function(data, status) {
-            console.log("Success" + data + " " + status)
+            $scope.userPhoto=data;
         }).error(function(data, status) {
-            console.log("Error" + data + " " + status)
-        });
-    }
+            console.log("Error " + data + " " + status)
+            $scope.userPhoto=data;
+    })};
 
     TeamResource.search({teamname : $routeParams.teamname},function(data){
         if(($rootScope.MainUser.admin&&data.id!=null)||$rootScope.MainUser.teamname ==  $routeParams.teamname){

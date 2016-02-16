@@ -22,7 +22,7 @@ public class TestTwitter {
         List<String> hashTags=new ArrayList<String>();
         hashTags.add("#test");
 
-        String path = uploader.postImageAndText(new File("D:\\test.png"),"test why u no work",hashTags);
+        String path = uploader.postImageAndText(new File("D:\\test.gif"),"test why u no work",hashTags);
 
         System.out.println("You can see the media path ....^");
         System.out.println("The tweet path is " + path);

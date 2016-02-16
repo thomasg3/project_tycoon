@@ -20,7 +20,7 @@
             </tr>
             <tr ng-repeat="team in game.teams  | filter: searchText | orderBy:'-score' track by $index">
                 <td><strong>#{{$index+1}}</strong></td>
-                <td><img width="80px" class="img-circle" src="{{team.teamImage}}"></td>
+                <td><img width="80px" class="img-circle" src={{team.teamImage}}></td>
                 <td>{{team.teamname}}</td>
                 <td>{{team.score}}</td>
                 <td>{{team.likes}}</td>
