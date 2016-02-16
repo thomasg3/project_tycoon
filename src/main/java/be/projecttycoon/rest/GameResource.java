@@ -145,13 +145,13 @@ public class GameResource {
 
     @RequestMapping(value = "/team/{id}", method=RequestMethod.DELETE)
     @Produces("application/json")
-    public void deleteTeam(@PathVariable long id){
+    public Game deleteTeam(@PathVariable long id){
         Team t = teamRepository.findOne(id);
         if(t==null)
             throw new NotFoundException();
         Game g = getGameForTeam(t.getTeamname());
         Set<Team> teams= g.getTeams();
         teams.remove(t);
-        gameRepository.save(g);
+        return gameRepository.save(g);
     }
 }
