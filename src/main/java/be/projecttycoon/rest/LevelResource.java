@@ -27,7 +27,6 @@ public class LevelResource {
         this.teamLevelPrestationRepository = teamLevelPrestationRepository;
     }
 
-    @Secured({"TEAM", "ADMIN"})
     @RequestMapping(value="/{id}", method = RequestMethod.GET)
     public Level getLevel(@PathVariable long id){
         Level level = levelRepository.findOne(id);
@@ -36,13 +35,11 @@ public class LevelResource {
         return level;
     }
 
-    @Secured({"TEAM", "ADMIN"})
     @RequestMapping(value="/{id}/prestations", method = RequestMethod.GET)
     public List<TeamLevelPrestation> getAllTeamLevelPrestations(@PathVariable long id){
         return teamLevelPrestationRepository.findByLevel(getLevel(id));
     }
 
-    @Secured({"ADMIN"})
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public Level updateLevel(@PathVariable long id, @RequestBody Level level){
         getLevel(id);
@@ -50,7 +47,6 @@ public class LevelResource {
         return levelRepository.save(level);
     }
 
-    @Secured({"ADMIN"})
     @RequestMapping(method = RequestMethod.POST)
     public Level addLevel(@RequestBody Level level){
         level = levelRepository.save(level);

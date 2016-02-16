@@ -42,34 +42,29 @@ public class TeamResource  {
         teamRepository.save(admin);
     }
 
-    @Secured({"ADMIN"})
     @RequestMapping(method = RequestMethod.GET)
     @Produces("application/json")
     public Collection<Team> getAllTeams(){
         return teamRepository.findAll();
     }
 
-    @Secured({"UNREGISTERED","TEAM", "ADMIN"})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @Produces("application/json")
     public Team getTeamById(@PathVariable long id){
         return teamRepository.findOne(id);}
 
-    @Secured({"UNREGISTERED","TEAM", "ADMIN"})
     @RequestMapping(value = "/search/{teamname}", method = RequestMethod.GET)
     @Produces("application/json")
     public Team getTeamByTeamname(@PathVariable String teamname){
         return teamRepository.findByTeamname(teamname);
     }
 
-    @Secured({"UNREGISTERED","TEAM", "ADMIN"})
     @RequestMapping(value="/search/{teamname}/registered", method = RequestMethod.GET)
     @Produces("application/json")
     public Map<String, Boolean> isRegisteredTeamByTeamname(@PathVariable String teamname){
         return Collections.singletonMap("registered", getTeamByTeamname(teamname).isRegistered());
     }
 
-    @Secured({"UNREGISTERED", "TEAM" ,"ADMIN"})
     @RequestMapping(value="/{id}", method = RequestMethod.PUT)
     @Produces("application/json")
     public void updateTeam(Principal currentUser, @PathVariable long id, @Valid @RequestBody TeamBean updateTeam){

@@ -29,7 +29,6 @@ public class KnowledgeAreaResource {
         }
     }
 
-    @Secured({"ADMIN", "TEAM"})
     @RequestMapping(method = RequestMethod.GET)
     public List<KnowledgeArea> getAllKnowledgeAreas(){
         List<KnowledgeArea> result =  knowledgeAreaRepository.findAll();
@@ -37,7 +36,6 @@ public class KnowledgeAreaResource {
         return result;
     }
 
-    @Secured({"ADMIN", "TEAM"})
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public KnowledgeArea getKnowledgeArea(@PathVariable long id){
         KnowledgeArea found =  knowledgeAreaRepository.findOne(id);
@@ -46,7 +44,6 @@ public class KnowledgeAreaResource {
         return found;
     }
 
-    @Secured({"ADMIN"})
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public KnowledgeArea updateKnowledgeArea(@PathVariable long id, @RequestBody KnowledgeArea knowledgeArea){
         getKnowledgeArea(id);
@@ -54,19 +51,16 @@ public class KnowledgeAreaResource {
         return knowledgeAreaRepository.save(knowledgeArea);
     }
 
-    @Secured({"ADMIN"})
     @RequestMapping(method = RequestMethod.POST)
     public KnowledgeArea addNewKnowledgeArea(@RequestBody KnowledgeArea knowledgeArea){
         return knowledgeAreaRepository.save(knowledgeArea);
     }
 
-    @Secured({"ADMIN"})
     @RequestMapping(value = "/multiple",method = RequestMethod.POST)
     public List<KnowledgeArea> addNewKnowledgeAreas(@RequestBody List<KnowledgeArea> knowledgeAreas){
         return knowledgeAreaRepository.save(knowledgeAreas);
     }
 
-    @Secured({"ADMIN"})
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
     public void deteleKnowledgeArea(@PathVariable long id){
         knowledgeAreaRepository.delete(getKnowledgeArea(id));

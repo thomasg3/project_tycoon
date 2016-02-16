@@ -61,14 +61,12 @@ public class GameResource {
         gameRepository.save(game);
     }
 
-    @Secured({"ADMIN"})
     @RequestMapping(method = RequestMethod.GET)
     @Produces("application/json")
     public Collection<Game> getAllGames(){
         return gameRepository.findAll();
     }
 
-    @Secured({"TEAM", "ADMIN"})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @Produces("application/json")
     public Game showGame(@PathVariable long id ){
@@ -78,7 +76,6 @@ public class GameResource {
         return game;
     }
 
-    @Secured({"ADMIN"})
     @RequestMapping(method = RequestMethod.POST)
     @Produces("application/json")
     public Game createGame(@Valid @RequestBody GameBean inputGame){
@@ -87,7 +84,6 @@ public class GameResource {
         return game;
     }
 
-    @Secured({"ADMIN"})
     @RequestMapping(value="/{id}", method = RequestMethod.PUT)
     @Produces("application/json")
     public Game updateGame(@PathVariable long id, @Valid @RequestBody Game newGame){
@@ -96,7 +92,6 @@ public class GameResource {
         return gameRepository.save(newGame);
     }
 
-    @Secured({"ADMIN", "TEAM"})
     @RequestMapping(value="/game/{teamname}" ,method = RequestMethod.GET)
     @Produces("application/json")
     public Game getGameForTeam(@PathVariable String teamname) {
@@ -109,7 +104,6 @@ public class GameResource {
         return game;
     }
 
-    @Secured({"ADMIN"})
     @RequestMapping (value="/{id}", method = RequestMethod.DELETE)
     @Produces("application/json")
     public void deleteGame(@PathVariable long id){
@@ -118,7 +112,6 @@ public class GameResource {
 
     }
 
-    @Secured({"ADMIN"})
     @RequestMapping(value = "/team/{id}", method=RequestMethod.DELETE)
     @Produces("application/json")
     public void deleteTeam(@PathVariable long id){
