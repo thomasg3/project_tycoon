@@ -25,7 +25,7 @@
                 <td>{{team.score}}</td>
                 <td>{{team.likes}}</td>
                 <td ng-show="MainUser.admin"><a href="#/editTeam/{{team.teamname}}">Edit</a></td>
-                <td ng-show="MainUser.admin"><button class="btn-danger" ng-click="deleteTeam(team.id)">Delete</button></td>
+                <td ng-show="MainUser.admin"><button class="btn btn-danger" ng-click="deleteTeam(team.id)">Delete</button></td>
             </tr>
         </table>
     </div>
