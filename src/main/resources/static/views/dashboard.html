@@ -17,6 +17,8 @@
                 <th>Team Name</th>
                 <th>Score</th>
                 <th>Likes</th>
+                <th></th>
+                <th></th>
             </tr>
             <tr ng-repeat="team in game.teams  | filter: searchText | orderBy:'-score' track by $index">
                 <td><strong>#{{$index+1}}</strong></td>
