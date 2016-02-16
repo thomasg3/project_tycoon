@@ -65,6 +65,10 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/updateTeam.html',
                 controller : 'updateTeam'
             })
+            .when('/team/:id', {
+                templateUrl : 'views/team/details.html',
+                controller : 'detailTeamController'
+            })
             //##### game pages #####
             .when('/games/:id/details',{
                 templateUrl : 'views/game/details.html',

@@ -5,6 +5,7 @@
 -->
 
 <h1>GameScore Details</h1>
+<a href="#/dashboard/{{game.id}}" class="btn btn-default">Back to overview</a>
 <div class="row">
     <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
@@ -26,7 +27,7 @@
         <table class="table">
             <tr>
                 <th>Team</th>
-                <th ng-repeat="ka in level.knowledgeAreas">{{ka.name}}</th>
+                <th ng-repeat="ka in level.levelKnowledgeAreas">{{ka.knowledgeArea.name}}</th>
                 <th>Total</th>
             </tr>
             <tr ng-repeat="team in game.teams | filter: searchText">
