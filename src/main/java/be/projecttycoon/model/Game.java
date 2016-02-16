@@ -33,16 +33,17 @@ public class Game {
 
     public Game() {
         this.teams = new HashSet<>();
+        this.scoreEngine = new ScoreEngine();
     }
 
     public Game(String name, int teams, int levels, List<KnowledgeArea> knowledgeAreas) {
         this();
+        this.scoreEngine = new ScoreEngine();
         setName(name);
         generateGame(teams, levels, knowledgeAreas);
     }
 
     private void generateGame(int teams, int levels, List<KnowledgeArea> knowledgeAreas){
-        scoreEngine = new ScoreEngine();
         for(int i = 1; i<=levels; i++){
             List<LevelKnowledgeArea> levelKnowledgeAreas = new ArrayList<>();
             for (KnowledgeArea k:knowledgeAreas){
@@ -57,6 +58,7 @@ public class Game {
         }
     }
 
+    @Transient
     public List<Level> getLevels(){
         return this.scoreEngine.getLevels();
     }

@@ -23,10 +23,6 @@ public class KnowledgeAreaResource {
     @Autowired
     public KnowledgeAreaResource(KnowledgeAreaRepository knowledgeAreaRepository){
             this.knowledgeAreaRepository = knowledgeAreaRepository;
-        String[] areas = {"Integration", "Scope", "Time", "Cost", "Quality", "Human Resources", "Communications", "Risk", "Procurement", "Stakeholder"};
-        for(int i=0; i<areas.length; i++){
-            knowledgeAreaRepository.save(new KnowledgeArea(areas[i], i));
-        }
     }
 
     @RequestMapping(method = RequestMethod.GET)

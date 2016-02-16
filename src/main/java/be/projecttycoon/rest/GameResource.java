@@ -4,6 +4,8 @@ import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.KnowledgeAreaRepository;
 import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Game;
+import be.projecttycoon.model.KnowledgeArea;
+import be.projecttycoon.model.ScoreEngine;
 import be.projecttycoon.model.Team;
 import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.GameBean;
@@ -34,14 +36,18 @@ public class GameResource {
     private final GameRepository gameRepository;
     private final TeamRepository teamRepository;
     private final KnowledgeAreaRepository knowledgeAreaRepository;
-    private final KnowledgeAreaResource k;
 
     @Autowired
     public GameResource(GameRepository gameRepository, TeamRepository teamRepository, KnowledgeAreaRepository knowledgeAreaRepository){
         this.gameRepository = gameRepository;
         this.teamRepository = teamRepository;
         this.knowledgeAreaRepository = knowledgeAreaRepository;
-        k = new KnowledgeAreaResource(knowledgeAreaRepository);
+
+        String[] areas = {"Integration", "Scope", "Time", "Cost", "Quality", "Human Resources", "Communications", "Risk", "Procurement", "Stakeholder"};
+        for(int i=0; i<areas.length; i++){
+            knowledgeAreaRepository.save(new KnowledgeArea(areas[i], i));
+        }
+
         Game game = new Game("ProjectFun2016",2,4, knowledgeAreaRepository.findAll());
         ArrayList<Team> teams= new ArrayList<Team>();
         teams.addAll(game.getTeams());
@@ -57,9 +63,17 @@ public class GameResource {
         teams2.addAll(testgame.getTeams());
         teams2.get(0).setTeamname("Team123");
         teams2.get(0).setPassword("azerty");
+
+
+        Game testgame2 = new Game("testGame123342", 5,5, knowledgeAreaRepository.findAll());
+        ArrayList<Team> teams3= new ArrayList<Team>();
+        teams2.addAll(testgame.getTeams());
+        teams2.get(0).setTeamname("Team123");
+        teams2.get(0).setPassword("azerty");
         teams2.get(0).setRegistered(true);
 
         gameRepository.save(testgame);
+        gameRepository.save(testgame2);
         gameRepository.save(game);
     }
 

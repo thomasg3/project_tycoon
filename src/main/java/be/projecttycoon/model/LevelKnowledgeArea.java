@@ -1,9 +1,6 @@
 package be.projecttycoon.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 /**
  * Created by Jeroen on 16-2-2016.
@@ -18,14 +15,14 @@ public class LevelKnowledgeArea {
 
     @OneToOne
     private Question question;
-    @OneToOne
+    @ManyToOne
     private KnowledgeArea knowledgeArea;
 
     public LevelKnowledgeArea(){};
 
     public LevelKnowledgeArea(Question question, KnowledgeArea knowledgeArea) {
         this.question = question;
-        this.knowledgeArea = knowledgeArea;
+        setKnowledgeArea(knowledgeArea);
     }
 
     public Question getQuestion() {
