@@ -9,6 +9,7 @@ import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.GameBean;
 import be.projecttycoon.rest.KnowledgeAreaResource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -87,7 +88,7 @@ public class GameResource {
 
     @RequestMapping(value="/{id}", method = RequestMethod.PUT)
     @Produces("application/json")
-    public Game updateTeam(Principal currentUser, @PathVariable long id, @Valid @RequestBody Game newGame){
+    public Game updateGame(@PathVariable long id, @Valid @RequestBody Game newGame){
         Game game = gameRepository.findOne(newGame.getId());
         newGame.setTeams(game.getTeams());
         return gameRepository.save(newGame);

@@ -41,7 +41,7 @@
 
             <div class="collapse navbar-collapse" id="bs-main-navbar-collapse">
                 <ul class="nav navbar-nav" ng-show="authenticated">
-                    <li ng-show="!MainUser.admin"><a href="#/dashboard">Dashboard</a></li>
+                    <li ng-show="!MainUser.admin&&MainUser.registered"><a href="#/dashboard">Dashboard</a></li>
                     <li class="dropdown" ng-show="MainUser.admin">
                         <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Games <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -49,6 +49,7 @@
                             <li><a href="#/adminOverview">Overview</a></li>
                         </ul>
                     </li>
+                    <li ng-show="MainUser.admin"><a href="#/admin/knowledgeareas/edit">KnowledgeAreas</a></li>
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
