@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.ws.rs.Produces;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.security.Principal;
 
@@ -40,7 +41,7 @@ public class ImageController {
                 byte[] bytes = file.getBytes();
 
                 Team principal=teamrep.findByTeamname(user.getName());
-
+                System.out.println(principal.getTeamname() +" is equal to " + teamname + "?");
                 if(teamname.equals(principal.getTeamname()) || principal.isAdmin()) {
 
                     Team t = teamrep.findByTeamname(teamname);
@@ -54,10 +55,17 @@ public class ImageController {
 
 
                     return imageBytes;
+
+                    /*String filename=user.getName()+"_"+System.currentTimeMillis()+extension;
+                    String path="D:\\";
+                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream("path"+filename));
+                    stream.write(bytes);
+                    stream.close();
+                    return "path"+filename;*/
                 }
                 else{
                     //todo not allowed...
-                    throw new RuntimeException("not allowed");
+                    throw new RuntimeException("not allowed Imagecontroller");
                 }
 
             } catch (Exception e) {
