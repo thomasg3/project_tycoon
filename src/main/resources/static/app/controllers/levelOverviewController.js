@@ -3,7 +3,7 @@
  */
 
 angular.module('projecttycoonControllers')
-    .controller('levelOverview', function($location, $rootScope, $scope, $http, GameResource, $routeParams){
+    .controller('levelOverview', function($location, $rootScope, $scope, $http, GameResource, $routeParams, QuestionResourceService){
         $scope.game = new GameResource();
         GameResource.get({id : $routeParams.id}, function(data){
             $scope.game = data;
@@ -30,43 +30,82 @@ angular.module('projecttycoonControllers')
             templateUrl: "views/game/level/level-iso.html",
             link: function ($scope) {
 
-                $scope.addAnswer = function(receiver) {
-                    $scope.receivers.push({value:""});
-                }
+            }
+        };
+    }).directive('levelkn', function(QuestionResourceService) {
+    return {
+        restrict: 'E',
+        scope: {
+            my_levelkn: '=levelknowledgearea',
+            my_gameid: '=gameid'
+        },
+        templateUrl: "views/game/level/levelKnowledgeArea-iso.html",
+        link: function ($scope, $attr) {
+            $scope.saved = false;
+            if($scope.question){
+                $scope.saved = true;
+            }
+            $scope.addQuestion = function(lk) {
+                QuestionResourceService.get({id : lk.question.id}, function(question){
+                    question.question = lk.question.question;
+                    question.format = lk.question.format;
+                    question.$update({id : question.id}, function(data){
+                        $scope.saved = true;
+                    });
+                });
+            };
 
-                $scope.deleteAnswer = function(receiver) {
-                    for(var i=0; i<$scope.receivers.length; i++) {
-                        if($scope.receivers[i] === receiver) {
-                            $scope.receivers.splice(i, 1);
+            $scope.deleteQuestion = function(lk) {
+                $scope.saved = false;
+                QuestionResourceService.get({id : lk.question.id}, function(question){
+                    question.question = null;
+                    question.format = null;
+                    question.$update({id : question.id}, function(data){
+
+                    });
+                });
+            };
+
+        }
+    };
+    }).directive('answer', function(QuestionResourceService) {
+        return {
+            restrict: 'E',
+            scope: {
+                levelkn: '=levelknowledgearea',
+                my_gameid: '=gameid'
+            },
+            templateUrl: "views/game/level/answer-iso.html",
+            link: function ($scope, $attr) {
+                if(!$scope.levelkn.question.answers){
+                    $scope.levelkn.question.answers =[];
+                }
+                $scope.levelkn.question.answers.push({answer: "", score:""});
+                $scope.addAnswer = function(answer) {
+                    QuestionResourceService.get({id : $scope.levelkn.question.id}, function(question){
+                        question.answers = $scope.levelkn.question.answers;
+                        question.$updateAnswers({id : question.id}, function(data){
+                            $scope.levelkn.question.answers.push({answer: "", score:""});
+                        });
+                    });
+                };
+
+                $scope.deleteAnswer = function(answer) {
+                    for(var i=0; i< $scope.levelkn.question.answers.length; i++) {
+                        if($scope.levelkn.question.answers[i] === answer) {
+                            $scope.levelkn.question.answers.splice(i, 1);
                             break;
                         }
                     }
-                }
 
-
-
-                /*
-                $scope.addQuestion = function(){
-                    GameResource.get({id : $scope.my_gameid}, function(game){
-                        var index;
-                        for (index = 0; index < game.levels.length; ++index) {
-                            if(game.levels[index].id === $scope.my_level.id){
-                                if(!game.levels[index].questions){
-                                    game.levels[index].questions = [];
-                                }
-                                if(!$scope.my_level.questions){
-                                    $scope.my_level.questions = [];
-                                }
-                                game.levels[index].questions.push($scope.newquestion);
-                                $scope.my_level.questions.push($scope.newquestion);
-                                $scope.newquestion = null;
-                            }
-                        }
-                        game.$update({id: game.id}, function(data){
+                    QuestionResourceService.get({id : $scope.levelkn.question.id}, function(question){
+                        $scope.levelkn.question.answers.pop();
+                        question.answers = $scope.levelkn.question.answers;
+                        question.$updateAnswers({id : question.id}, function(data){
+                            $scope.levelkn.question.answers.push({answer: "", score:""});
                         });
                     });
-                    //return $scope.my_level;
-                };*/
+                }
             }
         };
     });

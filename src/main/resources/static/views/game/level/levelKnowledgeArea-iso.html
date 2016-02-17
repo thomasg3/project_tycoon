@@ -1,0 +1,17 @@
+<h4>{{my_levelkn.knowledgeArea.name}}</h4>
+
+
+<table class="table table-bordered table-condensed">
+    <tbody>
+    <tr>
+        <td><input ng-disabled="saved" ng-model="my_levelkn.question.question" type="text" class="form-control" placeholder="Question"/></td>
+        <td><input ng-disabled="saved" ng-model="my_levelkn.question.format" type="text" class="form-control" placeholder="Format (optional)"/></td>
+        <td><button ng-disabled="saved" ng-click="addQuestion(my_levelkn)" class="btn btn-default" type="button">Add</button></td>
+        <td><button ng-disabled="!saved" ng-click="deleteQuestion(my_levelkn)" class="btn btn-default" type="button">Remove</button></td>
+    </tr>
+    </tbody>
+</table>
+
+<answer gameid="my_gameid" levelknowledgearea="my_levelkn"></answer>
+
+

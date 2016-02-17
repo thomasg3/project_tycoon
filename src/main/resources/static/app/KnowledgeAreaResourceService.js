@@ -11,10 +11,7 @@ angular.module('projecttycoon').factory('KnowledgeAreaResource', function($resou
             method: 'POST',
             url: '/api/knowledgeareas/multiple',
             isArray: true
-        },
-        jeroenheeftmijverwijderd : {}
-
-
+        }
     });
 
 });

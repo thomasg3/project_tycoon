@@ -18,12 +18,12 @@ public class Question {
     private String question;
     private String format;
 
-    @OneToMany(cascade= CascadeType.ALL)
+    @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers;
 
     public Question(){
-        this.answers = new ArrayList<>();
-    };
+        answers =  new ArrayList<>();
+    }
 
     public Question(String question, String format, List<Answer> answers) {
         this.question = question;
@@ -60,7 +60,18 @@ public class Question {
     }
 
     public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
+        this.answers.removeAll(this.answers);
+        this.answers.addAll(answers);
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", format='" + format + '\'' +
+                ", answers=" + answers +
+                '}';
     }
 }
 
