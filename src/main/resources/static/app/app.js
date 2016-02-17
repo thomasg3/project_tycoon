@@ -1,7 +1,7 @@
 /**
  * Created by thomas on 09/02/16.
  */
-var app = angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngResource']);
+var app = angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngResource', 'ngFileUpload']);
 
 app.factory('httpInterceptor', ['$q', '$location', '$log', function($q, $location, $log){
     return {

@@ -54,7 +54,7 @@ public class Game {
             this.scoreEngine.getLevels().add(new Level("Level "+ i, i, levelKnowledgeAreas));
         }
         for(int i = count; count<i + teams;count++){
-            this.teams.add(new Team("Team"+(count),"testtest",this.scoreEngine.getLevels(),"http://i.imgur.com/IhewUTH.jpg"));
+            this.teams.add(new Team("Team"+(count),"testtest",this.scoreEngine.getLevels(),"/hosted_resources/admin_1455635149425.png"));
         }
     }
 
