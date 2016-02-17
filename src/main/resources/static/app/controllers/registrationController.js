@@ -3,7 +3,7 @@
  */
 
 angular.module('projecttycoonControllers')
-.controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource, GameResource) {
+.controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource, GameResource,MainUserResource) {
     $scope.oldUsername = $routeParams.username;
 
     /*
@@ -33,7 +33,7 @@ angular.module('projecttycoonControllers')
                         updateTeam.password = $scope.credentials.password;
                         updateTeam.$update({id : updateTeam.id}, function(){
                             TeamResource.get({id: updateTeam.id}, function(data){
-                                $rootScope.MainUser = data;
+                                MainUserResource.saveMainUser(data);
                                 $location.path('/');
                             });
                         });

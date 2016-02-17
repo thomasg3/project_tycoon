@@ -3,7 +3,8 @@
  */
 
 angular.module('projecttycoonControllers')
-.controller('navigation', function($rootScope, $scope, $http, $location, TeamResource) {
+.controller('navigation', function($rootScope, $scope, $http, $location, $window,MainUserResource, TeamResource) {
+    $rootScope.MainUser = MainUserResource.getMainUser();
     $rootScope.authenticate = function(credentials, callback) {
 
         var headers = credentials ? {authorization : "Basic "
@@ -23,7 +24,6 @@ angular.module('projecttycoonControllers')
         });
 
     };
-
     $rootScope.authenticate();
     $scope.credentials = {};
     $scope.login = function() {
@@ -31,7 +31,9 @@ angular.module('projecttycoonControllers')
             if ($rootScope.authenticated) {
 
                 TeamResource.search({teamname: $scope.credentials.username},function(data){
-                    $rootScope.MainUser = data;
+                    //$window.sessionStorage.MainUser=JSON.stringify(data);
+                    MainUserResource.saveMainUser(data);
+                    $rootScope.MainUser=MainUserResource.getMainUser();
                 })
                 TeamResource.isRegistered({teamname: $scope.credentials.username}, function(data) {
                     if(data.registered){
@@ -50,6 +52,7 @@ angular.module('projecttycoonControllers')
     };
     $scope.logout = function() {
         $http.post('/logout', {}).success(function(){
+            MainUserResource.saveMainUser({});
             $rootScope.authenticated = false;
             $location.path("/");
         }).error(function(){
