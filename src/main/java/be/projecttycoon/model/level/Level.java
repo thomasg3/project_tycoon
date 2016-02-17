@@ -1,5 +1,7 @@
-package be.projecttycoon.model;
+package be.projecttycoon.model.level;
 
+
+import be.projecttycoon.model.LevelKnowledgeArea;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -12,7 +14,7 @@ import java.util.List;
  * Created by thomas on 11/02/16.
  */
 @Entity
-public class Level {
+public class Level{
 
     @Id
     @GeneratedValue
@@ -28,11 +30,16 @@ public class Level {
     @ManyToMany(cascade=CascadeType.ALL)
     private List<LevelKnowledgeArea> levelKnowledgeAreas;
 
+    @Transient
+    private LevelState state;
+
     public Level() {
+        this.state = new Closed(this);
         this.levelKnowledgeAreas = new ArrayList<>();
     }
 
     public Level(String name, int round, List<LevelKnowledgeArea> levelKnowledgeAreas) {
+        this();
         this.name = name;
         this.round = round;
         this.levelKnowledgeAreas = levelKnowledgeAreas;
@@ -70,6 +77,10 @@ public class Level {
         this.levelKnowledgeAreas = levelKnowledgeAreas;
     }
 
+    void setState(LevelState state){
+        this.state = state;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -101,5 +112,76 @@ public class Level {
                 ", name='" + name + '\'' +
                 ", levelKnowledgeAreas=" + levelKnowledgeAreas +
                 '}';
+    }
+
+    public void cermonieFinished() {
+        state.cermonieFinished();
+    }
+
+    public void open() {
+        state.open();
+    }
+
+    public void close() {
+        state.close();
+    }
+
+    public void pointPush() {
+        state.pointPush();
+    }
+
+    public boolean isClosed(){
+        return state instanceof Closed;
+    }
+
+    public void setClosed(boolean closed){
+        if(closed)
+            state = new Closed(this);
+    }
+
+    public boolean isOpen(){
+        return state instanceof Open;
+    }
+
+    public void setOpen(boolean open){
+        if(open)
+            state = new Open(this);
+    }
+
+    public boolean isFinished(){
+        return state instanceof Finished;
+    }
+
+    public void setFinished(boolean finished){
+        if(finished)
+            state = new Finished(this);
+    }
+
+    public boolean isCermonie(){
+        return state instanceof Cermonie;
+    }
+
+    public void setCermonie(boolean cermonie){
+        if(cermonie)
+            state = new Cermonie(this);
+    }
+
+    public boolean isConcluded(){
+        return state instanceof Concluded;
+    }
+
+    public void setConcluded(boolean concluded){
+        if(concluded)
+            state = new Concluded(this);
+    }
+
+    public boolean teamsCanSeePoints(){
+        return state.teamsCanSeePoints();
+    }
+    public boolean documentsAreOpen(){
+        return state.documentsAreOpen();
+    }
+    public boolean questionsAreOpen(){
+        return state.questionsAreOpen();
     }
 }
