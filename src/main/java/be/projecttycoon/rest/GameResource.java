@@ -4,10 +4,14 @@ import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.KnowledgeAreaRepository;
 import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Game;
+import be.projecttycoon.model.KnowledgeArea;
+import be.projecttycoon.model.ScoreEngine;
 import be.projecttycoon.model.Team;
+import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.GameBean;
-import be.projecttycoon.rest.util.TeamBean;
+import be.projecttycoon.rest.KnowledgeAreaResource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,10 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.ws.rs.Produces;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by thomas on 10/02/16.
@@ -38,6 +39,12 @@ public class GameResource {
         this.gameRepository = gameRepository;
         this.teamRepository = teamRepository;
         this.knowledgeAreaRepository = knowledgeAreaRepository;
+
+        String[] areas = {"Integration", "Scope", "Time", "Cost", "Quality", "Human Resources", "Communications", "Risk", "Procurement", "Stakeholder"};
+        for(int i=0; i<areas.length; i++){
+            knowledgeAreaRepository.save(new KnowledgeArea(areas[i], i));
+        }
+
         Game game = new Game("ProjectFun2016",2,4, knowledgeAreaRepository.findAll());
         ArrayList<Team> teams= new ArrayList<Team>();
         teams.addAll(game.getTeams());
@@ -53,10 +60,36 @@ public class GameResource {
         teams2.addAll(testgame.getTeams());
         teams2.get(0).setTeamname("Team123");
         teams2.get(0).setPassword("azerty");
-        teams2.get(0).setRegistered(true);
-        gameRepository.save(testgame);
 
+
+        Game testgame2 = new Game("testGame123342", 5,5, knowledgeAreaRepository.findAll());
+        ArrayList<Team> teams3= new ArrayList<Team>();
+        teams2.addAll(testgame.getTeams());
+        teams2.get(0).setTeamname("Team123");
+        teams2.get(0).setPassword("azerty");
+        teams2.get(0).setRegistered(true);
+
+        gameRepository.save(testgame);
+        gameRepository.save(testgame2);
         gameRepository.save(game);
+
+
+        Game scoreTest = new Game("The Admin Games", 4, 8, knowledgeAreaRepository.findAll());
+        teams = new ArrayList<>();
+        teams.addAll(scoreTest.getTeams());
+        teams.get(0).setTeamname("ABCDEFGH");
+        teams.get(1).setTeamname("DeVrolijkeBarten");
+        teams.get(2).setTeamname("ProjectNinas");
+        teams.get(3).setTeamname("TeamWin");
+        Random r  = new Random();
+        teams.stream().forEach(team -> {
+            team.getTeamLevelPrestations().stream().forEach(p -> {
+                p.getKnowledgeAreaScores().stream().forEach(kas -> {
+                    kas.setScore(r.nextInt(30)-10);
+                });
+            });
+        });
+        gameRepository.save(scoreTest);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -68,7 +101,10 @@ public class GameResource {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @Produces("application/json")
     public Game showGame(@PathVariable long id ){
-        return gameRepository.findOne(id);
+        Game game = gameRepository.findOne(id);
+        if(game == null)
+            throw new NotFoundException();
+        return game;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -81,7 +117,7 @@ public class GameResource {
 
     @RequestMapping(value="/{id}", method = RequestMethod.PUT)
     @Produces("application/json")
-    public Game updateTeam(Principal currentUser, @PathVariable long id, @Valid @RequestBody Game newGame){
+    public Game updateGame(@PathVariable long id, @Valid @RequestBody Game newGame){
         Game game = gameRepository.findOne(newGame.getId());
         newGame.setTeams(game.getTeams());
         return gameRepository.save(newGame);
@@ -91,26 +127,31 @@ public class GameResource {
     @Produces("application/json")
     public Game getGameForTeam(@PathVariable String teamname) {
         Team team = teamRepository.findByTeamname(teamname);
-        return gameRepository.findAll().stream()
+        Game game =  gameRepository.findAll().stream()
                 .filter(g -> g.containsTeam(team))
-                .findFirst().get();
+                .findFirst().orElse(null);
+        if(game == null)
+            throw new NotFoundException();
+        return game;
     }
 
     @RequestMapping (value="/{id}", method = RequestMethod.DELETE)
     @Produces("application/json")
     public void deleteGame(@PathVariable long id){
+        showGame(id);
         gameRepository.delete(id);
 
     }
 
     @RequestMapping(value = "/team/{id}", method=RequestMethod.DELETE)
     @Produces("application/json")
-    public void deleteTeam(@PathVariable long id){
+    public Game deleteTeam(@PathVariable long id){
         Team t = teamRepository.findOne(id);
-        System.out.println("hoera");
+        if(t==null)
+            throw new NotFoundException();
         Game g = getGameForTeam(t.getTeamname());
         Set<Team> teams= g.getTeams();
         teams.remove(t);
-        gameRepository.save(g);
+        return gameRepository.save(g);
     }
 }

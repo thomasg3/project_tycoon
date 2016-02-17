@@ -25,40 +25,42 @@ public class Game {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private Set<Team> teams;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Level> levels;
+    @OneToOne(cascade = CascadeType.ALL)
+    private ScoreEngine scoreEngine;
 
     private static int count = 1;
 
 
     public Game() {
         this.teams = new HashSet<>();
-        this.levels = new ArrayList<>();
+        this.scoreEngine = new ScoreEngine();
     }
 
     public Game(String name, int teams, int levels, List<KnowledgeArea> knowledgeAreas) {
         this();
+        this.scoreEngine = new ScoreEngine();
         setName(name);
         generateGame(teams, levels, knowledgeAreas);
-
     }
 
     private void generateGame(int teams, int levels, List<KnowledgeArea> knowledgeAreas){
         for(int i = 1; i<=levels; i++){
-            this.levels.add(new Level("Level "+ i, i, knowledgeAreas));
+            List<LevelKnowledgeArea> levelKnowledgeAreas = new ArrayList<>();
+            for (KnowledgeArea k:knowledgeAreas){
+                LevelKnowledgeArea lk = new LevelKnowledgeArea();
+                lk.setKnowledgeArea(k);
+                levelKnowledgeAreas.add(lk);
+            }
+            this.scoreEngine.getLevels().add(new Level("Level "+ i, i, levelKnowledgeAreas));
         }
         for(int i = count; count<i + teams;count++){
-            this.teams.add(new Team("Team"+(count),"testtest",this.levels,"http://i.imgur.com/IhewUTH.jpg"));
+            this.teams.add(new Team("Team"+(count),"testtest",this.scoreEngine.getLevels(),"http://i.imgur.com/IhewUTH.jpg"));
         }
-
     }
 
-    public void addLevels(List<Level> levels){
-        for (Level l: levels) {
-            if(!this.levels.contains(l)){
-                this.levels.add(l);
-            }
-        }
+    @Transient
+    public List<Level> getLevels(){
+        return this.scoreEngine.getLevels();
     }
 
     public long getId() {
@@ -69,12 +71,16 @@ public class Game {
         this.id = id;
     }
 
-    public List<Level> getLevels() {
-        return levels;
+    public ScoreEngine getScoreEngine() {
+        return scoreEngine;
     }
 
-    public void setLevels(List<Level> levels) {
-        this.levels = levels;
+    public void setScoreEngine(ScoreEngine scoreEngine) {
+        this.scoreEngine = scoreEngine;
+    }
+
+    public static int getCount() {
+        return count;
     }
 
     public String getName() {
@@ -119,6 +125,7 @@ public class Game {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", teams=" + teams +
+                ", scoreEngine=" + scoreEngine +
                 '}';
     }
 }

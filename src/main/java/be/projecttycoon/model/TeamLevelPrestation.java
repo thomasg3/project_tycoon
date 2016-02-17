@@ -27,8 +27,8 @@ public class TeamLevelPrestation {
     public TeamLevelPrestation(Level level) {
         this();
         this.level = level;
-        for(KnowledgeArea knowledgeArea : level.getKnowledgeAreas()){
-            knowledgeAreaScores.add(new KnowledgeAreaScore(knowledgeArea));
+        for(LevelKnowledgeArea lk : level.getLevelKnowledgeAreas()){
+            knowledgeAreaScores.add(new KnowledgeAreaScore(lk.getKnowledgeArea()));
         }
     }
 

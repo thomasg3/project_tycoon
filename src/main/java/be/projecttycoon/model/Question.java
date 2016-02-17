@@ -1,8 +1,8 @@
 package be.projecttycoon.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jeroen on 15-2-2016.
@@ -16,23 +16,27 @@ public class Question {
     private long id;
 
     private String question;
-    private String answer;
+    private String format;
+
+    @OneToMany(cascade= CascadeType.ALL)
+    private List<Answer> answers;
 
     public Question(){
+        this.answers = new ArrayList<>();
+    };
 
-    }
-
-    public Question(String question, String answer) {
+    public Question(String question, String format, List<Answer> answers) {
         this.question = question;
-        this.answer = answer;
+        this.format = format;
+        this.answers = answers;
     }
 
-    public boolean isCorrect(String answer){
-        boolean correct = false;
-        if(this.answer.equals(answer)){
-            correct = true;
-        }
-        return correct;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getQuestion() {
@@ -43,12 +47,20 @@ public class Question {
         this.question = question;
     }
 
-    public String getAnswer() {
-        return answer;
+    public String getFormat() {
+        return format;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 }
 

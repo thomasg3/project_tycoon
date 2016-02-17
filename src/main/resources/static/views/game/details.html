@@ -5,6 +5,7 @@
 -->
 
 <h1>GameScore Details</h1>
+<a href="#/dashboard/{{game.id}}" class="btn btn-default">Back to overview</a>
 <div class="row">
     <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
@@ -15,10 +16,10 @@
 
 <div class="panel panel-default" ng-repeat="level in game.levels track by $index">
     <div class="panel-heading" data-toggle="collapse" data-target="#{{$index}}" aria-expanded="false" aria-controls="{{$index}}">
-        <h2>{{level.round}}. {{level.name}}</h2>
+        <h2>{{level.round}}. {{level.name}}</h2><a href="#/games/{{game.id}}/levels/{{level.id}}/editscores" class="btn btn-default" ng-show="MainUser.admin">Edit Scores</a>
         <table class="table">
             <tr>
-                <td ng-repeat="team in game.teams">{{team.teamname}} : {{team.teamLevelPrestations[$index].levelScore}}</td>
+                <td ng-repeat="team in game.teams">{{team.teamname}} : {{team.teamLevelPrestations[level.round-1].levelScore}}</td>
             </tr>
         </table>
     </div>
@@ -26,13 +27,13 @@
         <table class="table">
             <tr>
                 <th>Team</th>
-                <th ng-repeat="ka in level.knowledgeAreas">{{ka.name}}</th>
+                <th ng-repeat="ka in level.levelKnowledgeAreas">{{ka.knowledgeArea.name}}</th>
                 <th>Total</th>
             </tr>
             <tr ng-repeat="team in game.teams | filter: searchText">
-                <td>{{team.teamname}}</td>
-                <td ng-repeat="kas in team.teamLevelPrestations[$index].knowledgeAreaScores">{{kas.score}}</td>
-                <td>{{team.teamLevelPrestations[$index].levelScore}}</td>
+                <th>{{team.teamname}}</th>
+                <td ng-repeat="kas in team.teamLevelPrestations[level.round-1].knowledgeAreaScores">{{kas.score}}</td>
+                <td>{{team.teamLevelPrestations[level.round-1].levelScore}}</td>
             </tr>
         </table>
     </div>

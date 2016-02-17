@@ -6,6 +6,20 @@ angular.module('projecttycoonControllers')
 .controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource, GameResource) {
     $scope.oldUsername = $routeParams.username;
 
+    /*
+    ----------------Onregistered user mag geen getGameByUsername doen----------------------
+    GameResource.getGameByUsername({teamname:$scope.oldUsername}, function(game){
+        alert("test");
+        var index;
+        var teamnames = [];
+        for (index = 0; index < game.teams.length; ++index) {
+            teamnames.push(game.teams[index].teamname);
+            alert(JSON.stringify(teamnames));
+        }
+    });
+    */
+
+
     $scope.initTeam = function(){
 
         var oldCredentials = {username : $scope.oldUsername, password : $scope.credentials.oldPassword};
