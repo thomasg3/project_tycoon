@@ -3,7 +3,7 @@
  */
 
 angular.module('projecttycoonControllers')
-    .controller('levelOverview', function($location, $rootScope, $scope, $http, GameResource, $routeParams){
+    .controller('levelOverview', function($location, $rootScope, $scope, $http, GameResource, $routeParams, QuestionResourceService){
         $scope.game = new GameResource();
         GameResource.get({id : $routeParams.id}, function(data){
             $scope.game = data;
@@ -32,7 +32,7 @@ angular.module('projecttycoonControllers')
 
             }
         };
-    }).directive('levelkn', function(GameResource) {
+    }).directive('levelkn', function(QuestionResourceService) {
     return {
         restrict: 'E',
         scope: {
@@ -41,47 +41,34 @@ angular.module('projecttycoonControllers')
         },
         templateUrl: "views/game/level/levelKnowledgeArea-iso.html",
         link: function ($scope, $attr) {
-            $scope.button = "Add";
             $scope.saved = false;
-
-            $scope.addQuestion = function(lk) {
-                $scope.button = "Remove";
+            if($scope.question){
                 $scope.saved = true;
-
-                //lk..
-                GameResource.get({id: $scope.my_gameid}, function(game){
-                    for(var i=0; i< game.scoreEngine.levels.length; i++) {
-                        for(var j=0; j< game.scoreEngine.levels[i].levelKnowledgeAreas.length; j++) {
-                            if($scope.my_levelkn.id === game.scoreEngine.levels[i].levelKnowledgeAreas[j].id){
-                                game.scoreEngine.levels[i].levelKnowledgeAreas[j].question = $scope.my_levelkn.question;
-                                game.$update({id : game.id}, function(data){
-                                    $scope.my_levelkn.question.saved = true;
-                                })
-                            }
-                        }
-                    }
+            }
+            $scope.addQuestion = function(lk) {
+                QuestionResourceService.get({id : lk.question.id}, function(question){
+                    question.question = lk.question.question;
+                    question.format = lk.question.format;
+                    question.$update({id : question.id}, function(data){
+                        $scope.saved = true;
+                    });
                 });
             };
 
             $scope.deleteQuestion = function(lk) {
-                $scope.button = "Add";
-                delete $scope.levelkn.question;
-                for(var i=0; i< game.scoreEngine.levels.length; i++) {
-                    for(var j=0; j< game.scoreEngine.levels[i].levelKnowledgeAreas.length; j++) {
-                        if($scope.levelkn.id === game.scoreEngine.levels[i].levelKnowledgeAreas[j].id){
-                            delete game.scoreEngine.levels[i].levelKnowledgeAreas[j].question;
-                            game.$update({id : game.id}, function(data){
+                $scope.saved = false;
+                QuestionResourceService.get({id : lk.question.id}, function(question){
+                    question.question = null;
+                    question.format = null;
+                    question.$update({id : question.id}, function(data){
 
-                            })
-                        }
-                    }
-                }
-
+                    });
+                });
             };
 
         }
     };
-    }).directive('answer', function(GameResource) {
+    }).directive('answer', function(QuestionResourceService) {
         return {
             restrict: 'E',
             scope: {
@@ -93,18 +80,31 @@ angular.module('projecttycoonControllers')
                 if(!$scope.levelkn.question.answers){
                     $scope.levelkn.question.answers =[];
                 }
-                $scope.levelkn.question.answers.push({answer: "", score:""})
+                $scope.levelkn.question.answers.push({answer: "", score:""});
                 $scope.addAnswer = function(answer) {
-                    $scope.levelkn.question.answers.push({answer: "", score:""})
-                }
+                    QuestionResourceService.get({id : $scope.levelkn.question.id}, function(question){
+                        question.answers = $scope.levelkn.question.answers;
+                        question.$updateAnswers({id : question.id}, function(data){
+                            $scope.levelkn.question.answers.push({answer: "", score:""});
+                        });
+                    });
+                };
 
                 $scope.deleteAnswer = function(answer) {
-                    for(var i=0; i<$scope.levelkn.question.answers.length; i++) {
+                    for(var i=0; i< $scope.levelkn.question.answers.length; i++) {
                         if($scope.levelkn.question.answers[i] === answer) {
                             $scope.levelkn.question.answers.splice(i, 1);
                             break;
                         }
                     }
+
+                    QuestionResourceService.get({id : $scope.levelkn.question.id}, function(question){
+                        $scope.levelkn.question.answers.pop();
+                        question.answers = $scope.levelkn.question.answers;
+                        question.$updateAnswers({id : question.id}, function(data){
+                            $scope.levelkn.question.answers.push({answer: "", score:""});
+                        });
+                    });
                 }
             }
         };

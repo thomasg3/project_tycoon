@@ -22,8 +22,8 @@ public class Question {
     private List<Answer> answers;
 
     public Question(){
-        this.answers = new ArrayList<>();
-    };
+        answers =  new ArrayList<>();
+    }
 
     public Question(String question, String format, List<Answer> answers) {
         this.question = question;
@@ -60,7 +60,8 @@ public class Question {
     }
 
     public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
+        this.answers.removeAll(this.answers);
+        this.answers.addAll(answers);
     }
 
     @Override

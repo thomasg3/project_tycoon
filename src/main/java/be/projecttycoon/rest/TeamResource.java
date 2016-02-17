@@ -78,7 +78,4 @@ public class TeamResource  {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
     }
-
-
-
 }
