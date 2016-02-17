@@ -36,6 +36,16 @@ public class ScoreEngine {
         return levels;
     }
 
+    public Level getLevel(long id){
+        Level level = null;
+        for (Level l : levels){
+            if(l.getId() == id){
+                level = l;
+            }
+        }
+        return level;
+    }
+
     public void setLevels(List<Level> levels) {
         this.levels = levels;
     }

@@ -13,16 +13,26 @@ public class LevelKnowledgeArea {
     @GeneratedValue
     private long id;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL, orphanRemoval = true)
     private Question question;
     @ManyToOne
     private KnowledgeArea knowledgeArea;
 
-    public LevelKnowledgeArea(){};
+    public LevelKnowledgeArea(){
+        this.setQuestion(new Question());
+    };
 
     public LevelKnowledgeArea(Question question, KnowledgeArea knowledgeArea) {
         this.question = question;
         setKnowledgeArea(knowledgeArea);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public Question getQuestion() {
@@ -39,5 +49,14 @@ public class LevelKnowledgeArea {
 
     public void setKnowledgeArea(KnowledgeArea knowledgeArea) {
         this.knowledgeArea = knowledgeArea;
+    }
+
+    @Override
+    public String toString() {
+        return "LevelKnowledgeArea{" +
+                "id=" + id +
+                ", question=" + question +
+                ", knowledgeArea=" + knowledgeArea +
+                '}';
     }
 }

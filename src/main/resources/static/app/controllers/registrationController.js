@@ -3,21 +3,38 @@
  */
 
 angular.module('projecttycoonControllers')
-.controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource, GameResource,MainUserResource) {
+.controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource, GameResource,Upload,MainUserResource) {
     $scope.oldUsername = $routeParams.username;
 
-    /*
-    ----------------Onregistered user mag geen getGameByUsername doen----------------------
-    GameResource.getGameByUsername({teamname:$scope.oldUsername}, function(game){
-        alert("test");
-        var index;
-        var teamnames = [];
-        for (index = 0; index < game.teams.length; ++index) {
-            teamnames.push(game.teams[index].teamname);
-            alert(JSON.stringify(teamnames));
-        }
-    });
-    */
+    TeamResource.search({teamname: $routeParams.username},function(data){
+        $scope.userPhoto=data.teamImage});
+
+
+
+    $scope.onUrlSelect=function(){
+        $http({
+            url: '/api/image/uploadWeb/'+$routeParams.username,
+            method: "POST",
+            data: $scope.url
+        })
+            .then(function(response) {
+                    $scope.userPhoto=$scope.url;
+                })
+    }
+
+    $scope.onFileSelect= function($files) {
+
+        var formData=new FormData();
+        formData.append("file",$files[0]);
+        $http.post('/api/image/upload/'+$routeParams.username, formData, {
+            transformRequest: function(data, headersGetterFunction) {
+                return data;
+            },
+            headers: { 'Content-Type': undefined }
+        }).success(function(response){
+                $scope.userPhoto=response.url;
+        })}
+
 
 
     $scope.initTeam = function(){

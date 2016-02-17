@@ -12,8 +12,6 @@ angular.module('projecttycoon').factory('KnowledgeAreaResource', function($resou
             url: '/api/knowledgeareas/multiple',
             isArray: true
         }
-
-
     });
 
 });
