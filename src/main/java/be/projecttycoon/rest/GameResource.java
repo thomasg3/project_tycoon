@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.ws.rs.Produces;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by thomas on 10/02/16.
@@ -73,6 +70,24 @@ public class GameResource {
         gameRepository.save(testgame);
         gameRepository.save(testgame2);
         gameRepository.save(game);
+
+
+        Game scoreTest = new Game("The Admin Games", 4, 8, knowledgeAreaRepository.findAll());
+        teams = new ArrayList<>();
+        teams.addAll(scoreTest.getTeams());
+        teams.get(0).setTeamname("ABCDEFGH");
+        teams.get(1).setTeamname("DeVrolijkeBarten");
+        teams.get(2).setTeamname("ProjectNinas");
+        teams.get(3).setTeamname("TeamWin");
+        Random r  = new Random();
+        teams.stream().forEach(team -> {
+            team.getTeamLevelPrestations().stream().forEach(p -> {
+                p.getKnowledgeAreaScores().stream().forEach(kas -> {
+                    kas.setScore(r.nextInt(30)-10);
+                });
+            });
+        });
+        gameRepository.save(scoreTest);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -155,13 +170,13 @@ public class GameResource {
 
     @RequestMapping(value = "/team/{id}", method=RequestMethod.DELETE)
     @Produces("application/json")
-    public void deleteTeam(@PathVariable long id){
+    public Game deleteTeam(@PathVariable long id){
         Team t = teamRepository.findOne(id);
         if(t==null)
             throw new NotFoundException();
         Game g = getGameForTeam(t.getTeamname());
         Set<Team> teams= g.getTeams();
         teams.remove(t);
-        gameRepository.save(g);
+        return gameRepository.save(g);
     }
 }

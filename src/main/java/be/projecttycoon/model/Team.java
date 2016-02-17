@@ -39,6 +39,7 @@ public class Team{
     @Size(min = 6, message = "Your password must be at least 6 characters")
     @JsonIgnore
     private String password;
+
     private String teamImage;
 
     private int likes;

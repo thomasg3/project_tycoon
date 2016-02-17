@@ -39,6 +39,7 @@
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/maven-archiver" />
       <excludeFolder url="file://$MODULE_DIR$/target/maven-status" />
+      <excludeFolder url="file://$MODULE_DIR$/target/surefire" />
       <excludeFolder url="file://$MODULE_DIR$/target/surefire-reports" />
       <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
       <excludeFolder url="file://$MODULE_DIR$/target/wro" />
@@ -161,5 +162,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: com.jayway.restassured:rest-assured-common:2.4.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: com.jayway.restassured:xml-path:2.4.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apache.commons:commons-lang3:3.3.2" level="project" />
+    <orderEntry type="library" name="Maven: org.twitter4j:twitter4j-core:4.0.4" level="project" />
+    <orderEntry type="library" name="Maven: org.twitter4j:twitter4j-media-support:4.0.4" level="project" />
   </component>
 </module>

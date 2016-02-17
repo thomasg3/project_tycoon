@@ -5,4 +5,5 @@
 angular.module('projecttycoonControllers')
 .controller('home', function($scope, $http, $rootScope) {
     $scope.data = $rootScope.MainUser;
+
 });

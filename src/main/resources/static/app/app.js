@@ -1,12 +1,11 @@
 /**
  * Created by thomas on 09/02/16.
  */
-var app = angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngResource']);
+var app = angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngResource', 'ngFileUpload']);
 
 app.factory('httpInterceptor', ['$q', '$location', '$log', function($q, $location, $log){
     return {
         response: function(response){
-            $log.debug(response);
             return response;
         },
         responseError: function(response){
@@ -65,6 +64,10 @@ app.config(function($routeProvider, $httpProvider) {
             .when('/editTeam/:teamname',{
                 templateUrl : 'views/updateTeam.html',
                 controller : 'updateTeam'
+            })
+            .when('/games/:gameid/teams/:id', {
+                templateUrl : 'views/team/details.html',
+                controller : 'detailTeamController'
             })
             //##### game pages #####
             .when('/games/:id/details',{
