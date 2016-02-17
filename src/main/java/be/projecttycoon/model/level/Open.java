@@ -29,4 +29,24 @@ public class Open implements LevelState {
     public void cermonieFinished() {
         throw new IllegalStateException();
     }
+
+    @Override
+    public boolean documentsAreOpen() {
+        return true;
+    }
+
+    @Override
+    public boolean teamsCanSeePoints() {
+        return false;
+    }
+
+    @Override
+    public boolean questionsAreOpen() {
+        return true;
+    }
+
+    @Override
+    public boolean questionsAreVisible() {
+        return true;
+    }
 }

@@ -12,5 +12,6 @@ public interface LevelState {
     boolean teamsCanSeePoints();
     boolean documentsAreOpen();
     boolean questionsAreOpen();
+    boolean questionsAreVisible();
 
 }

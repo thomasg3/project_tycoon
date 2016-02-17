@@ -181,6 +181,9 @@ public class Level{
     public boolean documentsAreOpen(){
         return state.documentsAreOpen();
     }
+    public boolean questionsAreVisible(){
+        return state.questionsAreVisible();
+    }
     public boolean questionsAreOpen(){
         return state.questionsAreOpen();
     }

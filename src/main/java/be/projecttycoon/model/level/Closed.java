@@ -43,4 +43,9 @@ public class Closed implements LevelState {
     public boolean questionsAreOpen() {
         return false;
     }
+
+    @Override
+    public boolean questionsAreVisible() {
+        return false;
+    }
 }

@@ -4,6 +4,7 @@ import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.KnowledgeAreaRepository;
 import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.*;
+import be.projecttycoon.model.level.Level;
 import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.GameBean;
 import be.projecttycoon.rest.KnowledgeAreaResource;

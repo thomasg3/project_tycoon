@@ -44,4 +44,9 @@ public class Cermonie implements LevelState {
     public boolean questionsAreOpen() {
         return false;
     }
+
+    @Override
+    public boolean questionsAreVisible() {
+        return true;
+    }
 }
