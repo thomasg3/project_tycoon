@@ -6,6 +6,21 @@ angular.module('projecttycoonControllers')
 .controller('registration', function($rootScope, $scope, $http, $routeParams,$location, TeamResource, GameResource, Upload) {
     $scope.oldUsername = $routeParams.username;
 
+    TeamResource.search({teamname: $routeParams.username},function(data){
+        $scope.userPhoto=data.teamImage});
+
+
+
+    $scope.onUrlSelect=function(){
+        $http({
+            url: '/api/image/uploadWeb/'+$routeParams.username,
+            method: "POST",
+            data: $scope.url
+        })
+            .then(function(response) {
+                    $scope.userPhoto=$scope.url;
+                })
+    }
 
     $scope.onFileSelect= function($files) {
 
@@ -16,12 +31,10 @@ angular.module('projecttycoonControllers')
                 return data;
             },
             headers: { 'Content-Type': undefined }
-        }).success(function(data, status) {
-            $scope.userPhoto=data;
-        }).error(function(data, status) {
-            console.log("Error " + data + " " + status)
-            $scope.userPhoto=data;
-        })};
+        }).success(function(response){
+                $scope.userPhoto=response.url;
+        })}
+
 
 
     $scope.initTeam = function(){

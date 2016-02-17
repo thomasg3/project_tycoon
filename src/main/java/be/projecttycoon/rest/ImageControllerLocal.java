@@ -2,6 +2,7 @@ package be.projecttycoon.rest;
 
 import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Team;
+import be.projecttycoon.rest.util.UrlBean;
 import jdk.nashorn.internal.objects.ArrayBufferView;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.codec.binary.StringUtils;
@@ -24,15 +25,15 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping(value = "/api/image")
-public class ImageController {
+public class ImageControllerLocal {
 
     @Autowired
     TeamRepository teamrep;
 
 
 
-    @RequestMapping(value = "/upload/{teamname}", method = RequestMethod.POST, produces = {"image/jpg","image/gif","image/png"})
-    public @ResponseBody String handleFileUpload(@PathVariable String teamname, @RequestParam(value = "file") MultipartFile file,Principal user) {
+    @RequestMapping(value = "/upload/{teamname}", method = RequestMethod.POST, produces = "application/json")
+    public UrlBean handleFileUpload(@PathVariable String teamname, @RequestParam(value = "file") MultipartFile file, Principal user) {
         if (file !=null && !file.isEmpty() && file.getOriginalFilename().contains(".")) {
             String[] filenameAndExtension=file.getOriginalFilename().split("\\.");
             String extension = "."+filenameAndExtension[filenameAndExtension.length-1];
@@ -41,27 +42,31 @@ public class ImageController {
                 byte[] bytes = file.getBytes();
 
                 Team principal=teamrep.findByTeamname(user.getName());
-                System.out.println(principal.getTeamname() +" is equal to " + teamname + "?");
                 if(teamname.equals(principal.getTeamname()) || principal.isAdmin()) {
 
-                    Team t = teamrep.findByTeamname(teamname);
-                    StringBuilder sb = new StringBuilder();
+
+                    /*StringBuilder sb = new StringBuilder();
                     sb.append("data:" + file.getContentType() + ";base64,");
                     sb.append(Base64.encodeBase64String(bytes));
                     String imageBytes = sb.toString();
-
                     t.setTeamImage(imageBytes);
                     teamrep.save(t);
+                    return imageBytes;*/
 
 
-                    return imageBytes;
 
-                    /*String filename=user.getName()+"_"+System.currentTimeMillis()+extension;
-                    String path="D:\\";
-                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream("path"+filename));
+                    Team t = teamrep.findByTeamname(teamname);
+                    String filename=user.getName()+"_"+System.currentTimeMillis()+extension;
+                    String path="../images/";
+                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(path+filename));
                     stream.write(bytes);
                     stream.close();
-                    return "path"+filename;*/
+
+                    String outputPath= "/hosted_resources/"+filename;
+                    t.setTeamImage(outputPath);
+                    teamrep.save(t);
+
+                    return new UrlBean(outputPath);
                 }
                 else{
                     //todo not allowed...

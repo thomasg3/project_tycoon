@@ -40,8 +40,6 @@ public class Team{
     @JsonIgnore
     private String password;
 
-
-    @Column(length = 2147483647)
     private String teamImage;
 
     private int likes;

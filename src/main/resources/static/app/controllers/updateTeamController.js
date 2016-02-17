@@ -4,7 +4,8 @@
 
 angular.module('projecttycoonControllers')
 .controller('updateTeam',function($rootScope, $scope, $http, $routeParams,$location,TeamResource, Upload){
-
+    TeamResource.search({teamname: $routeParams.teamname},function(data){
+        $scope.userPhoto=data.teamImage});
 
 
     $scope.onFileSelect= function($files) {
@@ -16,12 +17,25 @@ angular.module('projecttycoonControllers')
                 return data;
             },
             headers: { 'Content-Type': undefined }
-        }).success(function(data, status) {
-            $scope.userPhoto=data;
-        }).error(function(data, status) {
-            console.log("Error " + data + " " + status)
-            $scope.userPhoto=data;
-    })};
+        }).success(function(response){
+            $scope.userPhoto=response.url;
+        })}
+
+
+
+    $scope.onUrlSelect=function(){
+        $http({
+            url: '/api/image/uploadWeb/'+$routeParams.teamname,
+            method: "POST",
+            data: $scope.url
+        })
+            .then(function(response) {
+                    $scope.userPhoto=$scope.url;
+                });
+    }
+
+
+
 
     TeamResource.search({teamname : $routeParams.teamname},function(data){
         if(($rootScope.MainUser.admin&&data.id!=null)||$rootScope.MainUser.teamname ==  $routeParams.teamname){
