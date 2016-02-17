@@ -30,43 +30,82 @@ angular.module('projecttycoonControllers')
             templateUrl: "views/game/level/level-iso.html",
             link: function ($scope) {
 
-                $scope.addAnswer = function(receiver) {
-                    $scope.receivers.push({value:""});
-                }
+            }
+        };
+    }).directive('levelkn', function(GameResource) {
+    return {
+        restrict: 'E',
+        scope: {
+            my_levelkn: '=levelknowledgearea',
+            my_gameid: '=gameid'
+        },
+        templateUrl: "views/game/level/levelKnowledgeArea-iso.html",
+        link: function ($scope, $attr) {
+            $scope.button = "Add";
+            $scope.saved = false;
 
-                $scope.deleteAnswer = function(receiver) {
-                    for(var i=0; i<$scope.receivers.length; i++) {
-                        if($scope.receivers[i] === receiver) {
-                            $scope.receivers.splice(i, 1);
-                            break;
+            $scope.addQuestion = function(lk) {
+                $scope.button = "Remove";
+                $scope.saved = true;
+
+                //lk..
+                GameResource.get({id: $scope.my_gameid}, function(game){
+                    for(var i=0; i< game.scoreEngine.levels.length; i++) {
+                        for(var j=0; j< game.scoreEngine.levels[i].levelKnowledgeAreas.length; j++) {
+                            if($scope.my_levelkn.id === game.scoreEngine.levels[i].levelKnowledgeAreas[j].id){
+                                game.scoreEngine.levels[i].levelKnowledgeAreas[j].question = $scope.my_levelkn.question;
+                                game.$update({id : game.id}, function(data){
+                                    $scope.my_levelkn.question.saved = true;
+                                })
+                            }
+                        }
+                    }
+                });
+            };
+
+            $scope.deleteQuestion = function(lk) {
+                $scope.button = "Add";
+                delete $scope.levelkn.question;
+                for(var i=0; i< game.scoreEngine.levels.length; i++) {
+                    for(var j=0; j< game.scoreEngine.levels[i].levelKnowledgeAreas.length; j++) {
+                        if($scope.levelkn.id === game.scoreEngine.levels[i].levelKnowledgeAreas[j].id){
+                            delete game.scoreEngine.levels[i].levelKnowledgeAreas[j].question;
+                            game.$update({id : game.id}, function(data){
+
+                            })
                         }
                     }
                 }
 
+            };
 
+        }
+    };
+    }).directive('answer', function(GameResource) {
+        return {
+            restrict: 'E',
+            scope: {
+                levelkn: '=levelknowledgearea',
+                my_gameid: '=gameid'
+            },
+            templateUrl: "views/game/level/answer-iso.html",
+            link: function ($scope, $attr) {
+                if(!$scope.levelkn.question.answers){
+                    $scope.levelkn.question.answers =[];
+                }
+                $scope.levelkn.question.answers.push({answer: "", score:""})
+                $scope.addAnswer = function(answer) {
+                    $scope.levelkn.question.answers.push({answer: "", score:""})
+                }
 
-                /*
-                $scope.addQuestion = function(){
-                    GameResource.get({id : $scope.my_gameid}, function(game){
-                        var index;
-                        for (index = 0; index < game.levels.length; ++index) {
-                            if(game.levels[index].id === $scope.my_level.id){
-                                if(!game.levels[index].questions){
-                                    game.levels[index].questions = [];
-                                }
-                                if(!$scope.my_level.questions){
-                                    $scope.my_level.questions = [];
-                                }
-                                game.levels[index].questions.push($scope.newquestion);
-                                $scope.my_level.questions.push($scope.newquestion);
-                                $scope.newquestion = null;
-                            }
+                $scope.deleteAnswer = function(answer) {
+                    for(var i=0; i<$scope.levelkn.question.answers.length; i++) {
+                        if($scope.levelkn.question.answers[i] === answer) {
+                            $scope.levelkn.question.answers.splice(i, 1);
+                            break;
                         }
-                        game.$update({id: game.id}, function(data){
-                        });
-                    });
-                    //return $scope.my_level;
-                };*/
+                    }
+                }
             }
         };
     });

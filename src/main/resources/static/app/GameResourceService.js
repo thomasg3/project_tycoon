@@ -22,6 +22,14 @@ angular.module('projecttycoon').factory('GameResource', function($resource) {
         },
         update:{
             method: 'PUT'
+        },
+        getGameByKnowledgeAreaId:{
+            method: 'GET',
+            url: '/api/games/game/levelkn/:id'
+        },
+        postQuestion:{
+            method: 'POST',
+            url: '/api/games/levelkn'
         }
     });
 

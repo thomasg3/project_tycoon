@@ -18,7 +18,7 @@ public class Question {
     private String question;
     private String format;
 
-    @OneToMany(cascade= CascadeType.ALL)
+    @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers;
 
     public Question(){
@@ -61,6 +61,16 @@ public class Question {
 
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", question='" + question + '\'' +
+                ", format='" + format + '\'' +
+                ", answers=" + answers +
+                '}';
     }
 }
 

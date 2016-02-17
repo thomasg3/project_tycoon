@@ -3,13 +3,11 @@ package be.projecttycoon.rest;
 import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.KnowledgeAreaRepository;
 import be.projecttycoon.db.TeamRepository;
-import be.projecttycoon.model.Game;
-import be.projecttycoon.model.KnowledgeArea;
-import be.projecttycoon.model.ScoreEngine;
-import be.projecttycoon.model.Team;
+import be.projecttycoon.model.*;
 import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.GameBean;
 import be.projecttycoon.rest.KnowledgeAreaResource;
+import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -105,7 +103,16 @@ public class GameResource {
     public Game updateGame(@PathVariable long id, @Valid @RequestBody Game newGame){
         Game game = gameRepository.findOne(newGame.getId());
         newGame.setTeams(game.getTeams());
-        return gameRepository.save(newGame);
+        for(int j =0; j< game.getLevels().size(); j++) {
+            for(int i =0; i< game.getLevels().get(j).getLevelKnowledgeAreas().size(); i++){
+                Question q = new Question();
+                q.setQuestion(newGame.getScoreEngine().getLevels().get(j).getLevelKnowledgeAreas().get(i).getQuestion().getQuestion());
+                q.setFormat(newGame.getScoreEngine().getLevels().get(j).getLevelKnowledgeAreas().get(i).getQuestion().getFormat());
+                game.getLevels().get(j).getLevelKnowledgeAreas().get(i).setQuestion(q);
+            }
+        }
+
+        return gameRepository.save(game);
     }
 
     @RequestMapping(value="/game/{teamname}" ,method = RequestMethod.GET)
@@ -119,6 +126,24 @@ public class GameResource {
             throw new NotFoundException();
         return game;
     }
+
+    @RequestMapping(value="/game/levelkn/{levelknid}" ,method = RequestMethod.GET)
+    @Produces("application/json")
+    public Game getGameForKnowledgeArea(@PathVariable long levelknid) {
+        Game game = null;
+        for(Game g: getAllGames()){
+            for(Level l : g.getLevels()){
+                for(LevelKnowledgeArea lk : l.getLevelKnowledgeAreas()){
+                    if(lk.getId() == levelknid){
+                        game = g;
+                        break;
+                    }
+                }
+            }
+        }
+        return game;
+    }
+
 
     @RequestMapping (value="/{id}", method = RequestMethod.DELETE)
     @Produces("application/json")
