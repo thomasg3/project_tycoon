@@ -118,15 +118,6 @@ public class GameResource {
     public Game updateGame(@PathVariable long id, @Valid @RequestBody Game newGame){
         Game game = gameRepository.findOne(newGame.getId());
         newGame.setTeams(game.getTeams());
-        for(int j =0; j< game.getLevels().size(); j++) {
-            for(int i =0; i< game.getLevels().get(j).getLevelKnowledgeAreas().size(); i++){
-                Question q = new Question();
-                q.setQuestion(newGame.getScoreEngine().getLevels().get(j).getLevelKnowledgeAreas().get(i).getQuestion().getQuestion());
-                q.setFormat(newGame.getScoreEngine().getLevels().get(j).getLevelKnowledgeAreas().get(i).getQuestion().getFormat());
-                game.getLevels().get(j).getLevelKnowledgeAreas().get(i).setQuestion(q);
-            }
-        }
-
         return gameRepository.save(game);
     }
 
