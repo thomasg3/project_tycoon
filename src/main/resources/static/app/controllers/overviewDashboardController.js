@@ -36,10 +36,8 @@ angular.module('projecttycoonControllers')
         });
     }
 
-    TeamResource.get({id : $rootScope.MainUser.id}, function(data){
+
         GameResource.getGameByUsername({teamname: $rootScope.MainUser.teamname}, function(game){
             update(game);
         })
-        $scope.team = data;
-    });
 });

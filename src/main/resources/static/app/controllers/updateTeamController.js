@@ -3,7 +3,7 @@
  */
 
 angular.module('projecttycoonControllers')
-.controller('updateTeam',function($rootScope, $scope, $http, $routeParams,$location,TeamResource, Upload){
+.controller('updateTeam',function($rootScope, $scope, $http, $routeParams,$location,TeamResource, Upload,MainUserResource){
     TeamResource.search({teamname: $routeParams.teamname},function(data){
         $scope.userPhoto=data.teamImage});
 
@@ -38,7 +38,8 @@ angular.module('projecttycoonControllers')
 
 
     TeamResource.search({teamname : $routeParams.teamname},function(data){
-        if(($rootScope.MainUser.admin&&data.id!=null)||$rootScope.MainUser.teamname ==  $routeParams.teamname){
+        $scope.MainUser = MainUserResource.getMainUser();
+        if(($scope.MainUser.admin&&data.id!=null)||$scope.MainUser.teamname ==  $routeParams.teamname){
             angular.element(document).ready(function () {
                 $scope.team = TeamResource.search({teamname : $routeParams.teamname});
 
@@ -53,8 +54,8 @@ angular.module('projecttycoonControllers')
                             $location.path('/');
                         });
                         //if the user changed its team change the team in the rootScope
-                        if($rootScope.MainUser.teamname ==  $routeParams.teamname)
-                            $rootScope.MainUser = updateTeam;
+                        if($scope.MainUser.teamname ==  $routeParams.teamname)
+                            $scope.MainUser = updateTeam;
                     }
                     else{
                         $scope.error=true;
@@ -66,7 +67,7 @@ angular.module('projecttycoonControllers')
         }
         else{
             alert("you cant do this. You will be redirected to your edit page.\nMake this nice pls error handling or some shit.");
-            $location.path('/editTeam/'+$rootScope.MainUser.teamname);
+            $location.path('/editTeam/'+$scope.MainUser.teamname);
         }
     });
 });
