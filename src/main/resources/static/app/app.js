@@ -95,6 +95,10 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/levelOverview.html',
                 controller : 'levelOverview'
             })
+            .when('/admin/:id/mail', {
+                templateUrl : 'views/sendMail.html',
+                controller : 'mailController'
+            })
             .otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';

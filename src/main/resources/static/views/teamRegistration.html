@@ -47,6 +47,10 @@
                 <input type="password" class="form-control" placeholder="Confirm Password" id="verify" name="verify" ng-model="credentials.passwordconfirm" password-confirm  password="{{credentials.password}}" required>
             </div>
 
+            <div class="form-group">
+                <input type="email" class="form-control" placeholder="Choose email" id="email" name="email" ng-model="credentials.email"  required>
+            </div>
+
             <div class="alert alert-danger" ng-show="form.verify.$error.verifyconfirmPassword || form.password.$error.required && form.password.$touched">
                 <ul>
                     <li ng-show="form.verify.$error.verifyconfirmPassword">Repeat your new password</li>

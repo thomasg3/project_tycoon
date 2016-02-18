@@ -23,4 +23,8 @@ angular.module('projecttycoonControllers')
         $location.path('/admin/' + id + '/levels');
     }
 
+    $scope.mail = function(id){
+        $location.path('/admin/' + id + '/mail');
+    }
+
 });

@@ -25,7 +25,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping(value = "/api/image")
-public class ImageControllerLocal {
+public class ImageController {
 
     @Autowired
     TeamRepository teamrep;
@@ -78,6 +78,28 @@ public class ImageControllerLocal {
             }
         }
         return null;
+    }
+
+    @RequestMapping(value = "/uploadWeb/{teamname}", method = RequestMethod.POST)
+    public void handleFileUpload(@PathVariable String teamname, @RequestBody String url,Principal user) {
+        if (url !=null && !url.isEmpty()) {
+            try {
+
+                Team principal=teamrep.findByTeamname(user.getName());
+                if(teamname.equals(principal.getTeamname()) || principal.isAdmin()) {
+                    Team t = teamrep.findByTeamname(teamname);
+                    t.setTeamImage(url);
+                    teamrep.save(t);
+                }
+                else{
+                    //todo not allowed...
+                    throw new RuntimeException("not allowed Imagecontroller");
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
