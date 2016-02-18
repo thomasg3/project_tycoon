@@ -6,8 +6,7 @@ angular.module('projecttycoonControllers')
 
         $scope.showInfo = function(info){
             var table = document.getElementById("infoTable");
-
-            if(!info){
+            if(info.length==0){
                 var row = document.createElement("tr");
                 row.innerHTML="There are no documents available yet.";
                 table.appendChild(row);
