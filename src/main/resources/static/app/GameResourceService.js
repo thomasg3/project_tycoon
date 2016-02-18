@@ -30,6 +30,11 @@ angular.module('projecttycoon').factory('GameResource', function($resource) {
         postQuestion:{
             method: 'POST',
             url: '/api/games/levelkn'
+        },
+        getAllPublicLevelsForGame: {
+            method: 'GET',
+            url: '/api/games/public/game/:id',
+            isArray: true
         }
     });
 

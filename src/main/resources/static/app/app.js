@@ -74,6 +74,14 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/game/details.html',
                 controller : 'detailGameController'
             })
+            .when('/games/:id/levels',{
+                templateUrl : 'views/game/levels.html',
+                controller : 'levelController'
+            })
+            .when('/games/:id/levels/:activelevel',{
+                templateUrl : 'views/game/levels.html',
+                controller : 'levelController'
+            })
             .when('/games/:gameid/levels/:levelid/editscores', {
                 templateUrl : 'views/game/level/score_edit.html',
                 controller : 'editLevelScoreController'

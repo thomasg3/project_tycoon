@@ -7,6 +7,7 @@ import be.projecttycoon.model.*;
 import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.GameBean;
 import be.projecttycoon.rest.KnowledgeAreaResource;
+import be.projecttycoon.rest.util.PublicLevel;
 import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -59,8 +60,13 @@ public class GameResource {
         teams2.get(0).setTeamname("Team123");
         teams2.get(0).setPassword("azerty");
 
+        for(LevelKnowledgeArea lk : testgame.getLevels().get(0).getLevelKnowledgeAreas()){
+            lk.getQuestion().setQuestion("Dit is een vraag..." + lk.getQuestion().getId());
+            lk.getQuestion().setFormat("9-9-9");
+        }
 
         Game testgame2 = new Game("testGame123342", 5,5, knowledgeAreaRepository.findAll());
+
         ArrayList<Team> teams3= new ArrayList<Team>();
         teams2.addAll(testgame.getTeams());
         teams2.get(0).setTeamname("Team123");
@@ -148,6 +154,17 @@ public class GameResource {
             }
         }
         return game;
+    }
+
+    @RequestMapping(value="/public/game/{id}", method = RequestMethod.GET)
+    public List<PublicLevel> getAllPublicLevelsForGame(@PathVariable long id){
+        Game game = gameRepository.findOne(id);
+        List<PublicLevel> publicLevels = new ArrayList<>();
+
+        for(Level l: game.getLevels()){
+            publicLevels.add(new PublicLevel(l));
+        }
+        return publicLevels;
     }
 
 
