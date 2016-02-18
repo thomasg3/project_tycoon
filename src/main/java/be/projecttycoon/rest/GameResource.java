@@ -4,6 +4,8 @@ import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.KnowledgeAreaRepository;
 import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.*;
+import be.projecttycoon.model.level.*;
+import be.projecttycoon.rest.exception.IllegalStateChangeException;
 import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.GameBean;
 import be.projecttycoon.rest.KnowledgeAreaResource;
@@ -93,6 +95,16 @@ public class GameResource {
                 });
             });
         });
+        List<Level> levels = new ArrayList<>();
+        levels.addAll(scoreTest.getLevels());
+        levels.get(0).setState(Concluded.class.getSimpleName());
+        levels.get(1).setState(Concluded.class.getSimpleName());
+        levels.get(2).setState(Cermonie.class.getSimpleName());
+        levels.get(3).setState(Finished.class.getSimpleName());
+        levels.get(4).setState(Finished.class.getSimpleName());
+        levels.get(5).setState(Open.class.getSimpleName());
+        levels.get(6).setState(Open.class.getSimpleName());
+        levels.get(7).setState(Closed.class.getSimpleName());
         gameRepository.save(scoreTest);
     }
 
@@ -187,4 +199,5 @@ public class GameResource {
         teams.remove(t);
         return gameRepository.save(g);
     }
+
 }

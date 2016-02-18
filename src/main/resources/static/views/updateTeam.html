@@ -2,21 +2,39 @@
     <div class="col-sm-6 col-sm-offset-3">
         <h3>Modify Team: {{team.teamname}}</h3>
         <hr>
-        <form role="form" ng-submit="editTeam()">
-            <div class="alert alert-danger" ng-show="error">
-                The passwords dont match.
-            </div>
+        <form role="form" ng-submit="editTeam()" novalidate name="form">
+
 
             <p>New credentials:</p>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="New Teamname" id="name" name="name" ng-model="teamname">
+                <input type="text" class="form-control" placeholder="New Teamname" id="name" name="name" ng-model="teamname" minLength="5" regex-validator regex="^[\d\w]*$" required>
+            </div>
+            <div class="alert alert-danger" ng-show="form.name.$error.namevalidregex ||form.name.$error.minlength || form.name.$error.required && form.name.$touched">
+                <ul class="">
+                    <li ng-show="form.name.$error.minlength">The length of your teamname needs to be min 5 characters </br></li>
+                    <li ng-show="form.name.$error.namevalidregex">Your teamname can only contain numbers and letters</li>
+                    <li ng-show="form.name.$error.required">Field required</li>
+                </ul>
             </div>
 
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="New Password" id="password" name="password" ng-model="password">
+                <input type="password" class="form-control" placeholder="New Password" id="password" name="password" ng-model="password" minLength="6"  required>
             </div>
+            <div class="alert alert-danger" ng-show="form.password.$error.minlength || form.password.$error.required && form.password.$touched">
+                <ul class="">
+                    <li ng-show="form.password.$error.minlength">Your password needs to be min 6 characters long</li>
+                    <li ng-show="form.password.$error.required">Field required</li>
+                </ul>
+            </div>
+
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="Repeat Password" id="passwordRepeat" name="passwordRepeat" ng-model="passwordRepeat">
+                <input type="password" class="form-control" placeholder="Repeat Password" id="passwordRepeat" name="passwordRepeat" ng-model="passwordRepeat" password-confirm  password="{{password}}" required>
+            </div>
+            <div class="alert alert-danger" ng-show="form.passwordRepeat.$error.passwordRepeatconfirmPassword || form.password.$error.required && form.password.$touched">
+                <ul>
+                    <li ng-show="form.passwordRepeat.$error.passwordRepeatconfirmPassword">Repeat your new password</li>
+                    <li ng-show="form.passwordRepeat.$error.required">Field required</li>
+                </ul>
             </div>
 
             <div class="col-sm-6 col-sm-offset-3">

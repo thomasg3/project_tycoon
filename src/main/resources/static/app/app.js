@@ -86,6 +86,10 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/game/level/score_edit.html',
                 controller : 'editLevelScoreController'
             })
+            .when('/games/:gameid/levels/:levelid', {
+                templateUrl : 'views/level/overview.html',
+                controller : 'levelControlController'
+            })
             //##### admin pages #####
             .when('/adminOverview', {
                 templateUrl : 'views/adminOverview.html',

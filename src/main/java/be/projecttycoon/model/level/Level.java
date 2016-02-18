@@ -1,5 +1,7 @@
-package be.projecttycoon.model;
+package be.projecttycoon.model.level;
 
+
+import be.projecttycoon.model.LevelKnowledgeArea;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -12,7 +14,7 @@ import java.util.List;
  * Created by thomas on 11/02/16.
  */
 @Entity
-public class Level {
+public class Level{
 
     @Id
     @GeneratedValue
@@ -28,11 +30,18 @@ public class Level {
     @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
     private List<LevelKnowledgeArea> levelKnowledgeAreas;
 
+    @Transient
+    private LevelState levelState;
+    private String state;
+
     public Level() {
+        this.levelState = new Closed(this);
+        this.state = levelState.getClass().getSimpleName();
         this.levelKnowledgeAreas = new ArrayList<>();
     }
 
     public Level(String name, int round, List<LevelKnowledgeArea> levelKnowledgeAreas) {
+        this();
         this.name = name;
         this.round = round;
         this.levelKnowledgeAreas = levelKnowledgeAreas;
@@ -70,6 +79,36 @@ public class Level {
         this.levelKnowledgeAreas = levelKnowledgeAreas;
     }
 
+    public String getState(){
+        this.state = levelState.getClass().getSimpleName();
+        return state;
+    }
+
+    public void setState(String state){
+        this.state = state;
+        updateState();
+    }
+
+    @PostLoad
+    public void updateState(){
+        if(Open.class.getSimpleName().equals(state)){
+            this.levelState = new Open(this);
+        } else if(Finished.class.getSimpleName().equals(state)){
+            this.levelState = new Finished(this);
+        } else if(Cermonie.class.getSimpleName().equals(state)){
+            this.levelState = new Cermonie(this);
+        } else if(Concluded.class.getSimpleName().equals(state)){
+            this.levelState = new Concluded(this);
+        } else {
+            this.levelState = new Closed(this);
+        }
+    }
+
+
+    void levelState(LevelState state){
+        this.levelState = state;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -102,4 +141,51 @@ public class Level {
                 ", levelKnowledgeAreas=" + levelKnowledgeAreas +
                 '}';
     }
+
+    public void openUp() {
+        levelState.open();
+    }
+    public void closeUp() {
+        levelState.close();
+    }
+    public void pointPush() {
+        levelState.pointPush();
+    }
+    public void cermonieFinished() {
+        levelState.cermonieFinished();
+    }
+
+
+    public boolean isClosed(){
+        return levelState instanceof Closed;
+    }
+    public boolean isOpen(){
+        return levelState instanceof Open;
+    }
+    public boolean isFinished(){
+        return levelState instanceof Finished;
+    }
+    public boolean isCermonie(){
+        return levelState instanceof Cermonie;
+    }
+    public boolean isConcluded(){
+        return levelState instanceof Concluded;
+    }
+
+    public boolean teamsCanSeePoints(){
+        return levelState.teamsCanSeePoints();
+    }
+    public boolean documentsAreOpen(){
+        return levelState.documentsAreOpen();
+    }
+    public boolean questionsAreVisible(){
+        return levelState.questionsAreVisible();
+    }
+    public boolean questionsAreOpen(){
+        return levelState.questionsAreOpen();
+    }
+
+
+
+
 }

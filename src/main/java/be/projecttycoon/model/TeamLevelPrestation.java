@@ -1,5 +1,7 @@
 package be.projecttycoon.model;
 
+import be.projecttycoon.model.level.Level;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +59,8 @@ public class TeamLevelPrestation {
     }
 
     public int getLevelScore(){
-        return knowledgeAreaScores.stream().map(kas -> kas.getScore()).reduce(0, (x,y) -> x + y);
+        if(level.teamsCanSeePoints())
+            return knowledgeAreaScores.stream().map(kas -> kas.getScore()).reduce(0, (x,y) -> x + y);
+        else return 0;
     }
 }

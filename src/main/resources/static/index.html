@@ -10,7 +10,8 @@
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/form-error-colors.css">
+    <link rel="stylesheet" type="text/css" href="css/form-error-colors.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
     <!--
     <link rel="stylesheet" type="text/css" href="css/theme.min.css">
     -->
@@ -49,12 +50,11 @@
                         </ul>
                     </li>
                     <li ng-show="MainUser.admin"><a href="#/admin/knowledgeareas/edit">KnowledgeAreas</a></li>
-
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-show="!authenticated"><a href="#/login">Login</a></li>
-                    <li ng-show="authenticated"><a href="#/editTeam/{{MainUser.teamname}}">{{MainUser.teamname}}</a></li>
-                    <li ng-show="authenticated"><a href="#" ng-click="logout()">Logout</a></li>
+                    <li ng-show="!authenticated"><a href="#/login"><i class="fa fa-sign-in"></i> Login</a></li>
+                    <li ng-show="authenticated"><a href="#/editTeam/{{MainUser.teamname}}"><i class="fa fa-user"></i> {{MainUser.teamname}}</a></li>
+                    <li ng-show="authenticated"><a href="#" ng-click="logout()"><i class="fa fa-sign-out"></i> Logout</a></li>
                 </ul>
 
             </div>
@@ -86,12 +86,14 @@
     <script type="text/javascript" src="app/controllers/editLevelScoreController.js"></script>
     <script type="text/javascript" src="app/controllers/levelOverviewController.js"></script>
     <script type="text/javascript" src="app/controllers/detailTeamController.js"></script>
+    <script type="text/javascript" src="app/controllers/levelControlController.js"></script>
     <script type="text/javascript" src="app/controllers/levelController.js"></script>
 
 
     <script src="app/Validators.js" type="text/javascript"></script>
     <script src="app/QuestionResourceService.js" type="text/javascript"></script>
     <script src="app/TeamResourceService.js" type="text/javascript"></script>
+    <script src="app/MainUserResourceService.js" type="text/javascript"></script>
     <script src="app/GameResourceService.js" type="text/javascript"></script>
     <script src="app/LevelResourceService.js" type="text/javascript"></script>
     <script src="app/KnowledgeAreaResourceService.js" type="text/javascript"></script>
