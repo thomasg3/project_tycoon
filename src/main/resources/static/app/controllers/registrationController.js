@@ -48,6 +48,7 @@ angular.module('projecttycoonControllers')
                     TeamResource.search({teamname : $scope.oldUsername}, function(updateTeam){
                         updateTeam.teamname = $scope.credentials.username;
                         updateTeam.password = $scope.credentials.password;
+                        updateTeam.email = $scope.credentials.email;
                         updateTeam.$update({id : updateTeam.id}, function(){
                             TeamResource.get({id: updateTeam.id}, function(data){
                                 MainUserResource.saveMainUser(data);

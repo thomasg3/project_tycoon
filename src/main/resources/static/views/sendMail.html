@@ -1,0 +1,25 @@
+<div>
+    <h1>Send mail to the Teams in {{game.name}}</h1>
+
+    <form role="form" ng-submit="sendMail()">
+
+        <p class="alert alert-success" ng-hide=hide>Mail(s) sent...</p>
+        <p>Subject:</p>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Subject" id="subject" name="subject" ng-model="mail.subject">
+        </div>
+        <p>Message:</p>
+
+        <div class="form-group">
+
+            <textarea class="form-control" rows="5" placeholder="Message" id="message" name="message" ng-model="mail.message"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Send mail</button>
+
+
+
+    </form>
+
+
+</div>

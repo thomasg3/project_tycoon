@@ -40,6 +40,7 @@ public class Team{
     private String password;
 
     private String teamImage;
+    private String email;
 
     private int likes;
 
@@ -69,6 +70,15 @@ public class Team{
     public Team(String teamName, String password, List<Level> levels ,String path){
         this(teamName, password, levels);
         setTeamImage(path);
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public long getId() {
@@ -141,10 +151,10 @@ public class Team{
         this.teamLevelPrestations = teamLevelPrestations;
     }
 
-    public void register(String password, String teamname, String path){
+    public void register(String password, String teamname, String email){
         setTeamname(teamname);
         setPassword(password);
-        setTeamImage(path);
+        setEmail(email);
         setRegistered(true);
     }
 

@@ -70,7 +70,7 @@ public class TeamResource  {
     public void updateTeam(Principal currentUser, @PathVariable long id, @Valid @RequestBody TeamBean updateTeam){
         Team team = teamRepository.findOne(id);
         String oldName = team.getTeamname();
-        team.register(updateTeam.getPassword(), updateTeam.getTeamname(), updateTeam.getTeamImage());
+        team.register(updateTeam.getPassword(), updateTeam.getTeamname(), updateTeam.getEmail());
         teamRepository.save(team);
         if(oldName.equals(currentUser.getName())){
             UserDetails details = userService.loadUserByUsername(updateTeam.getTeamname());
