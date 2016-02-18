@@ -128,4 +128,8 @@ public class Game {
                 ", scoreEngine=" + scoreEngine +
                 '}';
     }
+
+    public void calculateScores(List<TeamLevelPrestation> teamLevelPrestations, List<LevelKnowledgeArea> levelKnowledgeAreas){
+        //scoreengine....
+    }
 }
