@@ -2,9 +2,7 @@ package be.projecttycoon.rest;
 
 import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.TeamRepository;
-import be.projecttycoon.model.Level;
 import be.projecttycoon.model.Team;
-import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.MailBean;
 import be.projecttycoon.social.GmailRest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -36,15 +35,15 @@ public class MailController {
             Team principal = teamrep.findByTeamname(user.getName());
             if (principal.isAdmin()) {
 
-                Set<Team> teams = gamerep.findOne(gameId).getTeams();
+                List<Team> teams = mail.getRecipients();
                 Set<String> recipients = new HashSet<String>();
                 for (Team team : teams) {
                     String email = team.getEmail();
                     if (email != null) {
                         recipients.add(email);
                     }
-                    gmail.sendEmail(recipients, mail.getSubject(), mail.getMessage());
                 }
+                gmail.sendEmail(recipients, mail.getSubject(), mail.getMessage());
             } else {
                 //todo not allowed...
             }

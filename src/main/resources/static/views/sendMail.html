@@ -1,6 +1,19 @@
 <div>
     <h1>Send mail to the Teams in {{game.name}}</h1>
 
+
+    <ul ng-repeat="team in teams">
+        <li>
+        <input
+                type="checkbox"
+                name="selectedRecipients"
+                value="{{team.id}}"
+                ng-model="team.selected"
+        >{{team.teamname}}</li>
+    </ul>
+
+
+
     <form role="form" ng-submit="sendMail()">
 
         <p class="alert alert-success" ng-hide=hide>Mail(s) sent...</p>
