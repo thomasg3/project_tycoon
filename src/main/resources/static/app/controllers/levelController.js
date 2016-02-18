@@ -45,7 +45,6 @@ angular.module('projecttycoonControllers')
                                     KnowledgeAreaScoreResource.get({id : $rootScope.MainUser.teamLevelPrestations[i].knowledgeAreaScores[j].id}, function(data){
                                         data.answer = $scope.answer;
                                         data.$update({id: data.id}, function(data){
-                                            alert(JSON.stringify(data));
                                         });
                                     });
                                 }

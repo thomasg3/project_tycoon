@@ -4,7 +4,6 @@ import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.LevelRepository;
 import be.projecttycoon.db.TeamLevelPrestationRepository;
 import be.projecttycoon.model.level.Level;
-import be.projecttycoon.model.Game;
 import be.projecttycoon.model.TeamLevelPrestation;
 import be.projecttycoon.rest.exception.IllegalStateChangeException;
 import be.projecttycoon.rest.exception.NotFoundException;

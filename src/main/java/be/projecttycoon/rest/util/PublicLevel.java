@@ -1,6 +1,6 @@
 package be.projecttycoon.rest.util;
 
-import be.projecttycoon.model.Level;
+import be.projecttycoon.model.level.Level;
 import be.projecttycoon.model.LevelKnowledgeArea;
 
 import java.util.ArrayList;
