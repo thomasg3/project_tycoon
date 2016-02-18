@@ -8,6 +8,9 @@ angular.module('projecttycoon').factory('InfoResource', function($resource) {
             method: 'GET',
             url: '/api/info',
             isArray: true
+        },
+        get:{
+          isArray:true
         }
     });
 

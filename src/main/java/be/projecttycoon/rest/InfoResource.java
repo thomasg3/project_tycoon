@@ -2,9 +2,11 @@ package be.projecttycoon.rest;
 
 import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.InfoRepository;
+import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Game;
 import be.projecttycoon.model.Info;
 import be.projecttycoon.model.InfoType;
+import be.projecttycoon.model.Team;
 import be.projecttycoon.model.level.Level;
 import be.projecttycoon.model.level.LevelState;
 import be.projecttycoon.model.level.Open;
@@ -33,14 +35,16 @@ public class InfoResource {
 
     private final InfoRepository infoRepository;
     private final GameRepository gameRepository;
+    private final TeamRepository teamRepository;
 
     @Autowired
-    public InfoResource(InfoRepository infoRepository, GameRepository gameRepository){
+    public InfoResource(InfoRepository infoRepository, GameRepository gameRepository, TeamRepository teamRepository){
         this.infoRepository=infoRepository;
         this.gameRepository=gameRepository;
+        this.teamRepository=teamRepository;
         Info i = new Info(1,"test info", "http://i.imgur.com/1rHMtFM.gif", InfoType.Image);
         Info i2 = new Info(1,"test video","https://www.youtube.com/embed/czezOcHfLS4",InfoType.Video);
-        Info i3 = new Info(2,"test document","/documents/changemanagement.pdf",InfoType.Document);
+        Info i3 = new Info(9,"test document","/documents/changemanagement.pdf",InfoType.Document);
         infoRepository.save(i);
         infoRepository.save(i2);
         infoRepository.save(i3);
@@ -55,8 +59,11 @@ public class InfoResource {
     @RequestMapping(value="/{id}",method = RequestMethod.GET)
     @Produces("application/json")
     public Collection<Info> getInfo(@PathVariable long id){
-        Game g = gameRepository.findOne(id);
-       int round = g.getLevels().stream()
+        Team t = teamRepository.findOne(id);
+        Game game = gameRepository.findAll().stream()
+                .filter(g->g.getTeams().contains(t))
+                .findFirst().orElse(null);
+       int round = game.getLevels().stream()
                 .filter(l->l.getState().equals("Open"))
                 .mapToInt(Level::getRound)
                 .max().orElse(-1);

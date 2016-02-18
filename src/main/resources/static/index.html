@@ -50,6 +50,7 @@
                         </ul>
                     </li>
                     <li ng-show="MainUser.admin"><a href="#/admin/knowledgeareas/edit">KnowledgeAreas</a></li>
+                    <li ng-show="MainUser.admin||MainUser.registered"><a href="#/info">Documents</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-show="!authenticated"><a href="#/login"><i class="fa fa-sign-in"></i> Login</a></li>
