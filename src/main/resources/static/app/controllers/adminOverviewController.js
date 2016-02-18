@@ -3,21 +3,20 @@
  */
 
 angular.module('projecttycoonControllers')
-.controller('adminOverview', function($scope, $http,$location, GameResource) {
-    GameResource.getAll().$promise.then(function(data){
+.controller('adminOverview', function($scope, $http, $location, GameAdminResource) {
+    GameAdminResource.query(function(data){
         $scope.games = data;
     });
-
-    $scope.getGame = function(id){
-        $location.path('/dashboard/' + id);
-    }
     $scope.deleteGame = function(id){
-        GameResource.delete({id : id}).$promise.then(function(){
-            GameResource.getAll().$promise.then(function(data){
+        GameAdminResource.delete({id : id}, function(){
+            GameAdminResource.query(function(data){
                 $scope.games = data;
             });
         });
 
+    }
+    $scope.getGame = function(id){
+        $location.path('/dashboard/' + id);
     }
     $scope.getLevels = function(id){
         $location.path('/admin/' + id + '/levels');

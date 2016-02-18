@@ -1,4 +1,4 @@
-package be.projecttycoon.rest;
+package be.projecttycoon.rest.team;
 
 import be.projecttycoon.db.LevelRepository;
 import be.projecttycoon.db.TeamLevelPrestationRepository;
@@ -19,8 +19,8 @@ import java.util.List;
 @RequestMapping("/api/levels")
 public class LevelResource {
 
-    private final LevelRepository levelRepository;
-    private final TeamLevelPrestationRepository teamLevelPrestationRepository;
+    protected final LevelRepository levelRepository;
+    protected final TeamLevelPrestationRepository teamLevelPrestationRepository;
 
     @Autowired
     public LevelResource(LevelRepository levelRepository, TeamLevelPrestationRepository teamLevelPrestationRepository){

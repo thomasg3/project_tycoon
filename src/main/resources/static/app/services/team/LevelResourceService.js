@@ -4,17 +4,11 @@
 
 angular.module('projecttycoon').factory('LevelResource', function($resource) {
     return $resource('/api/levels/:id', {id: "@id"}, {
-        getAll: {
-            method: 'GET',
-            url: '/api/levels',
-            isArray: true
-        },
         save: {
             method: 'POST'
         },
         update: {
-            method: 'PUT',
-            URL: '/api/levels/:id'
+            method: 'PUT'
         }
     });
 });

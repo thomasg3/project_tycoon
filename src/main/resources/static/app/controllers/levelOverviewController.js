@@ -3,16 +3,16 @@
  */
 
 angular.module('projecttycoonControllers')
-    .controller('levelOverview', function($location, $rootScope, $scope, $http, GameResource, $routeParams, QuestionResourceService){
-        $scope.game = new GameResource();
-        GameResource.get({id : $routeParams.id}, function(data){
+    .controller('levelOverview', function($location, $rootScope, $scope, $http, GameAdminResource, $routeParams, QuestionAdminResource){
+        $scope.game = new GameAdminResource();
+        GameAdminResource.get({id : $routeParams.id}, function(data){
             $scope.game = data;
             $scope.newQuestions = new Array($scope.game.levels);
         });
 
 
         $scope.addLevel = function(){
-            GameResource.get({id : $scope.game.id}, function(game){
+            GameAdminResource.get({id : $scope.game.id}, function(game){
                 game.levels.push($scope.level);
                 game.$update({id : $scope.game.id},function(){
                     $scope.game = game;
@@ -20,7 +20,7 @@ angular.module('projecttycoonControllers')
                 });
             });
         }
-    }).directive('myLevel', function($http, GameResource) {
+    }).directive('myLevel', function($http, GameAdminResource) {
         return {
             restrict: 'E',
             scope: {
@@ -32,7 +32,7 @@ angular.module('projecttycoonControllers')
 
             }
         };
-    }).directive('levelkn', function(QuestionResourceService) {
+    }).directive('levelkn', function(QuestionAdminResource) {
     return {
         restrict: 'E',
         scope: {
@@ -46,7 +46,7 @@ angular.module('projecttycoonControllers')
                 $scope.saved = true;
             }
             $scope.addQuestion = function(lk) {
-                QuestionResourceService.get({id : lk.question.id}, function(question){
+                QuestionAdminResource.get({id : lk.question.id}, function(question){
                     question.question = lk.question.question;
                     question.format = lk.question.format;
                     question.$update({id : question.id}, function(data){
@@ -68,7 +68,7 @@ angular.module('projecttycoonControllers')
 
         }
     };
-    }).directive('answer', function(QuestionResourceService) {
+    }).directive('answer', function(QuestionAdminResource) {
         return {
             restrict: 'E',
             scope: {
@@ -82,7 +82,7 @@ angular.module('projecttycoonControllers')
                 }
                 $scope.levelkn.question.answers.push({answer: "", score:""});
                 $scope.addAnswer = function(answer) {
-                    QuestionResourceService.get({id : $scope.levelkn.question.id}, function(question){
+                    QuestionAdminResource.get({id : $scope.levelkn.question.id}, function(question){
                         question.answers = $scope.levelkn.question.answers;
                         question.$updateAnswers({id : question.id}, function(data){
                             $scope.levelkn.question.answers.push({answer: "", score:""});
@@ -98,7 +98,7 @@ angular.module('projecttycoonControllers')
                         }
                     }
 
-                    QuestionResourceService.get({id : $scope.levelkn.question.id}, function(question){
+                    QuestionAdminResource.get({id : $scope.levelkn.question.id}, function(question){
                         $scope.levelkn.question.answers.pop();
                         question.answers = $scope.levelkn.question.answers;
                         question.$updateAnswers({id : question.id}, function(data){

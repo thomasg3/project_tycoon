@@ -1,4 +1,4 @@
-package be.projecttycoon.rest;
+package be.projecttycoon.rest.team;
 
 import be.projecttycoon.db.KnowledgeAreaRepository;
 import be.projecttycoon.model.KnowledgeArea;
@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/knowledgeareas")
 public class KnowledgeAreaResource {
-    private final KnowledgeAreaRepository knowledgeAreaRepository;
+    protected final KnowledgeAreaRepository knowledgeAreaRepository;
 
     @Autowired
     public KnowledgeAreaResource(KnowledgeAreaRepository knowledgeAreaRepository){

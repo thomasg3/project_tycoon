@@ -1,4 +1,4 @@
-package be.projecttycoon.rest;
+package be.projecttycoon.rest.team;
 
 import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.QuestionRepository;
@@ -22,7 +22,7 @@ import java.util.Collection;
 @RequestMapping(value = "/api/questions")
 public class QuestionResource {
 
-    private final QuestionRepository questionRepository;
+    protected final QuestionRepository questionRepository;
 
 
 
