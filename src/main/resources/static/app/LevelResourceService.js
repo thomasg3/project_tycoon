@@ -15,6 +15,10 @@ angular.module('projecttycoon').factory('LevelResource', function($resource) {
         update: {
             method: 'PUT',
             URL: '/api/levels/:id'
+        },
+        getPublicLevel: {
+            method: 'GET',
+            url: '/api/levels/public/:id'
         }
     });
 });

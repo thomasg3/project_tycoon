@@ -1,5 +1,7 @@
 package be.projecttycoon.model;
 
+import be.projecttycoon.model.level.Level;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,4 +59,6 @@ public class ScoreEngine {
             }
         }
     }
+
+
 }

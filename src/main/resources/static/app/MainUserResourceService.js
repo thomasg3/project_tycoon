@@ -16,7 +16,6 @@ angular.module('projecttycoon')
                 if(user) {
                     var main = JSON.parse(user);
                 }
-
                 return main;
             }
         };

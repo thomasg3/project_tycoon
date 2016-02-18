@@ -1,6 +1,6 @@
 package be.projecttycoon.db;
 
-import be.projecttycoon.model.Level;
+import be.projecttycoon.model.level.Level;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
