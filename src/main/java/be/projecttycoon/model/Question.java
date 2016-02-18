@@ -1,5 +1,7 @@
 package be.projecttycoon.model;
 
+import be.projecttycoon.model.ScoreEngine.ScoreFormat;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ public class Question {
     private long id;
 
     private String question;
-    private String format;
+    private ScoreFormat format;
 
     @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers;
@@ -25,7 +27,7 @@ public class Question {
         answers =  new ArrayList<>();
     }
 
-    public Question(String question, String format, List<Answer> answers) {
+    public Question(String question, ScoreFormat format, List<Answer> answers) {
         this.question = question;
         this.format = format;
         this.answers = answers;
@@ -47,11 +49,11 @@ public class Question {
         this.question = question;
     }
 
-    public String getFormat() {
+    public ScoreFormat getFormat() {
         return format;
     }
 
-    public void setFormat(String format) {
+    public void setFormat(ScoreFormat format) {
         this.format = format;
     }
 
@@ -64,12 +66,13 @@ public class Question {
         this.answers.addAll(answers);
     }
 
+
     @Override
     public String toString() {
         return "Question{" +
                 "id=" + id +
                 ", question='" + question + '\'' +
-                ", format='" + format + '\'' +
+                ", format=" + format +
                 ", answers=" + answers +
                 '}';
     }

@@ -1,5 +1,8 @@
-package be.projecttycoon.model;
+package be.projecttycoon.model.ScoreEngine;
 
+import be.projecttycoon.model.LevelKnowledgeArea;
+import be.projecttycoon.model.Question;
+import be.projecttycoon.model.TeamLevelPrestation;
 import be.projecttycoon.model.level.Level;
 
 import javax.persistence.*;
@@ -69,13 +72,8 @@ public class ScoreEngine {
     }
 
     private ScoreFormat getScore(Question question){
-        String format = question.getFormat();
-        ScoreFormat scoreFormat = ScoreFormat.STRING;
-        if(format.substring(format.length() - 1).equals("%")){
-            scoreFormat = ScoreFormat.PERCENT;
-        }
 
-        return scoreFormat;
+        return null;
     }
 
 
