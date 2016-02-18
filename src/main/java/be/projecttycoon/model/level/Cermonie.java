@@ -12,7 +12,7 @@ public class Cermonie implements LevelState {
 
     @Override
     public void cermonieFinished() {
-        context.setState(new Concluded(context));
+        context.setState(Concluded.class.getSimpleName());
     }
 
     @Override

@@ -31,10 +31,12 @@ public class Level{
     private List<LevelKnowledgeArea> levelKnowledgeAreas;
 
     @Transient
-    private LevelState state;
+    private LevelState levelState;
+    private String state;
 
     public Level() {
-        this.state = new Closed(this);
+        this.levelState = new Closed(this);
+        this.state = levelState.getClass().getSimpleName();
         this.levelKnowledgeAreas = new ArrayList<>();
     }
 
@@ -77,8 +79,34 @@ public class Level{
         this.levelKnowledgeAreas = levelKnowledgeAreas;
     }
 
-    void setState(LevelState state){
+    public String getState(){
+        this.state = levelState.getClass().getSimpleName();
+        return state;
+    }
+
+    public void setState(String state){
         this.state = state;
+        updateState();
+    }
+
+    @PostLoad
+    public void updateState(){
+        if(Open.class.getSimpleName().equals(state)){
+            this.levelState = new Open(this);
+        } else if(Finished.class.getSimpleName().equals(state)){
+            this.levelState = new Finished(this);
+        } else if(Cermonie.class.getSimpleName().equals(state)){
+            this.levelState = new Cermonie(this);
+        } else if(Concluded.class.getSimpleName().equals(state)){
+            this.levelState = new Concluded(this);
+        } else {
+            this.levelState = new Closed(this);
+        }
+    }
+
+
+    void levelState(LevelState state){
+        this.levelState = state;
     }
 
     @Override
@@ -114,77 +142,50 @@ public class Level{
                 '}';
     }
 
-    public void cermonieFinished() {
-        state.cermonieFinished();
+    public void openUp() {
+        levelState.open();
     }
-
-    public void open() {
-        state.open();
+    public void closeUp() {
+        levelState.close();
     }
-
-    public void close() {
-        state.close();
-    }
-
     public void pointPush() {
-        state.pointPush();
+        levelState.pointPush();
     }
+    public void cermonieFinished() {
+        levelState.cermonieFinished();
+    }
+
 
     public boolean isClosed(){
-        return state instanceof Closed;
+        return levelState instanceof Closed;
     }
-
-    public void setClosed(boolean closed){
-        if(closed)
-            state = new Closed(this);
-    }
-
     public boolean isOpen(){
-        return state instanceof Open;
+        return levelState instanceof Open;
     }
-
-    public void setOpen(boolean open){
-        if(open)
-            state = new Open(this);
-    }
-
     public boolean isFinished(){
-        return state instanceof Finished;
+        return levelState instanceof Finished;
     }
-
-    public void setFinished(boolean finished){
-        if(finished)
-            state = new Finished(this);
-    }
-
     public boolean isCermonie(){
-        return state instanceof Cermonie;
+        return levelState instanceof Cermonie;
     }
-
-    public void setCermonie(boolean cermonie){
-        if(cermonie)
-            state = new Cermonie(this);
-    }
-
     public boolean isConcluded(){
-        return state instanceof Concluded;
-    }
-
-    public void setConcluded(boolean concluded){
-        if(concluded)
-            state = new Concluded(this);
+        return levelState instanceof Concluded;
     }
 
     public boolean teamsCanSeePoints(){
-        return state.teamsCanSeePoints();
+        return levelState.teamsCanSeePoints();
     }
     public boolean documentsAreOpen(){
-        return state.documentsAreOpen();
+        return levelState.documentsAreOpen();
     }
     public boolean questionsAreVisible(){
-        return state.questionsAreVisible();
+        return levelState.questionsAreVisible();
     }
     public boolean questionsAreOpen(){
-        return state.questionsAreOpen();
+        return levelState.questionsAreOpen();
     }
+
+
+
+
 }

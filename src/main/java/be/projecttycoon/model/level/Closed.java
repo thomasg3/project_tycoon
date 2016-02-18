@@ -11,7 +11,7 @@ public class Closed implements LevelState {
     }
     @Override
     public void open() {
-        context.setState(new Open(context));
+        context.setState(Open.class.getSimpleName());
     }
 
     @Override

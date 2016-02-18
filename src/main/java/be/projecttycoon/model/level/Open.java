@@ -17,7 +17,7 @@ public class Open implements LevelState {
 
     @Override
     public void close() {
-        this.context.setState(new Finished(context));
+        this.context.setState(Finished.class.getSimpleName());
     }
 
     @Override
