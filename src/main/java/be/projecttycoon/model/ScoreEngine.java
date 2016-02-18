@@ -59,6 +59,27 @@ public class ScoreEngine {
             }
         }
     }
+    public void calculateScores(List<TeamLevelPrestation> teamLevelPrestations, List<LevelKnowledgeArea> levelKnowledgeAreas){
+        for (TeamLevelPrestation tlp : teamLevelPrestations) {
+            for(int i =0; i<= tlp.getKnowledgeAreaScores().size(); i++){
+                String teamanwser = tlp.getKnowledgeAreaScores().get(i).getAnswer();
+                Question question = levelKnowledgeAreas.get(i).getQuestion();
+            }
+        }
+    }
+
+    private ScoreFormat getScore(Question question){
+        String format = question.getFormat();
+        ScoreFormat scoreFormat = ScoreFormat.STRING;
+        if(format.substring(format.length() - 1).equals("%")){
+            scoreFormat = ScoreFormat.PERCENT;
+        }
+
+        return scoreFormat;
+    }
+
+
+
 
 
 }
