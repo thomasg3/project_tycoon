@@ -36,6 +36,7 @@ public class MailController {
             if (principal.isAdmin()) {
 
                 List<Team> teams = mail.getRecipients();
+                teams.add(principal);
                 Set<String> recipients = new HashSet<String>();
                 for (Team team : teams) {
                     String email = team.getEmail();
