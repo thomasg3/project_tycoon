@@ -1,4 +1,4 @@
-package be.projecttycoon.rest;
+package be.projecttycoon.rest.team;
 
 import be.projecttycoon.auth.UserService;
 import be.projecttycoon.db.TeamRepository;
@@ -26,20 +26,13 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "/api/teams")
 public class TeamResource  {
-    private final TeamRepository teamRepository;
-    private final UserService userService;
+    protected final TeamRepository teamRepository;
+    protected final UserService userService;
 
     @Autowired
     public TeamResource(TeamRepository teamRepository, UserService userService){
         this.teamRepository = teamRepository;
         this.userService = userService;
-        generateAdmin();
-    }
-
-    private void generateAdmin() {
-        Team admin = new Team("admin", "admin", new ArrayList<>());
-        admin.setAdmin(true);
-        teamRepository.save(admin);
     }
 
     @RequestMapping(method = RequestMethod.GET)

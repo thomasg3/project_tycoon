@@ -36,7 +36,6 @@ angular.module('projecttycoonControllers')
         })}
 
 
-
     $scope.initTeam = function(){
 
         var oldCredentials = {username : $scope.oldUsername, password : $scope.credentials.oldPassword};

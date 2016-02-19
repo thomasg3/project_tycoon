@@ -11,18 +11,14 @@ angular.module('projecttycoon').factory('TeamResource', function($resource) {
         },
         search: {
             method: 'GET',
-            url: '/api/teams/search/:teamname',
-            isArray: false
+            url: '/api/teams/search/:teamname'
         },
         isRegistered: {
             method: 'GET',
-            url: '/api/teams/search/:teamname/registered',
-            isArray: false,
-            responseType: 'json'
+            url: '/api/teams/search/:teamname/registered'
         },
         update: {
-            method: 'PUT',
-            URL: '/api/teams/:id'
+            method: 'PUT'
         }
     });
 });

@@ -2,7 +2,7 @@
  * Created by Jeroen on 17-2-2016.
  */
 
-angular.module('projecttycoon').factory('QuestionResourceService', function($resource) {
+angular.module('projecttycoon').factory('QuestionResource', function($resource) {
     return $resource('/api/questions/:id', {id: '@id'}, {
         update: {
             method: 'PUT'

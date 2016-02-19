@@ -1,4 +1,4 @@
-package be.projecttycoon.rest;
+package be.projecttycoon.rest.team;
 
 import be.projecttycoon.db.TeamLevelPrestationRepository;
 import be.projecttycoon.model.TeamLevelPrestation;
@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/prestations")
 public class TeamLevelPrestationResource {
-    private final TeamLevelPrestationRepository teamLevelPrestationRepository;
+    protected final TeamLevelPrestationRepository teamLevelPrestationRepository;
 
     @Autowired
     public TeamLevelPrestationResource(TeamLevelPrestationRepository teamLevelPrestationRepository){
@@ -30,18 +30,7 @@ public class TeamLevelPrestationResource {
         return teamLevelPrestation;
     }
 
-    @RequestMapping(value = "/multiple", method = RequestMethod.POST)
-    public List<TeamLevelPrestation> updateMultiplePrestations(@RequestBody List<TeamLevelPrestation> teamLevelPrestations){
-        return teamLevelPrestationRepository.save(teamLevelPrestations);
-    }
 
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public TeamLevelPrestation updatePrestation(@PathVariable long id, @RequestBody TeamLevelPrestation teamLevelPrestation){
-        getOneTeamLevelPrestation(id);
-        teamLevelPrestation.setId(id);
-        return teamLevelPrestationRepository.save(teamLevelPrestation);
-    }
 
 
 

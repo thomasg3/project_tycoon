@@ -3,22 +3,22 @@
  */
 
 angular.module('projecttycoonControllers')
-.controller('editKnowledgeAreasController', function($scope, $location, KnowledgeAreaResource){
-    $scope.knowledgeareas = KnowledgeAreaResource.query();
-    $scope.newarea = new KnowledgeAreaResource();
+.controller('editKnowledgeAreasController', function($scope, $location, KnowledgeAreaAdminResource){
+    $scope.knowledgeareas = KnowledgeAreaAdminResource.query();
+    $scope.newarea = new KnowledgeAreaAdminResource();
     $scope.toadds = [];
     $scope.todeletes = [];
     $scope.add = function(){
-        toadd = new KnowledgeAreaResource();
+        toadd = new KnowledgeAreaAdminResource();
         toadd.name = $scope.newarea.name;
         toadd.elementNumber = $scope.knowledgeareas.length + $scope.toadds.length;
         $scope.toadds.push(toadd);
         $scope.newarea.name = "";
     }
     $scope.save = function(){
-        KnowledgeAreaResource.saveAll($scope.toadds, function(){
+        KnowledgeAreaAdminResource.saveAll($scope.toadds, function(){
             $scope.toadds = [];
-            $scope.knowledgeareas = KnowledgeAreaResource.query();
+            $scope.knowledgeareas = KnowledgeAreaAdminResource.query();
         })
     }
 });
