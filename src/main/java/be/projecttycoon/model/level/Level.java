@@ -2,6 +2,9 @@ package be.projecttycoon.model.level;
 
 
 import be.projecttycoon.model.LevelKnowledgeArea;
+import be.projecttycoon.model.level.jobs.CloseLevelJob;
+import org.quartz.*;
+import org.quartz.impl.StdSchedulerFactory;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -9,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 /**
  * Created by thomas on 11/02/16.
@@ -93,6 +97,42 @@ public class Level{
     public void updateState(){
         if(Open.class.getSimpleName().equals(state)){
             this.levelState = new Open(this);
+
+            System.out.println("job started...");
+            // and start it off
+            try {
+                // Grab the Scheduler instance from the Factory
+                Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
+                scheduler.start();
+
+
+                // define the job and tie it to our HelloJob class
+                JobDetail job = JobBuilder.newJob(CloseLevelJob.class)
+                        .withIdentity("myJob", "group1") // name "myJob", group "group1"
+                        .build();
+                //job.getJobDataMap().put(CloseLevelJob.LEVEL, "Green");
+
+                // Trigger the job to run now, and then every 10 seconds
+                Trigger trigger = TriggerBuilder.newTrigger()
+                        .withIdentity("myTrigger", "group1")
+                        .startNow()
+                        .withSchedule(SimpleScheduleBuilder.simpleSchedule()
+                                .withIntervalInSeconds(10)
+                                .repeatForever())
+                        .build();
+
+                // Tell quartz to schedule the job using our trigger
+                scheduler.scheduleJob(job, trigger);
+
+
+
+                //scheduler.shutdown();
+            } catch (SchedulerException e) {
+                e.printStackTrace();
+            }
+
+
+
         } else if(Finished.class.getSimpleName().equals(state)){
             this.levelState = new Finished(this);
         } else if(Cermonie.class.getSimpleName().equals(state)){
