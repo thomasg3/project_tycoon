@@ -1,13 +1,42 @@
 package be.projecttycoon.model.level;
 
+import be.projecttycoon.MyScheduler;
+import be.projecttycoon.model.level.jobs.CloseLevelJob;
+import org.quartz.*;
+
+import java.util.Date;
+
 /**
  * Created by thomas on 17/02/16.
  */
 public class Open implements LevelState {
     private final Level context;
+    private MyScheduler scheduler=new MyScheduler();
 
     public Open(Level context){
+
         this.context = context;
+
+        // define the job and tie it to our CloseLevelJob class
+        JobDetail job = JobBuilder.newJob(CloseLevelJob.class)
+                .withIdentity("CloseLevel"+context.getId(), "closer")
+                .build();
+        job.getJobDataMap().put("level", context);
+
+        long currentTime=System.currentTimeMillis();
+        context.setTimestampStart(currentTime);
+        SimpleTrigger trigger = (SimpleTrigger) TriggerBuilder.newTrigger()
+                .withIdentity("trigger"+context.getId(), "closerTrigger")
+                .startAt(new Date(currentTime + context.getMinutesToClose()*60000L))
+                .forJob("CloseLevel"+context.getId(), "closer")
+                .build();
+
+            //Start countdown for game, to close...
+        try {
+            this.scheduler.getScheduler().scheduleJob(job, trigger);
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

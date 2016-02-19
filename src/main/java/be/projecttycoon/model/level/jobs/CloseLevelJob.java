@@ -13,7 +13,8 @@ public class CloseLevelJob  implements Job{
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        System.out.println("Message will be printed in "+ jobExecutionContext.getNextFireTime());
-        System.out.println("Hello Quartz!");
+        Level level = (Level)jobExecutionContext.getJobDetail().getJobDataMap().get("level");
+        level.setState("Closed");
+        System.out.println("Game with id "+level.getId() + " is now closed");
     }
 }

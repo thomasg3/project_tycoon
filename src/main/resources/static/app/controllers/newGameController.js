@@ -5,6 +5,19 @@ angular.module('projecttycoonControllers')
     .controller('newGameController', function($scope, $location ,KnowledgeAreaResource, GameResource){
         $scope.knowledgeareas = KnowledgeAreaResource.query();
         $scope.game = new GameResource();
+        $scope.game.allLevels = [];
+
+
+
+        $scope.notifyChange= function(){
+               while($scope.game.levels > $scope.game.allLevels.length){
+                   $scope.game.allLevels.push({});
+               }
+             while($scope.game.levels < $scope.game.allLevels.length){
+                 $scope.game.allLevels.pop();
+            }
+        }
+
         $scope.freeze = false;
         $scope.submit = function(){
             $scope.freeze = true;

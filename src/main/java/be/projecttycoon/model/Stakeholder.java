@@ -1,5 +1,7 @@
 package be.projecttycoon.model;
 
+import be.projecttycoon.model.level.Level;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,13 +17,53 @@ public class Stakeholder {
     private long id;
     private String name;
     private String imagePath;
+    private String organisation;
+    private String function;
+    private String description;
+    private int level;
 
-    public Stakeholder(String name, String imagePath) {
+    public Stakeholder(String name, String imagePath,String description,String organisation,String function,int level) {
         this.name = name;
         this.imagePath = imagePath;
+        this.description = description;
+        this.organisation = organisation;
+        this.function = function;
+        this.level = level;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public String getOrganisation() {
+        return organisation;
+    }
+
+    public void setOrganisation(String organisation) {
+        this.organisation = organisation;
+    }
+
+    public String getFunction() {
+        return function;
+    }
+
+    public void setFunction(String function) {
+        this.function = function;
     }
 
     public Stakeholder() {
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getName() {
@@ -48,17 +90,12 @@ public class Stakeholder {
 
         Stakeholder that = (Stakeholder) o;
 
-        if (id != that.id) return false;
-        if (!name.equals(that.name)) return false;
-        return imagePath.equals(that.imagePath);
+        return id == that.id;
 
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + name.hashCode();
-        result = 31 * result + imagePath.hashCode();
-        return result;
+        return (int) (id ^ (id >>> 32));
     }
 }
