@@ -4,6 +4,7 @@ import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.KnowledgeAreaRepository;
 import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.*;
+import be.projecttycoon.model.ScoreEngine.ScoreFormat;
 import be.projecttycoon.model.level.*;
 import be.projecttycoon.rest.exception.IllegalStateChangeException;
 import be.projecttycoon.rest.exception.NotFoundException;
@@ -64,7 +65,7 @@ public class GameResource {
 
         for(LevelKnowledgeArea lk : testgame.getLevels().get(0).getLevelKnowledgeAreas()){
             lk.getQuestion().setQuestion("Dit is een vraag..." + lk.getQuestion().getId());
-            lk.getQuestion().setFormat("9-9-9");
+            lk.getQuestion().setFormat(ScoreFormat.STRING);
         }
 
         Game testgame2 = new Game("testGame123342", 5,5, knowledgeAreaRepository.findAll());
