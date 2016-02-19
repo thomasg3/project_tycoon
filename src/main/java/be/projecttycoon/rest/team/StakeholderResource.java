@@ -1,4 +1,4 @@
-package be.projecttycoon.rest;
+package be.projecttycoon.rest.team;
 
 import be.projecttycoon.db.StakeholderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
