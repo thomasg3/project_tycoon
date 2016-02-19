@@ -39,7 +39,6 @@ public class KnowledgeAreaScoreResource {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public KnowledgeAreaScore updateKnowledgeAreaScore(@PathVariable long id, @RequestBody KnowledgeAreaScore knowledgeAreaScore){
         KnowledgeAreaScore knas = getKnowledgeAreaScore(id);
-        knas.setScore(knowledgeAreaScore.getScore());
         knas.setAnswer(knowledgeAreaScore.getAnswer());
         return knowledgeAreaScoreRepository.save(knas);
     }

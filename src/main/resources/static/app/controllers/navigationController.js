@@ -22,7 +22,6 @@ angular.module('projecttycoonControllers')
             $rootScope.authenticated = false;
             callback && callback();
         });
-
     };
     $rootScope.authenticate();
     $scope.credentials = {};
