@@ -9,7 +9,6 @@ app.factory('httpInterceptor', ['$q', '$location', '$log', function($q, $locatio
             return response;
         },
         responseError: function(response){
-            $log.debug("HTTP_ERR "+response.status);
             switch(response.status){
                 case 401:
                     if(response.config.url != "user")
@@ -22,8 +21,9 @@ app.factory('httpInterceptor', ['$q', '$location', '$log', function($q, $locatio
                     window.location =  '#/not_found';
                     break;
                 default:
-                    return $q.reject(response);
+                    break;
             }
+            return $q.reject(response);
 
         }
     };

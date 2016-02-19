@@ -2,6 +2,7 @@ package be.projecttycoon.model.level;
 
 
 import be.projecttycoon.model.LevelKnowledgeArea;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -9,7 +10,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Created by thomas on 11/02/16.
  */
@@ -75,6 +79,23 @@ public class Level{
         return levelKnowledgeAreas;
     }
 
+    @Transient
+    @JsonIgnore
+    public List<LevelKnowledgeArea> getPublicKnowledgeAreas(){
+        if(isClosed()){
+            return levelKnowledgeAreas.stream()
+                    .map(lkas -> {lkas.setQuestion(null); return lkas;})
+                    .collect(Collectors.toList());
+        } else {
+            return (List<LevelKnowledgeArea>)levelKnowledgeAreas.stream()
+                    .map(lkas -> {
+                        lkas.getQuestion().setAnswers(Collections.EMPTY_LIST);
+                        return lkas;
+                    })
+                    .collect(Collectors.toList());
+        }
+    }
+
     public void setLevelKnowledgeAreas(List<LevelKnowledgeArea> levelKnowledgeAreas) {
         this.levelKnowledgeAreas = levelKnowledgeAreas;
     }
@@ -104,10 +125,6 @@ public class Level{
         }
     }
 
-
-    void levelState(LevelState state){
-        this.levelState = state;
-    }
 
     @Override
     public boolean equals(Object o) {

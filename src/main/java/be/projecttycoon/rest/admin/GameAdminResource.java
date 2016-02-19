@@ -6,6 +6,7 @@ import be.projecttycoon.db.StartupScript;
 import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Game;
 import be.projecttycoon.model.Team;
+import be.projecttycoon.rest.exception.NotAuthorizedException;
 import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.team.GameResource;
 import be.projecttycoon.rest.util.GameBean;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.ws.rs.Produces;
+import java.security.Principal;
 import java.util.Collection;
 import java.util.Set;
 
@@ -36,12 +38,25 @@ public class GameAdminResource extends GameResource {
         return gameRepository.findAll();
     }
 
+    @Override
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @Produces("application/json")
+    public Game showGame(Principal team, @PathVariable long id ){
+        return getGame(id);
+    }
+
+    @Override
+    @RequestMapping(value="/game/{teamname}" ,method = RequestMethod.GET)
+    @Produces("application/json")
+    public Game getGameForTeam(Principal team, @PathVariable String teamname) {
+        return getGameByTeamname(teamname);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     @Produces("application/json")
     public Game createGame(@Valid @RequestBody GameBean inputGame){
         Game game = new Game(inputGame.getName(),inputGame.getAmount(), inputGame.getLevels(), knowledgeAreaRepository.findAll());
-        game = gameRepository.save(game);
-        return game;
+        return gameRepository.save(game);
     }
 
     @RequestMapping(value="/{id}", method = RequestMethod.PUT)
@@ -55,7 +70,7 @@ public class GameAdminResource extends GameResource {
     @RequestMapping (value="/{id}", method = RequestMethod.DELETE)
     @Produces("application/json")
     public void deleteGame(@PathVariable long id){
-        showGame(id);
+        getGame(id);
         gameRepository.delete(id);
 
     }
@@ -66,7 +81,7 @@ public class GameAdminResource extends GameResource {
         Team t = teamRepository.findOne(id);
         if(t==null)
             throw new NotFoundException();
-        Game g = getGameForTeam(t.getTeamname());
+        Game g = getGameByTeamname(t.getTeamname());
         Set<Team> teams= g.getTeams();
         teams.remove(t);
         return gameRepository.save(g);
