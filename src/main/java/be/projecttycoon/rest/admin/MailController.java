@@ -1,4 +1,4 @@
-package be.projecttycoon.rest;
+package be.projecttycoon.rest.admin;
 
 import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.TeamRepository;
@@ -18,7 +18,7 @@ import java.util.Set;
  */
 
 @RestController
-@RequestMapping("/api/mail")
+@RequestMapping("/api/admin/mail")
 public class MailController {
 
     @Autowired
