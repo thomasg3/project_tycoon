@@ -40,7 +40,7 @@ public class GmailRest {
 
     private static final String APPLICATION_NAME ="Project Management Briers";
     /** Directory to store user credentials for this application. */
-    private static final java.io.File DATA_STORE_DIR = new java.io.File("../.credentials/gmail-java-quickstart.json");
+    private static final java.io.File DATA_STORE_DIR = new java.io.File("../credentials/gmail-java-quickstart.json");
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     /*
      * If modifying these scopes, delete your previously saved credentials
