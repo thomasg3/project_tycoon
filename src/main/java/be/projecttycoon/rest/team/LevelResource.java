@@ -41,44 +41,6 @@ public class LevelResource {
         return teamLevelPrestationRepository.findByLevel(getLevel(id));
     }
 
-    @RequestMapping(value="/{id}/change/{state}", method = RequestMethod.GET)
-    public Level changeLevelState(@PathVariable long id, @PathVariable String state){
-        Level level = levelRepository.findOne(id);
-        try {
-            state = state.toLowerCase();
-            switch (state){
-                case "open":
-                    level.openUp();
-                    break;
-                case "close":
-                    level.closeUp();
-                    break;
-                case "push":
-                    level.pointPush();
-                    break;
-                case "conclude":
-                    level.cermonieFinished();
-                    break;
-                default:
-                    throw new NotFoundException("no such state transistion");
-            }
-        } catch (IllegalStateException e){
-            throw new IllegalStateChangeException(e);
-        }
-        return levelRepository.save(level);
-    }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public Level updateLevel(@PathVariable long id, @RequestBody Level level){
-        getLevel(id);
-        level.setId(id);
-        return levelRepository.save(level);
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public Level addLevel(@RequestBody Level level){
-        level = levelRepository.save(level);
-        return level;
-    }
 
 }

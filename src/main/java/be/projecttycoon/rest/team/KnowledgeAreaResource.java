@@ -40,26 +40,5 @@ public class KnowledgeAreaResource {
         return found;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public KnowledgeArea updateKnowledgeArea(@PathVariable long id, @RequestBody KnowledgeArea knowledgeArea){
-        getKnowledgeArea(id);
-        knowledgeArea.setId(id);
-        return knowledgeAreaRepository.save(knowledgeArea);
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public KnowledgeArea addNewKnowledgeArea(@RequestBody KnowledgeArea knowledgeArea){
-        return knowledgeAreaRepository.save(knowledgeArea);
-    }
-
-    @RequestMapping(value = "/multiple",method = RequestMethod.POST)
-    public List<KnowledgeArea> addNewKnowledgeAreas(@RequestBody List<KnowledgeArea> knowledgeAreas){
-        return knowledgeAreaRepository.save(knowledgeAreas);
-    }
-
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
-    public void deteleKnowledgeArea(@PathVariable long id){
-        knowledgeAreaRepository.delete(getKnowledgeArea(id));
-    }
 
 }

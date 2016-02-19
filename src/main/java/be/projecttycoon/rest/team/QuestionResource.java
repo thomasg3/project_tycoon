@@ -47,28 +47,7 @@ public class QuestionResource {
         return question;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    @Produces("application/json")
-    public Question createQuestion(@Valid @RequestBody QuestionBean inputQuestion){
-        Question question = new Question(inputQuestion.getQuestion(), inputQuestion.getFormat(), inputQuestion.getAnswers());
-        question = questionRepository.save(question);
-        return question;
-    }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Question updateQuestion(@PathVariable long id, @RequestBody Question question){
-        Question q = getQuestion(id);
-        q.setFormat(question.getFormat());
-        q.setQuestion(question.getQuestion());
-        return questionRepository.save(q);
-    }
-
-    @RequestMapping(value = "/answers/{id}", method = RequestMethod.PUT)
-    public Question updateAnswers(@PathVariable long id, @RequestBody Question question){
-        Question q = getQuestion(id);
-        q.setAnswers(question.getAnswers());
-        return questionRepository.save(q);
-    }
 
 
 }

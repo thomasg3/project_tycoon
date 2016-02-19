@@ -30,18 +30,7 @@ public class TeamLevelPrestationResource {
         return teamLevelPrestation;
     }
 
-    @RequestMapping(value = "/multiple", method = RequestMethod.POST)
-    public List<TeamLevelPrestation> updateMultiplePrestations(@RequestBody List<TeamLevelPrestation> teamLevelPrestations){
-        return teamLevelPrestationRepository.save(teamLevelPrestations);
-    }
 
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public TeamLevelPrestation updatePrestation(@PathVariable long id, @RequestBody TeamLevelPrestation teamLevelPrestation){
-        getOneTeamLevelPrestation(id);
-        teamLevelPrestation.setId(id);
-        return teamLevelPrestationRepository.save(teamLevelPrestation);
-    }
 
 
 
