@@ -6,6 +6,7 @@ import be.projecttycoon.model.level.Level;
 import be.projecttycoon.model.TeamLevelPrestation;
 import be.projecttycoon.rest.exception.IllegalStateChangeException;
 import be.projecttycoon.rest.exception.NotFoundException;
+import be.projecttycoon.rest.util.PublicLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,13 @@ public class LevelResource {
         return teamLevelPrestationRepository.findByLevel(getLevel(id));
     }
 
+    @RequestMapping(value="/public/{id}", method = RequestMethod.GET)
+    public PublicLevel getPublicLevel(@PathVariable long id){
+        Level level = levelRepository.findOne(id);
+        if(level == null)
+            throw new NotFoundException();
+        return new PublicLevel(level);
+    }
 
 
 }

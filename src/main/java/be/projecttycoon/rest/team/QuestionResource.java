@@ -51,18 +51,4 @@ public class QuestionResource {
         return question;
     }
 
-    @RequestMapping(value = "/enum", method = RequestMethod.GET)
-    @Produces("application/json")
-    public List<EnumFormatBean> getFormats(){
-        List<EnumFormatBean> formats = new ArrayList<>();
-        ScoreFormat[] enumlist = ScoreFormat.values();
-        for(ScoreFormat sf: enumlist){
-            formats.add(new EnumFormatBean(sf.toString()));
-        }
-        return formats;
-    }
-
-
-
-
 }

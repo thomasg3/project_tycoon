@@ -19,22 +19,12 @@ import java.util.List;
  * Created by thomas on 18/02/16.
  */
 @RestController
-@RequestMapping("/api/levels")
-
 @RequestMapping("/api/admin/levels")
 public class LevelAdminResource extends LevelResource {
 
     @Autowired
     public LevelAdminResource(LevelRepository levelRepository, TeamLevelPrestationRepository teamLevelPrestationRepository) {
         super(levelRepository, teamLevelPrestationRepository);
-    }
-
-    @RequestMapping(value="/public/{id}", method = RequestMethod.GET)
-    public PublicLevel getPublicLevel(@PathVariable long id){
-        Level level = levelRepository.findOne(id);
-        if(level == null)
-            throw new NotFoundException();
-        return new PublicLevel(level);
     }
 
     @RequestMapping(value="/{id}/change/{state}", method = RequestMethod.GET)
