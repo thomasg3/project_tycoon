@@ -90,6 +90,11 @@ public class StartupScript {
         teams.get(1).setTeamname("DeVrolijkeBarten");
         teams.get(2).setTeamname("ProjectNinas");
         teams.get(3).setTeamname("TeamWin");
+        teams.get(0).setRegistered(true);
+        teams.get(1).setRegistered(true);
+        teams.get(2).setRegistered(true);
+        teams.get(3).setRegistered(true);
+
         Random r  = new Random();
         teams.stream().forEach(team -> {
             team.getTeamLevelPrestations().stream().forEach(p -> {
