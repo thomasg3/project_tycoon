@@ -1,6 +1,7 @@
 package be.projecttycoon.rest.util;
 
 import be.projecttycoon.model.Answer;
+import be.projecttycoon.model.ScoreEngine.ScoreFormat;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public class QuestionBean {
     private String question;
-    private String format;
+    private EnumFormatBean format;
     private List<Answer> answers;
 
 
@@ -17,7 +18,7 @@ public class QuestionBean {
 
     }
 
-    public QuestionBean(List<Answer> answers, String question, String format) {
+    public QuestionBean(List<Answer> answers, String question, EnumFormatBean format) {
         this.answers = answers;
         this.question = question;
         this.format = format;
@@ -31,11 +32,11 @@ public class QuestionBean {
         this.question = question;
     }
 
-    public String getFormat() {
+    public EnumFormatBean getFormat() {
         return format;
     }
 
-    public void setFormat(String format) {
+    public void setFormat(EnumFormatBean format) {
         this.format = format;
     }
 
