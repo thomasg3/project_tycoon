@@ -1,5 +1,6 @@
 package be.projecttycoon.model.ScoreEngine;
 
+import be.projecttycoon.model.KnowledgeAreaScore;
 import be.projecttycoon.model.LevelKnowledgeArea;
 import be.projecttycoon.model.Question;
 import be.projecttycoon.model.TeamLevelPrestation;
@@ -63,19 +64,23 @@ public class ScoreEngine {
         }
     }
     public void calculateScores(List<TeamLevelPrestation> teamLevelPrestations, List<LevelKnowledgeArea> levelKnowledgeAreas){
+        CalculationStrategy calculationStrategy;
+
         for (TeamLevelPrestation tlp : teamLevelPrestations) {
             for(int i =0; i<= tlp.getKnowledgeAreaScores().size(); i++){
-                String teamanwser = tlp.getKnowledgeAreaScores().get(i).getAnswer();
+                KnowledgeAreaScore knowledgeAreaScore = tlp.getKnowledgeAreaScores().get(i);
                 Question question = levelKnowledgeAreas.get(i).getQuestion();
+                if(question.getFormat().equals(ScoreFormat.RANGE)){
+                    calculationStrategy = new RangeCalculation();
+                }
+                else{
+                    calculationStrategy = new StringCalculation();
+                }
+
+                calculationStrategy.calculateScore(knowledgeAreaScore, question);
             }
         }
     }
-
-    private ScoreFormat getScore(Question question){
-
-        return null;
-    }
-
 
 
 
