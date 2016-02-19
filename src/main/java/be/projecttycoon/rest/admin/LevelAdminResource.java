@@ -1,13 +1,13 @@
-package be.projecttycoon.rest;
+package be.projecttycoon.rest.admin;
 
 import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.LevelRepository;
 import be.projecttycoon.db.TeamLevelPrestationRepository;
 import be.projecttycoon.model.level.Level;
-import be.projecttycoon.model.TeamLevelPrestation;
 import be.projecttycoon.rest.exception.IllegalStateChangeException;
 import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.PublicLevel;
+import be.projecttycoon.rest.team.LevelResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,30 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by thomas on 15/02/16.
+ * Created by thomas on 18/02/16.
  */
 @RestController
 @RequestMapping("/api/levels")
-public class LevelResource {
 
-    private final LevelRepository levelRepository;
-    private final TeamLevelPrestationRepository teamLevelPrestationRepository;
-    private final GameRepository gameRepository;
-
+@RequestMapping("/api/admin/levels")
+public class LevelAdminResource extends LevelResource {
 
     @Autowired
-    public LevelResource(LevelRepository levelRepository, TeamLevelPrestationRepository teamLevelPrestationRepository, GameRepository gameRepository){
-        this.gameRepository = gameRepository;
-        this.levelRepository = levelRepository;
-        this.teamLevelPrestationRepository = teamLevelPrestationRepository;
-    }
-
-    @RequestMapping(value="/{id}", method = RequestMethod.GET)
-    public Level getLevel(@PathVariable long id){
-        Level level = levelRepository.findOne(id);
-        if(level == null)
-            throw new NotFoundException();
-        return level;
+    public LevelAdminResource(LevelRepository levelRepository, TeamLevelPrestationRepository teamLevelPrestationRepository) {
+        super(levelRepository, teamLevelPrestationRepository);
     }
 
     @RequestMapping(value="/public/{id}", method = RequestMethod.GET)
@@ -50,14 +37,9 @@ public class LevelResource {
         return new PublicLevel(level);
     }
 
-    @RequestMapping(value="/{id}/prestations", method = RequestMethod.GET)
-    public List<TeamLevelPrestation> getAllTeamLevelPrestations(@PathVariable long id){
-        return teamLevelPrestationRepository.findByLevel(getLevel(id));
-    }
-
     @RequestMapping(value="/{id}/change/{state}", method = RequestMethod.GET)
     public Level changeLevelState(@PathVariable long id, @PathVariable String state){
-        Level level = levelRepository.findOne(id);
+        Level level = getLevel(id);
         try {
             state = state.toLowerCase();
             switch (state){
@@ -94,5 +76,4 @@ public class LevelResource {
         level = levelRepository.save(level);
         return level;
     }
-
 }

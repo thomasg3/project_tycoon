@@ -1,4 +1,4 @@
-package be.projecttycoon.rest;
+package be.projecttycoon.rest.team;
 
 import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.QuestionRepository;
@@ -26,7 +26,7 @@ import java.util.List;
 @RequestMapping(value = "/api/questions")
 public class QuestionResource {
 
-    private final QuestionRepository questionRepository;
+    protected final QuestionRepository questionRepository;
 
 
 
@@ -62,30 +62,7 @@ public class QuestionResource {
         return formats;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    @Produces("application/json")
-    public Question createQuestion(@Valid @RequestBody QuestionBean inputQuestion){
-        Question question = new Question(inputQuestion.getQuestion(), ScoreFormat.valueOf(inputQuestion.getFormat().getFormat()), inputQuestion.getAnswers());
-        question = questionRepository.save(question);
-        return question;
-    }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Question updateQuestion(@PathVariable long id, @RequestBody QuestionBean question){
-
-        Question q = getQuestion(id);
-        q.setFormat(ScoreFormat.valueOf(question.getFormat().getFormat()));
-        q.setQuestion(question.getQuestion());
-        System.out.println(q);
-        return questionRepository.save(q);
-    }
-
-    @RequestMapping(value = "/answers/{id}", method = RequestMethod.PUT)
-    public Question updateAnswers(@PathVariable long id, @RequestBody Question question){
-        Question q = getQuestion(id);
-        q.setAnswers(question.getAnswers());
-        return questionRepository.save(q);
-    }
 
 
 }

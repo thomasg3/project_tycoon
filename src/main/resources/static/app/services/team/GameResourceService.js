@@ -4,17 +4,9 @@
 
 angular.module('projecttycoon').factory('GameResource', function($resource) {
     return $resource('/api/games/:id', {id: "@id"}, {
-        getAll: {
-            method: 'GET',
-            url: '/api/games',
-            isArray: true
-        },
         getGameByUsername:{
             method: 'GET',
             url: '/api/games/game/:teamname'
-        },
-        delete:{
-            method: 'DELETE'
         },
         deleteTeam: {
             method: 'DELETE',
@@ -22,10 +14,6 @@ angular.module('projecttycoon').factory('GameResource', function($resource) {
         },
         update:{
             method: 'PUT'
-        },
-        getGameByKnowledgeAreaId:{
-            method: 'GET',
-            url: '/api/games/game/levelkn/:id'
         },
         postQuestion:{
             method: 'POST',

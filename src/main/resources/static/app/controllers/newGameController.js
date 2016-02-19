@@ -2,9 +2,9 @@
  * Created by michael on 12/02/16.
  */
 angular.module('projecttycoonControllers')
-    .controller('newGameController', function($scope, $location ,KnowledgeAreaResource, GameResource){
-        $scope.knowledgeareas = KnowledgeAreaResource.query();
-        $scope.game = new GameResource();
+    .controller('newGameController', function($scope, $location ,KnowledgeAreaAdminResource, GameAdminResource){
+        $scope.knowledgeareas = KnowledgeAreaAdminResource.query();
+        $scope.game = new GameAdminResource();
         $scope.freeze = false;
         $scope.submit = function(){
             $scope.freeze = true;
