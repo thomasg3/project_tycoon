@@ -1,7 +1,10 @@
 package be.projecttycoon.model.level;
 
 
+import be.projecttycoon.MyScheduler;
 import be.projecttycoon.model.LevelKnowledgeArea;
+import org.quartz.JobKey;
+import org.quartz.SchedulerException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -31,12 +34,22 @@ public class Level{
     @Pattern(regexp = "^[A-Za-z0-9\\s]*$", message="Your levelname can only contain characters, numbers and spaces")
     private String name;
 
+
+    private int minutesToClose=1;
+    private long timestampStart;
+    private long remainingMs;
+
+    @Transient
+    private MyScheduler scheduler=new MyScheduler();
+
     @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
     private List<LevelKnowledgeArea> levelKnowledgeAreas;
 
     @Transient
     private LevelState levelState;
+
     private String state;
+
 
     public Level() {
         this.levelState = new Closed(this);
@@ -57,6 +70,14 @@ public class Level{
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getTimestampStart() {
+        return timestampStart;
+    }
+
+    public void setTimestampStart(long timestampTime) {
+        this.timestampStart = timestampTime;
     }
 
     public String getName() {
@@ -98,6 +119,14 @@ public class Level{
 
     public void setLevelKnowledgeAreas(List<LevelKnowledgeArea> levelKnowledgeAreas) {
         this.levelKnowledgeAreas = levelKnowledgeAreas;
+    }
+
+    public int getMinutesToClose() {
+        return minutesToClose;
+    }
+
+    public void setMinutesToClose(int minutesToClose) {
+        this.minutesToClose = minutesToClose;
     }
 
     public String getState(){
@@ -173,6 +202,16 @@ public class Level{
     }
 
 
+    //todo untested
+    public long getRemainingMs(){
+        long msecondsToClose=this.getMinutesToClose()*60000;
+        long startTime= this.getTimestampStart();
+        long endTime=startTime+msecondsToClose;
+        long currentTime= System.currentTimeMillis();
+        return endTime-currentTime;
+    }
+
+
     public boolean isClosed(){
         return levelState instanceof Closed;
     }
@@ -202,6 +241,15 @@ public class Level{
         return levelState.questionsAreOpen();
     }
 
+
+    //todo untested
+    public void removeCloseScheduler(){
+        try {
+            scheduler.getScheduler().deleteJob(JobKey.jobKey("CloseLevel"+this.getId(), "closer"));
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

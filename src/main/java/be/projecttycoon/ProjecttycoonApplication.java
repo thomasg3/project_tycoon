@@ -1,5 +1,6 @@
 package be.projecttycoon;
 
+import be.projecttycoon.model.level.Level;
 import be.projecttycoon.social.GmailRest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
