@@ -1,10 +1,7 @@
 package be.projecttycoon.db;
 
-import be.projecttycoon.model.Game;
-import be.projecttycoon.model.KnowledgeArea;
-import be.projecttycoon.model.LevelKnowledgeArea;
+import be.projecttycoon.model.*;
 import be.projecttycoon.model.ScoreEngine.ScoreFormat;
-import be.projecttycoon.model.Team;
 import be.projecttycoon.model.level.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -65,11 +62,16 @@ public class StartupScript {
         teams2.get(0).setTeamname("Team123");
         teams2.get(0).setPassword("azerty");
 
-        for(LevelKnowledgeArea lk : testgame.getLevels().get(0).getLevelKnowledgeAreas()){
-            lk.getQuestion().setQuestion("Dit is een vraag..." + lk.getQuestion().getId());
-            lk.getQuestion().setFormat(ScoreFormat.STRING);
+        for(Level l:testgame.getLevels()){
+            for(LevelKnowledgeArea lk : l.getLevelKnowledgeAreas()){
+                lk.getQuestion().setQuestion("Dit is een vraag... met als antwoord 'test' 50 en 'testtest' 30");
+                lk.getQuestion().setFormat(ScoreFormat.STRING);
+                List<Answer> answers = new ArrayList<>();
+                answers.add(new Answer("test", 50));
+                answers.add(new Answer("testtest", 30));
+                lk.getQuestion().setAnswers(answers);
+            }
         }
-
 
         Game testgame2 = new Game("testGame123342", 5,5, knowledgeAreaRepository.findAll());
         ArrayList<Team> teams3= new ArrayList<Team>();
