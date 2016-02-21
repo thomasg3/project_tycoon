@@ -8,22 +8,19 @@ public class Cleaner {
 
     public static String clean(String string) {
         if(string.contains("%")){
-            string.replaceAll("%", "");
+            string = string.replaceAll("%", "");
         }
         if(string.contains("$")){
-            string.replaceAll("$", "");
+           string = string.replaceAll("$", "");
         }
         if(string.contains("€")){
-            string.replaceAll("€", "");
+            string = string.replaceAll("€", "");
         }
         if(string.contains("£")){
-            string.replaceAll("£", "");
+            string = string.replaceAll("£", "");
         }
-        if(string.contains(" ")){
-            string.replaceAll(" ", "");
-        }
+
+        string = string.replaceAll("\\s","");
         return string;
     }
-
-
 }

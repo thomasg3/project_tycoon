@@ -1,6 +1,7 @@
 package be.projecttycoon.model.ScoreEngine.util;
 
 import java.lang.reflect.Array;
+import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,12 +28,12 @@ public class Enumeration {
         boolean match = true;
         String[] split = Splitter.split(string);
         if(split.length == enumeration.size()){
-            for(int i = 0; i <= split.length; i++ ){
-                if(enumeration.get(i).equals("*")){
-                    match = true;
-                }
-                else if(!split[i].equals(enumeration.get(i))){
-                    match = false;
+            for(int i = 0; i <= split.length -1; i++ ){
+                if(!enumeration.get(i).equals("*")){
+                    if(!split[i].equals(enumeration.get(i))){
+                        match = false;
+                        break;
+                    }
                 }
             }
         } else{

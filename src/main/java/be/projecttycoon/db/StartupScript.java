@@ -56,7 +56,7 @@ public class StartupScript {
         teams.get(1).setPassword("jefkes");
         teams.get(1).setRegistered(true);
 
-        Game testgame = new Game("testGame123", 5,5, knowledgeAreaRepository.findAll());
+        Game testgame = new Game("Met Questions", 5,5, knowledgeAreaRepository.findAll());
         ArrayList<Team> teams2= new ArrayList<Team>();
         teams2.addAll(testgame.getTeams());
         teams2.get(0).setTeamname("Team123");
@@ -73,6 +73,48 @@ public class StartupScript {
             }
         }
 
+        gameRepository.save(testgame);
+
+        Game test = new Game("ScoreEngine tester", 5,5, knowledgeAreaRepository.findAll());
+        ArrayList<Team> teams22= new ArrayList<Team>();
+        teams22.addAll(test.getTeams());
+        teams22.get(0).setTeamname("PerfectScore");
+        teams22.get(0).setPassword("azerty");
+
+        teams22.get(1).setTeamname("WorstScore");
+        teams22.get(1).setPassword("azerty");
+
+        teams22.get(2).setTeamname("MediumScore");
+        teams22.get(2).setPassword("azerty");
+
+
+        for(KnowledgeAreaScore kas :  teams22.get(0).getTeamLevelPrestations().get(0).getKnowledgeAreaScores()){
+            kas.setAnswer("5-5-9");
+        }
+
+        for(KnowledgeAreaScore kas :  teams22.get(2).getTeamLevelPrestations().get(0).getKnowledgeAreaScores()){
+            kas.setAnswer("5-5-7");
+        }
+
+        for(KnowledgeAreaScore kas :  teams22.get(1).getTeamLevelPrestations().get(0).getKnowledgeAreaScores()){
+            kas.setAnswer("5-5-6");
+        }
+
+
+        for(Level l:test.getLevels()){
+            for(LevelKnowledgeArea lk : l.getLevelKnowledgeAreas()){
+                lk.getQuestion().setQuestion("Dit is een vraag... met als antwoord 'test' 50 en 'testtest' 30");
+                lk.getQuestion().setFormat(ScoreFormat.ENUMERATION);
+                List<Answer> answers = new ArrayList<>();
+                answers.add(new Answer("5-5-9", 50));
+                answers.add(new Answer("5-5-*", 10));
+                answers.add(new Answer("5-7-8", -20));
+                lk.getQuestion().setAnswers(answers);
+            }
+        }
+
+        gameRepository.save(test);
+
         Game testgame2 = new Game("testGame123342", 5,5, knowledgeAreaRepository.findAll());
         ArrayList<Team> teams3= new ArrayList<Team>();
         teams2.addAll(testgame.getTeams());
@@ -80,7 +122,7 @@ public class StartupScript {
         teams2.get(0).setPassword("azerty");
         teams2.get(0).setRegistered(true);
 
-        gameRepository.save(testgame);
+
         gameRepository.save(testgame2);
         gameRepository.save(game);
 

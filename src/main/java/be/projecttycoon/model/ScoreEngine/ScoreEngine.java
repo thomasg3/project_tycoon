@@ -69,6 +69,7 @@ public class ScoreEngine {
     }
     public void calculateScores(List<TeamLevelPrestation> teamLevelPrestations, List<LevelKnowledgeArea> levelKnowledgeAreas){
         CalculationStrategy calculationStrategy;
+        resetScores(teamLevelPrestations);
 
         for (TeamLevelPrestation tlp : teamLevelPrestations) {
             for(int i =0; i<tlp.getKnowledgeAreaScores().size(); i++){
@@ -89,11 +90,18 @@ public class ScoreEngine {
                     }
 
                     calculationStrategy.calculateScore(knowledgeAreaScore, question);
-                    System.out.println("knowledgeare score na engine: " + knowledgeAreaScore.getScore());
 
                 } else{
                     knowledgeAreaScore.setScore(0);
                 }
+            }
+        }
+    }
+
+    private void resetScores(List<TeamLevelPrestation> teamLevelPrestations){
+        for(TeamLevelPrestation tlp: teamLevelPrestations){
+            for(KnowledgeAreaScore kas: tlp.getKnowledgeAreaScores()){
+                kas.setScore(0);
             }
         }
     }
