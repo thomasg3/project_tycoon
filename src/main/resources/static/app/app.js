@@ -103,6 +103,10 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/game/edit.html',
                 controller : 'newGameController'
             })
+            .when('/createScoreEngine', {
+                templateUrl : 'views/scoreengine/edit.html',
+                controller : 'newScoreEngineController'
+            })
             .when('/admin/knowledgeareas/edit', {
                 templateUrl : 'views/knowledgearea/edit.html',
                 controller : 'editKnowledgeAreasController'

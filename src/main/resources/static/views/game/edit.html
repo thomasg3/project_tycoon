@@ -27,26 +27,18 @@
             </div>
 
             <div class="form-group">
-                <label for="levels">Number of levels</label>
-                <input type="number" class="form-control" placeholder="3" id="levels" name="levels" ng-model="game.levels" min="1" max="20" required>
+                <label for="dropdown">Score Engine</label>
+                <div id="dropdown" class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        {{selectedItem.name}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li ng-model="game.scoreengine" ng-repeat="scoreengine in scoreengines"><a ng-click="dropboxitemselected(scoreengine)">name: {{scoreengine.name}} ,levels: {{scoreengine.levels}}</a></li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="alert alert-danger" ng-show="form.levels.$error.min || form.levels.$error.max || form.levels.$error.required && form.levels.$touched">
-                <ul class="">
-                    <li ng-show="form.levels.$error.min || form.levels.$error.max"> The value must be in range 1 to 20</li>
-                    <li ng-show="form.levels.$error.required">Field required</li>
-                </ul>
-            </div>
-
-            <h2>The {{knowledgeareas.length}} Knowledge Areas</h2>
-            <ul class="list-group">
-                <li class="list-group-item text-center" ng-repeat="knowledgearea in knowledgeareas | orderBy:'elementNumber'">
-                    {{knowledgearea.name}}
-                </li>
-            </ul>
-            <div class="list-group">
-                <a href="#/admin/knowledgeareas/edit" ng-disabled="freeze" class="list-group-item text-center">Edit Knowledge Areas</a>
-            </div>
             <button ng-disabled="form.$invalid" type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>

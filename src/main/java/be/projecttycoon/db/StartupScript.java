@@ -1,6 +1,7 @@
 package be.projecttycoon.db;
 
 import be.projecttycoon.model.*;
+import be.projecttycoon.model.ScoreEngine.ScoreEngine;
 import be.projecttycoon.model.ScoreEngine.ScoreFormat;
 import be.projecttycoon.model.level.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,17 @@ public class StartupScript {
     private final QuestionRepository questionRepository;
     private final TeamLevelPrestationRepository teamLevelPrestationRepository;
     private final TeamRepository teamRepository;
+    private final ScoreEngineRepository scoreEngineRepository;
 
     @Autowired
-    public StartupScript(GameRepository gameRepository, KnowledgeAreaRepository knowledgeAreaRepository, LevelRepository levelRepository, QuestionRepository questionRepository, TeamLevelPrestationRepository teamLevelPrestationRepository, TeamRepository teamRepository) {
+    public StartupScript(GameRepository gameRepository, KnowledgeAreaRepository knowledgeAreaRepository, LevelRepository levelRepository, QuestionRepository questionRepository, TeamLevelPrestationRepository teamLevelPrestationRepository, TeamRepository teamRepository, ScoreEngineRepository scoreEngineRepository) {
         this.gameRepository = gameRepository;
         this.knowledgeAreaRepository = knowledgeAreaRepository;
         this.levelRepository = levelRepository;
         this.questionRepository = questionRepository;
         this.teamLevelPrestationRepository = teamLevelPrestationRepository;
         this.teamRepository = teamRepository;
+        this.scoreEngineRepository = scoreEngineRepository;
     }
 
     public void run(){
@@ -45,7 +48,14 @@ public class StartupScript {
             knowledgeAreaRepository.save(new KnowledgeArea(areas[i], i));
         }
 
+        ScoreEngine scoreEngine1 = new ScoreEngine("ScoreEngine1", 5,knowledgeAreaRepository.findAll());
+        ScoreEngine scoreEngine2 = new ScoreEngine("ScoreEngine2", 2,knowledgeAreaRepository.findAll());
+        ScoreEngine scoreEngine3 = new ScoreEngine("ScoreEngine3", 8,knowledgeAreaRepository.findAll());
+        scoreEngineRepository.save(scoreEngine1);
+        scoreEngineRepository.save(scoreEngine2);
+        scoreEngineRepository.save(scoreEngine3);
 
+        /*
         Game game = new Game("ProjectFun2016",2,4, knowledgeAreaRepository.findAll());
         ArrayList<Team> teams= new ArrayList<Team>();
         teams.addAll(game.getTeams());
@@ -59,7 +69,7 @@ public class StartupScript {
         Game testgame = new Game("Met Questions", 5,5, knowledgeAreaRepository.findAll());
         ArrayList<Team> teams2= new ArrayList<Team>();
         teams2.addAll(testgame.getTeams());
-        teams2.get(0).setTeamname("Team123");
+        teams2.get(0).setTeamname("Team1234");
         teams2.get(0).setPassword("azerty");
 
         for(Level l:testgame.getLevels()){
@@ -80,12 +90,15 @@ public class StartupScript {
         teams22.addAll(test.getTeams());
         teams22.get(0).setTeamname("PerfectScore");
         teams22.get(0).setPassword("azerty");
+        teams22.get(0).setRegistered(true);
 
         teams22.get(1).setTeamname("WorstScore");
         teams22.get(1).setPassword("azerty");
+        teams22.get(1).setRegistered(true);
 
         teams22.get(2).setTeamname("MediumScore");
         teams22.get(2).setPassword("azerty");
+        teams22.get(2).setRegistered(true);
 
 
         for(KnowledgeAreaScore kas :  teams22.get(0).getTeamLevelPrestations().get(0).getKnowledgeAreaScores()){
@@ -114,6 +127,8 @@ public class StartupScript {
         }
 
         gameRepository.save(test);
+
+
 
         Game testgame2 = new Game("testGame123342", 5,5, knowledgeAreaRepository.findAll());
         ArrayList<Team> teams3= new ArrayList<Team>();
@@ -158,5 +173,7 @@ public class StartupScript {
         levels.get(6).setState(Open.class.getSimpleName());
         levels.get(7).setState(Closed.class.getSimpleName());
         gameRepository.save(scoreTest);
+        */
+
     }
 }

@@ -42,6 +42,7 @@ public class GameRestTest extends SuperTest{
     }
 
 
+    /*
 
     @Test
     public void getAllGamesWhenRegistered(){
@@ -120,4 +121,5 @@ public class GameRestTest extends SuperTest{
                     .statusCode(ALLOWED);
         }
     }
+    */
 }

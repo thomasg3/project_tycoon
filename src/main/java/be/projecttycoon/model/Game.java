@@ -37,11 +37,28 @@ public class Game {
         this.scoreEngine = new ScoreEngine();
     }
 
+    public Game(String name, int teams, ScoreEngine scoreEngine){
+        this();
+        this.teams = new HashSet<>();
+        this.scoreEngine = scoreEngine;
+        setName(name);
+        generateTeam(teams);
+    }
+
+    /*
     public Game(String name, int teams, int levels, List<KnowledgeArea> knowledgeAreas) {
         this();
         this.scoreEngine = new ScoreEngine();
         setName(name);
         generateGame(teams, levels, knowledgeAreas);
+    }
+    */
+
+    private void generateTeam(int teams){
+        System.out.println(getScoreEngine().toString());
+        for(int i = count; count<i + teams;count++){
+            this.teams.add(new Team("Team"+(count),"testtest",this.scoreEngine.getLevels(),"/hosted_resources/admin_1455635149425.png"));
+        }
     }
 
     private void generateGame(int teams, int levels, List<KnowledgeArea> knowledgeAreas){

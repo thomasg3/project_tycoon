@@ -6,14 +6,14 @@ package be.projecttycoon.rest.util;
 public class GameBean {
     private String name;
     private int amount;
-    private int levels;
+    private long scoreengineid;
 
-    public int getAmount() {
-        return amount;
-    }
+    public GameBean(){}
 
-    public void setAmount(int amount) {
+    public GameBean(String name, int amount, long scoreengineid) {
+        this.name = name;
         this.amount = amount;
+        this.scoreengineid = scoreengineid;
     }
 
     public String getName() {
@@ -24,11 +24,19 @@ public class GameBean {
         this.name = name;
     }
 
-    public int getLevels() {
-        return levels;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setLevels(int levels) {
-        this.levels = levels;
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public long getScoreengineid() {
+        return scoreengineid;
+    }
+
+    public void setScoreengineid(long scoreengineid) {
+        this.scoreengineid = scoreengineid;
     }
 }
