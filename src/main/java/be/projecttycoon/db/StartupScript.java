@@ -21,15 +21,24 @@ public class StartupScript {
     private final QuestionRepository questionRepository;
     private final TeamLevelPrestationRepository teamLevelPrestationRepository;
     private final TeamRepository teamRepository;
+    private final StakeholderRepository stakeholderRepository;
 
     @Autowired
-    public StartupScript(GameRepository gameRepository, KnowledgeAreaRepository knowledgeAreaRepository, LevelRepository levelRepository, QuestionRepository questionRepository, TeamLevelPrestationRepository teamLevelPrestationRepository, TeamRepository teamRepository) {
+    public StartupScript(
+            GameRepository gameRepository,
+            KnowledgeAreaRepository knowledgeAreaRepository,
+            LevelRepository levelRepository,
+            QuestionRepository questionRepository,
+            TeamLevelPrestationRepository teamLevelPrestationRepository,
+            TeamRepository teamRepository,
+            StakeholderRepository stakeholderRepository) {
         this.gameRepository = gameRepository;
         this.knowledgeAreaRepository = knowledgeAreaRepository;
         this.levelRepository = levelRepository;
         this.questionRepository = questionRepository;
         this.teamLevelPrestationRepository = teamLevelPrestationRepository;
         this.teamRepository = teamRepository;
+        this.stakeholderRepository = stakeholderRepository;
     }
 
     public void run(){
@@ -158,5 +167,29 @@ public class StartupScript {
         levels.get(6).setState(Open.class.getSimpleName());
         levels.get(7).setState(Closed.class.getSimpleName());
         gameRepository.save(scoreTest);
+
+        generateStakeholders();
+
+    }
+
+    private void generateStakeholders() {
+        Stakeholder stakeholder = new Stakeholder();
+        stakeholder.setName("Baltazhar");
+        stakeholder.setFunction("Wijze");
+        stakeholder.setDescription("Een der 3 wijzen die u bla bla bal, laat het hier is wat vooruit gaan.");
+        stakeholder.setLevel(0);
+        stakeholder.setOrganisation("Bethlehem Inc.");
+        stakeholder.setImagePath("http://www.civfanatics.com/gallery/files/1/8/4/4/0/1/advisorscience002.png");
+        stakeholderRepository.save(stakeholder);
+
+        stakeholder = new Stakeholder();
+        stakeholder.setName("Mario");
+        stakeholder.setFunction("Loodgieter");
+        stakeholder.setDescription("Mario is een loodgieter");
+        stakeholder.setLevel(0);
+        stakeholder.setOrganisation("Nintendo");
+        stakeholder.setImagePath("https://pbs.twimg.com/profile_images/2186972673/super_mario.jpg");
+        stakeholderRepository.save(stakeholder);
+
     }
 }

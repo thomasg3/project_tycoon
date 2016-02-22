@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-sm-6 col-lg-3">
+        <img ng-src="{{stakeholder.imagePath}}" class="img-responsive" />
+        <a class="btn btn-info btn-block" href="#/admin/stakeholders/{{stakeholder.id}}/edit"><i class="fa fa-edit"></i> Edit</a>
+        <a class="btn btn-danger btn-block" href="#/admin/stakeholders/{{stakeholder.id}}/delete"><i class="fa fa-remove"></i> Delete</a>
+    </div>
+    <div class="col-sm-6 col-lg-9">
+        <h1>#{{stakeholder.id}} {{stakeholder.name}}</h1>
+        <h2>{{stakeholder.function}} <small>{{stakeholder.organisation}}</small></h2>
+        <p ng-show="stakeholder.level > 0" class="text-info lead">Available from level <b>{{stakeholder.level}}</b></p>
+        <p ng-show="stakeholder.level < 1" class="text-success lead">Always Available</p>
+        <p>{{stakeholder.description}}</p>
+    </div>
+</div>

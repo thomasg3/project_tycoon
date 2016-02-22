@@ -22,6 +22,9 @@ public class Stakeholder {
     private String description;
     private int level;
 
+    public Stakeholder() {
+    }
+
     public Stakeholder(String name, String imagePath,String description,String organisation,String function,int level) {
         this.name = name;
         this.imagePath = imagePath;
@@ -29,6 +32,26 @@ public class Stakeholder {
         this.organisation = organisation;
         this.function = function;
         this.level = level;
+    }
+
+    public Stakeholder anonymous(){
+        Stakeholder stakeholder =  new Stakeholder();
+        stakeholder.setId(getId());
+        stakeholder.setName("Unknown");
+        stakeholder.setFunction("Unknown");
+        stakeholder.setOrganisation("Unknown");
+        stakeholder.setDescription("");
+        stakeholder.setLevel(getLevel());
+        stakeholder.setImagePath("img/unknown.png");
+        return stakeholder;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public int getLevel() {
@@ -53,9 +76,6 @@ public class Stakeholder {
 
     public void setFunction(String function) {
         this.function = function;
-    }
-
-    public Stakeholder() {
     }
 
     public String getDescription() {

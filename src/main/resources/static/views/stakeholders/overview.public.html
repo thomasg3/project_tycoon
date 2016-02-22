@@ -1,0 +1,23 @@
+<h1>
+    Stakeholders
+</h1>
+
+
+    <div class="row">
+        <h1 class="text-muted text-center" ng-show="stakeholders.length == 0">No stakeholders found</h1>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="stakeholder in stakeholders">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <img ng-src="{{stakeholder.imagePath}}" class="img-responsive img-circle center-block" />
+                    <div class="text-center">
+                        <h3>{{stakeholder.name}}</h3>
+                        <p>{{stakeholder.function}} @ {{stakeholder.organisation}}</p>
+                        <a class="btn btn-default" href="#/stakeholders/{{stakeholder.id}}">More Info</a>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <strong>{{stakeholder.id}}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
