@@ -1,4 +1,4 @@
-package be.projecttycoon.rest;
+package be.projecttycoon.rest.team;
 
 import be.projecttycoon.db.KnowledgeAreaScoreRepository;
 import be.projecttycoon.model.KnowledgeAreaScore;

@@ -2,7 +2,12 @@ package be.projecttycoon.rest.admin;
 
 import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.LevelRepository;
+import be.projecttycoon.db.ScoreEngineRepository;
 import be.projecttycoon.db.TeamLevelPrestationRepository;
+import be.projecttycoon.model.Game;
+import be.projecttycoon.model.ScoreEngine.ScoreEngine;
+import be.projecttycoon.model.Team;
+import be.projecttycoon.model.TeamLevelPrestation;
 import be.projecttycoon.model.level.Level;
 import be.projecttycoon.rest.exception.IllegalStateChangeException;
 import be.projecttycoon.rest.exception.NotFoundException;
@@ -22,9 +27,14 @@ import java.util.List;
 @RequestMapping("/api/admin/levels")
 public class LevelAdminResource extends LevelResource {
 
+    ScoreEngineRepository scoreEngineRepository;
+    GameRepository gameRepository;
+
     @Autowired
-    public LevelAdminResource(LevelRepository levelRepository, TeamLevelPrestationRepository teamLevelPrestationRepository) {
+    public LevelAdminResource(LevelRepository levelRepository, TeamLevelPrestationRepository teamLevelPrestationRepository, ScoreEngineRepository scoreEngineRepository, GameRepository gameRepository) {
         super(levelRepository, teamLevelPrestationRepository);
+        this.scoreEngineRepository = scoreEngineRepository;
+        this.gameRepository = gameRepository;
     }
 
     @RequestMapping(value="/{id}/change/{state}", method = RequestMethod.GET)
@@ -38,6 +48,23 @@ public class LevelAdminResource extends LevelResource {
                     break;
                 case "close":
                     level.closeUp();
+
+                    ScoreEngine scoreEngine = null;
+                    List<TeamLevelPrestation> teamLevelPrestations = new ArrayList<>();
+
+                    for(Game game : gameRepository.findAll()){
+                        for (Level l: game.getLevels()){
+                            if(l.getId() == id){
+                                scoreEngine = game.getScoreEngine();
+                                for (Team t: game.getTeams()){
+                                    teamLevelPrestations.addAll(t.getTeamLevelPrestations());
+                                }
+                                break;
+                            }
+                        }
+                    }
+
+                    scoreEngine.calculateScores(teamLevelPrestations, level.getLevelKnowledgeAreas());
                     break;
                 case "push":
                     level.pointPush();

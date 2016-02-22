@@ -3,6 +3,10 @@ package be.projecttycoon.model.ScoreEngine;
 import be.projecttycoon.model.KnowledgeAreaScore;
 import be.projecttycoon.model.LevelKnowledgeArea;
 import be.projecttycoon.model.Question;
+import be.projecttycoon.model.ScoreEngine.CalculationStrategies.EnumeratioCalculation;
+import be.projecttycoon.model.ScoreEngine.CalculationStrategies.IntCalculation;
+import be.projecttycoon.model.ScoreEngine.CalculationStrategies.RangeCalculation;
+import be.projecttycoon.model.ScoreEngine.CalculationStrategies.StringCalculation;
 import be.projecttycoon.model.TeamLevelPrestation;
 import be.projecttycoon.model.level.Level;
 
@@ -65,19 +69,39 @@ public class ScoreEngine {
     }
     public void calculateScores(List<TeamLevelPrestation> teamLevelPrestations, List<LevelKnowledgeArea> levelKnowledgeAreas){
         CalculationStrategy calculationStrategy;
+        resetScores(teamLevelPrestations);
 
         for (TeamLevelPrestation tlp : teamLevelPrestations) {
-            for(int i =0; i<= tlp.getKnowledgeAreaScores().size(); i++){
+            for(int i =0; i<tlp.getKnowledgeAreaScores().size(); i++){
                 KnowledgeAreaScore knowledgeAreaScore = tlp.getKnowledgeAreaScores().get(i);
                 Question question = levelKnowledgeAreas.get(i).getQuestion();
-                if(question.getFormat().equals(ScoreFormat.RANGE)){
-                    calculationStrategy = new RangeCalculation();
-                }
-                else{
-                    calculationStrategy = new StringCalculation();
-                }
+                if(knowledgeAreaScore.getAnswer() != null && !knowledgeAreaScore.getAnswer().isEmpty()){
+                    if(question.getFormat().equals(ScoreFormat.RANGE) || question.getFormat().equals(ScoreFormat.AMOUNT_RANGE) || question.getFormat().equals(ScoreFormat.PERCENT_RANGE)){
+                        calculationStrategy = new RangeCalculation();
+                    }
+                    else if(question.getFormat().equals(ScoreFormat.ENUMERATION)){
+                        calculationStrategy = new EnumeratioCalculation();
+                    }
+                    else if(question.getFormat().equals(ScoreFormat.INT)){
+                        calculationStrategy = new IntCalculation();
+                    }
+                    else{
+                        calculationStrategy = new StringCalculation();
+                    }
 
-                calculationStrategy.calculateScore(knowledgeAreaScore, question);
+                    calculationStrategy.calculateScore(knowledgeAreaScore, question);
+
+                } else{
+                    knowledgeAreaScore.setScore(0);
+                }
+            }
+        }
+    }
+
+    private void resetScores(List<TeamLevelPrestation> teamLevelPrestations){
+        for(TeamLevelPrestation tlp: teamLevelPrestations){
+            for(KnowledgeAreaScore kas: tlp.getKnowledgeAreaScores()){
+                kas.setScore(0);
             }
         }
     }
