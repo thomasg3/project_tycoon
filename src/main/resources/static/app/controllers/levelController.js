@@ -58,6 +58,7 @@ angular.module('projecttycoonControllers')
             },
             templateUrl: "views/game/level/gameinput-iso.html",
             link: function ($scope) {
+                $scope.answerd = false;
                 for(var i = 0; i < $rootScope.MainUser.teamLevelPrestations.length; i++){
                     if($rootScope.MainUser.teamLevelPrestations[i].level.id == $scope.my_levelid){
                         for(var j = 0; j < $rootScope.MainUser.teamLevelPrestations[i].knowledgeAreaScores.length; j++){
@@ -65,6 +66,9 @@ angular.module('projecttycoonControllers')
                                 KnowledgeAreaScoreResource.get({id : $rootScope.MainUser.teamLevelPrestations[i].knowledgeAreaScores[j].id}, function(data){
                                     $scope.knowledgearea = new KnowledgeAreaScoreResource();
                                     $scope.knowledgearea = data;
+                                    if($scope.knowledgearea.answer){
+                                        $scope.answerd = true;
+                                    }
                                 });
                             }
                         }
@@ -73,26 +77,10 @@ angular.module('projecttycoonControllers')
 
                 $scope.submitAnswer = function() {
                     $scope.knowledgearea.$update({id: $scope.knowledgearea.id}, function(data){
+                        $scope.answerd = true;
                     });
                 }
 
-                /*
-                $scope.submitAnswer = function() {
-                    for(var i = 0; i < $rootScope.MainUser.teamLevelPrestations.length; i++){
-                        if($rootScope.MainUser.teamLevelPrestations[i].level.id === $scope.my_levelid){
-                            for(var j = 0; j < $rootScope.MainUser.teamLevelPrestations[i].knowledgeAreaScores.length; j++){
-                                if($rootScope.MainUser.teamLevelPrestations[i].knowledgeAreaScores[j].knowledgeArea.id === $scope.my_levelkn.knowledgeArea.id){
-                                    KnowledgeAreaScoreResource.get({id : $rootScope.MainUser.teamLevelPrestations[i].knowledgeAreaScores[j].id}, function(data){
-                                        data.answer = $scope.answer;
-                                        data.$update({id: data.id}, function(data){
-                                        });
-                                    });
-                                }
-                            }
-                        }
-                    }
-                }
-                */
              }
         }
 
