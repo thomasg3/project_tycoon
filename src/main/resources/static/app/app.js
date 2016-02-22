@@ -82,26 +82,34 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/game/levels.html',
                 controller : 'levelController'
             })
-            .when('/games/:gameid/levels/:levelid/editscores', {
-                templateUrl : 'views/game/level/score_edit.html',
-                controller : 'editLevelScoreController'
-            })
             .when('/admin/games/:gameid/levels/:levelid', {
                 templateUrl : 'views/level/overview.html',
                 controller : 'levelControlController'
             })
             //##### admin pages #####
             .when('/admin/dashboard/:id', {
-                templateUrl : 'views/dashboard.html',
+                templateUrl : 'views/adminDashboard.html',
                 controller: 'adminDashboard'
             })
-            .when('/adminOverview', {
+            .when('/admin/games/:gameid/levels/:levelid/editscores', {
+                templateUrl : 'views/game/level/score_edit.html',
+                controller : 'editLevelScoreController'
+            })
+            .when('/admin/adminOverview', {
                 templateUrl : 'views/adminOverview.html',
                 controller: 'adminOverview'
             })
-            .when('/createGame', {
+            .when('/admin/games/:id/details', {
+                templateUrl : 'views/game/adminDetails.html',
+                controller : 'adminScoreDetails'
+            })
+            .when('/admin/createGame', {
                 templateUrl : 'views/game/edit.html',
                 controller : 'newGameController'
+            })
+            .when('/admin/createScoreEngine', {
+                templateUrl : 'views/scoreengine/edit.html',
+                controller : 'newScoreEngineController'
             })
             .when('/admin/knowledgeareas/edit', {
                 templateUrl : 'views/knowledgearea/edit.html',
@@ -128,6 +136,35 @@ app.config(function($routeProvider, $httpProvider) {
             }).when('/admin/info/update/:id', {
                 templateUrl : 'views/createInfo.html',
                 controller : 'adminInfo'
+            })
+            //##### stakeholder pages #####
+            .when('/admin/stakeholders', {
+                templateUrl : 'views/stakeholders/overview.html',
+                controller : 'adminStakeholderOverviewController'
+            })
+            .when('/admin/stakeholders/new', {
+                templateUrl: 'views/stakeholders/edit.html',
+                controller : 'adminStakeholderNewController'
+            })
+            .when('/admin/stakeholders/:id', {
+                templateUrl : 'views/stakeholders/details.html',
+                controller : 'adminStakeholderDetailController'
+            })
+            .when('/admin/stakeholders/:id/edit', {
+                templateUrl : 'views/stakeholders/edit.html',
+                controller : 'adminStakeholderEditController'
+            })
+            .when('/admin/stakeholders/:id/delete', {
+                templateUrl : 'views/stakeholders/delete.html',
+                controller : 'adminStakeholderDeleteController'
+            })
+            .when('/stakeholders', {
+                templateUrl : 'views/stakeholders/overview.public.html',
+                controller : 'stakeholderOverviewController'
+            })
+            .when('/stakeholders/:id', {
+                templateUrl : 'views/stakeholders/details.public.html',
+                controller : 'stakeholderDetailController'
             })
             .otherwise('/');
 

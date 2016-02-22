@@ -20,7 +20,7 @@ public class Question {
     private String question;
     private ScoreFormat format;
 
-    @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch=FetchType.EAGER,cascade= CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers;
 
     public Question(){

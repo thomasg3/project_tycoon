@@ -2,6 +2,7 @@ package be.projecttycoon.model;
 
 import be.projecttycoon.model.ScoreEngine.ScoreEngine;
 import be.projecttycoon.model.level.Level;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,7 +27,7 @@ public class Game {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private Set<Team> teams;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private ScoreEngine scoreEngine;
 
     private static int count = 1;
@@ -34,26 +35,17 @@ public class Game {
 
     public Game() {
         this.teams = new HashSet<>();
-        this.scoreEngine = new ScoreEngine();
     }
 
-    public Game(String name, int teams, int levels, List<KnowledgeArea> knowledgeAreas) {
+    public Game(String name, int teams, ScoreEngine scoreEngine){
         this();
-        this.scoreEngine = new ScoreEngine();
+        this.teams = new HashSet<>();
+        this.scoreEngine = scoreEngine;
         setName(name);
-        generateGame(teams, levels, knowledgeAreas);
+        generateTeam(teams);
     }
 
-    private void generateGame(int teams, int levels, List<KnowledgeArea> knowledgeAreas){
-        for(int i = 1; i<=levels; i++){
-            List<LevelKnowledgeArea> levelKnowledgeAreas = new ArrayList<>();
-            for (KnowledgeArea k:knowledgeAreas){
-                LevelKnowledgeArea lk = new LevelKnowledgeArea();
-                lk.setKnowledgeArea(k);
-                levelKnowledgeAreas.add(lk);
-            }
-            this.scoreEngine.getLevels().add(new Level("Level "+ i, i, levelKnowledgeAreas));
-        }
+    private void generateTeam(int teams){
         for(int i = count; count<i + teams;count++){
             this.teams.add(new Team("Team"+(count),"testtest",this.scoreEngine.getLevels(),"/hosted_resources/admin_1455635149425.png"));
         }
@@ -103,6 +95,15 @@ public class Game {
     public boolean containsTeam(Team t){
         return teams.contains(t);
     }
+
+    public int openLevel(){
+        return getLevels().stream()
+                .filter(l -> l.documentsAreOpen())
+                .map(l -> l.getRound())
+                .max(Integer::compareTo)
+                .orElse(-1);
+    }
+
 
     @Override
     public boolean equals(Object o) {

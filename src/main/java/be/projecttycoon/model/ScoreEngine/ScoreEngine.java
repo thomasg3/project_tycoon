@@ -1,14 +1,13 @@
 package be.projecttycoon.model.ScoreEngine;
 
-import be.projecttycoon.model.KnowledgeAreaScore;
-import be.projecttycoon.model.LevelKnowledgeArea;
-import be.projecttycoon.model.Question;
+import be.projecttycoon.model.*;
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.EnumeratioCalculation;
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.IntCalculation;
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.RangeCalculation;
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.StringCalculation;
-import be.projecttycoon.model.TeamLevelPrestation;
 import be.projecttycoon.model.level.Level;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -22,16 +21,19 @@ public class ScoreEngine {
     @Id
     @GeneratedValue
     private long id;
+    private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Level> levels;
 
     public ScoreEngine(){
         this.levels = new ArrayList<>();
     }
 
-    public ScoreEngine(List<Level> levels) {
-        this.levels = levels;
+    public ScoreEngine(String name, int levels, List<KnowledgeArea> knowledgeAreas) {
+        this.name = name;
+        generateLevels(levels, knowledgeAreas);
     }
 
     public long getId() {
@@ -40,6 +42,14 @@ public class ScoreEngine {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Level> getLevels() {
@@ -67,6 +77,21 @@ public class ScoreEngine {
             }
         }
     }
+
+    private void generateLevels(int levels, List<KnowledgeArea> knowledgeAreas){
+        this.levels = new ArrayList<>();
+        for(int i = 1; i<=levels; i++){
+            List<LevelKnowledgeArea> levelKnowledgeAreas = new ArrayList<>();
+            for (KnowledgeArea k:knowledgeAreas){
+                LevelKnowledgeArea lk = new LevelKnowledgeArea();
+                lk.setKnowledgeArea(k);
+                levelKnowledgeAreas.add(lk);
+            }
+            System.out.println("Generating: Level " + i + ", for game: " + getName());
+            getLevels().add(new Level("Level "+ i, i, levelKnowledgeAreas));
+        }
+    }
+
     public void calculateScores(List<TeamLevelPrestation> teamLevelPrestations, List<LevelKnowledgeArea> levelKnowledgeAreas){
         CalculationStrategy calculationStrategy;
         resetScores(teamLevelPrestations);
@@ -106,7 +131,12 @@ public class ScoreEngine {
         }
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "ScoreEngine{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", levels=" + levels +
+                '}';
+    }
 }

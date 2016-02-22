@@ -1,6 +1,7 @@
 package be.projecttycoon.db;
 
 import be.projecttycoon.model.*;
+import be.projecttycoon.model.ScoreEngine.ScoreEngine;
 import be.projecttycoon.model.ScoreEngine.ScoreFormat;
 import be.projecttycoon.model.level.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,20 @@ public class StartupScript {
     private final TeamRepository teamRepository;
     private final InfoRepository infoRepository;
 
+    private final ScoreEngineRepository scoreEngineRepository;
+    private final StakeholderRepository stakeholderRepository;
 
     @Autowired
-    public StartupScript(GameRepository gameRepository, KnowledgeAreaRepository knowledgeAreaRepository, LevelRepository levelRepository, QuestionRepository questionRepository, TeamLevelPrestationRepository teamLevelPrestationRepository, TeamRepository teamRepository, InfoRepository infoRepository) {
+    public StartupScript(
+            GameRepository gameRepository,
+            KnowledgeAreaRepository knowledgeAreaRepository,
+            LevelRepository levelRepository,
+            QuestionRepository questionRepository,
+            TeamLevelPrestationRepository teamLevelPrestationRepository,
+            TeamRepository teamRepository,
+            StakeholderRepository stakeholderRepository,
+            ScoreEngineRepository scoreEngineRepository,
+            InfoRepository infoRepository) {
         this.gameRepository = gameRepository;
         this.knowledgeAreaRepository = knowledgeAreaRepository;
         this.levelRepository = levelRepository;
@@ -33,6 +45,8 @@ public class StartupScript {
         this.teamLevelPrestationRepository = teamLevelPrestationRepository;
         this.teamRepository = teamRepository;
         this.infoRepository=infoRepository;
+        this.scoreEngineRepository = scoreEngineRepository;
+        this.stakeholderRepository = stakeholderRepository;
     }
 
     public void run(){
@@ -48,47 +62,33 @@ public class StartupScript {
             knowledgeAreaRepository.save(new KnowledgeArea(areas[i], i));
         }
 
+        ScoreEngine scoreEngine1 = new ScoreEngine("ScoreEngine1", 5,knowledgeAreaRepository.findAll());
+        ScoreEngine scoreEngine2 = new ScoreEngine("ScoreEngine2", 2,knowledgeAreaRepository.findAll());
+        ScoreEngine scoreEngine3 = new ScoreEngine("ScoreEngine3", 8,knowledgeAreaRepository.findAll());
+        ScoreEngine scoreEngine4 = new ScoreEngine("ScoreEngine4", 3,knowledgeAreaRepository.findAll());
 
-        Game game = new Game("ProjectFun2016",2,4, knowledgeAreaRepository.findAll());
-        ArrayList<Team> teams= new ArrayList<Team>();
-        teams.addAll(game.getTeams());
-        teams.get(0).setTeamname("joskes");
-        teams.get(0).setPassword("joskes");
-        teams.get(0).setRegistered(false);
-        teams.get(1).setTeamname("jefkes");
-        teams.get(1).setPassword("jefkes");
-        teams.get(1).setRegistered(true);
+        scoreEngineRepository.save(scoreEngine1);
+        scoreEngineRepository.save(scoreEngine2);
+        scoreEngineRepository.save(scoreEngine3);
+        scoreEngineRepository.save(scoreEngine4);
 
-        Game testgame = new Game("Met Questions", 5,5, knowledgeAreaRepository.findAll());
-        ArrayList<Team> teams2= new ArrayList<Team>();
-        teams2.addAll(testgame.getTeams());
-        teams2.get(0).setTeamname("Team123");
-        teams2.get(0).setPassword("azerty");
+        List<ScoreEngine> scoreEngines = scoreEngineRepository.findAll();
 
-        for(Level l:testgame.getLevels()){
-            for(LevelKnowledgeArea lk : l.getLevelKnowledgeAreas()){
-                lk.getQuestion().setQuestion("Dit is een vraag... met als antwoord 'test' 50 en 'testtest' 30");
-                lk.getQuestion().setFormat(ScoreFormat.STRING);
-                List<Answer> answers = new ArrayList<>();
-                answers.add(new Answer("test", 50));
-                answers.add(new Answer("testtest", 30));
-                lk.getQuestion().setAnswers(answers);
-            }
-        }
+        Game test = new Game("ScoreEngine tester", 5, scoreEngines.get(0));
 
-        gameRepository.save(testgame);
-
-        Game test = new Game("ScoreEngine tester", 5,5, knowledgeAreaRepository.findAll());
         ArrayList<Team> teams22= new ArrayList<Team>();
         teams22.addAll(test.getTeams());
         teams22.get(0).setTeamname("PerfectScore");
         teams22.get(0).setPassword("azerty");
+        teams22.get(0).setRegistered(true);
 
         teams22.get(1).setTeamname("WorstScore");
         teams22.get(1).setPassword("azerty");
+        teams22.get(1).setRegistered(true);
 
         teams22.get(2).setTeamname("MediumScore");
         teams22.get(2).setPassword("azerty");
+        teams22.get(2).setRegistered(true);
 
 
         for(KnowledgeAreaScore kas :  teams22.get(0).getTeamLevelPrestations().get(0).getKnowledgeAreaScores()){
@@ -118,20 +118,9 @@ public class StartupScript {
 
         gameRepository.save(test);
 
-        Game testgame2 = new Game("testGame123342", 5,5, knowledgeAreaRepository.findAll());
-        ArrayList<Team> teams3= new ArrayList<Team>();
-        teams2.addAll(testgame.getTeams());
-        teams2.get(0).setTeamname("Team123");
-        teams2.get(0).setPassword("azerty");
-        teams2.get(0).setRegistered(true);
 
-
-        gameRepository.save(testgame2);
-        gameRepository.save(game);
-
-
-        Game scoreTest = new Game("The Admin Games", 4, 8, knowledgeAreaRepository.findAll());
-        teams = new ArrayList<>();
+        Game scoreTest = new Game("The Admin Games", 4, scoreEngines.get(2));
+        List<Team>teams = new ArrayList<>();
         teams.addAll(scoreTest.getTeams());
         teams.get(0).setTeamname("ABCDEFGH");
         teams.get(1).setTeamname("DeVrolijkeBarten");
@@ -166,6 +155,29 @@ public class StartupScript {
         Info i2 = new Info(1,"test video","https://www.youtube.com/embed/czezOcHfLS4",InfoType.Video);
         infoRepository.save(i);
         infoRepository.save(i2);
+
+        generateStakeholders();
+
+    }
+
+    private void generateStakeholders() {
+        Stakeholder stakeholder = new Stakeholder();
+        stakeholder.setName("Baltazhar");
+        stakeholder.setFunction("Wijze");
+        stakeholder.setDescription("Een der 3 wijzen die u bla bla bal, laat het hier is wat vooruit gaan.");
+        stakeholder.setLevel(0);
+        stakeholder.setOrganisation("Bethlehem Inc.");
+        stakeholder.setImagePath("http://www.civfanatics.com/gallery/files/1/8/4/4/0/1/advisorscience002.png");
+        stakeholderRepository.save(stakeholder);
+
+        stakeholder = new Stakeholder();
+        stakeholder.setName("Mario");
+        stakeholder.setFunction("Loodgieter");
+        stakeholder.setDescription("Mario is een loodgieter");
+        stakeholder.setLevel(0);
+        stakeholder.setOrganisation("Nintendo");
+        stakeholder.setImagePath("https://pbs.twimg.com/profile_images/2186972673/super_mario.jpg");
+        stakeholderRepository.save(stakeholder);
 
     }
 }

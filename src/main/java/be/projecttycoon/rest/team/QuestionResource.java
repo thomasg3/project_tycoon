@@ -29,7 +29,6 @@ public class QuestionResource {
     protected final QuestionRepository questionRepository;
 
 
-
     @Autowired
     public QuestionResource(QuestionRepository questionRepository){
         this.questionRepository = questionRepository;

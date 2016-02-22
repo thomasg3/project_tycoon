@@ -129,6 +129,12 @@
 			<version>v1-rev37-1.21.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+
 
 
 

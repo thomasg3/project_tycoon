@@ -1,10 +1,8 @@
 package be.projecttycoon.rest.admin;
 
-import be.projecttycoon.db.GameRepository;
-import be.projecttycoon.db.KnowledgeAreaRepository;
-import be.projecttycoon.db.StartupScript;
-import be.projecttycoon.db.TeamRepository;
+import be.projecttycoon.db.*;
 import be.projecttycoon.model.Game;
+import be.projecttycoon.model.ScoreEngine.ScoreEngine;
 import be.projecttycoon.model.Team;
 import be.projecttycoon.rest.exception.NotAuthorizedException;
 import be.projecttycoon.rest.exception.NotFoundException;
@@ -26,9 +24,12 @@ import java.util.Set;
 @RequestMapping("/api/admin/games")
 public class GameAdminResource extends GameResource {
 
+    ScoreEngineRepository scoreEngineRepository;
+
     @Autowired
-    public GameAdminResource(StartupScript startupScript, GameRepository gameRepository, TeamRepository teamRepository, KnowledgeAreaRepository knowledgeAreaRepository) {
+    public GameAdminResource(StartupScript startupScript, GameRepository gameRepository, TeamRepository teamRepository, KnowledgeAreaRepository knowledgeAreaRepository, ScoreEngineRepository scoreEngineRepository) {
         super(gameRepository, teamRepository, knowledgeAreaRepository);
+        this.scoreEngineRepository = scoreEngineRepository;
         startupScript.run();
     }
 
@@ -55,7 +56,10 @@ public class GameAdminResource extends GameResource {
     @RequestMapping(method = RequestMethod.POST)
     @Produces("application/json")
     public Game createGame(@Valid @RequestBody GameBean inputGame){
-        Game game = new Game(inputGame.getName(),inputGame.getAmount(), inputGame.getLevels(), knowledgeAreaRepository.findAll());
+        ScoreEngine scoreEngine = scoreEngineRepository.findOne(inputGame.getScoreengineid());
+        System.out.println(inputGame.toString());
+
+        Game game = new Game(inputGame.getName(),inputGame.getAmount(), scoreEngine);
         return gameRepository.save(game);
     }
 
