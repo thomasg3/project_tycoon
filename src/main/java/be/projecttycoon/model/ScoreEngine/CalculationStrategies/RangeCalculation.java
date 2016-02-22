@@ -1,9 +1,12 @@
-package be.projecttycoon.model.ScoreEngine;
+package be.projecttycoon.model.ScoreEngine.CalculationStrategies;
 
 import be.projecttycoon.model.Answer;
 import be.projecttycoon.model.KnowledgeAreaScore;
 import be.projecttycoon.model.Question;
+import be.projecttycoon.model.ScoreEngine.CalculationStrategy;
 import be.projecttycoon.model.ScoreEngine.util.Between;
+import be.projecttycoon.model.ScoreEngine.util.Cleaner;
+import be.projecttycoon.model.ScoreEngine.util.Splitter;
 import com.sun.xml.internal.messaging.saaj.util.FinalArrayList;
 
 import java.util.ArrayList;
@@ -21,31 +24,18 @@ public class RangeCalculation implements CalculationStrategy {
         List<Between> answers = new ArrayList<>();
         int score = 0;
         for(Answer answer: question.getAnswers()){
-            String[] split;
-            if(answer.getAnswer().contains("-")){
-                split = answer.getAnswer().split("-");
-            }
-            else if(answer.getAnswer().contains("_")){
-                split = answer.getAnswer().split("_");
-            }
-            else if(answer.getAnswer().contains(";")){
-                split = answer.getAnswer().split(";");
-            }
-            else if(answer.getAnswer().contains(" ")){
-                split = answer.getAnswer().split(" ");
-            } else {
-                throw new IllegalArgumentException("String " + answer.getAnswer() + " does not contain delimiter");
-            }
+            String cleanInput = Cleaner.clean(answer.getAnswer());
+            String[] split = Splitter.split(cleanInput);
+
             answers.add(new Between(Integer.valueOf(split[0]),Integer.valueOf(split[1]), answer.getScore()));
         }
 
         for (Between between: answers) {
-            if(between.isBetween(Integer.valueOf(knowledgeAreaScore.getAnswer()))){
+            if(between.isBetween(Integer.valueOf(Cleaner.clean(knowledgeAreaScore.getAnswer())))){
                 score = between.getScore();
             }
         }
         knowledgeAreaScore.setScore(score);
-
     }
 
 }
