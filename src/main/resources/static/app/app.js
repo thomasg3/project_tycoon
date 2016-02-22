@@ -115,6 +115,10 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/sendMail.html',
                 controller : 'mailController'
             })
+            .when('/admin/stakeholders/edit', {
+                templateUrl : 'views/adminStakeholderOverview.html',
+                controller : 'adminStakeholderController'
+            })
             .otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
