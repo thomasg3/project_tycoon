@@ -31,7 +31,7 @@ public class Level{
     @Pattern(regexp = "^[A-Za-z0-9\\s]*$", message="Your levelname can only contain characters, numbers and spaces")
     private String name;
 
-    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL, orphanRemoval = true)
     private List<LevelKnowledgeArea> levelKnowledgeAreas;
 
     @Transient

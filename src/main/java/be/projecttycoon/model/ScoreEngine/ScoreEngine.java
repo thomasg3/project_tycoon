@@ -6,6 +6,8 @@ import be.projecttycoon.model.ScoreEngine.CalculationStrategies.IntCalculation;
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.RangeCalculation;
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.StringCalculation;
 import be.projecttycoon.model.level.Level;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,20 +23,16 @@ public class ScoreEngine {
     private long id;
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Level> levels;
 
     public ScoreEngine(){
         this.levels = new ArrayList<>();
     }
 
-    public ScoreEngine(List<Level> levels) {
-        this.levels = levels;
-    }
-
     public ScoreEngine(String name, int levels, List<KnowledgeArea> knowledgeAreas) {
         this.name = name;
-        this.levels = new ArrayList<>();
         generateLevels(levels, knowledgeAreas);
     }
 
@@ -81,6 +79,7 @@ public class ScoreEngine {
     }
 
     private void generateLevels(int levels, List<KnowledgeArea> knowledgeAreas){
+        this.levels = new ArrayList<>();
         for(int i = 1; i<=levels; i++){
             List<LevelKnowledgeArea> levelKnowledgeAreas = new ArrayList<>();
             for (KnowledgeArea k:knowledgeAreas){
@@ -88,6 +87,7 @@ public class ScoreEngine {
                 lk.setKnowledgeArea(k);
                 levelKnowledgeAreas.add(lk);
             }
+            System.out.println("Generating: Level " + i + ", for game: " + getName());
             getLevels().add(new Level("Level "+ i, i, levelKnowledgeAreas));
         }
     }

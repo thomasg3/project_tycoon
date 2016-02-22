@@ -2,6 +2,7 @@ package be.projecttycoon.model;
 
 import be.projecttycoon.model.ScoreEngine.ScoreEngine;
 import be.projecttycoon.model.level.Level;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,7 +27,7 @@ public class Game {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private Set<Team> teams;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private ScoreEngine scoreEngine;
 
     private static int count = 1;
@@ -34,7 +35,6 @@ public class Game {
 
     public Game() {
         this.teams = new HashSet<>();
-        this.scoreEngine = new ScoreEngine();
     }
 
     public Game(String name, int teams, ScoreEngine scoreEngine){
@@ -45,32 +45,7 @@ public class Game {
         generateTeam(teams);
     }
 
-    /*
-    public Game(String name, int teams, int levels, List<KnowledgeArea> knowledgeAreas) {
-        this();
-        this.scoreEngine = new ScoreEngine();
-        setName(name);
-        generateGame(teams, levels, knowledgeAreas);
-    }
-    */
-
     private void generateTeam(int teams){
-        System.out.println(getScoreEngine().toString());
-        for(int i = count; count<i + teams;count++){
-            this.teams.add(new Team("Team"+(count),"testtest",this.scoreEngine.getLevels(),"/hosted_resources/admin_1455635149425.png"));
-        }
-    }
-
-    private void generateGame(int teams, int levels, List<KnowledgeArea> knowledgeAreas){
-        for(int i = 1; i<=levels; i++){
-            List<LevelKnowledgeArea> levelKnowledgeAreas = new ArrayList<>();
-            for (KnowledgeArea k:knowledgeAreas){
-                LevelKnowledgeArea lk = new LevelKnowledgeArea();
-                lk.setKnowledgeArea(k);
-                levelKnowledgeAreas.add(lk);
-            }
-            this.scoreEngine.getLevels().add(new Level("Level "+ i, i, levelKnowledgeAreas));
-        }
         for(int i = count; count<i + teams;count++){
             this.teams.add(new Team("Team"+(count),"testtest",this.scoreEngine.getLevels(),"/hosted_resources/admin_1455635149425.png"));
         }

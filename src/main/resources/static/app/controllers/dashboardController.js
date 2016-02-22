@@ -7,7 +7,7 @@ angular.module('projecttycoonControllers')
     var update = function(data){
         $scope.game = data;
         var ctx = $("#teamEvolutionGraph").get(0).getContext("2d");
-        var labels = ["Start"].concat($scope.game.levels.map(function(level){return level.name;}));
+        var labels = ["Start"].concat($scope.game.scoreengine.levels.map(function(level){return level.name;}));
         var datasets = [];
         var unit = 360/$scope.game.teams.length;
         for(i = 0; i<$scope.game.teams.length; i++){

@@ -51,41 +51,17 @@ public class StartupScript {
         ScoreEngine scoreEngine1 = new ScoreEngine("ScoreEngine1", 5,knowledgeAreaRepository.findAll());
         ScoreEngine scoreEngine2 = new ScoreEngine("ScoreEngine2", 2,knowledgeAreaRepository.findAll());
         ScoreEngine scoreEngine3 = new ScoreEngine("ScoreEngine3", 8,knowledgeAreaRepository.findAll());
+        ScoreEngine scoreEngine4 = new ScoreEngine("ScoreEngine4", 3,knowledgeAreaRepository.findAll());
+
         scoreEngineRepository.save(scoreEngine1);
         scoreEngineRepository.save(scoreEngine2);
         scoreEngineRepository.save(scoreEngine3);
+        scoreEngineRepository.save(scoreEngine4);
 
-        /*
-        Game game = new Game("ProjectFun2016",2,4, knowledgeAreaRepository.findAll());
-        ArrayList<Team> teams= new ArrayList<Team>();
-        teams.addAll(game.getTeams());
-        teams.get(0).setTeamname("joskes");
-        teams.get(0).setPassword("joskes");
-        teams.get(0).setRegistered(false);
-        teams.get(1).setTeamname("jefkes");
-        teams.get(1).setPassword("jefkes");
-        teams.get(1).setRegistered(true);
+        List<ScoreEngine> scoreEngines = scoreEngineRepository.findAll();
 
-        Game testgame = new Game("Met Questions", 5,5, knowledgeAreaRepository.findAll());
-        ArrayList<Team> teams2= new ArrayList<Team>();
-        teams2.addAll(testgame.getTeams());
-        teams2.get(0).setTeamname("Team1234");
-        teams2.get(0).setPassword("azerty");
+        Game test = new Game("ScoreEngine tester", 5, scoreEngines.get(0));
 
-        for(Level l:testgame.getLevels()){
-            for(LevelKnowledgeArea lk : l.getLevelKnowledgeAreas()){
-                lk.getQuestion().setQuestion("Dit is een vraag... met als antwoord 'test' 50 en 'testtest' 30");
-                lk.getQuestion().setFormat(ScoreFormat.STRING);
-                List<Answer> answers = new ArrayList<>();
-                answers.add(new Answer("test", 50));
-                answers.add(new Answer("testtest", 30));
-                lk.getQuestion().setAnswers(answers);
-            }
-        }
-
-        gameRepository.save(testgame);
-
-        Game test = new Game("ScoreEngine tester", 5,5, knowledgeAreaRepository.findAll());
         ArrayList<Team> teams22= new ArrayList<Team>();
         teams22.addAll(test.getTeams());
         teams22.get(0).setTeamname("PerfectScore");
@@ -129,21 +105,8 @@ public class StartupScript {
         gameRepository.save(test);
 
 
-
-        Game testgame2 = new Game("testGame123342", 5,5, knowledgeAreaRepository.findAll());
-        ArrayList<Team> teams3= new ArrayList<Team>();
-        teams2.addAll(testgame.getTeams());
-        teams2.get(0).setTeamname("Team123");
-        teams2.get(0).setPassword("azerty");
-        teams2.get(0).setRegistered(true);
-
-
-        gameRepository.save(testgame2);
-        gameRepository.save(game);
-
-
-        Game scoreTest = new Game("The Admin Games", 4, 8, knowledgeAreaRepository.findAll());
-        teams = new ArrayList<>();
+        Game scoreTest = new Game("The Admin Games", 4, scoreEngines.get(2));
+        List<Team>teams = new ArrayList<>();
         teams.addAll(scoreTest.getTeams());
         teams.get(0).setTeamname("ABCDEFGH");
         teams.get(1).setTeamname("DeVrolijkeBarten");
@@ -173,7 +136,6 @@ public class StartupScript {
         levels.get(6).setState(Open.class.getSimpleName());
         levels.get(7).setState(Closed.class.getSimpleName());
         gameRepository.save(scoreTest);
-        */
 
     }
 }

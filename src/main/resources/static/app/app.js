@@ -82,28 +82,32 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/game/levels.html',
                 controller : 'levelController'
             })
-            .when('/games/:gameid/levels/:levelid/editscores', {
-                templateUrl : 'views/game/level/score_edit.html',
-                controller : 'editLevelScoreController'
-            })
             .when('/admin/games/:gameid/levels/:levelid', {
                 templateUrl : 'views/level/overview.html',
                 controller : 'levelControlController'
             })
             //##### admin pages #####
             .when('/admin/dashboard/:id', {
-                templateUrl : 'views/dashboard.html',
+                templateUrl : 'views/adminDashboard.html',
                 controller: 'adminDashboard'
             })
-            .when('/adminOverview', {
+            .when('/admin/games/:gameid/levels/:levelid/editscores', {
+                templateUrl : 'views/game/level/score_edit.html',
+                controller : 'editLevelScoreController'
+            })
+            .when('/admin/adminOverview', {
                 templateUrl : 'views/adminOverview.html',
                 controller: 'adminOverview'
             })
-            .when('/createGame', {
+            .when('/admin/games/:id/details', {
+                templateUrl : 'views/game/adminDetails.html',
+                controller : 'adminScoreDetails'
+            })
+            .when('/admin/createGame', {
                 templateUrl : 'views/game/edit.html',
                 controller : 'newGameController'
             })
-            .when('/createScoreEngine', {
+            .when('/admin/createScoreEngine', {
                 templateUrl : 'views/scoreengine/edit.html',
                 controller : 'newScoreEngineController'
             })
