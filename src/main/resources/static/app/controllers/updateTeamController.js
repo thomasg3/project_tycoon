@@ -5,7 +5,9 @@
 angular.module('projecttycoonControllers')
 .controller('updateTeam',function($rootScope, $scope, $http, $routeParams,$location,TeamResource, Upload,MainUserResource){
     TeamResource.search({teamname: $routeParams.teamname},function(data){
-        $scope.userPhoto=data.teamImage});
+        $scope.userPhoto=data.teamImage;
+        $scope.email=data.email;
+    });
 
 
     $scope.onFileSelect= function($files) {
@@ -39,6 +41,7 @@ angular.module('projecttycoonControllers')
 
     TeamResource.search({teamname : $routeParams.teamname},function(data){
         $scope.MainUser = MainUserResource.getMainUser();
+
         if(($scope.MainUser.admin&&data.id!=null)||$scope.MainUser.teamname ==  $routeParams.teamname){
             angular.element(document).ready(function () {
                 $scope.team = TeamResource.search({teamname : $routeParams.teamname});
@@ -48,6 +51,7 @@ angular.module('projecttycoonControllers')
                 $scope.updateTeam = TeamResource.search({teamname : $routeParams.teamname},function(updateTeam){
                     if($scope.password==$scope.passwordRepeat){
                         updateTeam.teamname =$scope.teamname;
+                        updateTeam.email = $scope.email;
                         updateTeam.password = $scope.password;
 
                         TeamResource.update({id:updateTeam.id},updateTeam).$promise.then(function(value){

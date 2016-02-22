@@ -43,7 +43,7 @@ angular.module('projecttycoonControllers')
 
 
     $scope.deleteTeam = function (id) {
-        GameResource.deleteTeam({id : id}).$promise.then(function(data){
+        GameResource.deleteTeam({id : id}, function(data){
             update(data);
         })
     }

@@ -11,8 +11,8 @@ angular.module('projecttycoonControllers')
             $scope.activelevel = $routeParams.activelevel;
         }
 
-        GameResource.getAllPublicLevelsForGame({id : $routeParams.id}, function(levels){
-            $scope.levels = levels;
+        GameResource.get({id : $routeParams.id}, function(game){
+            $scope.levels = game.levels;
         });
     }).directive('levelinput', function($http, LevelResource) {
         return {
@@ -37,7 +37,6 @@ angular.module('projecttycoonControllers')
             templateUrl: "views/game/level/questioninput-iso.html",
             link: function ($scope) {
                 $scope.submitAnswer = function() {
-                    console.log(JSON.stringify($rootScope.MainUser));
                     for(var i = 0; i < $rootScope.MainUser.teamLevelPrestations.length; i++){
                         if($rootScope.MainUser.teamLevelPrestations[i].level.id === $scope.my_levelid){
                             for(var j = 0; j < $rootScope.MainUser.teamLevelPrestations[i].knowledgeAreaScores.length; j++){
@@ -45,6 +44,7 @@ angular.module('projecttycoonControllers')
                                     KnowledgeAreaScoreResource.get({id : $rootScope.MainUser.teamLevelPrestations[i].knowledgeAreaScores[j].id}, function(data){
                                         data.answer = $scope.answer;
                                         data.$update({id: data.id}, function(data){
+                                            alert(JSON.stringify(data));
                                         });
                                     });
                                 }

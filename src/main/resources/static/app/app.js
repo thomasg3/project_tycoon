@@ -9,7 +9,6 @@ app.factory('httpInterceptor', ['$q', '$location', '$log', function($q, $locatio
             return response;
         },
         responseError: function(response){
-            $log.debug("HTTP_ERR "+response.status);
             switch(response.status){
                 case 401:
                     if(response.config.url != "user")
@@ -22,8 +21,9 @@ app.factory('httpInterceptor', ['$q', '$location', '$log', function($q, $locatio
                     window.location =  '#/not_found';
                     break;
                 default:
-                    return $q.reject(response);
+                    break;
             }
+            return $q.reject(response);
 
         }
     };
@@ -91,6 +91,10 @@ app.config(function($routeProvider, $httpProvider) {
                 controller : 'levelControlController'
             })
             //##### admin pages #####
+            .when('/admin/dashboard/:id', {
+                templateUrl : 'views/dashboard.html',
+                controller: 'adminDashboard'
+            })
             .when('/adminOverview', {
                 templateUrl : 'views/adminOverview.html',
                 controller: 'adminOverview'
@@ -106,6 +110,10 @@ app.config(function($routeProvider, $httpProvider) {
             .when('/admin/:id/levels', {
                 templateUrl : 'views/levelOverview.html',
                 controller : 'levelOverview'
+            })
+            .when('/admin/:id/mail', {
+                templateUrl : 'views/sendMail.html',
+                controller : 'mailController'
             })
             .when('/info', {
                 templateUrl : 'views/game/allInfo.html',
