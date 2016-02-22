@@ -10,6 +10,7 @@ import be.projecttycoon.model.Team;
 import be.projecttycoon.model.level.Level;
 import be.projecttycoon.model.level.LevelState;
 import be.projecttycoon.model.level.Open;
+import be.projecttycoon.rest.team.InfoResource;
 import be.projecttycoon.rest.util.UrlBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,19 +34,13 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/admin/info")
-public class InfoAdminResource {
+public class InfoAdminResource extends InfoResource{
 
-//game isnt finished yet so i cant do this yet
 
-    private final InfoRepository infoRepository;
-    private final GameRepository gameRepository;
-    private final TeamRepository teamRepository;
 
     @Autowired
     public InfoAdminResource(InfoRepository infoRepository, GameRepository gameRepository, TeamRepository teamRepository){
-        this.infoRepository=infoRepository;
-        this.gameRepository=gameRepository;
-        this.teamRepository=teamRepository;
+        super(infoRepository,gameRepository,teamRepository);
 
     }
 
@@ -55,21 +50,12 @@ public class InfoAdminResource {
         return infoRepository.findAll();
     }
 
-    @RequestMapping(value="/team/{id}",method = RequestMethod.GET)
+    @RequestMapping(value="/level/{level}", method = RequestMethod.GET)
     @Produces("application/json")
-    public Collection<Info> getInfo(@PathVariable long id){
-        Team t = teamRepository.findOne(id);
-        Game game = gameRepository.findAll().stream()
-                .filter(g->g.getTeams().contains(t))
-                .findFirst().orElse(null);
-        int round = game.getLevels().stream()
-                .filter(l->l.documentsAreOpen())
-                .mapToInt(Level::getRound)
-                .max().orElse(-1);
-        Collection<Info> info = infoRepository.findAll().stream()
-                .filter(i->i.getUnlockedAtLevel() <= round)
+    public Collection<Info> getInfoFromLevel(@PathVariable int level){
+        return infoRepository.findAll().stream()
+                .filter(l->l.getUnlockedAtLevel()==level)
                 .collect(Collectors.toList());
-        return info;
     }
 
     @RequestMapping(method = RequestMethod.POST)

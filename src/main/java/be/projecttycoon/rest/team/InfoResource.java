@@ -35,9 +35,9 @@ import java.util.stream.Collectors;
 public class InfoResource {
 
 
-    private final InfoRepository infoRepository;
-    private final GameRepository gameRepository;
-    private final TeamRepository teamRepository;
+    protected final InfoRepository infoRepository;
+    protected final GameRepository gameRepository;
+    protected final TeamRepository teamRepository;
 
     @Autowired
     public InfoResource(InfoRepository infoRepository, GameRepository gameRepository, TeamRepository teamRepository){
