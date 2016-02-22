@@ -15,6 +15,6 @@ public class CloseLevelJob  implements Job{
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         Level level = (Level)jobExecutionContext.getJobDetail().getJobDataMap().get("level");
         level.setState("Closed");
-        System.out.println("Game with id "+level.getId() + " is now closed");
+        System.out.println("Level with id "+level.getId() + " is now closed");
     }
 }

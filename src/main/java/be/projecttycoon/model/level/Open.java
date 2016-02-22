@@ -17,22 +17,23 @@ public class Open implements LevelState {
 
         this.context = context;
 
+        long currentTime=System.currentTimeMillis();
         // define the job and tie it to our CloseLevelJob class
         JobDetail job = JobBuilder.newJob(CloseLevelJob.class)
-                .withIdentity("CloseLevel"+context.getId(), "closer")
+                .withIdentity("CloseLevel"+currentTime, "closer")
                 .build();
         job.getJobDataMap().put("level", context);
 
-        long currentTime=System.currentTimeMillis();
         context.setTimestampStart(currentTime);
         SimpleTrigger trigger = (SimpleTrigger) TriggerBuilder.newTrigger()
-                .withIdentity("trigger"+context.getId(), "closerTrigger")
+                .withIdentity("trigger"+currentTime, "closerTrigger")
                 .startAt(new Date(currentTime + context.getMinutesToClose()*60000L))
-                .forJob("CloseLevel"+context.getId(), "closer")
+                .forJob("CloseLevel"+currentTime, "closer")
                 .build();
 
             //Start countdown for game, to close...
         try {
+            System.out.println("job scheduled... " + context.getId() +" @"+currentTime);
             this.scheduler.getScheduler().scheduleJob(job, trigger);
         } catch (SchedulerException e) {
             e.printStackTrace();

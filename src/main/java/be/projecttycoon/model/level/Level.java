@@ -245,7 +245,7 @@ public class Level{
     //todo untested
     public void removeCloseScheduler(){
         try {
-            scheduler.getScheduler().deleteJob(JobKey.jobKey("CloseLevel"+this.getId(), "closer"));
+            scheduler.getScheduler().deleteJob(JobKey.jobKey("CloseLevel"+this.getTimestampStart(), "closer"));
         } catch (SchedulerException e) {
             e.printStackTrace();
         }

@@ -26,10 +26,10 @@ public class StakeholderResourceAdmin extends StakeholderResource{
         super(stakeholderRepository);
     }
 
-
+    @Override
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @Produces("application/json")
-    public Stakeholder showStakeholder(@PathVariable long id ){
+    public Stakeholder showStakeholder(Principal team, @PathVariable long id ){
         return stakeholderRepository.findOne(id);
     }
 
