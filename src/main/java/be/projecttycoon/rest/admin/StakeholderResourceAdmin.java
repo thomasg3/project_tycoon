@@ -26,7 +26,7 @@ public class StakeholderResourceAdmin extends StakeholderResource{
         super(stakeholderRepository);
     }
 
-    //conflict met showStakeholder(Principal team, @PathVariable long id ) uit StakeholderResource ????
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @Produces("application/json")
     public Stakeholder showStakeholder(@PathVariable long id ){
