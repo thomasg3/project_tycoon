@@ -16,7 +16,7 @@ angular.module('projecttycoonControllers')
 
     }
     $scope.getGame = function(id){
-        $location.path('/dashboard/' + id);
+        $location.path('/admin/dashboard/' + id);
     }
     $scope.getLevels = function(id){
         $location.path('/admin/' + id + '/levels');

@@ -9,6 +9,7 @@ public enum ScoreFormat{
     ENUMERATION,
     INT,
     PERCENT,
-    AMOUNT;
-
+    AMOUNT,
+    PERCENT_RANGE,
+    AMOUNT_RANGE
 }
