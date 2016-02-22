@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -87,7 +88,6 @@ public class InfoAdminResource {
 
                 String path = "../documents/";
                 String filename = file.getOriginalFilename();
-                System.out.println(filename);
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(path + filename));
                 stream.write(bytes);
                 stream.close();
@@ -114,5 +114,21 @@ public class InfoAdminResource {
     @Produces("application/json")
     public Info getInfoById(@PathVariable long id){
         return infoRepository.findOne(id);
+    }
+
+    @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
+    public Collection<Info> deleteInfo(@PathVariable long id){
+        infoRepository.delete(id);
+        return getAllInfo();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public void updateInfo(@PathVariable long id,@RequestBody Info i){
+        Info info = infoRepository.findOne(id);
+        info.setUnlockedAtLevel(i.getUnlockedAtLevel());
+        info.setDescription(i.getDescription());
+        info.setPath(i.getPath());
+        info.setType(i.getType());
+        infoRepository.save(info);
     }
 }

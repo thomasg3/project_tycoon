@@ -2,7 +2,7 @@
     <div class="col-sm-6 col-sm-offset-3">
         <h3>Create new information for teams</h3>
         <hr>
-        <form role="form" ng-submit="postInfo()" class="css-form" novalidate name="form">
+        <form role="form" class="css-form" novalidate name="form" id="form">
 
 
 
@@ -43,7 +43,7 @@
             </div>
 
             <div class="col-sm-12">
-                <button ng-disabled="form.$invalid" type="submit" class="btn btn-primary">Submit</button>
+                <button ng-disabled="form.$invalid" type="submit" ng-click="checkWhatToDo()" class="btn btn-primary" id="submit">Submit</button>
             </div>
 
 

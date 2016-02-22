@@ -2,7 +2,38 @@
 <body>
 <div>
     <table class="table table-responsive" id="infoTable">
+        <thead>
+        <th>Resource</th>
+        <th ng-show="MainUser.admin">unlocked At Level</th>
+        <th></th>
+        <th></th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="info in infoArr">
+                <td >
+                    <div ng-if="info.type == 'Document'">
+                        <a href="{{info.path}}">{{info.description}}</a>
+                    </div>
+                    <div ng-if="info.type=='Video'">
+                        <iframe width="560" height="315" ng-src="{{getSafeSrc(info.path)}}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div ng-if="info.type=='Image'">
+                        <img ng-src="{{info.path}}">
+                    </div>
+                </td>
 
+                <td ng-if="MainUser.admin">
+                    {{info.unlockedAtLevel}}
+                </td>
+                <td ng-if="MainUser.admin">
+                    <a class="btn btn-default" href="#/admin/info/update/{{info.id}}">Edit</a>
+                </td>
+                <td ng-if="MainUser.admin">
+                    <button class="btn btn-danger" ng-click="deleteInfo(info.id)">Delete</button>
+                </td>
+
+            </tr>
+        </tbody>
     </table>
 
 </div>

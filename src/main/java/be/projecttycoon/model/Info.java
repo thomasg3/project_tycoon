@@ -1,5 +1,8 @@
 package be.projecttycoon.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,6 +18,7 @@ public class Info {
 
     @Id
     @GeneratedValue
+    @JsonProperty("id")
     private long id;
     @Min(value = 1, message = "The level must be at least 1")
     private int unlockedAtLevel;
@@ -22,8 +26,7 @@ public class Info {
     private String path;
     private InfoType type;
 
-    public Info() {
-        //not sure if we even want this but ok
+   public Info() {
         this(1,"","",InfoType.Document);
     }
 
@@ -64,5 +67,16 @@ public class Info {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Info{" +
+                "id=" + id +
+                ", unlockedAtLevel=" + unlockedAtLevel +
+                ", description='" + description + '\'' +
+                ", path='" + path + '\'' +
+                ", type=" + type +
+                '}';
     }
 }

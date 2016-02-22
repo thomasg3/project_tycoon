@@ -23,6 +23,14 @@ angular.module('projecttycoon').factory('InfoAdminResource', function($resource)
         getTypes : {
             method : 'GET',
             url: 'api/admin/info/types'
+        },
+        delete:{
+            method : 'DELETE',
+            isArray:true
+        },
+        update : {
+            method : 'PUT',
+            url: 'api/admin/info/:id'
         }
     });
 

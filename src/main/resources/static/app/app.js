@@ -125,7 +125,10 @@ app.config(function($routeProvider, $httpProvider) {
             }).when('/admin/info',{
                 templateUrl : 'views/game/allInfo.html',
                 controller:'adminInfo'
-        })
+            }).when('/admin/info/update/:id', {
+                templateUrl : 'views/createInfo.html',
+                controller : 'adminInfo'
+            })
             .otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
