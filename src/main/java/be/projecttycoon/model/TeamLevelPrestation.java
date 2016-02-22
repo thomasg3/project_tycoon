@@ -59,8 +59,8 @@ public class TeamLevelPrestation {
     }
 
     public int getLevelScore(){
-        if(level.teamsCanSeePoints())
-            return knowledgeAreaScores.stream().map(kas -> kas.getScore()).reduce(0, (x,y) -> x + y);
-        else return 0;
+        return knowledgeAreaScores.stream().map(kas -> kas.getScore()).reduce(0, (x,y) -> x + y);
     }
+
+
 }

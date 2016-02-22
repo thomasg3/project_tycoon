@@ -13,6 +13,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -137,6 +138,42 @@ public class Team{
         return teamLevelPrestations;
     }
 
+    @JsonIgnore
+    public List<TeamLevelPrestation> getPublicTeamLevelPrestations(){
+        return getTeamLevelPrestations().stream().map(
+                tlp -> {
+                    if(tlp.getLevel().teamsCanSeePoints()){
+                        return tlp;
+                    } else {
+                        tlp.setKnowledgeAreaScores(tlp.getKnowledgeAreaScores().stream().map(kas -> {
+                            kas.setScore(0);
+                            kas.setAnswer("");
+                            return kas;
+                        }).collect(Collectors.toList()));
+                        return tlp;
+                    }
+                }
+        ).collect(Collectors.toList());
+    }
+
+
+    @JsonIgnore
+    public List<TeamLevelPrestation> getOwnTeamLevelPrestations() {
+        return getTeamLevelPrestations().stream().map(
+                tlp -> {
+                    if(tlp.getLevel().teamsCanSeePoints()){
+                        return tlp;
+                    } else {
+                        tlp.setKnowledgeAreaScores(tlp.getKnowledgeAreaScores().stream().map(kas -> {
+                            kas.setScore(0);
+                            return kas;
+                        }).collect(Collectors.toList()));
+                        return tlp;
+                    }
+                }
+        ).collect(Collectors.toList());
+    }
+
     public void setTeamLevelPrestations(List<TeamLevelPrestation> teamLevelPrestations) {
         this.teamLevelPrestations = teamLevelPrestations;
     }
@@ -183,4 +220,6 @@ public class Team{
                 ", registered=" + isRegistered() +
                 '}';
     }
+
+
 }
