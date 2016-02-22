@@ -123,6 +123,35 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/sendMail.html',
                 controller : 'mailController'
             })
+            //##### stakeholder pages #####
+            .when('/admin/stakeholders', {
+                templateUrl : 'views/stakeholders/overview.html',
+                controller : 'adminStakeholderOverviewController'
+            })
+            .when('/admin/stakeholders/new', {
+                templateUrl: 'views/stakeholders/edit.html',
+                controller : 'adminStakeholderNewController'
+            })
+            .when('/admin/stakeholders/:id', {
+                templateUrl : 'views/stakeholders/details.html',
+                controller : 'adminStakeholderDetailController'
+            })
+            .when('/admin/stakeholders/:id/edit', {
+                templateUrl : 'views/stakeholders/edit.html',
+                controller : 'adminStakeholderEditController'
+            })
+            .when('/admin/stakeholders/:id/delete', {
+                templateUrl : 'views/stakeholders/delete.html',
+                controller : 'adminStakeholderDeleteController'
+            })
+            .when('/stakeholders', {
+                templateUrl : 'views/stakeholders/overview.public.html',
+                controller : 'stakeholderOverviewController'
+            })
+            .when('/stakeholders/:id', {
+                templateUrl : 'views/stakeholders/details.public.html',
+                controller : 'stakeholderDetailController'
+            })
             .otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';

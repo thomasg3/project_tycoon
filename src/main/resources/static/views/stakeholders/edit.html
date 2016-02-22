@@ -1,0 +1,48 @@
+<h1>{{title}}</h1>
+
+
+
+<form ng-submit="save()" class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2">
+    <div class="form-group">
+        <label for="name">Stakeholder Name: </label>
+        <input type="text" class="form-control" id="name" placeholder="Name" ng-model="stakeholder.name" ng-disabled="freeze">
+    </div>
+    <div class="form-group">
+        <label for="function">Stakeholder's Function: </label>
+        <input type="text" class="form-control" id="function" placeholder="Function" ng-model="stakeholder.function" ng-disabled="freeze">
+    </div>
+    <div class="form-group">
+        <label for="organisation">Stakeholder's Organisation: </label>
+        <input type="text" class="form-control" id="organisation" placeholder="Organisation" ng-model="stakeholder.organisation" ng-disabled="freeze">
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description: </label>
+        <textarea id="description" class="form-control" rows="3" ng-model="stakeholder.description" ng-disabled="freeze"></textarea>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <img class="img-responsive center-block"  ng-src="{{stakeholder.imagePath}}" id="photo-id"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="photofile">Stakeholder's Image upload: </label>
+        <input id="photofile" type="file" ngf-select="onFileSelect($files)" multiple>
+    </div>
+
+    <h2 class="text-center">OR</h2>
+
+    <div class="form-group">
+        <label for="url">Image url: </label>
+        <input type="text" class="form-control" placeholder="choose URL" id="url" name="url" ng-model="stakeholder.imagePath">
+    </div>
+
+    <div class="form-group">
+        <label for="level">Available from level: </label>
+        <input type="number" class="form-control" id="level" aria-describedby="levelhelp" ng-model="stakeholder.level" ng-disabled="freeze">
+        <span id="levelhelp" class="help-block">Round number of the level when it is available. 0 for Always Available</span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
