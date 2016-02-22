@@ -119,10 +119,13 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/game/allInfo.html',
                 controller : 'info'
             })
-            .when('/info/create', {
+            .when('/admin/info/create', {
                 templateUrl : 'views/createInfo.html',
-                controller : 'info'
-            })
+                controller : 'adminInfo'
+            }).when('/admin/info',{
+                templateUrl : 'views/game/allInfo.html',
+                controller:'adminInfo'
+        })
             .otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';

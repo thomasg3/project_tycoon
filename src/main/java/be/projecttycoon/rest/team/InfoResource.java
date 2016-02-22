@@ -1,4 +1,4 @@
-package be.projecttycoon.rest;
+package be.projecttycoon.rest.team;
 
 import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.InfoRepository;
@@ -34,8 +34,6 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/api/info")
 public class InfoResource {
 
-//todo search game by team and then look what level they are currently playing so you can search the right info
-//game isnt finished yet so i cant do this yet
 
     private final InfoRepository infoRepository;
     private final GameRepository gameRepository;
@@ -46,20 +44,9 @@ public class InfoResource {
         this.infoRepository=infoRepository;
         this.gameRepository=gameRepository;
         this.teamRepository=teamRepository;
-        Info i = new Info(1,"test info", "http://i.imgur.com/1rHMtFM.gif", InfoType.Image);
-        Info i2 = new Info(1,"test video","https://www.youtube.com/embed/czezOcHfLS4",InfoType.Video);
-        Info i3 = new Info(9,"test document","/documents/changemanagement.pdf",InfoType.Document);
-        infoRepository.save(i);
-        infoRepository.save(i2);
-        infoRepository.save(i3);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    @Produces("application/json")
-    public Collection<Info> getAllInfo(){
-        return infoRepository.findAll();
-    }
-
+    //todo make sure teams can only see their own info
     @RequestMapping(value="/team/{id}",method = RequestMethod.GET)
     @Produces("application/json")
     public Collection<Info> getInfo(@PathVariable long id){
@@ -77,44 +64,7 @@ public class InfoResource {
         return info;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    @Consumes("application/json")
-    public void saveInfo(@RequestBody Info i){
-        infoRepository.save(i);
-    }
 
-    @RequestMapping(value="/upload", method = RequestMethod.POST)
-    @Consumes("application/json")
-    public void upload(@RequestBody MultipartFile file) {
-        if (file != null && !file.isEmpty() && file.getOriginalFilename().contains(".")) {
-
-            try {
-                byte[] bytes = file.getBytes();
-
-                String path = "../documents/";
-                String filename = file.getOriginalFilename();
-                System.out.println(filename);
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(path + filename));
-                stream.write(bytes);
-                stream.close();
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-
-    @RequestMapping(value="/types", method=RequestMethod.GET)
-    @Produces("application/json")
-    public Map<Integer,InfoType> getTypes(){
-        Map<Integer,InfoType> map = new HashMap<>();
-        for(int i = 0;i<InfoType.values().length;i++){
-            map.put(i,InfoType.values()[i]);
-        }
-        return map;
-    }
 
     @RequestMapping(value="/{id}", method = RequestMethod.GET)
     @Produces("application/json")
