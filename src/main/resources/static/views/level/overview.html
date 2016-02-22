@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-xs-12 page-header">
-        <h1>{{game.name}}</h1>
+        <h1>{{game.name}}</h1><a href="#/admin/dashboard/{{game.id}}" class="btn btn-default">Dashboard</a>
     </div>
     <div class="col-sm-3">
         <ul class="nav nav-pills nav-stacked">
             <li role="presentation" ng-repeat="level in levels | orderBy: 'round'">
-                <a href="#/games/{{game.id}}/levels/{{level.id}}" >
+                <a href="#/admin/games/{{game.id}}/levels/{{level.id}}" >
                     {{level.round}}. {{level.name}}
                     <span ng-class="{'label': true, 'label-default': level.closed, 'label-primary': level.concluded, 'label-success': level.open, 'label-info': level.cermonie, 'label-danger': level.finished}">{{level.state}}</span>
                 </a>

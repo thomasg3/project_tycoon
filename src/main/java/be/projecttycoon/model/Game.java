@@ -1,5 +1,6 @@
 package be.projecttycoon.model;
 
+import be.projecttycoon.model.ScoreEngine.ScoreEngine;
 import be.projecttycoon.model.level.Level;
 
 import javax.persistence.*;
@@ -148,5 +149,9 @@ public class Game {
                 ", teams=" + teams +
                 ", scoreEngine=" + scoreEngine +
                 '}';
+    }
+
+    public void calculateScores(List<TeamLevelPrestation> teamLevelPrestations, List<LevelKnowledgeArea> levelKnowledgeAreas){
+        //scoreengine....
     }
 }

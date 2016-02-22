@@ -5,7 +5,9 @@ import be.projecttycoon.db.QuestionRepository;
 import be.projecttycoon.model.Game;
 import be.projecttycoon.model.KnowledgeArea;
 import be.projecttycoon.model.Question;
+import be.projecttycoon.model.ScoreEngine.ScoreFormat;
 import be.projecttycoon.rest.exception.NotFoundException;
+import be.projecttycoon.rest.util.EnumFormatBean;
 import be.projecttycoon.rest.util.GameBean;
 import be.projecttycoon.rest.util.QuestionBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.ws.rs.Produces;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Jeroen on 17-2-2016.
@@ -46,8 +50,5 @@ public class QuestionResource {
             throw new NotFoundException();
         return question;
     }
-
-
-
 
 }

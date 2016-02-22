@@ -13,8 +13,8 @@ public class KnowledgeAreaScore {
 
     @ManyToOne
     private KnowledgeArea knowledgeArea;
-
     private int score;
+    private String answer;
 
     public KnowledgeAreaScore() {
     }
@@ -31,12 +31,26 @@ public class KnowledgeAreaScore {
         this.knowledgeArea = knowledgeArea;
     }
 
+    public KnowledgeAreaScore(KnowledgeArea knowledgeArea, int score, String answer) {
+        this.knowledgeArea = knowledgeArea;
+        this.score = score;
+        this.answer = answer;
+    }
+
     public KnowledgeArea getKnowledgeArea() {
         return knowledgeArea;
     }
 
     public void setKnowledgeArea(KnowledgeArea knowledgeArea) {
         this.knowledgeArea = knowledgeArea;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     public int getScore() {

@@ -1,6 +1,7 @@
 <div class="row" >
     <div class="">
         <h1>{{game.name}}</h1> <a href="#/games/{{game.id}}/details" class="btn btn-info">Score Details</a>
+        <a href="#/games/{{game.id}}/levels" class="btn btn-info">Levels</a>
 
         <div class="row">
             <form class="navbar-form navbar-left" role="search">
@@ -31,7 +32,7 @@
             </tr>
             <tr ng-repeat="team in game.teams  | filter: searchText | orderBy:'-score' track by $index">
                 <td><strong>#{{$index+1}}</strong></td>
-                <td><img width="80px" class="img-circle" src={{team.teamImage}}></td>
+                <td><img width="80px" class="img-circle" ng-src={{team.teamImage}}></td>
                 <td>{{team.teamname}}</td>
                 <td>{{team.score}}</td>
                 <td>{{team.likes}}</td>

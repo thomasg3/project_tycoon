@@ -20,7 +20,7 @@ angular.module('projecttycoonControllers')
                 });
             });
         }
-    }).directive('myLevel', function($http, GameAdminResource) {
+    }).directive('myLevel', function($http, QuestionAdminResource) {
         return {
             restrict: 'E',
             scope: {
@@ -37,10 +37,20 @@ angular.module('projecttycoonControllers')
         restrict: 'E',
         scope: {
             my_levelkn: '=levelknowledgearea',
-            my_gameid: '=gameid'
+            my_gameid: '=gameid',
         },
         templateUrl: "views/game/level/levelKnowledgeArea-iso.html",
         link: function ($scope, $attr) {
+
+            QuestionAdminResource.getFormats(function(data){
+                $scope.formats = data;
+                for(var i = 0; i<$scope.formats.length; i++){
+                    if($scope.my_levelkn.question.format === $scope.formats[i].format){
+                        $scope.selected = $scope.formats[i];
+                    }
+                }
+            });
+
             $scope.saved = false;
             if($scope.question){
                 $scope.saved = true;
@@ -48,7 +58,7 @@ angular.module('projecttycoonControllers')
             $scope.addQuestion = function(lk) {
                 QuestionAdminResource.get({id : lk.question.id}, function(question){
                     question.question = lk.question.question;
-                    question.format = lk.question.format;
+                    question.format = $scope.selected;
                     question.$update({id : question.id}, function(data){
                         $scope.saved = true;
                     });

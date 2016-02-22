@@ -17,7 +17,7 @@ angular.module('projecttycoonControllers')
         }
 
         $scope.change = function(to){
-            $http.get('/api/levels/'+$scope.currentLevel.id+'/change/'+to)
+            $http.get('/api/admin/levels/'+$scope.currentLevel.id+'/change/'+to)
                 .success(function(data){
                     $scope.currentLevel = data;
                     updateList();

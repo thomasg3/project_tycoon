@@ -24,17 +24,29 @@ public class TeamBean {
     private String teamImage;
     private int score, likes;
     private TeamState state;
+    private String email;
+
 
     public TeamBean(){}
 
-    public TeamBean(long id, String teamname, String password, String teamImage, int score, int likes, TeamState state) {
+    public TeamBean(long id, String teamname, String password, String teamImage, String email, int score, int likes, TeamState state) {
         this.id = id;
         this.teamname = teamname;
         this.password = password;
         this.teamImage = teamImage;
+        this.email = email;
         this.score = score;
         this.likes = likes;
         this.state = state;
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public long getId() {

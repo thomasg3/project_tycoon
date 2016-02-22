@@ -14,6 +14,11 @@ angular.module('projecttycoon').factory('QuestionResource', function($resource) 
         saveAll : {
             method: 'POST',
             url: '/api/questions/:id'
+        },
+        getFormats : {
+            method: 'GET',
+            url: 'api/questions/enum',
+            isArray: true
         }
     });
 
