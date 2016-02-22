@@ -101,7 +101,10 @@ angular.module('projecttycoonControllers')
                 $scope.uploadFile();
             }
             //put info
-            InfoAdminResource.update({id:$routeParams.id},$scope.updateInfo);
+            InfoAdminResource.update({id:$routeParams.id},$scope.updateInfo).$promise.then(function(){
+                $location.path("/admin/info");
+            });
+
         }
 
         $scope.getInfoFromForm = function(){
