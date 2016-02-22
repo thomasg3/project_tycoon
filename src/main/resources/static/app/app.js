@@ -91,6 +91,10 @@ app.config(function($routeProvider, $httpProvider) {
                 controller : 'levelControlController'
             })
             //##### admin pages #####
+            .when('/admin/dashboard/:id', {
+                templateUrl : 'views/dashboard.html',
+                controller: 'adminDashboard'
+            })
             .when('/adminOverview', {
                 templateUrl : 'views/adminOverview.html',
                 controller: 'adminOverview'
