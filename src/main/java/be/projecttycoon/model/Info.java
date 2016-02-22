@@ -12,6 +12,7 @@ import javax.validation.constraints.Min;
 public class Info {
 
     //todo choose which team can see it -- here? (seems strange) or team keeps its own info (team is getting pretty big already..)
+    //link with scoreEngine? if so how do i choose which engine? there is only one at the moment but in the future it might change
     @Id
     @GeneratedValue
     private long id;

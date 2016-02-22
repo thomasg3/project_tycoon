@@ -10,16 +10,20 @@ import be.projecttycoon.model.Team;
 import be.projecttycoon.model.level.Level;
 import be.projecttycoon.model.level.LevelState;
 import be.projecttycoon.model.level.Open;
+import be.projecttycoon.rest.util.UrlBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -56,7 +60,7 @@ public class InfoResource {
         return infoRepository.findAll();
     }
 
-    @RequestMapping(value="/{id}",method = RequestMethod.GET)
+    @RequestMapping(value="/team/{id}",method = RequestMethod.GET)
     @Produces("application/json")
     public Collection<Info> getInfo(@PathVariable long id){
         Team t = teamRepository.findOne(id);
@@ -64,7 +68,7 @@ public class InfoResource {
                 .filter(g->g.getTeams().contains(t))
                 .findFirst().orElse(null);
        int round = game.getLevels().stream()
-                .filter(l->l.getState().equals("Open"))
+                .filter(l->l.documentsAreOpen())
                 .mapToInt(Level::getRound)
                 .max().orElse(-1);
         Collection<Info> info = infoRepository.findAll().stream()
@@ -73,6 +77,48 @@ public class InfoResource {
         return info;
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    @Consumes("application/json")
+    public void saveInfo(@RequestBody Info i){
+        infoRepository.save(i);
+    }
+
+    @RequestMapping(value="/upload", method = RequestMethod.POST)
+    @Consumes("application/json")
+    public void upload(@RequestBody MultipartFile file) {
+        if (file != null && !file.isEmpty() && file.getOriginalFilename().contains(".")) {
+
+            try {
+                byte[] bytes = file.getBytes();
+
+                String path = "../documents/";
+                String filename = file.getOriginalFilename();
+                System.out.println(filename);
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(path + filename));
+                stream.write(bytes);
+                stream.close();
 
 
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    @RequestMapping(value="/types", method=RequestMethod.GET)
+    @Produces("application/json")
+    public Map<Integer,InfoType> getTypes(){
+        Map<Integer,InfoType> map = new HashMap<>();
+        for(int i = 0;i<InfoType.values().length;i++){
+            map.put(i,InfoType.values()[i]);
+        }
+        return map;
+    }
+
+    @RequestMapping(value="/{id}", method = RequestMethod.GET)
+    @Produces("application/json")
+    public Info getInfoById(@PathVariable long id){
+        return infoRepository.findOne(id);
+    }
 }

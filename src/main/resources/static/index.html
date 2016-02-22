@@ -50,7 +50,14 @@
                         </ul>
                     </li>
                     <li ng-show="MainUser.admin"><a href="#/admin/knowledgeareas/edit">KnowledgeAreas</a></li>
-                    <li ng-show="MainUser.admin||MainUser.registered"><a href="#/info">Documents</a></li>
+                    <li ng-show="MainUser.registered&&!MainUser.admin"><a href="#/info">Documents</a></li>
+                    <li class="dropdown" ng-show="MainUser.admin">
+                        <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documents <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/info/create">New</a></li>
+                            <li><a href="#/info">Overview</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li ng-show="!authenticated"><a href="#/login"><i class="fa fa-sign-in"></i> Login</a></li>
