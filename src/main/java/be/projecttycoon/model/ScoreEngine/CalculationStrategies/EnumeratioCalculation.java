@@ -28,7 +28,6 @@ public class EnumeratioCalculation implements CalculationStrategy {
         }
 
         for(Enumeration enumeration: answers){
-            System.out.println("Enumeration: " + enumeration.getEnumeration().toString());
             if(enumeration.match(knowledgeAreaScore.getAnswer())){
                 score = enumeration.getScore();
             }
