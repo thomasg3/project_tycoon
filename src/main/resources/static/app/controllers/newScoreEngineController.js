@@ -11,7 +11,7 @@ angular.module('projecttycoonControllers')
             $scope.freeze = true;
             $scope.scoreengine.$save(
                 function(data){
-                    $location.path('/dashboard/'+data.id).replace();
+                    $location.path('/#/adminOverview').replace();
                 },
                 function(err){$scope.freeze = false;});
         };
