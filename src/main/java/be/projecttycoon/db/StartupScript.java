@@ -1,6 +1,7 @@
 package be.projecttycoon.db;
 
 import be.projecttycoon.model.*;
+import be.projecttycoon.model.ScoreEngine.ScoreEngine;
 import be.projecttycoon.model.ScoreEngine.ScoreFormat;
 import be.projecttycoon.model.level.*;
 import org.springframework.beans.factory.annotation.Autowired;
