@@ -53,6 +53,15 @@ public class StartupScript {
         ScoreEngine scoreEngine3 = new ScoreEngine("ScoreEngine3", 8,knowledgeAreaRepository.findAll());
         ScoreEngine scoreEngine4 = new ScoreEngine("ScoreEngine4", 3,knowledgeAreaRepository.findAll());
 
+        scoreEngine3.getLevels().get(0).setState(Concluded.class.getSimpleName());
+        scoreEngine3.getLevels().get(1).setState(Concluded.class.getSimpleName());
+        scoreEngine3.getLevels().get(2).setState(Cermonie.class.getSimpleName());
+        scoreEngine3.getLevels().get(3).setState(Finished.class.getSimpleName());
+        scoreEngine3.getLevels().get(4).setState(Finished.class.getSimpleName());
+        scoreEngine3.getLevels().get(5).setState(Open.class.getSimpleName());
+        scoreEngine3.getLevels().get(6).setState(Open.class.getSimpleName());
+        scoreEngine3.getLevels().get(7).setState(Closed.class.getSimpleName());
+
         scoreEngineRepository.save(scoreEngine1);
         scoreEngineRepository.save(scoreEngine2);
         scoreEngineRepository.save(scoreEngine3);
@@ -136,6 +145,5 @@ public class StartupScript {
         levels.get(6).setState(Open.class.getSimpleName());
         levels.get(7).setState(Closed.class.getSimpleName());
         gameRepository.save(scoreTest);
-
     }
 }
