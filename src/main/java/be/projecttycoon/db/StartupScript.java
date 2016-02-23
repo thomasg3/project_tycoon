@@ -22,6 +22,8 @@ public class StartupScript {
     private final QuestionRepository questionRepository;
     private final TeamLevelPrestationRepository teamLevelPrestationRepository;
     private final TeamRepository teamRepository;
+    private final InfoRepository infoRepository;
+
     private final ScoreEngineRepository scoreEngineRepository;
     private final StakeholderRepository stakeholderRepository;
 
@@ -34,13 +36,15 @@ public class StartupScript {
             TeamLevelPrestationRepository teamLevelPrestationRepository,
             TeamRepository teamRepository,
             StakeholderRepository stakeholderRepository,
-            ScoreEngineRepository scoreEngineRepository) {
+            ScoreEngineRepository scoreEngineRepository,
+            InfoRepository infoRepository) {
         this.gameRepository = gameRepository;
         this.knowledgeAreaRepository = knowledgeAreaRepository;
         this.levelRepository = levelRepository;
         this.questionRepository = questionRepository;
         this.teamLevelPrestationRepository = teamLevelPrestationRepository;
         this.teamRepository = teamRepository;
+        this.infoRepository=infoRepository;
         this.scoreEngineRepository = scoreEngineRepository;
         this.stakeholderRepository = stakeholderRepository;
     }
@@ -146,6 +150,11 @@ public class StartupScript {
         levels.get(6).setState(Open.class.getSimpleName());
         levels.get(7).setState(Closed.class.getSimpleName());
         gameRepository.save(scoreTest);
+
+        Info i = new Info(1,"test info", "http://i.imgur.com/1rHMtFM.gif", InfoType.Image);
+        Info i2 = new Info(1,"test video","https://www.youtube.com/embed/czezOcHfLS4",InfoType.Video);
+        infoRepository.save(i);
+        infoRepository.save(i2);
 
         generateStakeholders();
 
