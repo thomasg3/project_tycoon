@@ -9,8 +9,8 @@ angular.module('projecttycoonControllers')
         });
 
         $scope.deleteScoreEngine = function(id){
-            ScoreEngineAdminResource.delete({id : id}, function(data){
-                $scope.scoreEngines = data;
+            ScoreEngineTemplateAdminResource.delete({id : id}, function(data){
+                $scope.scoreEnginesTemplates = data;
             });
         }
     });
