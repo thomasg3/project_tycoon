@@ -18,7 +18,7 @@
             <td><strong>#{{$index+1}}</strong></td>
             <td><a ng-click="getGame(game.id)" role="button">{{game.name}}</a></td>
             <td>
-                <a href="#/admin/teams/{{game.id}}" class="btn btn-info">Teams</a>
+                <a href="#/admin/teams/{{game.id}}" class="btn btn-info"><i class="fa fa-users"></i> Teams</a>
                 <a href="#/admin/games/{{game.id}}/levels/0" class="btn btn-info"><i class="fa fa-fort-awesome"></i>  GameControlCenter</a>
                 <a ng-click="mail(game.id)" class="btn btn-default" role="button"><i class="fa fa-envelope"></i> Mail</a>
                 <button class="btn btn-danger" ng-click="deleteGame(game.id)"><i class="fa fa-remove"></i> Delete</button>
