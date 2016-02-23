@@ -2,6 +2,7 @@ package be.projecttycoon.rest.admin;
 
 import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.InfoRepository;
+import be.projecttycoon.db.LevelRepository;
 import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Game;
 import be.projecttycoon.model.Info;
@@ -10,6 +11,7 @@ import be.projecttycoon.model.Team;
 import be.projecttycoon.model.level.Level;
 import be.projecttycoon.model.level.LevelState;
 import be.projecttycoon.model.level.Open;
+import be.projecttycoon.rest.team.InfoResource;
 import be.projecttycoon.rest.util.UrlBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +23,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -33,20 +32,14 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/admin/info")
-public class InfoAdminResource {
+public class InfoAdminResource extends InfoResource{
 
-//game isnt finished yet so i cant do this yet
-
-    private final InfoRepository infoRepository;
-    private final GameRepository gameRepository;
-    private final TeamRepository teamRepository;
+private LevelRepository levelRepository;
 
     @Autowired
-    public InfoAdminResource(InfoRepository infoRepository, GameRepository gameRepository, TeamRepository teamRepository){
-        this.infoRepository=infoRepository;
-        this.gameRepository=gameRepository;
-        this.teamRepository=teamRepository;
-
+    public InfoAdminResource(InfoRepository infoRepository, GameRepository gameRepository, TeamRepository teamRepository, LevelRepository levelRepository){
+        super(infoRepository,gameRepository,teamRepository);
+        this.levelRepository=levelRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -55,21 +48,13 @@ public class InfoAdminResource {
         return infoRepository.findAll();
     }
 
-    @RequestMapping(value="/team/{id}",method = RequestMethod.GET)
+    @RequestMapping(value="/level/{level}", method = RequestMethod.GET)
     @Produces("application/json")
-    public Collection<Info> getInfo(@PathVariable long id){
-        Team t = teamRepository.findOne(id);
-        Game game = gameRepository.findAll().stream()
-                .filter(g->g.getTeams().contains(t))
-                .findFirst().orElse(null);
-        int round = game.getLevels().stream()
-                .filter(l->l.documentsAreOpen())
-                .mapToInt(Level::getRound)
-                .max().orElse(-1);
-        Collection<Info> info = infoRepository.findAll().stream()
-                .filter(i->i.getUnlockedAtLevel() <= round)
+    public Collection<Info> getInfoFromLevel(@PathVariable long level){
+       Level l =levelRepository.findOne(level);
+        return infoRepository.findAll().stream()
+                .filter(i->i.getUnlockedAtLevel()==l.getRound())
                 .collect(Collectors.toList());
-        return info;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -130,5 +115,19 @@ public class InfoAdminResource {
         info.setPath(i.getPath());
         info.setType(i.getType());
         infoRepository.save(info);
+    }
+
+    @RequestMapping(value="/{id}/team/{team}", method = RequestMethod.DELETE)
+    public void removeTeamFromBlackList(@PathVariable long id, @PathVariable long team){
+        Info i = infoRepository.findOne(id);
+        i.removeTeamFromBlackList(team);
+        infoRepository.save(i);
+    }
+
+    @RequestMapping(value="/{id}/team/{team}", method = RequestMethod.GET)
+    public void addTeamToBlackList(@PathVariable long id, @PathVariable(value="team") long team){
+        Info i = infoRepository.findOne(id);
+        i.addTeamToBlackList(team);
+        infoRepository.save(i);
     }
 }

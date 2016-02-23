@@ -1,12 +1,14 @@
 package be.projecttycoon.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by michael on 18/02/16.
@@ -26,15 +28,22 @@ public class Info {
     private String path;
     private InfoType type;
 
+    @ElementCollection
+    private Set<Long> excludedTeams;
+
    public Info() {
         this(1,"","",InfoType.Document);
     }
 
     public Info(int unlockedAtLevel, String description, String path, InfoType type) {
+        this(unlockedAtLevel,description,path,type,new HashSet<>());
+    }
+    public Info(int unlockedAtLevel,String description,String path,InfoType type,Set<Long> excludedTeams){
         this.unlockedAtLevel = unlockedAtLevel;
         this.description = description;
         this.path = path;
         this.type = type;
+        this.excludedTeams=excludedTeams;
     }
 
     public String getPath() {
@@ -67,6 +76,21 @@ public class Info {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Long> getExcludedTeams() {
+        return excludedTeams;
+    }
+
+    public void setExcludedTeams(Set<Long> excludedTeams) {
+        this.excludedTeams = excludedTeams;
+    }
+
+    public void addTeamToBlackList(long id){
+        excludedTeams.add(id);
+    }
+    public void removeTeamFromBlackList(long id){
+        excludedTeams.remove(id);
     }
 
     @Override

@@ -31,7 +31,21 @@ angular.module('projecttycoon').factory('InfoAdminResource', function($resource)
         update : {
             method : 'PUT',
             url: 'api/admin/info/:id'
+        },
+        getForLevel: {
+            method : 'GET',
+            url :'api/admin/info/level/:level',
+            isArray:true
+        },
+        addTeamToBlackList : {
+            method : 'GET',
+            url: 'api/admin/info/:id/team/:team'
+        },
+        removeTeamFromBlackList : {
+          method : 'DELETE',
+            url: 'api/admin/info/:id/team/:team'
         }
+
     });
 
 });
