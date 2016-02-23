@@ -59,7 +59,7 @@ angular.module('projecttycoonControllers')
                 function(err){
                     $scope.freeze = false;
                 });
-        }
+        };
         $scope.onFileSelect= function($files) {
             $scope.freeze = true;
             var formData=new FormData();

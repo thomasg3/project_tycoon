@@ -208,6 +208,7 @@ public class StartupScript {
         stakeholder.setLevel(0);
         stakeholder.setOrganisation("Nintendo");
         stakeholder.setImagePath("https://pbs.twimg.com/profile_images/2186972673/super_mario.jpg");
+        stakeholder.getLinks().add("http://mario.nintendo.com");
         stakeholderRepository.save(stakeholder);
 
     }

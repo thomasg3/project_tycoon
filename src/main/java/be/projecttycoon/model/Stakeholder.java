@@ -6,7 +6,9 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,8 +30,12 @@ public class Stakeholder {
     @ElementCollection
     private Set<Long> forbiddenUsers;
 
+    @ElementCollection
+    private List<String> links;
+
     public Stakeholder() {
         forbiddenUsers = new HashSet<>();
+        links = new ArrayList<>();
     }
 
     public Stakeholder(String name, String imagePath,String description,String organisation,String function,int level) {
@@ -136,6 +142,14 @@ public class Stakeholder {
 
     public boolean allowUser(long userid){
         return !forbiddenUsers.contains(userid);
+    }
+
+    public List<String> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<String> links) {
+        this.links = links;
     }
 
     @Override

@@ -1,10 +1,8 @@
 package be.projecttycoon.db;
 
 import be.projecttycoon.model.Stakeholder;
-import be.projecttycoon.model.Team;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.faces.component.StateHolder;
 import java.util.List;
 
 /**

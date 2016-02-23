@@ -75,7 +75,7 @@ angular.module('projecttycoonControllers')
             else{
                 StakeholderAdminResource.addTeamToBlackList({id:stakeholderid , team:teamid});
             }
-        }
+        };
         $scope.showInfo = function(info){
             info.show=true;
         }

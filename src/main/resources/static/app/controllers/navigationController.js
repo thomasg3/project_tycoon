@@ -33,7 +33,7 @@ angular.module('projecttycoonControllers')
                     //$window.sessionStorage.MainUser=JSON.stringify(data);
                     MainUserResource.saveMainUser(data);
                     $rootScope.MainUser=MainUserResource.getMainUser();
-                })
+                });
                 TeamResource.isRegistered({teamname: $scope.credentials.username}, function(data) {
                     if(data.registered){
                         $location.path("/");

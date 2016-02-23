@@ -20,7 +20,7 @@ public class LevelKnowledgeArea {
 
     public LevelKnowledgeArea(){
         this.setQuestion(new Question());
-    };
+    }
 
     public LevelKnowledgeArea(Question question, KnowledgeArea knowledgeArea) {
         this.question = question;

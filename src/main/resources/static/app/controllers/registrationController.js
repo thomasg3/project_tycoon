@@ -20,7 +20,7 @@ angular.module('projecttycoonControllers')
             .then(function(response) {
                     $scope.userPhoto=$scope.url;
                 })
-    }
+    };
 
     $scope.onFileSelect= function($files) {
 
@@ -33,7 +33,7 @@ angular.module('projecttycoonControllers')
             headers: { 'Content-Type': undefined }
         }).success(function(response){
                 $scope.userPhoto=response.url;
-        })}
+        })};
 
 
     $scope.initTeam = function(){
