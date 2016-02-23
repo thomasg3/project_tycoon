@@ -10,6 +10,7 @@ import be.projecttycoon.rest.exception.NotAuthorizedException;
 import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.team.GameResource;
 import be.projecttycoon.rest.util.GameBean;
+import be.projecttycoon.rest.util.ShortGameBean;
 import be.projecttycoon.rest.util.TeamBeanLight;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
