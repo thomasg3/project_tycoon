@@ -5,6 +5,8 @@ import be.projecttycoon.model.ScoreEngine.CalculationStrategies.EnumeratioCalcul
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.IntCalculation;
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.RangeCalculation;
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.StringCalculation;
+import be.projecttycoon.model.ScoreEngineTemplate.LevelKnowledgeAreaTemplate;
+import be.projecttycoon.model.ScoreEngineTemplate.ScoreEngineTemplate;
 import be.projecttycoon.model.level.Level;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -27,13 +29,24 @@ public class ScoreEngine {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Level> levels;
 
+    @ManyToOne
+    private ScoreEngineTemplate scoreEngineTemplate;
+
     public ScoreEngine(){
         this.levels = new ArrayList<>();
     }
 
+    /*
     public ScoreEngine(String name, int levels, List<KnowledgeArea> knowledgeAreas) {
         this.name = name;
         generateLevels(levels, knowledgeAreas);
+    }
+    */
+
+    public ScoreEngine(ScoreEngineTemplate scoreEngineTemplate) {
+        this.name = "default";
+        this.scoreEngineTemplate = scoreEngineTemplate;
+        useTemplate();
     }
 
     public long getId() {
@@ -78,16 +91,18 @@ public class ScoreEngine {
         }
     }
 
-    private void generateLevels(int levels, List<KnowledgeArea> knowledgeAreas){
+    private void useTemplate(){
         this.levels = new ArrayList<>();
-        for(int i = 1; i<=levels; i++){
+        for(int i = 0; i< scoreEngineTemplate.getLevelTemplates().size(); i++){
             List<LevelKnowledgeArea> levelKnowledgeAreas = new ArrayList<>();
-            for (KnowledgeArea k:knowledgeAreas){
-                LevelKnowledgeArea lk = new LevelKnowledgeArea();
-                lk.setKnowledgeArea(k);
-                levelKnowledgeAreas.add(lk);
+            for(LevelKnowledgeAreaTemplate lkatemplate: scoreEngineTemplate.getLevelTemplates().get(i).getLevelKnowledgeAreaTemplates()){
+                LevelKnowledgeArea levelKnowledgeArea = new LevelKnowledgeArea();
+
+                levelKnowledgeArea.setKnowledgeArea(lkatemplate.getKnowledgeArea());
+                levelKnowledgeArea.setQuestion(lkatemplate.getQuestion());
+
+                levelKnowledgeAreas.add(levelKnowledgeArea);
             }
-            System.out.println("Generating: Level " + i + ", for game: " + getName());
             getLevels().add(new Level("Level "+ i, i, levelKnowledgeAreas));
         }
     }

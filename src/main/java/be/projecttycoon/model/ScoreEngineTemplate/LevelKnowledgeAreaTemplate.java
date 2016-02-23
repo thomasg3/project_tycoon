@@ -1,30 +1,32 @@
-package be.projecttycoon.model;
+package be.projecttycoon.model.ScoreEngineTemplate;
+
+import be.projecttycoon.model.KnowledgeArea;
+import be.projecttycoon.model.Question;
 
 import javax.persistence.*;
 
 /**
- * Created by Jeroen on 16-2-2016.
+ * Created by Jeroen on 23-2-2016.
  */
-
 @Entity
-public class LevelKnowledgeArea {
+public class LevelKnowledgeAreaTemplate {
 
     @Id
     @GeneratedValue
     private long id;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Question question;
     @ManyToOne
     private KnowledgeArea knowledgeArea;
 
-    public LevelKnowledgeArea(){
-        this.setQuestion(new Question());
-    };
-
-    public LevelKnowledgeArea(Question question, KnowledgeArea knowledgeArea) {
+    public LevelKnowledgeAreaTemplate(KnowledgeArea knowledgeArea, Question question) {
+        this.knowledgeArea = knowledgeArea;
         this.question = question;
-        setKnowledgeArea(knowledgeArea);
+    }
+
+    public LevelKnowledgeAreaTemplate() {
+        this.setQuestion(new Question());
     }
 
     public long getId() {
@@ -49,14 +51,5 @@ public class LevelKnowledgeArea {
 
     public void setKnowledgeArea(KnowledgeArea knowledgeArea) {
         this.knowledgeArea = knowledgeArea;
-    }
-
-    @Override
-    public String toString() {
-        return "LevelKnowledgeArea{" +
-                "id=" + id +
-                ", question=" + question +
-                ", knowledgeArea=" + knowledgeArea +
-                '}';
     }
 }

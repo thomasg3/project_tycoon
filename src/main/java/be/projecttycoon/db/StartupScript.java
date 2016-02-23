@@ -3,6 +3,9 @@ package be.projecttycoon.db;
 import be.projecttycoon.model.*;
 import be.projecttycoon.model.ScoreEngine.ScoreEngine;
 import be.projecttycoon.model.ScoreEngine.ScoreFormat;
+import be.projecttycoon.model.ScoreEngineTemplate.LevelKnowledgeAreaTemplate;
+import be.projecttycoon.model.ScoreEngineTemplate.LevelTemplate;
+import be.projecttycoon.model.ScoreEngineTemplate.ScoreEngineTemplate;
 import be.projecttycoon.model.level.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +29,7 @@ public class StartupScript {
 
     private final ScoreEngineRepository scoreEngineRepository;
     private final StakeholderRepository stakeholderRepository;
+    private final ScoreEngineTemplateRepository scoreEngineTemplateRepository;
 
     @Autowired
     public StartupScript(
@@ -37,7 +41,8 @@ public class StartupScript {
             TeamRepository teamRepository,
             StakeholderRepository stakeholderRepository,
             ScoreEngineRepository scoreEngineRepository,
-            InfoRepository infoRepository) {
+            InfoRepository infoRepository,
+            ScoreEngineTemplateRepository scoreEngineTemplateRepository) {
         this.gameRepository = gameRepository;
         this.knowledgeAreaRepository = knowledgeAreaRepository;
         this.levelRepository = levelRepository;
@@ -47,6 +52,7 @@ public class StartupScript {
         this.infoRepository=infoRepository;
         this.scoreEngineRepository = scoreEngineRepository;
         this.stakeholderRepository = stakeholderRepository;
+        this.scoreEngineTemplateRepository = scoreEngineTemplateRepository;
     }
 
     public void run(){
@@ -62,10 +68,21 @@ public class StartupScript {
             knowledgeAreaRepository.save(new KnowledgeArea(areas[i], i));
         }
 
-        ScoreEngine scoreEngine1 = new ScoreEngine("ScoreEngine1", 5,knowledgeAreaRepository.findAll());
-        ScoreEngine scoreEngine2 = new ScoreEngine("ScoreEngine2", 2,knowledgeAreaRepository.findAll());
-        ScoreEngine scoreEngine3 = new ScoreEngine("ScoreEngine3", 8,knowledgeAreaRepository.findAll());
-        ScoreEngine scoreEngine4 = new ScoreEngine("ScoreEngine4", 3,knowledgeAreaRepository.findAll());
+        ScoreEngineTemplate scoreEngineTemplate1 = new ScoreEngineTemplate("Template1", 5,knowledgeAreaRepository.findAll());
+        ScoreEngineTemplate scoreEngineTemplate2 = new ScoreEngineTemplate("Template2", 2,knowledgeAreaRepository.findAll());
+        ScoreEngineTemplate scoreEngineTemplate3 = new ScoreEngineTemplate("Template3", 8,knowledgeAreaRepository.findAll());
+        ScoreEngineTemplate scoreEngineTemplate4 = new ScoreEngineTemplate("Template4", 3,knowledgeAreaRepository.findAll());
+
+        fillQuestions(scoreEngineTemplate1);
+        fillQuestions(scoreEngineTemplate3);
+
+        scoreEngineTemplateRepository.save(scoreEngineTemplate1);
+        scoreEngineTemplateRepository.save(scoreEngineTemplate2);
+        scoreEngineTemplateRepository.save(scoreEngineTemplate3);
+        scoreEngineTemplateRepository.save(scoreEngineTemplate4);
+
+        ScoreEngine scoreEngine1 = new ScoreEngine(scoreEngineTemplate1);
+        ScoreEngine scoreEngine3 = new ScoreEngine(scoreEngineTemplate3);
 
         scoreEngine3.getLevels().get(0).setState(Concluded.class.getSimpleName());
         scoreEngine3.getLevels().get(1).setState(Concluded.class.getSimpleName());
@@ -86,9 +103,7 @@ public class StartupScript {
         });
 
         scoreEngineRepository.save(scoreEngine1);
-        scoreEngineRepository.save(scoreEngine2);
         scoreEngineRepository.save(scoreEngine3);
-        scoreEngineRepository.save(scoreEngine4);
 
         List<ScoreEngine> scoreEngines = scoreEngineRepository.findAll();
 
@@ -121,23 +136,10 @@ public class StartupScript {
             kas.setAnswer("5-5-6");
         }
 
-
-        for(Level l:test.getLevels()){
-            for(LevelKnowledgeArea lk : l.getLevelKnowledgeAreas()){
-                lk.getQuestion().setQuestion("Dit is een vraag... met als antwoord 'test' 50 en 'testtest' 30");
-                lk.getQuestion().setFormat(ScoreFormat.ENUMERATION);
-                List<Answer> answers = new ArrayList<>();
-                answers.add(new Answer("5-5-9", 50));
-                answers.add(new Answer("5-5-*", 10));
-                answers.add(new Answer("5-7-8", -20));
-                lk.getQuestion().setAnswers(answers);
-            }
-        }
-
         gameRepository.save(test);
 
 
-        Game scoreTest = new Game("The Admin Games", 4, scoreEngines.get(2));
+        Game scoreTest = new Game("The Admin Games", 4, scoreEngines.get(1));
         List<Team>teams = new ArrayList<>();
         teams.addAll(scoreTest.getTeams());
         teams.get(0).setTeamname("ABCDEFGH");
@@ -209,6 +211,19 @@ public class StartupScript {
         stakeholder.setOrganisation("Nintendo");
         stakeholder.setImagePath("https://pbs.twimg.com/profile_images/2186972673/super_mario.jpg");
         stakeholderRepository.save(stakeholder);
+    }
 
+    private void fillQuestions(ScoreEngineTemplate scoreEngineTemplate){
+        for(LevelTemplate l: scoreEngineTemplate.getLevelTemplates()){
+            for(LevelKnowledgeAreaTemplate lk : l.getLevelKnowledgeAreaTemplates()){
+                lk.getQuestion().setQuestion("Dit is een vraag... met als antwoord '5-5-9' 50 en '5-7-8' -20");
+                lk.getQuestion().setFormat(ScoreFormat.ENUMERATION);
+                List<Answer> answers = new ArrayList<>();
+                answers.add(new Answer("5-5-9", 50));
+                answers.add(new Answer("5-5-*", 10));
+                answers.add(new Answer("5-7-8", -20));
+                lk.getQuestion().setAnswers(answers);
+            }
+        }
     }
 }

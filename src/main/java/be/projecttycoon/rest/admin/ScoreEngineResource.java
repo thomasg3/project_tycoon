@@ -2,25 +2,19 @@ package be.projecttycoon.rest.admin;
 
 import be.projecttycoon.db.KnowledgeAreaRepository;
 import be.projecttycoon.db.ScoreEngineRepository;
-import be.projecttycoon.model.Game;
-import be.projecttycoon.model.KnowledgeArea;
-import be.projecttycoon.model.Question;
+import be.projecttycoon.db.ScoreEngineTemplateRepository;
 import be.projecttycoon.model.ScoreEngine.ScoreEngine;
 import be.projecttycoon.model.ScoreEngine.ScoreFormat;
+import be.projecttycoon.model.ScoreEngineTemplate.ScoreEngineTemplate;
 import be.projecttycoon.model.Team;
-import be.projecttycoon.rest.exception.NotAuthorizedException;
 import be.projecttycoon.rest.exception.NotFoundException;
-import be.projecttycoon.rest.util.QuestionBean;
 import be.projecttycoon.rest.util.ScoreEngineBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.ws.rs.Produces;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Jeroen on 22-2-2016.
@@ -31,11 +25,13 @@ public class ScoreEngineResource {
 
     private ScoreEngineRepository scoreEngineRepository;
     private KnowledgeAreaRepository knowledgeAreaRepository;
+    private ScoreEngineTemplateRepository scoreEngineTemplateRepository;
 
     @Autowired
-    public ScoreEngineResource(ScoreEngineRepository scoreEngineRepository, KnowledgeAreaRepository knowledgeAreaRepository){
+    public ScoreEngineResource(ScoreEngineRepository scoreEngineRepository, KnowledgeAreaRepository knowledgeAreaRepository, ScoreEngineTemplateRepository scoreEngineTemplateRepository){
         this.scoreEngineRepository = scoreEngineRepository;
         this.knowledgeAreaRepository = knowledgeAreaRepository;
+        this.scoreEngineTemplateRepository = scoreEngineTemplateRepository;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -67,10 +63,14 @@ public class ScoreEngineResource {
 
     @RequestMapping(method = RequestMethod.POST)
     @Produces("application/json")
-    public ScoreEngine createScoreEngine(@RequestBody ScoreEngineBean scoreEngine){
-        ScoreEngine se = new ScoreEngine(scoreEngine.getName() , scoreEngine.getLevels(), knowledgeAreaRepository.findAll());
+    public ScoreEngine createScoreEngine(@RequestBody long id){
+        ScoreEngineTemplate scoreEngineTemplate = scoreEngineTemplateRepository.findOne(id);
+        if(scoreEngineTemplate==null)
+            throw new NotFoundException();
+        ScoreEngine se = new ScoreEngine(scoreEngineTemplate);
         return scoreEngineRepository.save(se);
     }
+
 
     @RequestMapping(value = "/{id}", method=RequestMethod.DELETE)
     @Produces("application/json")

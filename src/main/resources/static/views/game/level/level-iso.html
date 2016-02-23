@@ -2,7 +2,7 @@
     <div class="panel-heading" data-toggle="collapse" data-target="#{{$index}}" aria-expanded="false" aria-controls="{{$index}}">
 
         <h2>{{my_level.round}} {{my_level.name}}</h2>
-        <div ng-repeat="lk in my_level.levelKnowledgeAreas">
+        <div ng-repeat="lk in my_level.levelKnowledgeAreaTemplates">
             <levelkn gameid="my_gameid" levelknowledgearea="lk"></levelkn>
         </div>
     </div>
