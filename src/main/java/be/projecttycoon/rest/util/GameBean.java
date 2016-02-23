@@ -28,7 +28,8 @@ public class GameBean {
         this.allLevels = allLevels;
     }
 
-    public GameBean(){}
+
+
 
     public GameBean(String name, int amount, long scoreengineid) {
         this.name = name;
