@@ -40,7 +40,8 @@ public class GameResource {
     public Game showGame(Principal team, @PathVariable long id ){
         Game game = getGame(id);
         if(game.getTeams().stream().map(Team::getTeamname).anyMatch(tn -> tn.equals(team.getName()))){
-            return sanitizeGame(team, game);
+            game.sanitizeFor(team.getName());
+            return game;
         } else {
             throw new NotAuthorizedException();
         }
@@ -51,24 +52,13 @@ public class GameResource {
     public Game getGameForTeam(Principal team, @PathVariable String teamname) {
         if(!team.getName().equals(teamname))
             throw new NotAuthorizedException();
-        return sanitizeGame(team, getGameByTeamname(teamname));
-
-    }
-
-
-    private Game sanitizeGame(Principal user, Game game){
-        game.getScoreEngine().setLevels(
-                game.getScoreEngine().getLevels().stream()
-                .map(level -> {
-                    level.setLevelKnowledgeAreas(level.getPublicKnowledgeAreas());
-                    return level;
-
-                })
-                .collect(Collectors.toList())
-        );
-
+        Game game = getGameByTeamname(teamname);
+        game.sanitizeFor(team.getName());
         return game;
     }
+
+
+
 
     protected Game getGameByTeamname(String teamname){
         Team team = teamRepository.findByTeamname(teamname);

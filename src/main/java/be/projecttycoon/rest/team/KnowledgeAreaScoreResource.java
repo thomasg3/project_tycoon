@@ -25,6 +25,7 @@ public class KnowledgeAreaScoreResource {
     @RequestMapping(method = RequestMethod.GET)
     public List<KnowledgeAreaScore> getAllKnowledgeAreaScores(){
         List<KnowledgeAreaScore> result =  knowledgeAreaScoreRepository.findAll();
+        result.forEach(kas -> kas.setScore(0));
         return result;
     }
 
@@ -33,6 +34,7 @@ public class KnowledgeAreaScoreResource {
         KnowledgeAreaScore found =  knowledgeAreaScoreRepository.findOne(id);
         if(found == null)
             throw new NotFoundException();
+        found.setScore(0);
         return found;
     }
 

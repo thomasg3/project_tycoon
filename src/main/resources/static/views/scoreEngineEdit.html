@@ -1,0 +1,5 @@
+<h2>{{scoreEngine.name}}</h2>
+
+<div ng-repeat="level in scoreEngine.levels | orderBy: 'round'">
+    <my-level level="level"></my-level>
+</div>

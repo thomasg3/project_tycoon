@@ -1,19 +1,17 @@
 package be.projecttycoon.rest.util;
 
 /**
- * Created by Jeroen on 22-2-2016.
+ * Created by thomas on 23/02/16.
  */
-public class ScoreEngineLimitBean {
-
+public class ShortGameBean {
     private long id;
-    private int levels;
     private String name;
 
-    public ScoreEngineLimitBean(){}
+    public ShortGameBean() {
+    }
 
-    public ScoreEngineLimitBean(long id, int levels, String name) {
+    public ShortGameBean(long id, String name) {
         this.id = id;
-        this.levels = levels;
         this.name = name;
     }
 
@@ -23,14 +21,6 @@ public class ScoreEngineLimitBean {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public int getLevels() {
-        return levels;
-    }
-
-    public void setLevels(int levels) {
-        this.levels = levels;
     }
 
     public String getName() {

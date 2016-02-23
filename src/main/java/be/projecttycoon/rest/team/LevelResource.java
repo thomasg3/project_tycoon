@@ -34,12 +34,16 @@ public class LevelResource {
         Level level = levelRepository.findOne(id);
         if(level == null)
             throw new NotFoundException();
+        level.setLevelKnowledgeAreas(level.getPublicKnowledgeAreas());
         return level;
     }
 
     @RequestMapping(value="/{id}/prestations", method = RequestMethod.GET)
     public List<TeamLevelPrestation> getAllTeamLevelPrestations(@PathVariable long id){
-        return teamLevelPrestationRepository.findByLevel(getLevel(id));
+        Level level = getLevel(id);
+        List<TeamLevelPrestation> result =  teamLevelPrestationRepository.findByLevel(level);
+        result.forEach(tlp -> {tlp.setKnowledgeAreaScores(tlp.getPublicKnowledgeAreaScores());});
+        return result;
     }
 
     @RequestMapping(value="/public/{id}", method = RequestMethod.GET)

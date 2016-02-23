@@ -95,13 +95,17 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/game/level/score_edit.html',
                 controller : 'editLevelScoreController'
             })
-            .when('/admin/adminOverview', {
+            .when('/admin/overview', {
                 templateUrl : 'views/adminOverview.html',
                 controller: 'adminOverview'
             })
             .when('/admin/games/:id/details', {
                 templateUrl : 'views/game/adminDetails.html',
                 controller : 'adminScoreDetails'
+            })
+            .when('/admin/games/:gameid/teams/:id', {
+                templateUrl : 'views/team/details.admin.html',
+                controller : 'adminTeamDetailsController'
             })
             .when('/admin/createGame', {
                 templateUrl : 'views/game/edit.html',
@@ -145,6 +149,14 @@ app.config(function($routeProvider, $httpProvider) {
             .when('/admin/stakeholders/new', {
                 templateUrl: 'views/stakeholders/edit.html',
                 controller : 'adminStakeholderNewController'
+            })
+            .when('/admin/scoreEngineOverview', {
+                templateUrl : 'views/scoreEngineOverview.html',
+                controller : 'scoreEngineOverviewController'
+            })
+            .when('/admin/scoreEngineEdit/:id', {
+                templateUrl : 'views/scoreEngineEdit.html',
+                controller : 'scoreEngineEditController'
             })
             .when('/admin/stakeholders/:id', {
                 templateUrl : 'views/stakeholders/details.html',
