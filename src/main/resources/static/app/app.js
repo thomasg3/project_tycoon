@@ -186,6 +186,10 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/stakeholders/details.public.html',
                 controller : 'stakeholderDetailController'
             })
+            .when('/info/:id',{
+                templateUrl : 'views/game/detailInfo.html',
+                controller: 'info'
+            })
             .otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';

@@ -5,7 +5,10 @@
 angular.module('projecttycoon').factory('InfoResource', function($resource) {
     return $resource('/api/info/:id', {id: "@id"}, {
 
-
+        get : {
+            method : 'GET',
+            url : '/api/info/:id'
+        },
         //carefull the id is used for the team here and not for the Info itself
         getForTeam:{
             method: 'GET',

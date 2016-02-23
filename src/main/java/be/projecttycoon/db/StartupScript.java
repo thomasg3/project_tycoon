@@ -7,9 +7,7 @@ import be.projecttycoon.model.level.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by thomas on 18/02/16.
@@ -183,6 +181,11 @@ public class StartupScript {
         Info i2 = new Info(1,"test video","https://www.youtube.com/embed/czezOcHfLS4",InfoType.Video);
         Info i3 = new Info(3,"test info", "https://scontent-ams2-1.xx.fbcdn.net/hphotos-xlf1/v/t1.0-9/12741902_796295903848673_3248892646472531132_n.jpg?oh=4f86f8da49bbee6fc022efb45e73dcea&oe=572AC943", InfoType.Image);
         i2.addTeamToBlackList(8);
+        Set<String> tags = new HashSet<String>();
+        tags.add("nice picture");
+        tags.add("selena gomez");
+        tags.add("nipples");
+        i3.setTags(tags);
         infoRepository.save(i);
         infoRepository.save(i2);
         infoRepository.save(i3);

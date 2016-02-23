@@ -1,6 +1,13 @@
 
 <body>
 <div>
+    <div class="row">
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search" ng-model="searchText" >
+            </div>
+        </form>
+    </div>
     <table class="table table-responsive" id="infoTable">
         <thead>
         <th>Resource</th>
@@ -9,7 +16,7 @@
         <th></th>
         </thead>
         <tbody>
-            <tr ng-repeat="info in infoArr">
+            <tr ng-repeat="info in infoArr | filter : searchText">
                 <td >
                     <div ng-if="info.type == 'Document'">
                         <a href="{{info.path}}" download>{{info.description}}</a>

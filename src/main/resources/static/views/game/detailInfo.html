@@ -1,0 +1,14 @@
+<td >
+    <div ng-if="info.type == 'Document'">
+        <a href="{{info.path}}" download>{{info.description}}</a>
+    </div>
+    <div ng-if="info.type=='Video'">
+        <iframe width="560" height="315" ng-src="{{getSafeSrc(info.path)}}" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div ng-if="info.type=='Image'">
+        <img ng-src="{{info.path}}">
+    </div>
+    <div ng-if="info.type=='Link'">
+        <a href="{{info.path}}" target="_blank">{{info.description}}</a>
+    </div>
+</td>
