@@ -2,6 +2,7 @@ package be.projecttycoon.rest.util;
 
 import be.projecttycoon.model.level.Level;
 import be.projecttycoon.model.LevelKnowledgeArea;
+import be.projecttycoon.model.level.LevelState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class PublicLevel {
     private int round;
     private String name;
     private List<LevelKnowledgeArea> levelKnowledgeAreas;
+    private String levelState;
 
     public PublicLevel() {
         this.levelKnowledgeAreas = new ArrayList<>();
@@ -26,6 +28,7 @@ public class PublicLevel {
         this.round = level.getRound();
         this.name = level.getName();
         levelKnowledgeAreas = level.getLevelKnowledgeAreas();
+        this.levelState = level.getState();
     }
 
     public PublicLevel(long id, int round, String name, List<LevelKnowledgeArea> levelKnowledgeAreas) {
