@@ -8,7 +8,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.security.Principal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by michael on 09/02/16.
@@ -49,6 +51,25 @@ public class Game {
         for(int i = count; count<i + teams;count++){
             this.teams.add(new Team("Team"+(count),"testtest",this.scoreEngine.getLevels(),"/hosted_resources/admin_1455635149425.png"));
         }
+    }
+
+    public void sanitizeFor(String username){
+        getScoreEngine().setLevels(
+                getScoreEngine().getLevels().stream()
+                        .map(level -> {
+                            level.setLevelKnowledgeAreas(level.getPublicKnowledgeAreas());
+                            return level;
+
+                        })
+                        .collect(Collectors.toList())
+        );
+        getTeams().stream().forEach(t -> {
+            if(!t.getTeamname().equals(username)){
+                t.setTeamLevelPrestations(t.getPublicTeamLevelPrestations());
+            } else {
+                t.setTeamLevelPrestations(t.getOwnTeamLevelPrestations());
+            }
+        });
     }
 
     @Transient

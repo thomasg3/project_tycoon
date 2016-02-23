@@ -25,7 +25,7 @@ angular.module('projecttycoonControllers')
 
             PrestationAdminResource.saveAll( [].concat.apply([], $scope.teamLevelPres),
                 function(data){
-                    $location.path('/games/'+$scope.game.id+'/details').replace();
+                    $location.path('/admin/games/'+$scope.game.id+'/details').replace();
                 },
                 function(err){
                     saving = false;

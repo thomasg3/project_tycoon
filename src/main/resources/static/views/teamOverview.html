@@ -1,0 +1,22 @@
+<div class="row" >
+    <h1>ADMIN OVERVIEW</h1>
+
+    <div class="row">
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+            </div>
+        </form>
+    </div>
+    <table class="table table-responsive">
+        <tr>
+            <th>#</th>
+            <th colspan="4">Team</th>
+        </tr>
+        <tr ng-repeat="team in teams | filter: searchText">
+            <td><strong>#{{$index+1}}</strong></td>
+            <td><a href="#/admin/teams/{{team.id}}/answers" role="button">{{team.teamname}}</a></td>
+            <td><span class="badge">{{team.numberOfAnswers}}</span></td>
+        </tr>
+    </table>
+</div>

@@ -3,6 +3,7 @@ package be.projecttycoon.rest.team;
 import be.projecttycoon.auth.UserService;
 import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Team;
+import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.TeamBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -35,27 +36,28 @@ public class TeamResource  {
         this.userService = userService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    @Produces("application/json")
-    public Collection<Team> getAllTeams(){
-        return teamRepository.findAll();
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @Produces("application/json")
-    public Team getTeamById(@PathVariable long id){
-        return teamRepository.findOne(id);}
+    public Team getTeamById(Principal user, @PathVariable long id){
+        Team team = teamRepository.findOne(id);
+        if(team == null)
+            throw new NotFoundException();
+        return sanitizeTeam(user, team);
+    }
 
     @RequestMapping(value = "/search/{teamname}", method = RequestMethod.GET)
     @Produces("application/json")
-    public Team getTeamByTeamname(@PathVariable String teamname){
-        return teamRepository.findByTeamname(teamname);
+    public Team getTeamByTeamname(Principal user, @PathVariable String teamname){
+        Team team = teamRepository.findByTeamname(teamname);
+        if(team == null)
+            throw new NotFoundException();
+        return sanitizeTeam(user, team);
     }
 
     @RequestMapping(value="/search/{teamname}/registered", method = RequestMethod.GET)
     @Produces("application/json")
-    public Map<String, Boolean> isRegisteredTeamByTeamname(@PathVariable String teamname){
-        return Collections.singletonMap("registered", getTeamByTeamname(teamname).isRegistered());
+    public Map<String, Boolean> isRegisteredTeamByTeamname(Principal user, @PathVariable String teamname){
+        return Collections.singletonMap("registered", getTeamByTeamname(user, teamname).isRegistered());
     }
 
     @RequestMapping(value="/{id}", method = RequestMethod.PUT)
@@ -70,5 +72,14 @@ public class TeamResource  {
             Authentication authentication = new UsernamePasswordAuthenticationToken(details.getUsername(), details.getPassword(), details.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+    }
+
+    private Team sanitizeTeam(Principal user, Team team){
+        if(team.getTeamname().equals(user.getName())){
+            team.setTeamLevelPrestations(team.getOwnTeamLevelPrestations());
+        } else {
+            team.setTeamLevelPrestations(team.getPublicTeamLevelPrestations());
+        }
+        return team;
     }
 }

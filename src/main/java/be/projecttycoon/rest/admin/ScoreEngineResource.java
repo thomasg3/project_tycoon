@@ -12,7 +12,6 @@ import be.projecttycoon.rest.exception.NotAuthorizedException;
 import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.QuestionBean;
 import be.projecttycoon.rest.util.ScoreEngineBean;
-import be.projecttycoon.rest.util.ScoreEngineLimitBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +20,7 @@ import javax.ws.rs.Produces;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Jeroen on 22-2-2016.
@@ -49,11 +49,11 @@ public class ScoreEngineResource {
 
     @RequestMapping(value = "/limit", method = RequestMethod.GET)
     @Produces("application/json")
-    public List<ScoreEngineLimitBean> getScoreEngineInfo(){
-        List<ScoreEngineLimitBean> sebeans = new ArrayList<>();
+    public List<ScoreEngineBean> getScoreEngineInfo(){
+        List<ScoreEngineBean> sebeans = new ArrayList<>();
         List<ScoreEngine> scoreEngines = scoreEngineRepository.findAll();
         for(ScoreEngine se: scoreEngines){
-            sebeans.add(new ScoreEngineLimitBean(se.getId(), se.getLevels().size(), se.getName()));
+            sebeans.add(new ScoreEngineBean(se.getLevels().size(), se.getName(), se.getId()));
         }
         return sebeans;
     }
@@ -70,6 +70,16 @@ public class ScoreEngineResource {
     public ScoreEngine createScoreEngine(@RequestBody ScoreEngineBean scoreEngine){
         ScoreEngine se = new ScoreEngine(scoreEngine.getName() , scoreEngine.getLevels(), knowledgeAreaRepository.findAll());
         return scoreEngineRepository.save(se);
+    }
+
+    @RequestMapping(value = "/{id}", method=RequestMethod.DELETE)
+    @Produces("application/json")
+    public List<ScoreEngine> deleteScoreEngine(@PathVariable long id){
+        ScoreEngine engine = scoreEngineRepository.findOne(id);
+        if(engine==null)
+            throw new NotFoundException();
+        scoreEngineRepository.delete(engine);
+        return getAllScoreEngines();
     }
 
 }

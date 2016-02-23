@@ -1,0 +1,18 @@
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"><h4>{{my_tlp.level.name}}</h4></div>
+
+    <!-- Table -->
+    <table class="table table-responsive">
+        <tr>
+            <th>#</th>
+            <th>Question</th>
+            <th>Answer</th>
+        </tr>
+        <tr ng-repeat="levelkn in my_tlp.level.levelKnowledgeAreas">
+            <td><strong>#{{$index+1}}</strong></td>
+            <td>{{levelkn.question.question}}</td>
+            <td>{{getGivenAnswer(levelkn)}}</strong></td>
+        </tr>
+    </table>
+</div>

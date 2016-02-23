@@ -76,6 +76,15 @@ public class StartupScript {
         scoreEngine3.getLevels().get(6).setState(Open.class.getSimpleName());
         scoreEngine3.getLevels().get(7).setState(Closed.class.getSimpleName());
 
+        scoreEngine3.getLevels().stream().forEach(level -> {
+            level.getLevelKnowledgeAreas().stream().forEach(lkn -> {
+                Answer answer = new Answer("test", 50);
+                List<Answer> answers = new ArrayList<Answer>();
+                answers.add(answer);
+                lkn.getQuestion().setQuestion("Dit is een vraag");
+            });
+        });
+
         scoreEngineRepository.save(scoreEngine1);
         scoreEngineRepository.save(scoreEngine2);
         scoreEngineRepository.save(scoreEngine3);
@@ -148,6 +157,15 @@ public class StartupScript {
                 });
             });
         });
+
+        teams.stream().forEach(team -> {
+            team.getTeamLevelPrestations().stream().forEach(p -> {
+                p.getKnowledgeAreaScores().stream().forEach(kas -> {
+                    kas.setAnswer("test");
+                });
+            });
+        });
+
         List<Level> levels = new ArrayList<>();
         levels.addAll(scoreTest.getLevels());
         levels.get(0).setState(Concluded.class.getSimpleName());
@@ -158,6 +176,7 @@ public class StartupScript {
         levels.get(5).setState(Open.class.getSimpleName());
         levels.get(6).setState(Open.class.getSimpleName());
         levels.get(7).setState(Closed.class.getSimpleName());
+
         gameRepository.save(scoreTest);
 
         Info i = new Info(1,"test info", "http://i.imgur.com/1rHMtFM.gif", InfoType.Image);

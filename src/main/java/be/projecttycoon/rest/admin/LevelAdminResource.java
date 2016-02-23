@@ -27,14 +27,27 @@ import java.util.List;
 @RequestMapping("/api/admin/levels")
 public class LevelAdminResource extends LevelResource {
 
-    ScoreEngineRepository scoreEngineRepository;
-    GameRepository gameRepository;
+    private ScoreEngineRepository scoreEngineRepository;
+    private GameRepository gameRepository;
 
     @Autowired
     public LevelAdminResource(LevelRepository levelRepository, TeamLevelPrestationRepository teamLevelPrestationRepository, ScoreEngineRepository scoreEngineRepository, GameRepository gameRepository) {
         super(levelRepository, teamLevelPrestationRepository);
         this.scoreEngineRepository = scoreEngineRepository;
         this.gameRepository = gameRepository;
+    }
+
+    @RequestMapping(value="/{id}", method = RequestMethod.GET)
+    public Level getLevel(@PathVariable long id){
+        Level level = levelRepository.findOne(id);
+        if(level == null)
+            throw new NotFoundException();
+        return level;
+    }
+
+    @RequestMapping(value="/{id}/prestations", method = RequestMethod.GET)
+    public List<TeamLevelPrestation> getAllTeamLevelPrestations(@PathVariable long id){
+        return  teamLevelPrestationRepository.findByLevel(getLevel(id));
     }
 
     @RequestMapping(value="/{id}/change/{state}", method = RequestMethod.GET)
