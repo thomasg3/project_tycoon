@@ -141,6 +141,14 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/createInfo.html',
                 controller : 'adminInfo'
             })
+            .when('/admin/teams/:id', {
+                templateUrl : 'views/teamOverview.html',
+                controller : 'teamOverviewController'
+            })
+            .when('/admin/teams/:id/answers', {
+                templateUrl : 'views/teamAnswerOverview.html',
+                controller : 'teamAnswersController'
+            })
             //##### stakeholder pages #####
             .when('/admin/stakeholders', {
                 templateUrl : 'views/stakeholders/overview.html',
