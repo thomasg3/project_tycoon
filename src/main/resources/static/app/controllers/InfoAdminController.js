@@ -32,6 +32,7 @@ angular.module('projecttycoonControllers')
             $scope.imgUrl="";
             $scope.videoUrl="";
             $scope.filename="";
+            $scope.linkUrl="";
         }
 
         $scope.postInfo = function(){
@@ -87,6 +88,9 @@ angular.module('projecttycoonControllers')
                 else if(data.type=="Image"){
                     $scope.imgUrl=data.path;
                 }
+                else if(data.type=="Link"){
+                    $scope.linkUrl=data.path;
+                }
                 var btn = document.getElementById("submit");
                 btn.setAttribute("ng-click","updateInfo()");
             })
@@ -120,8 +124,11 @@ angular.module('projecttycoonControllers')
             else if($scope.type=="Image"){
                 $scope.send.path=$scope.imgUrl;
             }
-            else {
+            else if($scope.type=="Document"){
                 $scope.send.path = "/documents/" + $scope.filename;
+            }
+            else{
+                $scope.send.path = $scope.linkUrl;
             }
             return $scope.send;
         }

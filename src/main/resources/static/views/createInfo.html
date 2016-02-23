@@ -41,7 +41,10 @@
                 <input ng-files="getTheFiles($files)" type="file" name="file" id="file" multiple>
 
             </div>
-
+            <div ng-show="type=='Link'" class="form-group">
+                <label for="linkUrl">url</label>
+                <input class="form-control" type="url" id="linkUrl" name="linkUrl" ng-model="linkUrl">
+            </div>
             <div class="col-sm-12">
                 <button ng-disabled="form.$invalid" type="submit" ng-click="checkWhatToDo()" class="btn btn-primary" id="submit">Submit</button>
             </div>
