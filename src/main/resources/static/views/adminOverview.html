@@ -11,14 +11,17 @@
     <table class="table table-responsive">
         <tr>
             <th>#</th>
-            <th colspan="4">Game Name</th>
+            <th>Game Name</th>
+            <th></th>
         </tr>
         <tr ng-repeat="game in games | filter: searchText">
             <td><strong>#{{$index+1}}</strong></td>
             <td><a ng-click="getGame(game.id)" role="button">{{game.name}}</a></td>
-            <td><a href="#/admin/games/{{game.id}}/levels/0" class="btn btn-info">GameControlCenter</a></td>
-            <td><a ng-click="mail(game.id)" class="btn btn-default" role="button">Mail</a></td>
-            <td><button class="btn btn-danger" ng-click="deleteGame(game.id)">delete</button></td>
+            <td>
+                <a href="#/admin/games/{{game.id}}/levels/0" class="btn btn-info"><i class="fa fa-fort-awesome"></i>  GameControlCenter</a>
+                <a ng-click="mail(game.id)" class="btn btn-default" role="button"><i class="fa fa-envelope"></i> Mail</a>
+                <button class="btn btn-danger" ng-click="deleteGame(game.id)"><i class="fa fa-remove"></i> Delete</button>
+            </td>
         </tr>
     </table>
 </div>
