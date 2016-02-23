@@ -37,6 +37,19 @@ public class LevelAdminResource extends LevelResource {
         this.gameRepository = gameRepository;
     }
 
+    @RequestMapping(value="/{id}", method = RequestMethod.GET)
+    public Level getLevel(@PathVariable long id){
+        Level level = levelRepository.findOne(id);
+        if(level == null)
+            throw new NotFoundException();
+        return level;
+    }
+
+    @RequestMapping(value="/{id}/prestations", method = RequestMethod.GET)
+    public List<TeamLevelPrestation> getAllTeamLevelPrestations(@PathVariable long id){
+        return  teamLevelPrestationRepository.findByLevel(getLevel(id));
+    }
+
     @RequestMapping(value="/{id}/change/{state}", method = RequestMethod.GET)
     public Level changeLevelState(@PathVariable long id, @PathVariable String state){
         Level level = getLevel(id);

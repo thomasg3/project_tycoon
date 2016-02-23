@@ -32,9 +32,9 @@ public class LevelResource {
     @RequestMapping(value="/{id}", method = RequestMethod.GET)
     public Level getLevel(@PathVariable long id){
         Level level = levelRepository.findOne(id);
-        level.setLevelKnowledgeAreas(level.getPublicKnowledgeAreas());
         if(level == null)
             throw new NotFoundException();
+        level.setLevelKnowledgeAreas(level.getPublicKnowledgeAreas());
         return level;
     }
 
