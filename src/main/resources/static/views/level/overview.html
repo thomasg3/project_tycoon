@@ -4,6 +4,9 @@
     </div>
     <div class="col-sm-3">
         <ul class="nav nav-pills nav-stacked">
+            <li role="presentation">
+                <a href="#/admin/games/{{game.id}}/levels/0" >Public</a>
+            </li>
             <li role="presentation" ng-repeat="level in levels | orderBy: 'round'">
                 <a href="#/admin/games/{{game.id}}/levels/{{level.id}}" >
                     {{level.round}}. {{level.name}}
@@ -22,15 +25,31 @@
                 <div class="btn-group" role="group"><button ng-click="change('push')" type="button" class="btn btn-default">Start Cermonie</button></div>
                 <div class="btn-group" role="group"><button ng-click="change('conclude')" type="button" class="btn btn-default">Conclude</button></div>
             </div>
-            <div>
-                <div class="alert alert-danger alert-dismissible" role="alert" ng-repeat="error in errors">
+            <div class="container">
+                <div class="alert alert-danger alert-dismissible" role="alert" ng-repeat="error in errors track by $index">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Error!</strong> {{error}}
                 </div>
             </div>
+
+
+
         </div>
         <div ng-show="!currentLevel">
             <h1>Select a level in the list</h1>
         </div>
+
+        <h3>Stakeholders <a href="#/stakeholders" class="btn btn-default"><i class="fa fa-eye"></i> Overview</a></h3>
+
+        <table class="table table-responsive table-hover">
+            <tr>
+                <th>Stakeholder</th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="stakeholder in stakeholders">
+                <th>{{stakeholder.name}}</th>
+                <td><input type="checkbox"></td>
+            </tr>
+        </table>
     </div>
 </div>
