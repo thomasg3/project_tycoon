@@ -40,9 +40,10 @@ public class StakeholderResource {
     @Produces("application/json")
     public List<Stakeholder> getAllStakeHolders(Principal user){
         int threshold  = findThresholdForUser(user);
+        Team team = teamRepository.findByTeamname(user.getName());
         return this.stakeholderRepository.findAll().stream()
                 .map(s -> {
-                    if(s.getLevel() <= threshold)
+                    if(s.getLevel() <= threshold && s.allowUser(team.getId()))
                         return s;
                     else
                         return s.anonymous();
@@ -54,8 +55,9 @@ public class StakeholderResource {
     @Produces("application/json")
     public Stakeholder showStakeholder(Principal user, @PathVariable long id ){
         int threshold = findThresholdForUser(user);
+        Team team = teamRepository.findByTeamname(user.getName());
         Stakeholder stakeholder = stakeholderRepository.findOne(id);
-        if(stakeholder.getLevel() <= threshold)
+        if(stakeholder.getLevel() <= threshold && stakeholder.allowUser(team.getId()))
             return stakeholder;
         else return stakeholder.anonymous();
     }

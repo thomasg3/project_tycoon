@@ -2,9 +2,12 @@ package be.projecttycoon.model;
 
 import be.projecttycoon.model.level.Level;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by kiwi on 17/02/2016.
@@ -22,10 +25,15 @@ public class Stakeholder {
     private String description;
     private int level;
 
+    @ElementCollection
+    private Set<Long> forbiddenUsers;
+
     public Stakeholder() {
+        forbiddenUsers = new HashSet<>();
     }
 
     public Stakeholder(String name, String imagePath,String description,String organisation,String function,int level) {
+        this();
         this.name = name;
         this.imagePath = imagePath;
         this.description = description;
@@ -102,6 +110,33 @@ public class Stakeholder {
         this.imagePath = imagePath;
     }
 
+    public Set<Long> getForbiddenUsers() {
+        return forbiddenUsers;
+    }
+
+    public void setForbiddenUsers(Set<Long> forbiddenUsers) {
+        this.forbiddenUsers = forbiddenUsers;
+    }
+
+/**    public void addForbiddenUser(Team team){
+        forbiddenUsers.add(team.getId());
+    }*/
+
+    public void addForbiddenUser(long userid){
+        forbiddenUsers.add(userid);
+    }
+
+/**    public void removeForbiddenUser(Team team){
+        forbiddenUsers.remove(team.getId());
+    }*/
+
+    public void removeForbiddenUser(long userid){
+        forbiddenUsers.remove(userid);
+    }
+
+    public boolean allowUser(long userid){
+        return !forbiddenUsers.contains(userid);
+    }
 
     @Override
     public boolean equals(Object o) {

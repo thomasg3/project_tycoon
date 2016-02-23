@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by kiwi on 17/02/2016.
@@ -85,6 +87,31 @@ public class StakeholderResourceAdmin extends StakeholderResource{
             }
         }
         return null;
+    }
+
+    @RequestMapping(value="/from_level/{levelround}", method = RequestMethod.GET)
+    public List<Stakeholder> getStakeholdersOfLevel(@PathVariable int levelround){
+        if(levelround > 0)
+            return stakeholderRepository.findByLevel(levelround);
+        if(levelround == 0)
+            return stakeholderRepository.findAll().stream()
+                    .filter(s -> s.getLevel() < 1)
+                    .collect(Collectors.toList());
+        throw new NotFoundException();
+    }
+
+    @RequestMapping(value="{id}/blacklist/{teamid}", method = RequestMethod.GET)
+    public void addToBlackList(@PathVariable long id, @PathVariable long teamid){
+        Stakeholder stakeholder = showStakeholder(null, id);
+        stakeholder.addForbiddenUser(teamid);
+        stakeholderRepository.save(stakeholder);
+    }
+
+    @RequestMapping(value="{id}/blacklist/{teamid}", method = RequestMethod.DELETE)
+    public void removeFromBlackList(@PathVariable long id, @PathVariable long teamid){
+        Stakeholder stakeholder = showStakeholder(null, id);
+        stakeholder.removeForbiddenUser(teamid);
+        stakeholderRepository.save(stakeholder);
     }
 
 }
