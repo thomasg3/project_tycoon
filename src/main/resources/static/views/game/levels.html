@@ -1,5 +1,8 @@
 <ul class="nav nav-tabs">
-    <li ng-repeat="level in levels" ng-class="{'active' : level.id == $parent.activelevel}" role="presentation"><a href="#/games/{{gameid}}/levels/{{level.id}}">{{level.name}}</a></li>
+    <li ng-repeat="level in levels" ng-class="{'active' : level.id == $parent.activelevel}" role="presentation"><a href="#/games/{{id}}/levels/{{level.id}}">{{level.name}}</a></li>
 </ul>
 
-<levelinput levelid="activelevel"></levelinput>
+<h2>{{level.name}}</h2>
+<div ng-repeat="levelkn in level.levelKnowledgeAreas">
+    <questioninput levelknowledgearea="levelkn" my-levelid="{{activelevel}}"></questioninput>
+</div>

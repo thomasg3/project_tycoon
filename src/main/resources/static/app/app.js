@@ -123,6 +123,20 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/sendMail.html',
                 controller : 'mailController'
             })
+            .when('/info', {
+                templateUrl : 'views/game/allInfo.html',
+                controller : 'info'
+            })
+            .when('/admin/info/create', {
+                templateUrl : 'views/createInfo.html',
+                controller : 'adminInfo'
+            }).when('/admin/info',{
+                templateUrl : 'views/game/allInfo.html',
+                controller:'adminInfo'
+            }).when('/admin/info/update/:id', {
+                templateUrl : 'views/createInfo.html',
+                controller : 'adminInfo'
+            })
             //##### stakeholder pages #####
             .when('/admin/stakeholders', {
                 templateUrl : 'views/stakeholders/overview.html',

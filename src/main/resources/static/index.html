@@ -53,6 +53,14 @@
                         </ul>
                     </li>
                     <li ng-show="MainUser.admin"><a href="#/admin/knowledgeareas/edit">KnowledgeAreas</a></li>
+                    <li ng-show="MainUser.registered&&!MainUser.admin"><a href="#/info">Documents</a></li>
+                    <li class="dropdown" ng-show="MainUser.admin">
+                        <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documents <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/admin/info/create">New</a></li>
+                            <li><a href="#/admin/info">Overview</a></li>
+                        </ul>
+                    </li>
                     <li ng-show="MainUser.admin"><a href="#/admin/stakeholders">Stakeholders</a></li>
 
                 </ul>
@@ -92,10 +100,12 @@
     <script type="text/javascript" src="app/controllers/editLevelScoreController.js"></script>
     <script type="text/javascript" src="app/controllers/levelOverviewController.js"></script>
     <script type="text/javascript" src="app/controllers/detailTeamController.js"></script>
+    <script type="text/javascript" src="app/controllers/InfoController.js"></script>
     <script type="text/javascript" src="app/controllers/mailController.js"></script>
     <script type="text/javascript" src="app/controllers/levelControlController.js"></script>
     <script type="text/javascript" src="app/controllers/levelController.js"></script>
     <script type="text/javascript" src="app/controllers/adminDashboardController.js"></script>
+    <script type="text/javascript" src="app/controllers/infoAdminController.js"></script>
     <script type="text/javascript" src="app/controllers/newScoreEngineController.js"></script>
     <script type="text/javascript" src="app/controllers/adminScoreDetailsController.js"></script>
     <script type="text/javascript" src="app/controllers/adminStakeholderController.js"></script>
@@ -113,6 +123,7 @@
     <script src="app/services/team/KnowledgeAreaResourceService.js" type="text/javascript"></script>
     <script src="app/services/team/PrestationResourceService.js" type="text/javascript"></script>
     <script src="app/services/team/KnowledgeAreaScoreResourceService.js" type="text/javascript"></script>
+    <script src="app/services/team/InfoResourceService.js" type="text/javascript"></script>
     <script src="app/services/team/StakeholderResourceService.js" type="text/javascript"></script>
 
 
@@ -124,6 +135,8 @@
     <script src="app/services/admin/KnowledgeAreaAdminResourceService.js" type="text/javascript"></script>
     <script src="app/services/admin/PrestationAdminResourceService.js" type="text/javascript"></script>
     <script src="app/services/admin/MailAdminResourceService.js" type="text/javascript"></script>
+    <script src="app/services/admin/InfoAdminResourceService.js" type="text/javascript"></script>
+
     <script src="app/services/admin/ScoreEngineAdminResource.js" type="text/javascript"></script>
     <script src="app/services/admin/StakeholderAdminResourceService.js" type="text/javascript"></script>
 </body>

@@ -22,6 +22,8 @@ public class StartupScript {
     private final QuestionRepository questionRepository;
     private final TeamLevelPrestationRepository teamLevelPrestationRepository;
     private final TeamRepository teamRepository;
+    private final InfoRepository infoRepository;
+
     private final ScoreEngineRepository scoreEngineRepository;
     private final StakeholderRepository stakeholderRepository;
 
@@ -34,13 +36,15 @@ public class StartupScript {
             TeamLevelPrestationRepository teamLevelPrestationRepository,
             TeamRepository teamRepository,
             StakeholderRepository stakeholderRepository,
-            ScoreEngineRepository scoreEngineRepository) {
+            ScoreEngineRepository scoreEngineRepository,
+            InfoRepository infoRepository) {
         this.gameRepository = gameRepository;
         this.knowledgeAreaRepository = knowledgeAreaRepository;
         this.levelRepository = levelRepository;
         this.questionRepository = questionRepository;
         this.teamLevelPrestationRepository = teamLevelPrestationRepository;
         this.teamRepository = teamRepository;
+        this.infoRepository=infoRepository;
         this.scoreEngineRepository = scoreEngineRepository;
         this.stakeholderRepository = stakeholderRepository;
     }
@@ -62,6 +66,15 @@ public class StartupScript {
         ScoreEngine scoreEngine2 = new ScoreEngine("ScoreEngine2", 2,knowledgeAreaRepository.findAll());
         ScoreEngine scoreEngine3 = new ScoreEngine("ScoreEngine3", 8,knowledgeAreaRepository.findAll());
         ScoreEngine scoreEngine4 = new ScoreEngine("ScoreEngine4", 3,knowledgeAreaRepository.findAll());
+
+        scoreEngine3.getLevels().get(0).setState(Concluded.class.getSimpleName());
+        scoreEngine3.getLevels().get(1).setState(Concluded.class.getSimpleName());
+        scoreEngine3.getLevels().get(2).setState(Cermonie.class.getSimpleName());
+        scoreEngine3.getLevels().get(3).setState(Finished.class.getSimpleName());
+        scoreEngine3.getLevels().get(4).setState(Finished.class.getSimpleName());
+        scoreEngine3.getLevels().get(5).setState(Open.class.getSimpleName());
+        scoreEngine3.getLevels().get(6).setState(Open.class.getSimpleName());
+        scoreEngine3.getLevels().get(7).setState(Closed.class.getSimpleName());
 
         scoreEngineRepository.save(scoreEngine1);
         scoreEngineRepository.save(scoreEngine2);
@@ -146,6 +159,11 @@ public class StartupScript {
         levels.get(6).setState(Open.class.getSimpleName());
         levels.get(7).setState(Closed.class.getSimpleName());
         gameRepository.save(scoreTest);
+
+        Info i = new Info(1,"test info", "http://i.imgur.com/1rHMtFM.gif", InfoType.Image);
+        Info i2 = new Info(1,"test video","https://www.youtube.com/embed/czezOcHfLS4",InfoType.Video);
+        infoRepository.save(i);
+        infoRepository.save(i2);
 
         generateStakeholders();
 
