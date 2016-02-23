@@ -101,21 +101,22 @@ public class ScoreEngine {
                 KnowledgeAreaScore knowledgeAreaScore = tlp.getKnowledgeAreaScores().get(i);
                 Question question = levelKnowledgeAreas.get(i).getQuestion();
                 if(knowledgeAreaScore.getAnswer() != null && !knowledgeAreaScore.getAnswer().isEmpty()){
-                    if(question.getFormat().equals(ScoreFormat.RANGE) || question.getFormat().equals(ScoreFormat.AMOUNT_RANGE) || question.getFormat().equals(ScoreFormat.PERCENT_RANGE)){
-                        calculationStrategy = new RangeCalculation();
-                    }
-                    else if(question.getFormat().equals(ScoreFormat.ENUMERATION)){
-                        calculationStrategy = new EnumeratioCalculation();
-                    }
-                    else if(question.getFormat().equals(ScoreFormat.INT)){
-                        calculationStrategy = new IntCalculation();
-                    }
-                    else{
-                        calculationStrategy = new StringCalculation();
-                    }
+                    if(question != null){
+                        if(question.getFormat().equals(ScoreFormat.RANGE) || question.getFormat().equals(ScoreFormat.AMOUNT_RANGE) || question.getFormat().equals(ScoreFormat.PERCENT_RANGE)){
+                            calculationStrategy = new RangeCalculation();
+                        }
+                        else if(question.getFormat().equals(ScoreFormat.ENUMERATION)){
+                            calculationStrategy = new EnumeratioCalculation();
+                        }
+                        else if(question.getFormat().equals(ScoreFormat.INT)){
+                            calculationStrategy = new IntCalculation();
+                        }
+                        else{
+                            calculationStrategy = new StringCalculation();
+                        }
 
-                    calculationStrategy.calculateScore(knowledgeAreaScore, question);
-
+                        calculationStrategy.calculateScore(knowledgeAreaScore, question);
+                    }
                 } else{
                     knowledgeAreaScore.setScore(0);
                 }
