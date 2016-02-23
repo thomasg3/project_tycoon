@@ -11,7 +11,7 @@ angular.module('projecttycoonControllers')
 
             InfoResource.getForTeam({id:MainUserResource.getMainUser().id}).$promise.then(function(data){
                 $scope.showInfo(data);
-            })
+            });
         $scope.getSafeSrc=function(url){
             return $sce.trustAsResourceUrl(url);
         }

@@ -108,7 +108,7 @@ public class Level{
                     .map(lkas -> {lkas.setQuestion(null); return lkas;})
                     .collect(Collectors.toList());
         } else {
-            return levelKnowledgeAreas.stream()
+            return (List<LevelKnowledgeArea>) levelKnowledgeAreas.stream()
                     .map(lkas -> {
                         lkas.getQuestion().setAnswers(Collections.EMPTY_LIST);
                         return lkas;

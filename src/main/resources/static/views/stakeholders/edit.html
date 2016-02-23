@@ -47,8 +47,16 @@
 
     <div class="form-group">
         <label>Additional links for stakeholder</label>
-        <input type="text" class="form-control" ng-repeat="link in stakeholder.links" ng-model="link" ng-disabled="freeze">
+        <div class="list-group">
 
+            <li class="list-group-item" ng-repeat="link in stakeholder.links track by $index"><span>{{link}}</span> <span class="text-danger" ng-click="removeUrl($index)"><i class="fa fa-remove"></i>  Delete</span></li>
+        </div>
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button ng-click="addUrl()" type="button" class="btn btn-default">Add Url</button>
+            </span>
+            <input type="url" class="form-control" placeholder="http://www.example.com"  ng-model="url">
+        </div>
 
 
     </div>

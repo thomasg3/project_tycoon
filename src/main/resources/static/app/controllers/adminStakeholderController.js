@@ -43,13 +43,22 @@ angular.module('projecttycoonControllers')
             }).success(function(response){
                 $scope.stakeholder.imagePath=response.url;
                 $scope.freeze = false;
-            }).error(function(err){$scope.freeze = false;})}
+            }).error(function(err){$scope.freeze = false;})};
+
+        $scope.removeUrl = function(index){
+            $scope.stakeholder.links.splice(index, 1);
+        };
+        $scope.addUrl = function(){
+            $scope.stakeholder.links.push($scope.url);
+            $scope.url = "";
+        };
 
     })
     .controller('adminStakeholderNewController', function($scope, $location, $http,StakeholderAdminResource) {
         $scope.title = "New Stakeholder";
         $scope.freeze = false;
         $scope.stakeholder = new StakeholderAdminResource();
+        $scope.stakeholder.links = [];
         $scope.save = function(){
             $scope.freeze = true;
             $scope.stakeholder.$save(
@@ -72,7 +81,15 @@ angular.module('projecttycoonControllers')
             }).success(function(response){
                 $scope.stakeholder.imagePath=response.url;
                 $scope.freeze = false;
-            }).error(function(err){$scope.freeze = false;})}
+            }).error(function(err){$scope.freeze = false;})};
+
+        $scope.removeUrl = function(index){
+            $scope.stakeholder.links.splice(index, 1)
+        };
+        $scope.addUrl = function(){
+            $scope.stakeholder.links.push($scope.url);
+            $scope.url = "";
+        };
     })
     .controller('adminStakeholderDeleteController', function($scope, $routeParams,$location, StakeholderAdminResource) {
         StakeholderAdminResource.delete({id: $routeParams.id}, function(){
