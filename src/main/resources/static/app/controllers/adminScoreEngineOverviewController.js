@@ -7,4 +7,10 @@ angular.module('projecttycoonControllers')
         ScoreEngineAdminResource.getScoreEngineInfo(function(data){
             $scope.scoreEngines = data;
         });
+
+        $scope.deleteScoreEngine = function(id){
+            ScoreEngineAdminResource.delete({id : id}, function(data){
+                $scope.scoreEngines = data;
+            });
+        }
     });

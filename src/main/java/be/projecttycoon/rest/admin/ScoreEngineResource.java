@@ -20,6 +20,7 @@ import javax.ws.rs.Produces;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Jeroen on 22-2-2016.
@@ -69,6 +70,16 @@ public class ScoreEngineResource {
     public ScoreEngine createScoreEngine(@RequestBody ScoreEngineBean scoreEngine){
         ScoreEngine se = new ScoreEngine(scoreEngine.getName() , scoreEngine.getLevels(), knowledgeAreaRepository.findAll());
         return scoreEngineRepository.save(se);
+    }
+
+    @RequestMapping(value = "/{id}", method=RequestMethod.DELETE)
+    @Produces("application/json")
+    public List<ScoreEngine> deleteScoreEngine(@PathVariable long id){
+        ScoreEngine engine = scoreEngineRepository.findOne(id);
+        if(engine==null)
+            throw new NotFoundException();
+        scoreEngineRepository.delete(engine);
+        return getAllScoreEngines();
     }
 
 }
