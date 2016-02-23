@@ -1,10 +1,12 @@
 package be.projecttycoon.model;
 
 import be.projecttycoon.model.level.Level;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by thomas on 11/02/16.
@@ -56,6 +58,16 @@ public class TeamLevelPrestation {
 
     public void setKnowledgeAreaScores(List<KnowledgeAreaScore> knowledgeAreaScores) {
         this.knowledgeAreaScores = knowledgeAreaScores;
+    }
+
+    @JsonIgnore
+    public List<KnowledgeAreaScore> getPublicKnowledgeAreaScores(){
+        return knowledgeAreaScores.stream()
+                .map(kas -> {
+                    kas.setScore(0);
+                    return kas;
+                })
+                .collect(Collectors.toList());
     }
 
     public int getLevelScore(){

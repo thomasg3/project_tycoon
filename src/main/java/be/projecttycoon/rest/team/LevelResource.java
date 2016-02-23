@@ -42,9 +42,7 @@ public class LevelResource {
     public List<TeamLevelPrestation> getAllTeamLevelPrestations(@PathVariable long id){
         Level level = getLevel(id);
         List<TeamLevelPrestation> result =  teamLevelPrestationRepository.findByLevel(level);
-
-        result.forEach(tlp -> {});
-
+        result.forEach(tlp -> {tlp.setKnowledgeAreaScores(tlp.getPublicKnowledgeAreaScores());});
         return result;
     }
 

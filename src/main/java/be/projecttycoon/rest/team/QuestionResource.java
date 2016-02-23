@@ -17,6 +17,7 @@ import javax.validation.Valid;
 import javax.ws.rs.Produces;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,7 +39,9 @@ public class QuestionResource {
     @RequestMapping(method = RequestMethod.GET)
     @Produces("application/json")
     public Collection<Question> getAllQuestions(){
-        return questionRepository.findAll();
+        List<Question> result = questionRepository.findAll();
+        result.forEach(q -> q.setAnswers(Collections.EMPTY_LIST));
+        return result;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -47,6 +50,7 @@ public class QuestionResource {
         Question question = questionRepository.findOne(id);
         if(question == null)
             throw new NotFoundException();
+        question.setAnswers(Collections.EMPTY_LIST);
         return question;
     }
 

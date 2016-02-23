@@ -95,13 +95,17 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/game/level/score_edit.html',
                 controller : 'editLevelScoreController'
             })
-            .when('/admin/adminOverview', {
+            .when('/admin/overview', {
                 templateUrl : 'views/adminOverview.html',
                 controller: 'adminOverview'
             })
             .when('/admin/games/:id/details', {
                 templateUrl : 'views/game/adminDetails.html',
                 controller : 'adminScoreDetails'
+            })
+            .when('/admin/games/:gameid/teams/:id', {
+                templateUrl : 'views/team/details.admin.html',
+                controller : 'adminTeamDetailsController'
             })
             .when('/admin/createGame', {
                 templateUrl : 'views/game/edit.html',
