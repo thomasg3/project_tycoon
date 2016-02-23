@@ -96,6 +96,15 @@ public class Game {
         return teams.contains(t);
     }
 
+    public int openLevel(){
+        return getLevels().stream()
+                .filter(l -> l.documentsAreOpen())
+                .map(l -> l.getRound())
+                .max(Integer::compareTo)
+                .orElse(-1);
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+        <h3>Create new information for teams</h3>
+        <hr>
+        <form role="form" class="css-form" novalidate name="form" id="form">
+
+
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control"  id="description" name="description" ng-model="description">
+            </div>
+
+            <div class="form-group">
+                <label for="unlockedAt">unlocked at level</label>
+                <input type="number" class="form-control" id="unlockedAt" name="unlockedAt" ng-model="unlockedAt">
+            </div>
+            <div class="form-group">
+                <label for="types">type</label>
+                <select ng-model="type" id="types"
+                        ng-options="type as type for type in types"
+                        ng-change="clear()"
+                        ></select>
+                <input type="hidden" name="type" value="{{type}}" />
+            </div>
+            <div ng-show="imgUrl">
+                <img class="img-responsive" ng-src="{{imgUrl}}"/>
+            </div>
+            <div ng-show="type=='Image'" class="form-group">
+                <label for="imgUrl">url</label>
+                <input class="form-control" type="url" id="imgUrl" name="imgUrl" ng-model="imgUrl">
+            </div>
+            <div ng-show="videoUrl">
+                <iframe width="560" height="315" ng-src="{{getIframeSrc()}}" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div ng-show="type=='Video'" class="form-group">
+                <label for="videoUrl">url</label>
+              <p>https://www.youtube.com/watch?v=  <input class="" type="text" id="videoUrl" name="videoUrl" ng-model="videoUrl"></p>
+            </div>
+            <div ng-show="type=='Document'" class="form-group">
+                <input ng-files="getTheFiles($files)" type="file" name="file" id="file" multiple>
+
+            </div>
+
+            <div class="col-sm-12">
+                <button ng-disabled="form.$invalid" type="submit" ng-click="checkWhatToDo()" class="btn btn-primary" id="submit">Submit</button>
+            </div>
+
+
+
+        </form>
+    </div>
+</div>

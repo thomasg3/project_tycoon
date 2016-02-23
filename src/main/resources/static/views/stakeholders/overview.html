@@ -1,0 +1,33 @@
+<h1>
+    Stakeholders
+    <small><a href="#/admin/stakeholders/new" class="btn btn-default">New</a></small>
+</h1>
+
+
+<div class="row">
+    <h1 class="text-muted text-center" ng-show="stakeholders.length == 0">No stakeholders found</h1>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="stakeholder in stakeholders">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <img ng-src="{{stakeholder.imagePath}}" class="img-responsive img-circle center-block" />
+                <div class="text-center">
+                    <h3>{{stakeholder.name}}</h3>
+                    <p>{{stakeholder.function}} @ {{stakeholder.organisation}}</p>
+                    <a class="btn btn-default" href="#/admin/stakeholders/{{stakeholder.id}}">More Info</a>
+                </div>
+                <br><br>
+                <div class="text-right">
+                    <p ng-show="stakeholder.level > 0" class="text-info">Available from level <b>{{stakeholder.level}}</b></p>
+                    <p ng-show="stakeholder.level < 1" class="text-success">Always Available</p>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <b>{{stakeholder.id}}</b>
+                <div class="text-right">
+                    <a href="#/admin/stakeholders/{{stakeholder.id}}/edit"><i class="fa fa-edit"></i> Edit</a>
+                    <a class="text-danger" href="#/admin/stakeholders/{{stakeholder.id}}/delete"><i class="fa fa-remove"></i> Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

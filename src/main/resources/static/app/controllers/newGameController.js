@@ -7,6 +7,15 @@ angular.module('projecttycoonControllers')
         });
 
         $scope.game = new GameAdminResource();
+        $scope.notifyChange= function(){
+            while($scope.game.levels > $scope.game.allLevels.length){
+                $scope.game.allLevels.push({});
+            }
+            while($scope.game.levels < $scope.game.allLevels.length){
+                $scope.game.allLevels.pop();
+            }
+        }
+        $scope.game.allLevels = [];
         $scope.freeze = false;
 
         $scope.dropboxitemselected = function (scoreengine) {

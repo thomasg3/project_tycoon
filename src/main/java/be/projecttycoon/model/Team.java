@@ -29,6 +29,7 @@ public class Team{
     private long id;
 
     @NotNull
+    @Column(unique=true)
     @Size(min = 5, message = "Your teamname must be at least 5 characters")
     @Pattern(regexp = "^[A-Za-z0-9]*$", message="Your teamname can only contain characters")
     @SafeHtml(whitelistType = SafeHtml.WhiteListType.RELAXED, message = "Please enter a name that compliance with html url standards")
