@@ -16,8 +16,8 @@
         <tr ng-repeat="scoreEngine in scoreEngines | filter: searchText">
             <td><strong>#{{$index+1}}</strong></td>
             <td><a ng-click="getScoreEngine(scoreEngine.id)" role="button">{{scoreEngine.name}}</a></td>
-            <td><a href="#/admin/scoreEngineEdit/{{scoreEngine.id}}" class="btn btn-default" role="button">Edit</a></td>
-            <td><button class="btn btn-danger" ng-click="deleteScoreEngine(scoreEngine.id)">Delete</button></td>
+            <td><a href="#/admin/scoreEngineEdit/{{scoreEngine.id}}" class="btn btn-info" role="button"><i class="fa fa-edit"></i> Edit</a></td>
+            <td><button class="btn btn-danger" ng-click="deleteScoreEngine(scoreEngine.id)"><i class="fa fa-remove"></i> Delete</button></td>
         </tr>
     </table>
 </div>
