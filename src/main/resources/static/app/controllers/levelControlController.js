@@ -56,4 +56,7 @@ angular.module('projecttycoonControllers')
                 InfoAdminResource.addTeamToBlackList({id:info.id , team:id});
             }
         }
+        $scope.showInfo = function(info){
+            info.show=true;
+        }
     });
