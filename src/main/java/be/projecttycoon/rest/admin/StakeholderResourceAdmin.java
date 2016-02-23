@@ -100,4 +100,18 @@ public class StakeholderResourceAdmin extends StakeholderResource{
         throw new NotFoundException();
     }
 
+    @RequestMapping(value="{id}/blacklist/{teamid}", method = RequestMethod.GET)
+    public void addToBlackList(@PathVariable long id, @PathVariable long teamid){
+        Stakeholder stakeholder = showStakeholder(null, id);
+        stakeholder.addForbiddenUser(teamid);
+        stakeholderRepository.save(stakeholder);
+    }
+
+    @RequestMapping(value="{id}/blacklist/{teamid}", method = RequestMethod.DELETE)
+    public void removeFromBlackList(@PathVariable long id, @PathVariable long teamid){
+        Stakeholder stakeholder = showStakeholder(null, id);
+        stakeholder.removeForbiddenUser(teamid);
+        stakeholderRepository.save(stakeholder);
+    }
+
 }
