@@ -3,14 +3,14 @@
  */
 
 angular.module('projecttycoonControllers')
-    .controller('scoreEngineOverviewController', function($scope, ScoreEngineAdminResource, $routeParams){
-        ScoreEngineAdminResource.getScoreEngineInfo(function(data){
-            $scope.scoreEngines = data;
+    .controller('scoreEngineOverviewController', function($scope, ScoreEngineTemplateAdminResource, $routeParams){
+        ScoreEngineTemplateAdminResource.query(function(data){
+            $scope.scoreEnginesTemplates = data;
         });
 
         $scope.deleteScoreEngine = function(id){
-            ScoreEngineAdminResource.delete({id : id}, function(data){
-                $scope.scoreEngines = data;
+            ScoreEngineTemplateAdminResource.delete({id : id}, function(data){
+                $scope.scoreEnginesTemplates = data;
             });
         }
     });

@@ -4,7 +4,7 @@
         <form ng-submit="submit()" name="form" class="css-form" novalidate>
             <div class="form-group">
                 <label for="name">ScoreEngine name</label>
-                <input type="text" class="form-control" placeholder="Name" id="name" name="name" min="4" ng-model="scoreengine.name"  min-length-validator min="4" regex-validator regex="^[A-Za-z0-9\s]*$" required>
+                <input type="text" class="form-control" placeholder="Name" id="name" name="name" min="4" ng-model="scoreenginetemplate.name"  min-length-validator min="4" regex-validator regex="^[A-Za-z0-9\s]*$" required>
             </div>
 
             <div class="alert alert-danger" ng-show="form.name.$error.namelength || form.name.$error.namevalidregex || form.name.$error.required && form.name.$touched">
@@ -17,7 +17,7 @@
 
             <div class="form-group">
                 <label for="levels">Number of levels</label>
-                <input type="number" class="form-control" placeholder="3" id="levels" name="levels" ng-model="scoreengine.levels" min="1" max="20" required>
+                <input type="number" class="form-control" placeholder="3" id="levels" name="levels" ng-model="scoreenginetemplate.levels" min="1" max="20" required>
             </div>
 
             <div class="alert alert-danger" ng-show="form.levels.$error.min || form.levels.$error.max || form.levels.$error.required && form.levels.$touched">

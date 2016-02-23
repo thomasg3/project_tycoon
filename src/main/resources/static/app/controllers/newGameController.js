@@ -2,8 +2,8 @@
  * Created by michael on 12/02/16.
  */
 angular.module('projecttycoonControllers')
-    .controller('newGameController', function($scope, $location , GameAdminResource, ScoreEngineAdminResource){
-        $scope.scoreengines = ScoreEngineAdminResource.getScoreEngineInfo(function(){
+    .controller('newGameController', function($scope, $location , GameAdminResource, ScoreEngineTemplateAdminResource){
+        $scope.scoreenginestemplates = ScoreEngineTemplateAdminResource.query(function(){
         });
 
         $scope.game = new GameAdminResource();

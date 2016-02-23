@@ -4,6 +4,7 @@ import be.projecttycoon.db.*;
 import be.projecttycoon.model.Game;
 import be.projecttycoon.model.KnowledgeAreaScore;
 import be.projecttycoon.model.ScoreEngine.ScoreEngine;
+import be.projecttycoon.model.ScoreEngineTemplate.ScoreEngineTemplate;
 import be.projecttycoon.model.Team;
 import be.projecttycoon.model.TeamLevelPrestation;
 import be.projecttycoon.rest.exception.NotAuthorizedException;
@@ -32,11 +33,13 @@ import java.util.stream.Collectors;
 public class GameAdminResource extends GameResource {
 
     ScoreEngineRepository scoreEngineRepository;
+    private ScoreEngineTemplateRepository scoreEngineTemplateRepository;
 
     @Autowired
-    public GameAdminResource(StartupScript startupScript, GameRepository gameRepository, TeamRepository teamRepository, KnowledgeAreaRepository knowledgeAreaRepository, ScoreEngineRepository scoreEngineRepository) {
+    public GameAdminResource(StartupScript startupScript, GameRepository gameRepository, TeamRepository teamRepository, KnowledgeAreaRepository knowledgeAreaRepository, ScoreEngineRepository scoreEngineRepository, ScoreEngineTemplateRepository scoreEngineTemplateRepository) {
         super(gameRepository, teamRepository, knowledgeAreaRepository);
         this.scoreEngineRepository = scoreEngineRepository;
+        this.scoreEngineTemplateRepository =scoreEngineTemplateRepository;
         startupScript.run();
     }
 
@@ -65,10 +68,12 @@ public class GameAdminResource extends GameResource {
     @RequestMapping(method = RequestMethod.POST)
     @Produces("application/json")
     public Game createGame(@Valid @RequestBody GameBean inputGame){
-        ScoreEngine scoreEngine = scoreEngineRepository.findOne(inputGame.getScoreengineid());
+        ScoreEngineTemplate scoreEngineTemplate = scoreEngineTemplateRepository.findOne((long)inputGame.getScoreengineid());
         System.out.println(inputGame.toString());
+        ScoreEngine scoreEngine = new ScoreEngine(scoreEngineTemplate);
+        scoreEngineRepository.save(scoreEngine);
 
-        Game game = new Game(inputGame.getName(),inputGame.getAmount(), scoreEngine);
+        Game game = new Game(inputGame.getName(),inputGame.getAmount(), scoreEngineRepository.findOne(scoreEngine.getId()));
         return gameRepository.save(game);
     }
 
@@ -85,7 +90,6 @@ public class GameAdminResource extends GameResource {
     public void deleteGame(@PathVariable long id){
         getGame(id);
         gameRepository.delete(id);
-
     }
 
     @RequestMapping(value = "/team/{id}", method=RequestMethod.DELETE)
