@@ -12,7 +12,6 @@ import be.projecttycoon.rest.exception.NotAuthorizedException;
 import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.QuestionBean;
 import be.projecttycoon.rest.util.ScoreEngineBean;
-import be.projecttycoon.rest.util.ScoreEngineLimitBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,11 +48,11 @@ public class ScoreEngineResource {
 
     @RequestMapping(value = "/limit", method = RequestMethod.GET)
     @Produces("application/json")
-    public List<ScoreEngineLimitBean> getScoreEngineInfo(){
-        List<ScoreEngineLimitBean> sebeans = new ArrayList<>();
+    public List<ScoreEngineBean> getScoreEngineInfo(){
+        List<ScoreEngineBean> sebeans = new ArrayList<>();
         List<ScoreEngine> scoreEngines = scoreEngineRepository.findAll();
         for(ScoreEngine se: scoreEngines){
-            sebeans.add(new ScoreEngineLimitBean(se.getId(), se.getLevels().size(), se.getName()));
+            sebeans.add(new ScoreEngineBean(se.getLevels().size(), se.getName(), se.getId()));
         }
         return sebeans;
     }

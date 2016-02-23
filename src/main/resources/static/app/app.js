@@ -146,6 +146,14 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl: 'views/stakeholders/edit.html',
                 controller : 'adminStakeholderNewController'
             })
+            .when('/admin/scoreEngineOverview', {
+                templateUrl : 'views/scoreEngineOverview.html',
+                controller : 'scoreEngineOverviewController'
+            })
+            .when('/admin/scoreEngineEdit/:id', {
+                templateUrl : 'views/scoreEngineEdit.html',
+                controller : 'scoreEngineEditController'
+            })
             .when('/admin/stakeholders/:id', {
                 templateUrl : 'views/stakeholders/details.html',
                 controller : 'adminStakeholderDetailController'

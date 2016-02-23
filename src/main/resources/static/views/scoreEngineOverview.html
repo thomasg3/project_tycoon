@@ -1,0 +1,23 @@
+<div class="row" >
+    <h1>ADMIN OVERVIEW</h1>
+
+    <div class="row">
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+            </div>
+        </form>
+    </div>
+    <table class="table table-responsive">
+        <tr>
+            <th>#</th>
+            <th colspan="4">Score Engine</th>
+        </tr>
+        <tr ng-repeat="scoreEngine in scoreEngines | filter: searchText">
+            <td><strong>#{{$index+1}}</strong></td>
+            <td><a ng-click="getScoreEngine(scoreEngine.id)" role="button">{{scoreEngine.name}}</a></td>
+            <td><a href="#/admin/scoreEngineEdit/{{scoreEngine.id}}" class="btn btn-default" role="button">Edit</a></td>
+            <td><button class="btn btn-danger" ng-click="deleteScoreEngine(scoreEngine.id)">Delete</button></td>
+        </tr>
+    </table>
+</div>
