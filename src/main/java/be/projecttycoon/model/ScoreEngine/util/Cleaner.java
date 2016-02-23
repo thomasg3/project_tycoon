@@ -21,6 +21,8 @@ public class Cleaner {
         }
 
         string = string.replaceAll("\\s","");
+        string = string.toLowerCase();
         return string;
     }
+
 }
