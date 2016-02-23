@@ -103,7 +103,7 @@ public class ScoreEngine {
 
                 levelKnowledgeAreas.add(levelKnowledgeArea);
             }
-            getLevels().add(new Level("Level "+ i, i, levelKnowledgeAreas));
+            getLevels().add(new Level(scoreEngineTemplate.getLevelTemplates().get(i).getName(), scoreEngineTemplate.getLevelTemplates().get(i).getRound(), levelKnowledgeAreas));
         }
     }
 
