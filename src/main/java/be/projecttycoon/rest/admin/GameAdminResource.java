@@ -100,7 +100,7 @@ public class GameAdminResource extends GameResource {
         return gameRepository.save(g);
     }
 
-    @RequestMapping(value = "/{id}/lightteams", method=RequestMethod.GET)
+    @RequestMapping(value = "/{id}/teams", method=RequestMethod.GET)
     @Produces("application/json")
     public List<TeamBeanLight> getAllTeamsForGameLight(@PathVariable long id){
         Game game = gameRepository.findOne(id);
@@ -122,4 +122,5 @@ public class GameAdminResource extends GameResource {
         }
         return count;
     }
+
 }

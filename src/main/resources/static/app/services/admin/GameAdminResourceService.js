@@ -20,7 +20,7 @@ angular.module('projecttycoon').factory('GameAdminResource', function($resource)
         },
         getTeamsForOverview:{
             method: 'GET',
-            url: '/api/admin/games/:id/lightteams',
+            url: '/api/admin/games/:id/teams',
             isArray: true
         }
     });
