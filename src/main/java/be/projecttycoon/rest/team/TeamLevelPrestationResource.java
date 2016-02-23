@@ -27,6 +27,9 @@ public class TeamLevelPrestationResource {
         TeamLevelPrestation teamLevelPrestation = teamLevelPrestationRepository.findOne(id);
         if(teamLevelPrestation==null)
             throw new NotFoundException();
+
+
+
         return teamLevelPrestation;
     }
 

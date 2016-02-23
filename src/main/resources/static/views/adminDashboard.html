@@ -1,7 +1,8 @@
 <div class="row" >
     <div class="">
-        <h1>{{game.name}}</h1> <a href="#/admin/games/{{game.id}}/details" class="btn btn-info">Score Details</a>
-
+        <h1>{{game.name}}</h1>
+        <a href="#/admin/games/{{game.id}}/details" class="btn btn-info"><i class="fa fa-eye"></i> Score Details</a>
+        <a href="#/admin/games/{{game.id}}/levels/0" class="btn btn-info"><i class="fa fa-fort-awesome"></i> ControlCenter</a>
         <div class="row">
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
@@ -24,20 +25,18 @@
                 <th></th>
                 <th>Team Name</th>
                 <th>Score</th>
-                <th>Likes</th>
                 <th></th>
-                <th ng-show="MainUser.admin"></th>
-                <th ng-show="MainUser.admin"></th>
+                <th></th>
+                <th></th>
             </tr>
             <tr ng-repeat="team in game.teams  | filter: searchText | orderBy:'-score' track by $index">
                 <td><strong>#{{$index+1}}</strong></td>
                 <td><img width="80px" class="img-circle" ng-src={{team.teamImage}}></td>
                 <td>{{team.teamname}}</td>
                 <td>{{team.score}}</td>
-                <td>{{team.likes}}</td>
-                <td><a href="#/games/{{game.id}}/teams/{{team.id}}" class="btn btn-default">Details</a></td>
-                <td ng-show="MainUser.admin"><a href="#/editTeam/{{team.teamname}}" class="btn btn-default">Edit</a></td>
-                <td ng-show="MainUser.admin"><button class="btn btn-danger" ng-click="deleteTeam(team.id)">Delete</button></td>
+                <td><a href="#/admin/games/{{game.id}}/teams/{{team.id}}" class="btn btn-default"><i class="fa fa-info-circle"></i> Details</a></td>
+                <td ng-show="MainUser.admin"><a href="#/editTeam/{{team.teamname}}" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a></td>
+                <td ng-show="MainUser.admin"><button class="btn btn-danger" ng-click="deleteTeam(team.id)"><i class="fa fa-remove"></i> Delete</button></td>
             </tr>
         </table>
     </div>
