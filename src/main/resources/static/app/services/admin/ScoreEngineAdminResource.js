@@ -7,7 +7,11 @@ angular.module('projecttycoon').factory('ScoreEngineAdminResource', function($re
         getScoreEngineInfo:{
             url: '/api/admin/scoreengine/limit',
             isArray: true
-        }
+        },
+        delete:{
+            method: 'DELETE',
+            isArray: true
+        },
     });
 
 });

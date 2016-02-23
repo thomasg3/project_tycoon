@@ -11,14 +11,13 @@
     <table class="table table-responsive">
         <tr>
             <th>#</th>
-            <th colspan="4">Game Name</th>
+            <th colspan="4">Score Engine</th>
         </tr>
-        <tr ng-repeat="game in games | filter: searchText">
+        <tr ng-repeat="scoreEngine in scoreEngines | filter: searchText">
             <td><strong>#{{$index+1}}</strong></td>
-            <td><a ng-click="getGame(game.id)" role="button">{{game.name}}</a></td>
-            <td><a href="#/admin/games/{{game.id}}/levels/0" class="btn btn-info">GameControlCenter</a></td>
-            <td><a ng-click="mail(game.id)" class="btn btn-default" role="button">Mail</a></td>
-            <td><button class="btn btn-danger" ng-click="deleteGame(game.id)">delete</button></td>
+            <td><a ng-click="getScoreEngine(scoreEngine.id)" role="button">{{scoreEngine.name}}</a></td>
+            <td><a href="#/admin/scoreEngineEdit/{{scoreEngine.id}}" class="btn btn-default" role="button">Edit</a></td>
+            <td><button class="btn btn-danger" ng-click="deleteScoreEngine(scoreEngine.id)">Delete</button></td>
         </tr>
     </table>
 </div>
