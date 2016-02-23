@@ -27,8 +27,8 @@ import java.util.List;
 @RequestMapping("/api/admin/levels")
 public class LevelAdminResource extends LevelResource {
 
-    ScoreEngineRepository scoreEngineRepository;
-    GameRepository gameRepository;
+    private ScoreEngineRepository scoreEngineRepository;
+    private GameRepository gameRepository;
 
     @Autowired
     public LevelAdminResource(LevelRepository levelRepository, TeamLevelPrestationRepository teamLevelPrestationRepository, ScoreEngineRepository scoreEngineRepository, GameRepository gameRepository) {

@@ -61,4 +61,6 @@ public class TeamLevelPrestation {
     public int getLevelScore(){
         return knowledgeAreaScores.stream().map(kas -> kas.getScore()).reduce(0, (x,y) -> x + y);
     }
+
+
 }
