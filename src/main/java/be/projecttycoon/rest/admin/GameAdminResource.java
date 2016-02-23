@@ -20,6 +20,7 @@ import javax.ws.rs.Produces;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -99,7 +100,7 @@ public class GameAdminResource extends GameResource {
         return gameRepository.save(g);
     }
 
-    @RequestMapping(value = "/{id}/lightteams", method=RequestMethod.GET)
+    @RequestMapping(value = "/{id}/teams", method=RequestMethod.GET)
     @Produces("application/json")
     public List<TeamBeanLight> getAllTeamsForGameLight(@PathVariable long id){
         Game game = gameRepository.findOne(id);
@@ -122,11 +123,4 @@ public class GameAdminResource extends GameResource {
         return count;
     }
 
-    @RequestMapping(value="/{id}/teams")
-    @Produces("application/json")
-    //todo remove brol
-    public Set<Team> getTeamsOfGame(@PathVariable long id){
-        Game g = gameRepository.findOne(id);
-        return g.getTeams();
-    }
 }

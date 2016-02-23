@@ -18,10 +18,10 @@ angular.module('projecttycoon').factory('GameAdminResource', function($resource)
             method: 'POST',
             url: '/api/admin/games/levelkn'
         },
-        getTeamsOfGame : {
+        getTeamsForOverview:{
             method: 'GET',
             url: '/api/admin/games/:id/teams',
-            isArray : true
+            isArray: true
         }
     });
 

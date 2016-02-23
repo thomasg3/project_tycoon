@@ -26,7 +26,7 @@ angular.module('projecttycoonControllers')
                     $scope.errors.push('Oops, something went wrong...');
                 });
         }
-         GameAdminResource.getTeamsOfGame({id: $routeParams.gameid},function(teams){
+         GameAdminResource.getTeamsForOverview({id: $routeParams.gameid},function(teams){
              $scope.teams=teams;
          })
 
