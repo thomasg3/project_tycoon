@@ -8,6 +8,7 @@ import be.projecttycoon.rest.exception.NotAuthorizedException;
 import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.team.GameResource;
 import be.projecttycoon.rest.util.GameBean;
+import be.projecttycoon.rest.util.ShortGameBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ import javax.ws.rs.Produces;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by thomas on 18/02/16.
@@ -35,8 +37,10 @@ public class GameAdminResource extends GameResource {
 
     @RequestMapping(method = RequestMethod.GET)
     @Produces("application/json")
-    public Collection<Game> getAllGames(){
-        return gameRepository.findAll();
+    public Collection<ShortGameBean> getAllGames(){
+        return gameRepository.findAll().stream()
+                .map(g -> new ShortGameBean(g.getId(), g.getName()))
+                .collect(Collectors.toList());
     }
 
     @Override
