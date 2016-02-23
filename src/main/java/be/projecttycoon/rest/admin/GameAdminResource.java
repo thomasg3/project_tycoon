@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import javax.ws.rs.Produces;
 import java.security.Principal;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -89,5 +90,13 @@ public class GameAdminResource extends GameResource {
         Set<Team> teams= g.getTeams();
         teams.remove(t);
         return gameRepository.save(g);
+    }
+
+    @RequestMapping(value="/{id}/teams")
+    @Produces("application/json")
+    //todo remove brol
+    public Set<Team> getTeamsOfGame(@PathVariable long id){
+        Game g = gameRepository.findOne(id);
+        return g.getTeams();
     }
 }

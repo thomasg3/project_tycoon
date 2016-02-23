@@ -2,6 +2,7 @@ package be.projecttycoon.rest.admin;
 
 import be.projecttycoon.db.GameRepository;
 import be.projecttycoon.db.InfoRepository;
+import be.projecttycoon.db.LevelRepository;
 import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Game;
 import be.projecttycoon.model.Info;
@@ -22,10 +23,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -36,12 +34,12 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/api/admin/info")
 public class InfoAdminResource extends InfoResource{
 
-
+private LevelRepository levelRepository;
 
     @Autowired
-    public InfoAdminResource(InfoRepository infoRepository, GameRepository gameRepository, TeamRepository teamRepository){
+    public InfoAdminResource(InfoRepository infoRepository, GameRepository gameRepository, TeamRepository teamRepository, LevelRepository levelRepository){
         super(infoRepository,gameRepository,teamRepository);
-
+        this.levelRepository=levelRepository;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -52,9 +50,10 @@ public class InfoAdminResource extends InfoResource{
 
     @RequestMapping(value="/level/{level}", method = RequestMethod.GET)
     @Produces("application/json")
-    public Collection<Info> getInfoFromLevel(@PathVariable int level){
+    public Collection<Info> getInfoFromLevel(@PathVariable long level){
+       Level l =levelRepository.findOne(level);
         return infoRepository.findAll().stream()
-                .filter(l->l.getUnlockedAtLevel()==level)
+                .filter(i->i.getUnlockedAtLevel()==l.getRound())
                 .collect(Collectors.toList());
     }
 
@@ -116,5 +115,19 @@ public class InfoAdminResource extends InfoResource{
         info.setPath(i.getPath());
         info.setType(i.getType());
         infoRepository.save(info);
+    }
+
+    @RequestMapping(value="/{id}/team/{team}", method = RequestMethod.DELETE)
+    public void removeTeamFromBlackList(@PathVariable long id, @PathVariable long team){
+        Info i = infoRepository.findOne(id);
+        i.removeTeamFromBlackList(team);
+        infoRepository.save(i);
+    }
+
+    @RequestMapping(value="/{id}/team/{team}", method = RequestMethod.GET)
+    public void addTeamToBlackList(@PathVariable long id, @PathVariable(value="team") long team){
+        Info i = infoRepository.findOne(id);
+        i.addTeamToBlackList(team);
+        infoRepository.save(i);
     }
 }

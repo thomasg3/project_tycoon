@@ -28,6 +28,34 @@
                     <strong>Error!</strong> {{error}}
                 </div>
             </div>
+            <table ng-if="infoArr.length>0" class="table table-responsive">
+                <thead>
+                    <th>
+                        Resource
+                    </th>
+                    <th ng-repeat="team in teams">
+                        {{team.teamname}}
+                    </th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="info in infoArr">
+                        <td>
+                            <div ng-if="info.type == 'Document'">
+                                <a href="{{info.path}}">{{info.description}}</a>
+                            </div>
+                            <div ng-if="info.type=='Video'">
+                                <iframe width="560" height="315" ng-src="{{getSafeSrc(info.path)}}" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            <div ng-if="info.type=='Image'">
+                                <img ng-src="{{info.path}}">
+                            </div>
+                        </td>
+                        <td ng-repeat="team in teams">
+                            <input type="checkbox" ng-checked="!isOnBlackList(team.id,info)" ng-click="sendChanges(team.id,info,$event)">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div ng-show="!currentLevel">
             <h1>Select a level in the list</h1>

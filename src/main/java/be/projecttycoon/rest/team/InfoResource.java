@@ -60,6 +60,7 @@ public class InfoResource {
                 .max().orElse(-1);
         Collection<Info> info = infoRepository.findAll().stream()
                 .filter(i->i.getUnlockedAtLevel() <= round)
+                .filter(j->!j.getExcludedTeams().contains(t.getId()))
                 .collect(Collectors.toList());
         return info;
     }
