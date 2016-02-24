@@ -23,6 +23,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
+import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -97,7 +98,7 @@ private LevelRepository levelRepository;
 
     @RequestMapping(value="/{id}", method = RequestMethod.GET)
     @Produces("application/json")
-    public Info getInfoById(@PathVariable long id){
+    public Info findOneInfo(Principal user, @PathVariable long id){
         return infoRepository.findOne(id);
     }
 
