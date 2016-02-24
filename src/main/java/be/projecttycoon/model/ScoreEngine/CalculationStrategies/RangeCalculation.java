@@ -21,6 +21,7 @@ public class RangeCalculation implements CalculationStrategy {
     public void calculateScore(KnowledgeAreaScore knowledgeAreaScore, Question question) {
         List<Between> answers = new ArrayList<>();
         int score = 0;
+
         for(Answer answer: question.getAnswers()){
             String cleanInput = Cleaner.clean(answer.getAnswer());
             String[] split = Splitter.split(cleanInput);
@@ -29,9 +30,14 @@ public class RangeCalculation implements CalculationStrategy {
         }
 
         for (Between between: answers) {
-            if(between.isBetween(Integer.valueOf(Cleaner.clean(knowledgeAreaScore.getAnswer())))){
-                score = between.getScore();
+            try{
+                if(between.isBetween(Integer.valueOf(Cleaner.clean(knowledgeAreaScore.getAnswer())))){
+                    score = between.getScore();
+                }
+            } catch (Exception e){
+                System.out.println(e.getMessage());
             }
+
         }
         knowledgeAreaScore.setScore(score);
     }
