@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-xs-12 page-header">
-        <h1>{{game.name}}</h1><a href="#/admin/dashboard/{{game.id}}" class="btn btn-default">Dashboard</a>
+        <h1>{{game.name}}</h1>
+        <a href="#/admin/dashboard/{{game.id}}" class="btn btn-default"><i class="fa fa-trophy"></i> Dashboard</a>
     </div>
     <div class="col-sm-3">
         <ul class="nav nav-pills nav-stacked">
@@ -33,7 +34,7 @@
             </div>
 
             <div ng-if="infoArr.length>0">
-            <h3>Documents <a href="#/admin/info" class="btn btn-default"><i class="fa fa-eye"></i> Overview</a></h3>
+            <h3><i class="fa fa-file"></i> Documents <a href="#/admin/info" class="btn btn-default"><i class="fa fa-eye"></i> Overview</a></h3>
 
 
             <table  class="table table-responsive">
@@ -77,7 +78,7 @@
         </div>
 
         <div ng-if="stakeholders.length != 0">
-        <h3>Stakeholders <a href="#/admin/stakeholders" class="btn btn-default"><i class="fa fa-eye"></i> Overview</a></h3>
+        <h3><i class="fa fa-users"></i> Stakeholders <a href="#/admin/stakeholders" class="btn btn-default"><i class="fa fa-eye"></i> Overview</a></h3>
 
         <table class="table table-responsive table-hover">
             <tr>
