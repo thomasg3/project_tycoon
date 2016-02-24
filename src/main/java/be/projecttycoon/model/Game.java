@@ -122,7 +122,7 @@ public class Game {
                 .filter(l -> l.documentsAreOpen())
                 .map(l -> l.getRound())
                 .max(Integer::compareTo)
-                .orElse(-1);
+                .orElse(0);
     }
 
 

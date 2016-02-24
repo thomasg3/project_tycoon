@@ -27,7 +27,7 @@ app.factory('httpInterceptor', ['$q', '$location', '$log', function($q, $locatio
 
         }
     };
-}])
+}]);
 
 app.config(function($routeProvider, $httpProvider) {
 

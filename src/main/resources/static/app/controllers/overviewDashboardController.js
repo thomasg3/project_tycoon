@@ -34,7 +34,7 @@ angular.module('projecttycoonControllers')
         var chart = new Chart(ctx).Line(data, {
             //scaleBeginAtZero : true
         });
-    }
+    };
 
 
         GameResource.getGameByUsername({teamname: $rootScope.MainUser.teamname}, function(game){

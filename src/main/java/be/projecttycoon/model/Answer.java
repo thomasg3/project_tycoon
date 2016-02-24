@@ -17,7 +17,7 @@ public class Answer {
     private String answer;
     private int score;
 
-    public Answer(){};
+    public Answer(){}
 
     public Answer(String answer, int score) {
         this.answer = answer;

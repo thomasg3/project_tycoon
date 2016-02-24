@@ -14,7 +14,7 @@ angular.module('projecttycoonControllers')
         toadd.elementNumber = $scope.knowledgeareas.length + $scope.toadds.length;
         $scope.toadds.push(toadd);
         $scope.newarea.name = "";
-    }
+    };
     $scope.save = function(){
         KnowledgeAreaAdminResource.saveAll($scope.toadds, function(){
             $scope.toadds = [];

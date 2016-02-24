@@ -2,8 +2,8 @@
  * Created by michael on 12/02/16.
  */
 angular.module('projecttycoonControllers')
-    .controller('newGameController', function($scope, $location , GameAdminResource, ScoreEngineAdminResource){
-        $scope.scoreengines = ScoreEngineAdminResource.getScoreEngineInfo(function(){
+    .controller('newGameController', function($scope, $location , GameAdminResource, ScoreEngineTemplateAdminResource){
+        $scope.scoreenginestemplates = ScoreEngineTemplateAdminResource.query(function(){
         });
 
         $scope.game = new GameAdminResource();
@@ -14,14 +14,14 @@ angular.module('projecttycoonControllers')
             while($scope.game.levels < $scope.game.allLevels.length){
                 $scope.game.allLevels.pop();
             }
-        }
+        };
         $scope.game.allLevels = [];
         $scope.freeze = false;
 
         $scope.dropboxitemselected = function (scoreengine) {
             $scope.game.scoreengineid = scoreengine.id;
             $scope.selectedItem = scoreengine;
-        }
+        };
 
         $scope.submit = function(){
             $scope.freeze = true;

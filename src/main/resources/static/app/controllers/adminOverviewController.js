@@ -14,13 +14,13 @@ angular.module('projecttycoonControllers')
             });
         });
 
-    }
+    };
     $scope.getGame = function(id){
         $location.path('/admin/dashboard/' + id);
-    }
+    };
     $scope.getLevels = function(id){
         $location.path('/admin/' + id + '/levels');
-    }
+    };
 
     $scope.mail = function(id){
         $location.path('/admin/' + id + '/mail');
