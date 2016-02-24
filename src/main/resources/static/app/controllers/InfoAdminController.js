@@ -60,7 +60,6 @@ angular.module('projecttycoonControllers')
         };
 
         $scope.deleteInfo = function(id){
-            console.log("I am trying to delete");
             InfoAdminResource.delete({id:id}).$promise.then(function(data){
                 $scope.showInfo(data);
             });
@@ -98,7 +97,6 @@ angular.module('projecttycoonControllers')
 
             //get info out form
             $scope.updateInfo = $scope.getInfoFromForm();
-            console.log($scope.updateInfo);
             //check if file is selected if so upload it
             if($scope.filename){
                 $scope.uploadFile();

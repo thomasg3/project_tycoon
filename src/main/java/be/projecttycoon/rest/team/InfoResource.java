@@ -61,7 +61,7 @@ public class InfoResource {
         Game game = gameRepository.findAll().stream().filter(g -> g.containsTeam(team)).findFirst().orElse(null);
         if(info == null || game == null)
             throw new NotFoundException();
-        if(info.getUnlockedAtLevel() <= game.openLevel() && info.getExcludedTeams().contains(team.getId()))
+        if(info.getUnlockedAtLevel() <= game.openLevel() && !info.getExcludedTeams().contains(team.getId()))
             return info;
         else throw new NotAuthorizedException();
 
