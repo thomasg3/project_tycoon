@@ -179,8 +179,8 @@ public class StartupScript {
         levels.get(7).setState(Closed.class.getSimpleName());
 
         gameRepository.save(scoreTest);
-
         Info i = new Info(1,"test info", "http://i.imgur.com/1rHMtFM.gif", InfoType.Image);
+        Info i1 = new Info(1,"epic mind blown", "https://media.giphy.com/media/EldfH1VJdbrwY/giphy.gif", InfoType.Image);
         Info i2 = new Info(1,"test video","https://www.youtube.com/embed/czezOcHfLS4",InfoType.Video);
         Info i3 = new Info(3,"test info", "https://bartbriers.files.wordpress.com/2012/11/gsummit3.jpg", InfoType.Image);
         i2.addTeamToBlackList(8);
@@ -190,6 +190,7 @@ public class StartupScript {
         tags.add("rocking");
         i3.setTags(tags);
         infoRepository.save(i);
+        infoRepository.save(i1);
         infoRepository.save(i2);
         infoRepository.save(i3);
 

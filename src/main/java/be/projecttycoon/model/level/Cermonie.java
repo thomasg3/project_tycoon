@@ -1,5 +1,10 @@
 package be.projecttycoon.model.level;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by thomas on 17/02/16.
  */
@@ -14,6 +19,7 @@ public class Cermonie implements LevelState {
     @Override
     public void cermonieFinished() {
         context.setState(Concluded.class.getSimpleName());
+
     }
 
     @Override
