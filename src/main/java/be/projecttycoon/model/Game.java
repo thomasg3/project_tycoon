@@ -2,6 +2,7 @@ package be.projecttycoon.model;
 
 import be.projecttycoon.model.ScoreEngine.ScoreEngine;
 import be.projecttycoon.model.level.Level;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -25,6 +26,9 @@ public class Game {
     @Size(min = 4, message = "Your gamename must be at least 4 characters")
     @Pattern(regexp = "^[A-Za-z0-9\\s]*$", message="Your gamename can only contain characters and numbers")
     private String name;
+
+    @JsonIgnore
+    public static final String PASSWORD = "m4#t3h2j1";
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private Set<Team> teams;
@@ -50,7 +54,7 @@ public class Game {
     private void generateTeam(int teams){
         for(int i = count; count<i + teams;count++){
             int random = new Random().nextInt(100000);
-            this.teams.add(new Team("Team"+ random,"m4t3h2j1",this.scoreEngine.getLevels(),"/hosted_resources/admin_1455635149425.png"));
+            this.teams.add(new Team("Team"+ random,PASSWORD,this.scoreEngine.getLevels(),"/hosted_resources/admin_1455635149425.png"));
         }
     }
 
@@ -125,7 +129,6 @@ public class Game {
                 .max(Integer::compareTo)
                 .orElse(0);
     }
-
 
     @Override
     public boolean equals(Object o) {

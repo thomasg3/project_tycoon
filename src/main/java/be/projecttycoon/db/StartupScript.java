@@ -162,7 +162,7 @@ public class StartupScript {
         teams.stream().forEach(team -> {
             team.getTeamLevelPrestations().stream().forEach(p -> {
                 p.getKnowledgeAreaScores().stream().forEach(kas -> {
-                    kas.setAnswer("test");
+                    kas.setAnswer("5-5-3");
                 });
             });
         });

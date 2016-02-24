@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -152,6 +153,26 @@ public class GameAdminResource extends GameResource {
         }
         game.getScoreEngine().calculateScores(game.getAllTeamLevelPrestations(), l);
         return gameRepository.save(game);
+    }
+
+    private static String teamDelimiter = "\n\n/////////////////////////////////////////////////\n\n";
+    @RequestMapping(value="/{id}/teams.txt")
+    public String getTeamsInText(@PathVariable long id){
+        Game game = getGame(id);
+        if(game.getTeams().stream().anyMatch(t -> t.isRegistered())){
+            return "There is one registered team, so default passwords are not an option anymore.";
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        game.getTeams().forEach(t -> {
+            stringBuilder.append(teamDelimiter);
+            stringBuilder.append("Login Name:   ");
+            stringBuilder.append(t.getTeamname());
+            stringBuilder.append("\n");
+            stringBuilder.append("Password:   ");
+            stringBuilder.append(Game.PASSWORD);
+            stringBuilder.append("\n");
+        });
+        return stringBuilder.toString();
     }
 
 
