@@ -130,13 +130,13 @@ public class ScoreEngine {
                         if(kas.getKnowledgeArea().equals(lka.getKnowledgeArea())){
                             if(lka.getQuestion() != null){
                                 Question question = lka.getQuestion();
-                                if(question.getFormat().equals(ScoreFormat.RANGE) || question.getFormat().equals(ScoreFormat.AMOUNT_RANGE) || question.getFormat().equals(ScoreFormat.PERCENT_RANGE)){
+                                if(question.getFormat().equals(ScoreFormat.RANGE) || question.getFormat().equals(ScoreFormat.AMOUNT_RANGE) || question.getFormat().equals(ScoreFormat.PERCENTAGE_RANGE)){
                                     calculationStrategy = new RangeCalculation();
                                 }
-                                else if(question.getFormat().equals(ScoreFormat.ENUMERATION)){
+                                else if(question.getFormat().equals(ScoreFormat.LIST)){
                                     calculationStrategy = new EnumeratioCalculation();
                                 }
-                                else if(question.getFormat().equals(ScoreFormat.INT)){
+                                else if(question.getFormat().equals(ScoreFormat.NUMBER)){
                                     calculationStrategy = new IntCalculation();
                                 }
                                 else{
@@ -167,13 +167,13 @@ public class ScoreEngine {
                 Question question = levelKnowledgeAreas.get(i).getQuestion();
                 if(knowledgeAreaScore.getAnswer() != null && !knowledgeAreaScore.getAnswer().isEmpty()){
                     if(question != null){
-                        if(question.getFormat().equals(ScoreFormat.RANGE) || question.getFormat().equals(ScoreFormat.AMOUNT_RANGE) || question.getFormat().equals(ScoreFormat.PERCENT_RANGE)){
+                        if(question.getFormat().equals(ScoreFormat.RANGE) || question.getFormat().equals(ScoreFormat.AMOUNT_RANGE) || question.getFormat().equals(ScoreFormat.PERCENTAGE_RANGE)){
                             calculationStrategy = new RangeCalculation();
                         }
-                        else if(question.getFormat().equals(ScoreFormat.ENUMERATION)){
+                        else if(question.getFormat().equals(ScoreFormat.LIST)){
                             calculationStrategy = new EnumeratioCalculation();
                         }
-                        else if(question.getFormat().equals(ScoreFormat.INT)){
+                        else if(question.getFormat().equals(ScoreFormat.NUMBER)){
                             calculationStrategy = new IntCalculation();
                         }
                         else{

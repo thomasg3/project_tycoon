@@ -4,12 +4,12 @@ package be.projecttycoon.model.ScoreEngine;
  * Created by Jeroen on 18-2-2016.
  */
 public enum ScoreFormat{
-    STRING,
+    WORD,
     RANGE,
-    ENUMERATION,
-    INT,
-    PERCENT,
+    LIST,
+    NUMBER,
+    PERCENTAGE,
     AMOUNT,
-    PERCENT_RANGE,
+    PERCENTAGE_RANGE,
     AMOUNT_RANGE
 }

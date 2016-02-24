@@ -223,7 +223,7 @@ public class StartupScript {
         for(LevelTemplate l: scoreEngineTemplate.getLevelTemplates()){
             for(LevelKnowledgeAreaTemplate lk : l.getLevelKnowledgeAreaTemplates()){
                 lk.getQuestion().setQuestion("Dit is een vraag... met als antwoord '5-5-9' 50 en '5-7-8' -20");
-                lk.getQuestion().setFormat(ScoreFormat.ENUMERATION);
+                lk.getQuestion().setFormat(ScoreFormat.LIST);
                 List<Answer> answers = new ArrayList<>();
                 answers.add(new Answer("5-5-9", 20));
                 answers.add(new Answer("5-5-*", 10));
