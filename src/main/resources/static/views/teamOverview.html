@@ -17,6 +17,8 @@
             <td><strong>#{{$index+1}}</strong></td>
             <td><a href="#/admin/teams/{{team.id}}/answers" role="button">{{team.teamname}}</a></td>
             <td><span class="badge">{{team.numberOfAnswers}}</span></td>
+            <td ng-show="MainUser.admin"><a href="#/editTeam/{{team.teamname}}" class="btn btn-info"><i class="fa fa-edit"></i> Edit</a></td>
+            <td ng-show="MainUser.admin"><button class="btn btn-danger" ng-click="deleteTeam(team.id)"><i class="fa fa-remove"></i> Delete</button></td>
         </tr>
     </table>
 </div>

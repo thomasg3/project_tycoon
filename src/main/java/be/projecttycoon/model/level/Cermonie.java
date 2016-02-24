@@ -12,6 +12,7 @@ public class Cermonie implements LevelState {
     private final Level context;
 
     public Cermonie(Level context){
+
         this.context = context;
     }
 

@@ -81,5 +81,4 @@ public class ScoreEngineResource {
         scoreEngineRepository.delete(engine);
         return getAllScoreEngines();
     }
-
 }

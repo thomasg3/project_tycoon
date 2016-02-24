@@ -48,7 +48,7 @@ public class DbConfig {
     public JpaVendorAdapter jpaVendorAdapter() {
         HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
         adapter.setDatabase(Database.HSQL);
-        adapter.setShowSql(true);
+        adapter.setShowSql(false);
         adapter.setGenerateDdl(false);
         adapter.setDatabasePlatform("org.hibernate.dialect.HSQLDialect");
         adapter.setGenerateDdl(true);

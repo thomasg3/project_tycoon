@@ -49,7 +49,8 @@ public class Game {
 
     private void generateTeam(int teams){
         for(int i = count; count<i + teams;count++){
-            this.teams.add(new Team("Team"+(count),"testtest",this.scoreEngine.getLevels(),"/hosted_resources/admin_1455635149425.png"));
+            int random = new Random().nextInt(100000);
+            this.teams.add(new Team("Team"+ random,"m4t3h2j1",this.scoreEngine.getLevels(),"/hosted_resources/admin_1455635149425.png"));
         }
     }
 
@@ -152,7 +153,11 @@ public class Game {
                 '}';
     }
 
-    public void calculateScores(List<TeamLevelPrestation> teamLevelPrestations, List<LevelKnowledgeArea> levelKnowledgeAreas){
-        //scoreengine....
+    public List<TeamLevelPrestation> getAllTeamLevelPrestations(){
+        List<TeamLevelPrestation> teamLevelPrestations = new ArrayList<>();
+        for(Team t: getTeams()){
+            teamLevelPrestations.addAll(t.getTeamLevelPrestations());
+        }
+        return teamLevelPrestations;
     }
 }

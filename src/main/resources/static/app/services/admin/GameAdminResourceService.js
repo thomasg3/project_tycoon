@@ -22,6 +22,14 @@ angular.module('projecttycoon').factory('GameAdminResource', function($resource)
             method: 'GET',
             url: '/api/admin/games/:id/teams',
             isArray: true
+        },
+        recalculateGame:{
+            method: 'GET',
+            url: '/api/admin/games/:id/recalculate'
+        },
+        recalculateLevel:{
+            method: 'GET',
+            url: '/api/admin/games/:id/recalculate/:levelid'
         }
     });
 
