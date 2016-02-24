@@ -1,9 +1,5 @@
 package be.projecttycoon.model.level;
 
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-
 /**
  * Created by thomas on 17/02/16.
  */
@@ -28,7 +24,7 @@ public class Finished implements LevelState {
 
     @Override
     public void pointPush() {
-        context.setState(Cermonie.class.getSimpleName());
+        context.setState(Ceremony.class.getSimpleName());
     }
 
     @Override
