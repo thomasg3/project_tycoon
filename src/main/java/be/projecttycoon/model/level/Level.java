@@ -1,7 +1,6 @@
 package be.projecttycoon.model.level;
 
 
-import be.projecttycoon.MyScheduler;
 import be.projecttycoon.model.LevelKnowledgeArea;
 import org.quartz.JobKey;
 import org.quartz.SchedulerException;
@@ -38,9 +37,6 @@ public class Level{
     private long remainingMs;
 
     private Date latestStateChange;
-
-    @Transient
-    private MyScheduler scheduler=new MyScheduler();
 
     @OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL, orphanRemoval = true)
     private List<LevelKnowledgeArea> levelKnowledgeAreas;
@@ -251,13 +247,7 @@ public class Level{
     }
 
 
-    public void removeCloseScheduler(){
-        try {
-            scheduler.getScheduler().deleteJob(JobKey.jobKey("CloseLevel"+this.getTimestampStart(), "closer"));
-        } catch (SchedulerException e) {
-            e.printStackTrace();
-        }
-    }
+
 
 
 
