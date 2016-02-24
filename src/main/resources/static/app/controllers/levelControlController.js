@@ -15,6 +15,7 @@ angular.module('projecttycoonControllers')
             });
             LevelAdminResource.get({id: $routeParams.levelid}, function(level){
                 $scope.currentLevel = level;
+                $scope.time = level.latestStateChange;
                 StakeholderAdminResource.getStakholdersOfLevel({level: level.round}, function(data){
                     $scope.stakeholders = data;
                 })
@@ -33,6 +34,8 @@ angular.module('projecttycoonControllers')
             $http.get('/api/admin/levels/'+$scope.currentLevel.id+'/change/'+to)
                 .success(function(data){
                     $scope.currentLevel = data;
+                    $scope.time = data.latestStateChange;
+
                     updateList();
                 })
                 .error(function(err){

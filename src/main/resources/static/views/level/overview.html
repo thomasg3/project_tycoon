@@ -17,7 +17,7 @@
     </div>
     <div class="col-sm-9">
         <div ng-show="currentLevel">
-            <h2>{{currentLevel.name}} <small ng-class="{'label': true, 'label-default': currentLevel.closed, 'label-primary': currentLevel.concluded, 'label-success': currentLevel.open, 'label-info': currentLevel.cermonie, 'label-danger': currentLevel.finished}">{{currentLevel.state}}</small> </h2>
+            <h2>{{currentLevel.name}} <small ng-class="{'label': true, 'label-default': currentLevel.closed, 'label-primary': currentLevel.concluded, 'label-success': currentLevel.open, 'label-info': currentLevel.cermonie, 'label-danger': currentLevel.finished}">{{currentLevel.state}}</small> <span style="padding-left: 30px" ng-model="time"> {{time | date:'dd/MM/yyyy HH:mm'}}</span> </h2>
 
             <div class="btn-group btn-group-justified" role="group" aria-label="buttons">
                 <div class="btn-group" role="group"><button ng-click="change('open')" type="button" class="btn btn-default">Open</button></div>
