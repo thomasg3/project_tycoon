@@ -115,6 +115,7 @@ private LevelRepository levelRepository;
         info.setDescription(i.getDescription());
         info.setPath(i.getPath());
         info.setType(i.getType());
+        info.setTags(i.getTags());
         infoRepository.save(info);
     }
 

@@ -59,6 +59,16 @@ angular.module('projecttycoonControllers')
             
         };
 
+        $scope.info = new InfoAdminResource();
+        $scope.info.tags = [];
+        $scope.removeTag = function(index){
+            $scope.info.tags.splice(index, 1)
+        };
+        $scope.addTag = function(){
+            $scope.info.tags.push($scope.tagModel);
+            $scope.tagModel = "";
+        };
+
         $scope.deleteInfo = function(id){
             InfoAdminResource.delete({id:id}).$promise.then(function(data){
                 $scope.showInfo(data);
@@ -75,6 +85,7 @@ angular.module('projecttycoonControllers')
                 $scope.description=data.description;
                 $scope.unlockedAt=data.unlockedAtLevel;
                 $scope.type=data.type;
+                $scope.info.tags = data.tags;
                 var url = data.path.split('/');
                 var parsed = url[url.length-1];
                 if(data.type=="Video"){
@@ -112,7 +123,8 @@ angular.module('projecttycoonControllers')
             $scope.send={
                 description:$scope.description,
                 unlockedAtLevel:$scope.unlockedAt,
-                type:$scope.type
+                type:$scope.type,
+                tags : $scope.info.tags
             };
 
             if($scope.type=='Video'){
@@ -127,6 +139,7 @@ angular.module('projecttycoonControllers')
             else{
                 $scope.send.path = $scope.linkUrl;
             }
+            console.log($scope.send);
             return $scope.send;
         };
         $scope.checkWhatToDo = function(){
