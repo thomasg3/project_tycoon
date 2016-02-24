@@ -28,7 +28,6 @@ public class EnumeratioCalculation implements CalculationStrategy {
 
         for(Enumeration enumeration: answers){
             if(enumeration.match(knowledgeAreaScore.getAnswer())){
-                System.out.println(knowledgeAreaScore.getAnswer() + " ==== " + enumeration.toString());
                 score = enumeration.getScore();
 
                 if(knowledgeAreaScore.getScore() == 0){
@@ -36,7 +35,6 @@ public class EnumeratioCalculation implements CalculationStrategy {
                 } else if(score > knowledgeAreaScore.getScore()){
                     knowledgeAreaScore.setScore(score);
                 }
-                System.out.println(knowledgeAreaScore.getScore());
 
             }
         }

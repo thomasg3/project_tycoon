@@ -19,6 +19,7 @@ public class IntCalculation implements CalculationStrategy{
             int expected = Integer.valueOf(answer.getAnswer());
             if(teamanswer == expected){
                 score = answer.getScore();
+
             }
         }
         knowledgeAreaScore.setScore(score);

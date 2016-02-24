@@ -224,7 +224,7 @@ public class StartupScript {
                 lk.getQuestion().setQuestion("Dit is een vraag... met als antwoord '5-5-9' 50 en '5-7-8' -20");
                 lk.getQuestion().setFormat(ScoreFormat.ENUMERATION);
                 List<Answer> answers = new ArrayList<>();
-                answers.add(new Answer("5-5-9", 50));
+                answers.add(new Answer("5-5-9", 20));
                 answers.add(new Answer("5-5-*", 10));
                 answers.add(new Answer("5-7-8", -20));
                 lk.getQuestion().setAnswers(answers);
