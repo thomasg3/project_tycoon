@@ -16,7 +16,6 @@ import java.util.Set;
 @Entity
 public class Info {
 
-    //todo choose which team can see it
 
     @Id
     @GeneratedValue
@@ -31,14 +30,17 @@ public class Info {
     @ElementCollection
     private Set<Long> excludedTeams;
 
+    @ElementCollection
+    private Set<String> tags;
+
    public Info() {
         this(1,"","",InfoType.Document);
     }
 
     public Info(int unlockedAtLevel, String description, String path, InfoType type) {
-        this(unlockedAtLevel,description,path,type,new HashSet<>());
+        this(unlockedAtLevel,description,path,type,new HashSet<>(),new HashSet<>());
     }
-    public Info(int unlockedAtLevel,String description,String path,InfoType type,Set<Long> excludedTeams){
+    public Info(int unlockedAtLevel,String description,String path,InfoType type,Set<String> tags,Set<Long> excludedTeams){
         this.unlockedAtLevel = unlockedAtLevel;
         this.description = description;
         this.path = path;
@@ -91,6 +93,14 @@ public class Info {
     }
     public void removeTeamFromBlackList(long id){
         excludedTeams.remove(id);
+    }
+
+    public Set<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<String> tags) {
+        this.tags = tags;
     }
 
     @Override

@@ -12,9 +12,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -35,9 +33,11 @@ public class Level{
     private String name;
 
 
-    private int minutesToClose=5;
+    private int minutesToClose=30;
     private long timestampStart;
     private long remainingMs;
+
+    private Date latestStateChange;
 
     @Transient
     private MyScheduler scheduler=new MyScheduler();
@@ -100,6 +100,15 @@ public class Level{
         return levelKnowledgeAreas;
     }
 
+    public Date getLatestStateChange() {
+        return latestStateChange;
+    }
+
+    public void setLatestStateChange(Date latestStateChange) {
+        this.latestStateChange = latestStateChange;
+
+    }
+
     @Transient
     @JsonIgnore
     public List<LevelKnowledgeArea> getPublicKnowledgeAreas(){
@@ -108,7 +117,7 @@ public class Level{
                     .map(lkas -> {lkas.setQuestion(null); return lkas;})
                     .collect(Collectors.toList());
         } else {
-            return (List<LevelKnowledgeArea>)levelKnowledgeAreas.stream()
+            return (List<LevelKnowledgeArea>) levelKnowledgeAreas.stream()
                     .map(lkas -> {
                         lkas.getQuestion().setAnswers(Collections.EMPTY_LIST);
                         return lkas;
@@ -136,6 +145,7 @@ public class Level{
 
     public void setState(String state){
         this.state = state;
+        this.setLatestStateChange(new Date());
         updateState();
     }
 
@@ -145,8 +155,8 @@ public class Level{
             this.levelState = new Open(this);
         } else if(Finished.class.getSimpleName().equals(state)){
             this.levelState = new Finished(this);
-        } else if(Cermonie.class.getSimpleName().equals(state)){
-            this.levelState = new Cermonie(this);
+        } else if(Ceremony.class.getSimpleName().equals(state)){
+            this.levelState = new Ceremony(this);
         } else if(Concluded.class.getSimpleName().equals(state)){
             this.levelState = new Concluded(this);
         } else {
@@ -222,7 +232,7 @@ public class Level{
         return levelState instanceof Finished;
     }
     public boolean isCermonie(){
-        return levelState instanceof Cermonie;
+        return levelState instanceof Ceremony;
     }
     public boolean isConcluded(){
         return levelState instanceof Concluded;

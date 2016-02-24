@@ -13,14 +13,14 @@ public class LevelKnowledgeArea {
     @GeneratedValue
     private long id;
 
-    @OneToOne(cascade=CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne
     private Question question;
     @ManyToOne
     private KnowledgeArea knowledgeArea;
 
     public LevelKnowledgeArea(){
         this.setQuestion(new Question());
-    };
+    }
 
     public LevelKnowledgeArea(Question question, KnowledgeArea knowledgeArea) {
         this.question = question;

@@ -57,4 +57,12 @@ public class Enumeration {
     public void setScore(int score) {
         this.score = score;
     }
+
+    @Override
+    public String toString() {
+        return "Enumeration{" +
+                "enumeration=" + enumeration +
+                ", score=" + score +
+                '}';
+    }
 }

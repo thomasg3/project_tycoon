@@ -2,6 +2,7 @@ package be.projecttycoon.model;
 
 import be.projecttycoon.model.ScoreEngine.ScoreEngine;
 import be.projecttycoon.model.level.Level;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -26,6 +27,9 @@ public class Game {
     @Pattern(regexp = "^[A-Za-z0-9\\s]*$", message="Your gamename can only contain characters and numbers")
     private String name;
 
+    @JsonIgnore
+    public static final String PASSWORD = "m4#t3h2j1";
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
     private Set<Team> teams;
 
@@ -49,7 +53,8 @@ public class Game {
 
     private void generateTeam(int teams){
         for(int i = count; count<i + teams;count++){
-            this.teams.add(new Team("Team"+(count),"testtest",this.scoreEngine.getLevels(),"/hosted_resources/admin_1455635149425.png"));
+            int random = new Random().nextInt(100000);
+            this.teams.add(new Team("Team"+ random,PASSWORD,this.scoreEngine.getLevels(),"/hosted_resources/admin_1455635149425.png"));
         }
     }
 
@@ -122,9 +127,8 @@ public class Game {
                 .filter(l -> l.documentsAreOpen())
                 .map(l -> l.getRound())
                 .max(Integer::compareTo)
-                .orElse(-1);
+                .orElse(0);
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -152,7 +156,11 @@ public class Game {
                 '}';
     }
 
-    public void calculateScores(List<TeamLevelPrestation> teamLevelPrestations, List<LevelKnowledgeArea> levelKnowledgeAreas){
-        //scoreengine....
+    public List<TeamLevelPrestation> getAllTeamLevelPrestations(){
+        List<TeamLevelPrestation> teamLevelPrestations = new ArrayList<>();
+        for(Team t: getTeams()){
+            teamLevelPrestations.addAll(t.getTeamLevelPrestations());
+        }
+        return teamLevelPrestations;
     }
 }

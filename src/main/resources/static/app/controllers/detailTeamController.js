@@ -13,6 +13,7 @@ angular.module('projecttycoonControllers')
             for(l = 0; l < $scope.team.teamLevelPrestations.length; l++) {
                 for (i = 0; i < labels.length; i++) {
                     datas[i] += $scope.team.teamLevelPrestations[l].knowledgeAreaScores[i].score;
+
                 }
             }
 
@@ -28,7 +29,11 @@ angular.module('projecttycoonControllers')
                         pointStrokeColor: "#fff",
                         pointHighlightFill: "#fff",
                         pointHighlightStroke: "rgba(255, 0, 0, 1)",
-                        data: datas
+                        data: datas.map(function(e){
+                            if(e < 0)
+                                return 0;
+                            else return e;
+                        })
                     }
                 ]
             }, {

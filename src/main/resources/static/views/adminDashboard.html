@@ -3,6 +3,10 @@
         <h1>{{game.name}}</h1>
         <a href="#/admin/games/{{game.id}}/details" class="btn btn-info"><i class="fa fa-eye"></i> Score Details</a>
         <a href="#/admin/games/{{game.id}}/levels/0" class="btn btn-info"><i class="fa fa-fort-awesome"></i> ControlCenter</a>
+        <a ng-click="recalculate(game.id)" class="btn btn-info"><i class="fa fa-calculator"></i> Recalculate Game</a>
+        <a ng-href="/api/admin/games/{{game.id}}/teams.txt" class="btn btn-info"><i class="fa fa-print"></i> Default logins</a>
+        <a ng-href="/#/admin/scoreEngineEdit/{{game.scoreEngine.scoreEngineTemplate.id}}" class="btn btn-info"><i class="fa fa-tachometer"></i> Edit scoreEngine</a>
+
         <div class="row">
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">

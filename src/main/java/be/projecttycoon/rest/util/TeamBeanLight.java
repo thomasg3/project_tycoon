@@ -9,7 +9,7 @@ public class TeamBeanLight {
     private String teamname;
     private int numberOfAnswers;
 
-    public TeamBeanLight(){};
+    public TeamBeanLight(){}
 
     public TeamBeanLight(long id, String teamname, int numberOfAnswers) {
         this.id = id;

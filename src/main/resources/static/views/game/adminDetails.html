@@ -16,7 +16,9 @@
 
 <div class="panel panel-default" ng-repeat="level in game.levels track by $index">
     <div class="panel-heading" data-toggle="collapse" data-target="#{{$index}}" aria-expanded="false" aria-controls="{{$index}}">
-        <h2>{{level.round}}. {{level.name}}</h2><a href="#/admin/games/{{game.id}}/levels/{{level.id}}/editscores" class="btn btn-default" ng-show="MainUser.admin">Edit Scores</a>
+        <h2>{{level.round}}. {{level.name}}</h2>
+        <a href="#/admin/games/{{game.id}}/levels/{{level.id}}/editscores" class="btn btn-default" ng-show="MainUser.admin">Edit Scores</a>
+        <a ng-click="recalculateLevel(level.id)" class="btn btn-default" ng-show="MainUser.admin">Recalculate scores</a>
         <table class="table">
             <tr>
                 <td ng-repeat="team in game.teams">{{team.teamname}} : {{team.teamLevelPrestations[level.round-1].levelScore}}</td>

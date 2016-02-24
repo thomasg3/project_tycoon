@@ -9,8 +9,7 @@ angular.module('projecttycoonControllers')
             element.on('change', function (event) {
                 onChange(scope, { $files: event.target.files });
             });
-        };
-
+        }
         return {
             link: fn_link
         }
@@ -32,7 +31,8 @@ angular.module('projecttycoonControllers')
             $scope.imgUrl="";
             $scope.videoUrl="";
             $scope.filename="";
-        }
+            $scope.linkUrl="";
+        };
 
         $scope.postInfo = function(){
             $scope.send=$scope.getInfoFromForm();
@@ -43,28 +43,37 @@ angular.module('projecttycoonControllers')
             InfoAdminResource.post($scope.send).$promise.then(function(){
                 $location.path("/admin/info");
             });
-        }
+        };
 
         $scope.createVideoUrl=function(){
             return "https://www.youtube.com/embed/"+$scope.videoUrl;
-        }
+        };
         $scope.getIframeSrc=function(){
                 return $sce.trustAsResourceUrl($scope.createVideoUrl());
-        }
+        };
         $scope.getSafeSrc=function(url){
             return $sce.trustAsResourceUrl(url);
-        }
+        };
         $scope.showInfo = function(info){
             $scope.infoArr = info;
             
         };
 
+        $scope.info = new InfoAdminResource();
+        $scope.info.tags = [];
+        $scope.removeTag = function(index){
+            $scope.info.tags.splice(index, 1)
+        };
+        $scope.addTag = function(){
+            $scope.info.tags.push($scope.tagModel);
+            $scope.tagModel = "";
+        };
+
         $scope.deleteInfo = function(id){
-            console.log("I am trying to delete");
             InfoAdminResource.delete({id:id}).$promise.then(function(data){
                 $scope.showInfo(data);
             });
-        }
+        };
         $window.deleteInfo = $scope.deleteInfo;
 
             InfoAdminResource.getAll().$promise.then(function (data) {
@@ -76,6 +85,7 @@ angular.module('projecttycoonControllers')
                 $scope.description=data.description;
                 $scope.unlockedAt=data.unlockedAtLevel;
                 $scope.type=data.type;
+                $scope.info.tags = data.tags;
                 var url = data.path.split('/');
                 var parsed = url[url.length-1];
                 if(data.type=="Video"){
@@ -87,6 +97,9 @@ angular.module('projecttycoonControllers')
                 else if(data.type=="Image"){
                     $scope.imgUrl=data.path;
                 }
+                else if(data.type=="Link"){
+                    $scope.linkUrl=data.path;
+                }
                 var btn = document.getElementById("submit");
                 btn.setAttribute("ng-click","updateInfo()");
             })
@@ -95,7 +108,6 @@ angular.module('projecttycoonControllers')
 
             //get info out form
             $scope.updateInfo = $scope.getInfoFromForm();
-            console.log($scope.updateInfo);
             //check if file is selected if so upload it
             if($scope.filename){
                 $scope.uploadFile();
@@ -105,14 +117,15 @@ angular.module('projecttycoonControllers')
                 $location.path("/admin/info");
             });
 
-        }
+        };
 
         $scope.getInfoFromForm = function(){
             $scope.send={
                 description:$scope.description,
                 unlockedAtLevel:$scope.unlockedAt,
-                type:$scope.type
-            }
+                type:$scope.type,
+                tags : $scope.info.tags
+            };
 
             if($scope.type=='Video'){
                 $scope.send.path=$scope.createVideoUrl();
@@ -120,11 +133,14 @@ angular.module('projecttycoonControllers')
             else if($scope.type=="Image"){
                 $scope.send.path=$scope.imgUrl;
             }
-            else {
+            else if($scope.type=="Document"){
                 $scope.send.path = "/documents/" + $scope.filename;
             }
+            else{
+                $scope.send.path = $scope.linkUrl;
+            }
             return $scope.send;
-        }
+        };
         $scope.checkWhatToDo = function(){
             if($routeParams.id){
                 $scope.updateInfo();
@@ -132,7 +148,7 @@ angular.module('projecttycoonControllers')
             else{
                 $scope.postInfo();
             }
-        }
+        };
 
         $scope.uploadFile=function(){
             var request = {

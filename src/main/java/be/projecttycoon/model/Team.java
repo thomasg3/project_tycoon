@@ -203,10 +203,7 @@ public class Team{
 
         Team team = (Team) o;
 
-        if(team.getId()==this.getId()&&team.getTeamname().equals(this.getTeamname())){
-            return true;
-        }
-        return false;
+        return team.getId() == this.getId() && team.getTeamname().equals(this.getTeamname());
     }
 
     @Override

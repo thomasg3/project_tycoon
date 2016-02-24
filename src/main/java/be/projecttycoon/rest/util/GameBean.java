@@ -1,5 +1,6 @@
 package be.projecttycoon.rest.util;
 
+import be.projecttycoon.model.ScoreEngineTemplate.ScoreEngineTemplate;
 import be.projecttycoon.model.level.Level;
 
 import java.util.ArrayList;
@@ -11,27 +12,12 @@ import java.util.List;
 public class GameBean {
     private String name;
     private int amount;
-    private long scoreengineid;
-    private int levels;
-    private List<LevelBean> allLevels;
+    private int scoreengineid;
 
-
-    public GameBean(){
-        allLevels=new ArrayList<LevelBean>();
+    public GameBean() {
     }
 
-    public List<LevelBean> getAllLevels() {
-        return allLevels;
-    }
-
-    public void setAllLevels(List<LevelBean> allLevels) {
-        this.allLevels = allLevels;
-    }
-
-
-
-
-    public GameBean(String name, int amount, long scoreengineid) {
+    public GameBean(String name, int amount, int scoreengineid) {
         this.name = name;
         this.amount = amount;
         this.scoreengineid = scoreengineid;
@@ -53,11 +39,11 @@ public class GameBean {
         this.amount = amount;
     }
 
-    public long getScoreengineid() {
+    public int getScoreengineid() {
         return scoreengineid;
     }
 
-    public void setScoreengineid(long scoreengineid) {
+    public void setScoreengineid(int scoreengineid) {
         this.scoreengineid = scoreengineid;
     }
 }

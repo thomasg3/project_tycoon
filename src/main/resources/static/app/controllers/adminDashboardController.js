@@ -33,7 +33,7 @@ angular.module('projecttycoonControllers')
             var chart = new Chart(ctx).Line(data, {
                 //scaleBeginAtZero : true
             });
-        }
+        };
 
         if($routeParams.id){
             GameAdminResource.get({id : $routeParams.id}, function(data){
@@ -46,9 +46,14 @@ angular.module('projecttycoonControllers')
             GameAdminResource.deleteTeam({id : id}, function(data){
                 update(data);
             })
-        }
+        };
+
+        $scope.recalculate = function(id){
+            GameAdminResource.recalculateGame({id : id}, function(data){
+                $scope.game = data;
+                update(data);
+            })
+        };
 
 
-    });/**
- * Created by thomas on 22/02/16.
- */
+    });

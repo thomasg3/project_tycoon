@@ -8,6 +8,8 @@ public class Finished implements LevelState {
 
     public Finished(Level context){
         this.context = context;
+
+
     }
 
     @Override
@@ -22,7 +24,7 @@ public class Finished implements LevelState {
 
     @Override
     public void pointPush() {
-        context.setState(Cermonie.class.getSimpleName());
+        context.setState(Ceremony.class.getSimpleName());
     }
 
     @Override

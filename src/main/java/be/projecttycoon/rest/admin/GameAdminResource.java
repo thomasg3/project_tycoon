@@ -4,8 +4,10 @@ import be.projecttycoon.db.*;
 import be.projecttycoon.model.Game;
 import be.projecttycoon.model.KnowledgeAreaScore;
 import be.projecttycoon.model.ScoreEngine.ScoreEngine;
+import be.projecttycoon.model.ScoreEngineTemplate.ScoreEngineTemplate;
 import be.projecttycoon.model.Team;
 import be.projecttycoon.model.TeamLevelPrestation;
+import be.projecttycoon.model.level.Level;
 import be.projecttycoon.rest.exception.NotAuthorizedException;
 import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.team.GameResource;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -32,11 +35,13 @@ import java.util.stream.Collectors;
 public class GameAdminResource extends GameResource {
 
     ScoreEngineRepository scoreEngineRepository;
+    private ScoreEngineTemplateRepository scoreEngineTemplateRepository;
 
     @Autowired
-    public GameAdminResource(StartupScript startupScript, GameRepository gameRepository, TeamRepository teamRepository, KnowledgeAreaRepository knowledgeAreaRepository, ScoreEngineRepository scoreEngineRepository) {
+    public GameAdminResource(StartupScript startupScript, GameRepository gameRepository, TeamRepository teamRepository, KnowledgeAreaRepository knowledgeAreaRepository, ScoreEngineRepository scoreEngineRepository, ScoreEngineTemplateRepository scoreEngineTemplateRepository) {
         super(gameRepository, teamRepository, knowledgeAreaRepository);
         this.scoreEngineRepository = scoreEngineRepository;
+        this.scoreEngineTemplateRepository =scoreEngineTemplateRepository;
         startupScript.run();
     }
 
@@ -65,10 +70,12 @@ public class GameAdminResource extends GameResource {
     @RequestMapping(method = RequestMethod.POST)
     @Produces("application/json")
     public Game createGame(@Valid @RequestBody GameBean inputGame){
-        ScoreEngine scoreEngine = scoreEngineRepository.findOne(inputGame.getScoreengineid());
+        ScoreEngineTemplate scoreEngineTemplate = scoreEngineTemplateRepository.findOne((long)inputGame.getScoreengineid());
         System.out.println(inputGame.toString());
+        ScoreEngine scoreEngine = new ScoreEngine(scoreEngineTemplate);
+        scoreEngineRepository.save(scoreEngine);
 
-        Game game = new Game(inputGame.getName(),inputGame.getAmount(), scoreEngine);
+        Game game = new Game(inputGame.getName(),inputGame.getAmount(), scoreEngineRepository.findOne(scoreEngine.getId()));
         return gameRepository.save(game);
     }
 
@@ -85,7 +92,6 @@ public class GameAdminResource extends GameResource {
     public void deleteGame(@PathVariable long id){
         getGame(id);
         gameRepository.delete(id);
-
     }
 
     @RequestMapping(value = "/team/{id}", method=RequestMethod.DELETE)
@@ -122,5 +128,52 @@ public class GameAdminResource extends GameResource {
         }
         return count;
     }
+
+    @RequestMapping(value = "/{id}/recalculate", method = RequestMethod.GET)
+    @Produces("application/json")
+    public Game recalculateGame(@PathVariable long id ){
+        Game game = gameRepository.findOne(id);
+        ScoreEngine scoreEngine = game.getScoreEngine();
+        if(game == null || scoreEngine == null)
+            throw new NotFoundException();
+        scoreEngine.calculateScoresForCompleteGame(game);
+        return gameRepository.save(game);
+    }
+
+
+    @RequestMapping(value = "/{id}/recalculate/{levelid}", method = RequestMethod.GET)
+    @Produces("application/json")
+    public Game recalculateLevel(@PathVariable long id, @PathVariable long levelid ){
+        Game game = gameRepository.findOne(id);
+        Level l = null;
+        for(Level level : game.getLevels()){
+            if(level.getId() == levelid){
+                l = level;
+            }
+        }
+        game.getScoreEngine().calculateScores(game.getAllTeamLevelPrestations(), l);
+        return gameRepository.save(game);
+    }
+
+    private static String teamDelimiter = "\n\n/////////////////////////////////////////////////\n\n";
+    @RequestMapping(value="/{id}/teams.txt")
+    public String getTeamsInText(@PathVariable long id){
+        Game game = getGame(id);
+        if(game.getTeams().stream().anyMatch(t -> t.isRegistered())){
+            return "There is one registered team, so default passwords are not an option anymore.";
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        game.getTeams().forEach(t -> {
+            stringBuilder.append(teamDelimiter);
+            stringBuilder.append("Login Name:   ");
+            stringBuilder.append(t.getTeamname());
+            stringBuilder.append("\n");
+            stringBuilder.append("Password:   ");
+            stringBuilder.append(Game.PASSWORD);
+            stringBuilder.append("\n");
+        });
+        return stringBuilder.toString();
+    }
+
 
 }

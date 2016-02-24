@@ -3,9 +3,9 @@
  */
 
 angular.module('projecttycoonControllers')
-    .controller('scoreEngineEditController', function($scope, ScoreEngineAdminResource, $routeParams){
-        ScoreEngineAdminResource.get({id: $routeParams.id}, function(data){
-            $scope.scoreEngine = data;
+    .controller('scoreEngineEditController', function($scope, ScoreEngineTemplateAdminResource, $routeParams){
+        ScoreEngineTemplateAdminResource.get({id: $routeParams.id}, function(data){
+            $scope.scoreEngineTemplate = data;
         });
     }).directive('myLevel', function($http, QuestionAdminResource) {
         return {

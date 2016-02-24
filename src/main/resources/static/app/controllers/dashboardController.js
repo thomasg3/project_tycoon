@@ -33,7 +33,7 @@ angular.module('projecttycoonControllers')
         var chart = new Chart(ctx).Line(data, {
             //scaleBeginAtZero : true
         });
-    }
+    };
 
     if($routeParams.id){
         GameResource.get({id : $routeParams.id}, function(data){

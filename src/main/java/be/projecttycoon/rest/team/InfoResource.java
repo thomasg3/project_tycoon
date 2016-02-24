@@ -10,16 +10,20 @@ import be.projecttycoon.model.Team;
 import be.projecttycoon.model.level.Level;
 import be.projecttycoon.model.level.LevelState;
 import be.projecttycoon.model.level.Open;
+import be.projecttycoon.rest.exception.NotAuthorizedException;
+import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.UrlBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
+import java.security.Principal;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -46,10 +50,28 @@ public class InfoResource {
         this.teamRepository=teamRepository;
     }
 
-    //todo make sure teams can only see their own info
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @Produces("application/json")
+    public Info findOneInfo(Principal user, @PathVariable long id){
+        Team team = teamRepository.findByTeamname(user.getName());
+        Info info = infoRepository.findOne(id);
+        if(team.isAdmin())
+            return info;
+        Game game = gameRepository.findAll().stream().filter(g -> g.containsTeam(team)).findFirst().orElse(null);
+        if(info == null || game == null)
+            throw new NotFoundException();
+        if(info.getUnlockedAtLevel() <= game.openLevel() && !info.getExcludedTeams().contains(team.getId()))
+            return info;
+        else throw new NotAuthorizedException();
+
+    }
+
     @RequestMapping(value="/team/{id}",method = RequestMethod.GET)
     @Produces("application/json")
-    public Collection<Info> getInfo(@PathVariable long id){
+    public Collection<Info> getInfo(Principal p,@PathVariable long id){
+        Team principal=teamRepository.findByTeamname(p.getName());
+        if(principal.getId()!=id){throw new NotAuthorizedException();}
         Team t = teamRepository.findOne(id);
         Game game = gameRepository.findAll().stream()
                 .filter(g->g.getTeams().contains(t))
@@ -66,10 +88,4 @@ public class InfoResource {
     }
 
 
-
-    @RequestMapping(value="/{id}", method = RequestMethod.GET)
-    @Produces("application/json")
-    public Info getInfoById(@PathVariable long id){
-        return infoRepository.findOne(id);
-    }
 }

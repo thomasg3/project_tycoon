@@ -5,6 +5,8 @@ import be.projecttycoon.model.ScoreEngine.CalculationStrategies.EnumeratioCalcul
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.IntCalculation;
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.RangeCalculation;
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.StringCalculation;
+import be.projecttycoon.model.ScoreEngineTemplate.LevelKnowledgeAreaTemplate;
+import be.projecttycoon.model.ScoreEngineTemplate.ScoreEngineTemplate;
 import be.projecttycoon.model.level.Level;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -27,13 +29,24 @@ public class ScoreEngine {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Level> levels;
 
+    @ManyToOne
+    private ScoreEngineTemplate scoreEngineTemplate;
+
     public ScoreEngine(){
         this.levels = new ArrayList<>();
     }
 
+    /*
     public ScoreEngine(String name, int levels, List<KnowledgeArea> knowledgeAreas) {
         this.name = name;
         generateLevels(levels, knowledgeAreas);
+    }
+    */
+
+    public ScoreEngine(ScoreEngineTemplate scoreEngineTemplate) {
+        this.name = "default";
+        this.scoreEngineTemplate = scoreEngineTemplate;
+        useTemplate();
     }
 
     public long getId() {
@@ -78,19 +91,71 @@ public class ScoreEngine {
         }
     }
 
-    private void generateLevels(int levels, List<KnowledgeArea> knowledgeAreas){
+    private void useTemplate(){
         this.levels = new ArrayList<>();
-        for(int i = 1; i<=levels; i++){
+        for(int i = 0; i< scoreEngineTemplate.getLevelTemplates().size(); i++){
             List<LevelKnowledgeArea> levelKnowledgeAreas = new ArrayList<>();
-            for (KnowledgeArea k:knowledgeAreas){
-                LevelKnowledgeArea lk = new LevelKnowledgeArea();
-                lk.setKnowledgeArea(k);
-                levelKnowledgeAreas.add(lk);
+            for(LevelKnowledgeAreaTemplate lkatemplate: scoreEngineTemplate.getLevelTemplates().get(i).getLevelKnowledgeAreaTemplates()){
+                LevelKnowledgeArea levelKnowledgeArea = new LevelKnowledgeArea();
+
+                levelKnowledgeArea.setKnowledgeArea(lkatemplate.getKnowledgeArea());
+                levelKnowledgeArea.setQuestion(lkatemplate.getQuestion());
+
+                levelKnowledgeAreas.add(levelKnowledgeArea);
             }
-            System.out.println("Generating: Level " + i + ", for game: " + getName());
-            getLevels().add(new Level("Level "+ i, i, levelKnowledgeAreas));
+            getLevels().add(new Level(scoreEngineTemplate.getLevelTemplates().get(i).getName(), scoreEngineTemplate.getLevelTemplates().get(i).getRound(), levelKnowledgeAreas));
         }
     }
+
+    public void calculateScoresForCompleteGame(Game game){
+        List<TeamLevelPrestation> teamLevelPrestations = new ArrayList<>();
+        for (Team t: game.getTeams()){
+            teamLevelPrestations.addAll(t.getTeamLevelPrestations());
+        }
+        for(Level l: game.getLevels()){
+            if(l.isFinished() || l.isConcluded() || l.isCermonie()){
+                calculateScores(teamLevelPrestations, l);
+            }
+        }
+    }
+
+
+    public void calculateScores(List<TeamLevelPrestation> teamLevelPrestations, Level level){
+        CalculationStrategy calculationStrategy;
+        resetScoresForLevel(teamLevelPrestations, level);
+        for(LevelKnowledgeArea lka:  level.getLevelKnowledgeAreas()){
+            for (TeamLevelPrestation tlp : teamLevelPrestations) {
+                if(tlp.getLevel().getId() == level.getId()){
+                    for(KnowledgeAreaScore kas: tlp.getKnowledgeAreaScores()){
+                        if(kas.getKnowledgeArea().equals(lka.getKnowledgeArea())){
+                            if(lka.getQuestion() != null){
+                                Question question = lka.getQuestion();
+                                if(question.getFormat().equals(ScoreFormat.RANGE) || question.getFormat().equals(ScoreFormat.AMOUNT_RANGE) || question.getFormat().equals(ScoreFormat.PERCENT_RANGE)){
+                                    calculationStrategy = new RangeCalculation();
+                                }
+                                else if(question.getFormat().equals(ScoreFormat.ENUMERATION)){
+                                    calculationStrategy = new EnumeratioCalculation();
+                                }
+                                else if(question.getFormat().equals(ScoreFormat.INT)){
+                                    calculationStrategy = new IntCalculation();
+                                }
+                                else{
+                                    calculationStrategy = new StringCalculation();
+                                }
+
+                                System.out.println(level.getName() + " " + lka.getKnowledgeArea().getName());
+                                calculationStrategy.calculateScore(kas, question);
+                            }
+                            else{
+                                kas.setScore(0);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     public void calculateScores(List<TeamLevelPrestation> teamLevelPrestations, List<LevelKnowledgeArea> levelKnowledgeAreas){
         CalculationStrategy calculationStrategy;
@@ -124,12 +189,30 @@ public class ScoreEngine {
         }
     }
 
-    private void resetScores(List<TeamLevelPrestation> teamLevelPrestations){
+    public void resetScoresForLevel(List<TeamLevelPrestation> teamLevelPrestations, Level level){
+        for(TeamLevelPrestation tlp: teamLevelPrestations){
+            if(tlp.getLevel().getId() == level.getId()){
+                for(KnowledgeAreaScore kas: tlp.getKnowledgeAreaScores()){
+                    kas.setScore(0);
+                }
+            }
+        }
+    }
+
+    public void resetScores(List<TeamLevelPrestation> teamLevelPrestations){
         for(TeamLevelPrestation tlp: teamLevelPrestations){
             for(KnowledgeAreaScore kas: tlp.getKnowledgeAreaScores()){
                 kas.setScore(0);
             }
         }
+    }
+
+    public ScoreEngineTemplate getScoreEngineTemplate() {
+        return scoreEngineTemplate;
+    }
+
+    public void setScoreEngineTemplate(ScoreEngineTemplate scoreEngineTemplate) {
+        this.scoreEngineTemplate = scoreEngineTemplate;
     }
 
     @Override

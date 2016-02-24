@@ -28,12 +28,12 @@ angular.module('projecttycoonControllers')
     $scope.login = function() {
         $rootScope.authenticate($scope.credentials, function() {
             if ($rootScope.authenticated) {
-
+                $rootScope.$broadcast('loggedIn', {});
                 TeamResource.search({teamname: $scope.credentials.username},function(data){
                     //$window.sessionStorage.MainUser=JSON.stringify(data);
                     MainUserResource.saveMainUser(data);
                     $rootScope.MainUser=MainUserResource.getMainUser();
-                })
+                });
                 TeamResource.isRegistered({teamname: $scope.credentials.username}, function(data) {
                     if(data.registered){
                         $location.path("/");
@@ -53,9 +53,11 @@ angular.module('projecttycoonControllers')
         $http.post('/logout', {}).success(function(){
             MainUserResource.saveMainUser({});
             $rootScope.authenticated = false;
+            $rootScope.$broadcast('loggedIn', {});
             $location.path("/");
         }).error(function(){
             $rootScope.authenticated = false;
+            $rootScope.$broadcast('loggedIn', {});
             $location.path("/");
         });
     }

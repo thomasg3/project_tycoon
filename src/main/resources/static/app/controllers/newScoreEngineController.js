@@ -3,15 +3,15 @@
  */
 
 angular.module('projecttycoonControllers')
-    .controller('newScoreEngineController', function($scope, $location ,KnowledgeAreaAdminResource, GameAdminResource, ScoreEngineAdminResource){
+    .controller('newScoreEngineController', function($scope, $location ,KnowledgeAreaAdminResource, GameAdminResource, ScoreEngineTemplateAdminResource){
         $scope.knowledgeareas = KnowledgeAreaAdminResource.query();
-        $scope.scoreengine = new ScoreEngineAdminResource();
+        $scope.scoreenginetemplate = new ScoreEngineTemplateAdminResource();
         $scope.freeze = false;
         $scope.submit = function(){
             $scope.freeze = true;
-            $scope.scoreengine.$save(
+            $scope.scoreenginetemplate.$save(
                 function(data){
-                    $location.path('/#/adminOverview').replace();
+                    $location.path('/#/admin/adminOverview').replace();
                 },
                 function(err){$scope.freeze = false;});
         };
