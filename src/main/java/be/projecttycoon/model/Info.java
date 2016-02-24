@@ -16,6 +16,7 @@ import java.util.Set;
 @Entity
 public class Info {
 
+
     @Id
     @GeneratedValue
     @JsonProperty("id")

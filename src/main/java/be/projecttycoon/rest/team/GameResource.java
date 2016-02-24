@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/api/games")
 public class GameResource {
 
+    
     protected final GameRepository gameRepository;
     protected final TeamRepository teamRepository;
     protected final KnowledgeAreaRepository knowledgeAreaRepository;
