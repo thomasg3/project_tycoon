@@ -67,7 +67,6 @@ public class InfoResource {
 
     }
 
-    //todo make sure teams can only see their own info
     @RequestMapping(value="/team/{id}",method = RequestMethod.GET)
     @Produces("application/json")
     public Collection<Info> getInfo(Principal p,@PathVariable long id){
