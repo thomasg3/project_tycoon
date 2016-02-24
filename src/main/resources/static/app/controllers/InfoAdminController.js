@@ -139,7 +139,6 @@ angular.module('projecttycoonControllers')
             else{
                 $scope.send.path = $scope.linkUrl;
             }
-            console.log($scope.send);
             return $scope.send;
         };
         $scope.checkWhatToDo = function(){
