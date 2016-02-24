@@ -4,7 +4,8 @@ import be.projecttycoon.MyScheduler;
 import be.projecttycoon.model.level.jobs.CloseLevelJob;
 import org.quartz.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * Created by thomas on 17/02/16.
@@ -16,6 +17,8 @@ public class Open implements LevelState {
     public Open(Level context){
 
         this.context = context;
+
+
         if(context.getTimestampStart() == 0){
             long currentTime=System.currentTimeMillis();
             // define the job and tie it to our CloseLevelJob class

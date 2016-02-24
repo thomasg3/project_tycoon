@@ -1,5 +1,9 @@
 package be.projecttycoon.model.level;
 
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by thomas on 17/02/16.
  */
@@ -8,6 +12,8 @@ public class Finished implements LevelState {
 
     public Finished(Level context){
         this.context = context;
+
+
     }
 
     @Override

@@ -12,9 +12,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -38,6 +37,8 @@ public class Level{
     private int minutesToClose=5;
     private long timestampStart;
     private long remainingMs;
+
+    private Date latestStateChange;
 
     @Transient
     private MyScheduler scheduler=new MyScheduler();
@@ -100,6 +101,15 @@ public class Level{
         return levelKnowledgeAreas;
     }
 
+    public Date getLatestStateChange() {
+        return latestStateChange;
+    }
+
+    public void setLatestStateChange(Date latestStateChange) {
+        this.latestStateChange = latestStateChange;
+
+    }
+
     @Transient
     @JsonIgnore
     public List<LevelKnowledgeArea> getPublicKnowledgeAreas(){
@@ -136,6 +146,7 @@ public class Level{
 
     public void setState(String state){
         this.state = state;
+        this.setLatestStateChange(new Date());
         updateState();
     }
 
