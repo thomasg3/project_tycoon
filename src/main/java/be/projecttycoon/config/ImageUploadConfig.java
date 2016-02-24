@@ -20,12 +20,11 @@ public class ImageUploadConfig {
     }
 
 
-    /*todo kies logische filegrootte*/
     @Bean
     MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
-        factory.setMaxFileSize(999999999);
-        factory.setMaxRequestSize(999999999);
+        factory.setMaxFileSize(20000000);
+        factory.setMaxRequestSize(20000000);
         //factory.setFileSizeThreshold();
         //factory.setLocation();
 

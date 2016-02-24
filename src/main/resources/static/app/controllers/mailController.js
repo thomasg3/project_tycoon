@@ -3,11 +3,11 @@
  */
 
 angular.module('projecttycoonControllers')
-    .controller('mailController', function($scope, $http,$routeParams, GameResource, MailAdminResource, $rootScope, filterFilter) {
+    .controller('mailController', function($scope, $http,$routeParams, GameAdminResource, MailAdminResource, $rootScope, filterFilter) {
         $scope.data = $rootScope.MainUser;
         $scope.hide = 1;
         $scope.mail=new MailAdminResource();
-        GameResource.get({id : $routeParams.id}, function(data){
+        GameAdminResource.get({id : $routeParams.id}, function(data){
             $scope.game = data;
             var teams=$scope.game.teams;
             for(var i=0; i< teams.length;i++){

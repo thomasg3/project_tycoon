@@ -52,8 +52,6 @@ public class Team{
     private TeamState state;
 
 
-    //todo errors/bean validation
-
     //constructors
     public Team() {
         state = TeamState.UNREGISTERED;

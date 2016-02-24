@@ -12,6 +12,7 @@ import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by kiwi on 18/02/2016.
@@ -37,21 +38,18 @@ public class MailController {
 
                 List<Team> teams = mail.getRecipients();
                 teams.add(principal);
-                Set<String> recipients = new HashSet<String>();
-                for (Team team : teams) {
-                    String email = team.getEmail();
-                    if (email != null) {
-                        recipients.add(email);
-                    }
-                }
+                Set<String> recipients = teams.stream()
+                        .map(t -> t.getEmail())
+                        .filter(e -> e != null)
+                        .collect(Collectors.toSet());
                 gmail.sendEmail(recipients, mail.getSubject(), mail.getMessage());
             } else {
-                //todo not allowed...
+
             }
         }
         catch (Exception ex){
             ex.printStackTrace();
-            //todo send "failed" back....
+            throw new RuntimeException(ex);
         }
     }
 }
