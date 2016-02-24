@@ -2,8 +2,6 @@ package be.projecttycoon.model.level;
 
 
 import be.projecttycoon.model.LevelKnowledgeArea;
-import org.quartz.JobKey;
-import org.quartz.SchedulerException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
