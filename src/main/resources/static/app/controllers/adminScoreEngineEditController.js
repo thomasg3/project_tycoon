@@ -79,10 +79,13 @@ angular.module('projecttycoonControllers')
                     QuestionAdminResource.get({id : $scope.levelkn.question.id}, function(question){
                         question.answers = $scope.levelkn.question.answers;
                         question.$updateAnswers({id : question.id}, function(data){
-                            $scope.levelkn.question.answers.push({answer: "", score:""});
+                            if($scope.levelkn.question.answers[$scope.levelkn.question.answers.length - 1].answer != ""){
+                                $scope.levelkn.question.answers.push({answer: "", score:""});
+                            }
                         });
                     });
                 };
+
 
                 $scope.deleteAnswer = function(answer) {
                     for(var i=0; i< $scope.levelkn.question.answers.length; i++) {
