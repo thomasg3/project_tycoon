@@ -107,6 +107,56 @@ public class ScoreEngine {
         }
     }
 
+    public void calculateScoresForCompleteGame(Game game){
+        List<TeamLevelPrestation> teamLevelPrestations = new ArrayList<>();
+        for (Team t: game.getTeams()){
+            teamLevelPrestations.addAll(t.getTeamLevelPrestations());
+        }
+        for(Level l: game.getLevels()){
+            if(l.isFinished() || l.isConcluded() || l.isCermonie()){
+                calculateScores(teamLevelPrestations, l);
+            }
+        }
+    }
+
+
+    public void calculateScores(List<TeamLevelPrestation> teamLevelPrestations, Level level){
+        CalculationStrategy calculationStrategy;
+        resetScoresForLevel(teamLevelPrestations, level);
+        for(LevelKnowledgeArea lka:  level.getLevelKnowledgeAreas()){
+            for (TeamLevelPrestation tlp : teamLevelPrestations) {
+                if(tlp.getLevel().getId() == level.getId()){
+                    for(KnowledgeAreaScore kas: tlp.getKnowledgeAreaScores()){
+                        if(kas.getKnowledgeArea().equals(lka.getKnowledgeArea())){
+                            if(lka.getQuestion() != null){
+                                Question question = lka.getQuestion();
+                                if(question.getFormat().equals(ScoreFormat.RANGE) || question.getFormat().equals(ScoreFormat.AMOUNT_RANGE) || question.getFormat().equals(ScoreFormat.PERCENT_RANGE)){
+                                    calculationStrategy = new RangeCalculation();
+                                }
+                                else if(question.getFormat().equals(ScoreFormat.ENUMERATION)){
+                                    calculationStrategy = new EnumeratioCalculation();
+                                }
+                                else if(question.getFormat().equals(ScoreFormat.INT)){
+                                    calculationStrategy = new IntCalculation();
+                                }
+                                else{
+                                    calculationStrategy = new StringCalculation();
+                                }
+
+                                System.out.println(level.getName() + " " + lka.getKnowledgeArea().getName());
+                                calculationStrategy.calculateScore(kas, question);
+                            }
+                            else{
+                                kas.setScore(0);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
     public void calculateScores(List<TeamLevelPrestation> teamLevelPrestations, List<LevelKnowledgeArea> levelKnowledgeAreas){
         CalculationStrategy calculationStrategy;
         resetScores(teamLevelPrestations);
@@ -139,7 +189,17 @@ public class ScoreEngine {
         }
     }
 
-    private void resetScores(List<TeamLevelPrestation> teamLevelPrestations){
+    public void resetScoresForLevel(List<TeamLevelPrestation> teamLevelPrestations, Level level){
+        for(TeamLevelPrestation tlp: teamLevelPrestations){
+            if(tlp.getLevel().getId() == level.getId()){
+                for(KnowledgeAreaScore kas: tlp.getKnowledgeAreaScores()){
+                    kas.setScore(0);
+                }
+            }
+        }
+    }
+
+    public void resetScores(List<TeamLevelPrestation> teamLevelPrestations){
         for(TeamLevelPrestation tlp: teamLevelPrestations){
             for(KnowledgeAreaScore kas: tlp.getKnowledgeAreaScores()){
                 kas.setScore(0);

@@ -22,21 +22,25 @@ public class EnumeratioCalculation implements CalculationStrategy {
         List<Enumeration> answers = new ArrayList<>();
         int score = 0;
         for(Answer answer: question.getAnswers()){
-            String cleanInput = Cleaner.clean(answer.getAnswer());
             String[] split = Splitter.split(Cleaner.clean(answer.getAnswer()));
             answers.add(new Enumeration(answer.getScore(), split));
         }
 
         for(Enumeration enumeration: answers){
             if(enumeration.match(knowledgeAreaScore.getAnswer())){
+                System.out.println(knowledgeAreaScore.getAnswer() + " ==== " + enumeration.toString());
                 score = enumeration.getScore();
+
+                if(knowledgeAreaScore.getScore() == 0){
+                    knowledgeAreaScore.setScore(score);
+                } else if(score > knowledgeAreaScore.getScore()){
+                    knowledgeAreaScore.setScore(score);
+                }
+                System.out.println(knowledgeAreaScore.getScore());
+
             }
         }
 
-        if(knowledgeAreaScore.getScore() == 0){
-            knowledgeAreaScore.setScore(score);
-        } else if(score > knowledgeAreaScore.getScore()){
-            knowledgeAreaScore.setScore(score);
-        }
+
     }
 }

@@ -9,6 +9,7 @@
             <property name="toplink.jdbc.url" value="jdbc:hsqldb:mem:tycoondb" />
             <property name="toplink.jdbc.user" value="sa" />
             <property name="toplink.jdbc.password" value="" />
+            <property name="toplink.logging.level" value="OFF"/>
         </properties>
     </persistence-unit>
 </persistence>

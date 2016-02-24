@@ -152,7 +152,11 @@ public class Game {
                 '}';
     }
 
-    public void calculateScores(List<TeamLevelPrestation> teamLevelPrestations, List<LevelKnowledgeArea> levelKnowledgeAreas){
-        //scoreengine....
+    public List<TeamLevelPrestation> getAllTeamLevelPrestations(){
+        List<TeamLevelPrestation> teamLevelPrestations = new ArrayList<>();
+        for(Team t: getTeams()){
+            teamLevelPrestations.addAll(t.getTeamLevelPrestations());
+        }
+        return teamLevelPrestations;
     }
 }

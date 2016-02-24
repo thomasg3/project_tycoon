@@ -7,6 +7,7 @@ import be.projecttycoon.model.ScoreEngine.ScoreEngine;
 import be.projecttycoon.model.ScoreEngineTemplate.ScoreEngineTemplate;
 import be.projecttycoon.model.Team;
 import be.projecttycoon.model.TeamLevelPrestation;
+import be.projecttycoon.model.level.Level;
 import be.projecttycoon.rest.exception.NotAuthorizedException;
 import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.team.GameResource;
@@ -126,5 +127,32 @@ public class GameAdminResource extends GameResource {
         }
         return count;
     }
+
+    @RequestMapping(value = "/{id}/recalculate", method = RequestMethod.GET)
+    @Produces("application/json")
+    public Game recalculateGame(@PathVariable long id ){
+        Game game = gameRepository.findOne(id);
+        ScoreEngine scoreEngine = game.getScoreEngine();
+        if(game == null || scoreEngine == null)
+            throw new NotFoundException();
+        scoreEngine.calculateScoresForCompleteGame(game);
+        return gameRepository.save(game);
+    }
+
+
+    @RequestMapping(value = "/{id}/recalculate/{levelid}", method = RequestMethod.GET)
+    @Produces("application/json")
+    public Game recalculateLevel(@PathVariable long id, @PathVariable long levelid ){
+        Game game = gameRepository.findOne(id);
+        Level l = null;
+        for(Level level : game.getLevels()){
+            if(level.getId() == levelid){
+                l = level;
+            }
+        }
+        game.getScoreEngine().calculateScores(game.getAllTeamLevelPrestations(), l);
+        return gameRepository.save(game);
+    }
+
 
 }

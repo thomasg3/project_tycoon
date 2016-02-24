@@ -7,12 +7,14 @@ import be.projecttycoon.model.ScoreEngineTemplate.LevelKnowledgeAreaTemplate;
 import be.projecttycoon.model.ScoreEngineTemplate.LevelTemplate;
 import be.projecttycoon.model.ScoreEngineTemplate.ScoreEngineTemplate;
 import be.projecttycoon.model.level.*;
+import be.projecttycoon.model.level.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.*;
 
 /**
  * Created by thomas on 18/02/16.
@@ -163,7 +165,7 @@ public class StartupScript {
         teams.stream().forEach(team -> {
             team.getTeamLevelPrestations().stream().forEach(p -> {
                 p.getKnowledgeAreaScores().stream().forEach(kas -> {
-                    kas.setAnswer("test");
+                    kas.setAnswer("5-5-5");
                 });
             });
         });
