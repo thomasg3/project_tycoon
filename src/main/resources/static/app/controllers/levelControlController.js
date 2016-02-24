@@ -36,7 +36,7 @@ angular.module('projecttycoonControllers')
                     updateList();
                 })
                 .error(function(err){
-                    $scope.errors.push('Oops, something went wrong...');
+                    $scope.errors.push('You cannot change to this state now...');
                 });
         };
          GameAdminResource.getTeamsForOverview({id: $routeParams.gameid},function(teams){
