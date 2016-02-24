@@ -7,7 +7,7 @@ angular.module('projecttycoonControllers')
         ScoreEngineTemplateAdminResource.get({id: $routeParams.id}, function(data){
             $scope.scoreEngineTemplate = data;
         });
-    }).directive('myLevel', function($http, QuestionAdminResource) {
+    }).directive('myLevel', function($http, LevelTemplateResource, LevelAdminResource) {
         return {
             restrict: 'E',
             scope: {
@@ -15,6 +15,16 @@ angular.module('projecttycoonControllers')
             },
             templateUrl: "views/game/level/level-iso.html",
             link: function ($scope) {
+
+                $scope.changeLevelName = function(id) {
+                    LevelTemplateResource.get({id : id}, function(data){
+                        data.name = $scope.my_level.name;
+                        data.$update({id : id}, function(data){
+                            $scope.my_level = data;
+                        });
+                    });
+
+                };
 
             }
         };
@@ -35,6 +45,7 @@ angular.module('projecttycoonControllers')
                         }
                     }
                 });
+
 
                 $scope.saved = false;
                 if($scope.question){
@@ -79,10 +90,13 @@ angular.module('projecttycoonControllers')
                     QuestionAdminResource.get({id : $scope.levelkn.question.id}, function(question){
                         question.answers = $scope.levelkn.question.answers;
                         question.$updateAnswers({id : question.id}, function(data){
-                            $scope.levelkn.question.answers.push({answer: "", score:""});
+                            if($scope.levelkn.question.answers[$scope.levelkn.question.answers.length - 1].answer != ""){
+                                $scope.levelkn.question.answers.push({answer: "", score:""});
+                            }
                         });
                     });
                 };
+
 
                 $scope.deleteAnswer = function(answer) {
                     for(var i=0; i< $scope.levelkn.question.answers.length; i++) {
