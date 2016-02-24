@@ -33,7 +33,7 @@ public class Level{
     private String name;
 
 
-    private int minutesToClose=5;
+    private int minutesToClose=30;
     private long timestampStart;
     private long remainingMs;
 
