@@ -156,6 +156,7 @@ public class Game {
                 '}';
     }
 
+    @JsonIgnore
     public List<TeamLevelPrestation> getAllTeamLevelPrestations(){
         List<TeamLevelPrestation> teamLevelPrestations = new ArrayList<>();
         for(Team t: getTeams()){

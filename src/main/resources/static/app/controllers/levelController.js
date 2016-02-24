@@ -16,7 +16,7 @@ angular.module('projecttycoonControllers')
                     }
                 }
 
-                LevelResource.getPublicLevel({id: $scope.activelevel}, function(level){
+                LevelResource.get({id: $scope.activelevel}, function(level){
                     $scope.level = level;
                 });
             });
@@ -34,7 +34,7 @@ angular.module('projecttycoonControllers')
                     }
                 }
 
-                LevelResource.getPublicLevel({id: $scope.activelevel}, function(level){
+                LevelResource.get({id: $scope.activelevel}, function(level){
                     $scope.level = level;
                 });
             });
@@ -70,6 +70,7 @@ angular.module('projecttycoonControllers')
                                         $scope.answerd = true;
                                     }
                                 });
+                                break;
                             }
                         }
                     }

@@ -6,6 +6,7 @@ import be.projecttycoon.model.ScoreEngine.CalculationStrategies.IntCalculation;
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.RangeCalculation;
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.StringCalculation;
 import be.projecttycoon.model.ScoreEngineTemplate.LevelKnowledgeAreaTemplate;
+import be.projecttycoon.model.ScoreEngineTemplate.LevelTemplate;
 import be.projecttycoon.model.ScoreEngineTemplate.ScoreEngineTemplate;
 import be.projecttycoon.model.level.Level;
 import org.hibernate.annotations.Fetch;
@@ -93,9 +94,9 @@ public class ScoreEngine {
 
     private void useTemplate(){
         this.levels = new ArrayList<>();
-        for(int i = 0; i< scoreEngineTemplate.getLevelTemplates().size(); i++){
+        for(LevelTemplate levelTemplate : scoreEngineTemplate.getLevelTemplates()){
             List<LevelKnowledgeArea> levelKnowledgeAreas = new ArrayList<>();
-            for(LevelKnowledgeAreaTemplate lkatemplate: scoreEngineTemplate.getLevelTemplates().get(i).getLevelKnowledgeAreaTemplates()){
+            for(LevelKnowledgeAreaTemplate lkatemplate: levelTemplate.getLevelKnowledgeAreaTemplates()){
                 LevelKnowledgeArea levelKnowledgeArea = new LevelKnowledgeArea();
 
                 levelKnowledgeArea.setKnowledgeArea(lkatemplate.getKnowledgeArea());
@@ -103,7 +104,7 @@ public class ScoreEngine {
 
                 levelKnowledgeAreas.add(levelKnowledgeArea);
             }
-            getLevels().add(new Level(scoreEngineTemplate.getLevelTemplates().get(i).getName(), scoreEngineTemplate.getLevelTemplates().get(i).getRound(), levelKnowledgeAreas));
+            getLevels().add(new Level(levelTemplate.getName(), levelTemplate.getRound(), levelKnowledgeAreas));
         }
     }
 

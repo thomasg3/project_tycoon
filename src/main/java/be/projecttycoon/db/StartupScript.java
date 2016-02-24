@@ -67,12 +67,12 @@ public class StartupScript {
             knowledgeAreaRepository.save(new KnowledgeArea(areas[i], i));
         }
 
-        ScoreEngineTemplate scoreEngineTemplate1 = new ScoreEngineTemplate("Template1", 5,knowledgeAreaRepository.findAll());
+        ScoreEngineTemplate scoreEngineTemplate1 = new ScoreEngineTemplate("Template1", 1,knowledgeAreaRepository.findAll());
         ScoreEngineTemplate scoreEngineTemplate2 = new ScoreEngineTemplate("Template2", 2,knowledgeAreaRepository.findAll());
         ScoreEngineTemplate scoreEngineTemplate3 = new ScoreEngineTemplate("Template3", 8,knowledgeAreaRepository.findAll());
         ScoreEngineTemplate scoreEngineTemplate4 = new ScoreEngineTemplate("Template4", 3,knowledgeAreaRepository.findAll());
 
-        fillQuestions(scoreEngineTemplate1);
+        fillRealisticQuestions(scoreEngineTemplate1);
         fillQuestions(scoreEngineTemplate3);
 
         scoreEngineTemplateRepository.save(scoreEngineTemplate1);
@@ -80,8 +80,10 @@ public class StartupScript {
         scoreEngineTemplateRepository.save(scoreEngineTemplate3);
         scoreEngineTemplateRepository.save(scoreEngineTemplate4);
 
+
         ScoreEngine scoreEngine1 = new ScoreEngine(scoreEngineTemplate1);
         ScoreEngine scoreEngine3 = new ScoreEngine(scoreEngineTemplate3);
+
 
         scoreEngine3.getLevels().get(0).setState(Concluded.class.getSimpleName());
         scoreEngine3.getLevels().get(1).setState(Concluded.class.getSimpleName());
@@ -100,6 +102,7 @@ public class StartupScript {
                 lkn.getQuestion().setQuestion("Dit is een vraag");
             });
         });
+
 
         scoreEngineRepository.save(scoreEngine1);
         scoreEngineRepository.save(scoreEngine3);
@@ -121,19 +124,6 @@ public class StartupScript {
         teams22.get(2).setTeamname("MediumScore");
         teams22.get(2).setPassword("azerty");
         teams22.get(2).setRegistered(true);
-
-
-        for(KnowledgeAreaScore kas :  teams22.get(0).getTeamLevelPrestations().get(0).getKnowledgeAreaScores()){
-            kas.setAnswer("5-5-9");
-        }
-
-        for(KnowledgeAreaScore kas :  teams22.get(2).getTeamLevelPrestations().get(0).getKnowledgeAreaScores()){
-            kas.setAnswer("5-5-7");
-        }
-
-        for(KnowledgeAreaScore kas :  teams22.get(1).getTeamLevelPrestations().get(0).getKnowledgeAreaScores()){
-            kas.setAnswer("5-5-6");
-        }
 
         gameRepository.save(test);
 
@@ -217,6 +207,59 @@ public class StartupScript {
         stakeholder.setImagePath("https://pbs.twimg.com/profile_images/2186972673/super_mario.jpg");
         stakeholder.getLinks().add("http://mario.nintendo.com");
         stakeholderRepository.save(stakeholder);
+    }
+
+    private void fillRealisticQuestions(ScoreEngineTemplate scoreEngineTemplate){
+
+        //INTEGER
+        List<Answer> intanswers = new ArrayList<>();
+        intanswers.add(new Answer("5", 20));
+        intanswers.add(new Answer("9", 10));
+        intanswers.add(new Answer("10", -20));
+        Question intQuestion = new Question("Interger vraag correct: '5':20 --- '9':10 --- '10':-20", ScoreFormat.NUMBER, intanswers);
+
+        //RANGE
+        List<Answer> rangeanswers = new ArrayList<>();
+        rangeanswers.add(new Answer("5-20", 20));
+        rangeanswers.add(new Answer("20-25", 10));
+        rangeanswers.add(new Answer("0-5", -20));
+        Question rangeQuestion = new Question("Range vraag correct: '5-20':20 --- '20-25':10 --- '0-5':-20", ScoreFormat.RANGE, rangeanswers);
+
+        //STRING
+        List<Answer> stringanswers = new ArrayList<>();
+        rangeanswers.add(new Answer("Test", 20));
+        rangeanswers.add(new Answer("Test1", 10));
+        rangeanswers.add(new Answer("meerdere woorden test", -20));
+        Question stringQuestion = new Question("String vraag correct: 'Test':20 --- 'Test1':10 --- 'meerdere woorden test':-20", ScoreFormat.WORD, stringanswers);
+
+        //ENUMERATION
+        List<Answer> enumanswers = new ArrayList<>();
+        rangeanswers.add(new Answer("5-8-9", 20));
+        rangeanswers.add(new Answer("5-8-*", 10));
+        rangeanswers.add(new Answer("4-*-3", -20));
+        Question enumQuestion = new Question("List vraag correct: '5-8-9':20 --- '5-8-*':10 --- '4-*-3':-20", ScoreFormat.LIST, enumanswers);
+
+        List<Question> questions =  new ArrayList<>();
+        questions.add(intQuestion);
+        questions.add(rangeQuestion);
+        questions.add(stringQuestion);
+        questions.add(enumQuestion);
+
+        int random = 0;
+        Question q = null;
+        for(LevelTemplate l: scoreEngineTemplate.getLevelTemplates()){
+            for(LevelKnowledgeAreaTemplate lk : l.getLevelKnowledgeAreaTemplates()){
+                random = new Random().nextInt(4);
+                q = questions.get(random);
+                lk.getQuestion().setQuestion(q.getQuestion());
+                lk.getQuestion().setFormat(q.getFormat());
+                List<Answer> answers = new ArrayList<>();
+                for(Answer a: q.getAnswers()){
+                    answers.add(new Answer(a.getAnswer(), a.getScore()));
+                }
+                lk.getQuestion().setAnswers(answers);
+            }
+        }
     }
 
     private void fillQuestions(ScoreEngineTemplate scoreEngineTemplate){
