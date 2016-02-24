@@ -59,8 +59,17 @@ angular.module('projecttycoonControllers')
             
         };
 
+        $scope.info = new InfoAdminResource();
+        $scope.info.tags = [];
+        $scope.removeTag = function(index){
+            $scope.info.tags.splice(index, 1)
+        };
+        $scope.addTag = function(){
+            $scope.info.tags.push($scope.tagModel);
+            $scope.tagModel = "";
+        };
+
         $scope.deleteInfo = function(id){
-            console.log("I am trying to delete");
             InfoAdminResource.delete({id:id}).$promise.then(function(data){
                 $scope.showInfo(data);
             });
@@ -76,6 +85,7 @@ angular.module('projecttycoonControllers')
                 $scope.description=data.description;
                 $scope.unlockedAt=data.unlockedAtLevel;
                 $scope.type=data.type;
+                $scope.info.tags = data.tags;
                 var url = data.path.split('/');
                 var parsed = url[url.length-1];
                 if(data.type=="Video"){
@@ -98,7 +108,6 @@ angular.module('projecttycoonControllers')
 
             //get info out form
             $scope.updateInfo = $scope.getInfoFromForm();
-            console.log($scope.updateInfo);
             //check if file is selected if so upload it
             if($scope.filename){
                 $scope.uploadFile();
@@ -114,7 +123,8 @@ angular.module('projecttycoonControllers')
             $scope.send={
                 description:$scope.description,
                 unlockedAtLevel:$scope.unlockedAt,
-                type:$scope.type
+                type:$scope.type,
+                tags : $scope.info.tags
             };
 
             if($scope.type=='Video'){

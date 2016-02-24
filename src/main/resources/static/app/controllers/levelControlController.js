@@ -36,7 +36,7 @@ angular.module('projecttycoonControllers')
                     updateList();
                 })
                 .error(function(err){
-                    $scope.errors.push('Oops, something went wrong...');
+                    $scope.errors.push('You cannot change to this state now...');
                 });
         };
          GameAdminResource.getTeamsForOverview({id: $routeParams.gameid},function(teams){
@@ -55,14 +55,14 @@ angular.module('projecttycoonControllers')
         };
 
         $scope.sendChanges = function(id,info,checked){
-            console.log(id);
+
             if(checked.target.checked){
-                console.log("checked");
+
                 //remove id from blacklist
                 InfoAdminResource.removeTeamFromBlackList({id:info.id ,team:id });
             }
             else{
-                console.log("not checked");
+
                 //put id in blacklist
                 InfoAdminResource.addTeamToBlackList({id:info.id , team:id});
             }

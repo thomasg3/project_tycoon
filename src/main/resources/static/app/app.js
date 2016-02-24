@@ -3,7 +3,7 @@
  */
 var app = angular.module('projecttycoon', [ 'ngRoute', 'projecttycoonControllers', 'ngResource', 'ngFileUpload']);
 
-app.factory('httpInterceptor', ['$q', '$location', '$log', function($q, $location, $log){
+app.factory('httpInterceptor', ['$q', '$rootScope' ,'$location', '$log', function($q, $rootScope ,$location, $log){
     return {
         response: function(response){
             return response;
@@ -11,14 +11,19 @@ app.factory('httpInterceptor', ['$q', '$location', '$log', function($q, $locatio
         responseError: function(response){
             switch(response.status){
                 case 401:
-                    if(response.config.url != "user")
-                        window.location =  '#/login';
+                    if(response.config.url != "user") {
+                        window.location = '#/login';
+                        $rootScope.$broadcast('http401', {response: response});
+                    }
                     break;
                 case 403:
                     window.location =  '#/forbidden';
                     break;
                 case 404:
                     window.location =  '#/not_found';
+                    break;
+                case 500:
+                    $rootScope.$broadcast('http500', {response: response});
                     break;
                 default:
                     break;
@@ -185,6 +190,10 @@ app.config(function($routeProvider, $httpProvider) {
             .when('/stakeholders/:id', {
                 templateUrl : 'views/stakeholders/details.public.html',
                 controller : 'stakeholderDetailController'
+            })
+            .when('/info/:id',{
+                templateUrl : 'views/game/detailInfo.html',
+                controller: 'info'
             })
             .otherwise('/');
 

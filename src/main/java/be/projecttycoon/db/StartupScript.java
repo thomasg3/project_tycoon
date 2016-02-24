@@ -11,10 +11,7 @@ import be.projecttycoon.model.level.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.logging.*;
+import java.util.*;
 
 /**
  * Created by thomas on 18/02/16.
@@ -165,7 +162,7 @@ public class StartupScript {
         teams.stream().forEach(team -> {
             team.getTeamLevelPrestations().stream().forEach(p -> {
                 p.getKnowledgeAreaScores().stream().forEach(kas -> {
-                    kas.setAnswer("5-5-5");
+                    kas.setAnswer("test");
                 });
             });
         });
@@ -185,8 +182,13 @@ public class StartupScript {
 
         Info i = new Info(1,"test info", "http://i.imgur.com/1rHMtFM.gif", InfoType.Image);
         Info i2 = new Info(1,"test video","https://www.youtube.com/embed/czezOcHfLS4",InfoType.Video);
-        Info i3 = new Info(3,"test info", "https://scontent-ams2-1.xx.fbcdn.net/hphotos-xlf1/v/t1.0-9/12741902_796295903848673_3248892646472531132_n.jpg?oh=4f86f8da49bbee6fc022efb45e73dcea&oe=572AC943", InfoType.Image);
+        Info i3 = new Info(3,"test info", "https://bartbriers.files.wordpress.com/2012/11/gsummit3.jpg", InfoType.Image);
         i2.addTeamToBlackList(8);
+        Set<String> tags = new HashSet<String>();
+        tags.add("bart briers");
+        tags.add("guitar");
+        tags.add("rocking");
+        i3.setTags(tags);
         infoRepository.save(i);
         infoRepository.save(i2);
         infoRepository.save(i3);
