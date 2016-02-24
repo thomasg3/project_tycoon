@@ -8,7 +8,7 @@
         <p>{{stakeholder.description}}</p>
         <h3 ng-show="stakeholder.links.length != 0" >Links</h3>
         <div class="list-group">
-            <a class="list-group-item" ng-repeat="link in stakeholder.links" ng-href="{{link}}">{{link}}</a>
+            <a class="list-group-item" ng-repeat="link in stakeholder.links" ng-href="{{link}}"><i class="fa fa-link"></i> {{link}}</a>
         </div>
     </div>
 </div>

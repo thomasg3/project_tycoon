@@ -5,7 +5,7 @@
 -->
 
 <h1>GameScore Details</h1>
-<a href="#/admin/dashboard/{{game.id}}" class="btn btn-default">Back to overview</a>
+<a href="#/admin/dashboard/{{game.id}}" class="btn btn-default"><i class="fa fa-trophy"></i> Dashboard</a>
 <div class="row">
     <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
@@ -17,8 +17,8 @@
 <div class="panel panel-default" ng-repeat="level in game.levels track by $index">
     <div class="panel-heading" data-toggle="collapse" data-target="#{{$index}}" aria-expanded="false" aria-controls="{{$index}}">
         <h2>{{level.round}}. {{level.name}}</h2>
-        <a href="#/admin/games/{{game.id}}/levels/{{level.id}}/editscores" class="btn btn-default" ng-show="MainUser.admin">Edit Scores</a>
-        <a ng-click="recalculateLevel(level.id)" class="btn btn-default" ng-show="MainUser.admin">Recalculate scores</a>
+        <a href="#/admin/games/{{game.id}}/levels/{{level.id}}/editscores" class="btn btn-default" ng-show="MainUser.admin"><i class="fa fa-edit"></i> Edit Scores</a>
+        <a ng-click="recalculateLevel(level.id)" class="btn btn-default" ng-show="MainUser.admin"><i class="fa fa-calculator"></i> Recalculate scores</a>
         <table class="table">
             <tr>
                 <td ng-repeat="team in game.teams">{{team.teamname}} : {{team.teamLevelPrestations[level.round-1].levelScore}}</td>

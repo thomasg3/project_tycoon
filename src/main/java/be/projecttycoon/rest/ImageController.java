@@ -2,6 +2,7 @@ package be.projecttycoon.rest;
 
 import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Team;
+import be.projecttycoon.rest.exception.NotAuthorizedException;
 import be.projecttycoon.rest.util.UrlBean;
 import jdk.nashorn.internal.objects.ArrayBufferView;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -69,8 +70,7 @@ public class ImageController {
                     return new UrlBean(outputPath);
                 }
                 else{
-                    //todo not allowed...
-                    throw new RuntimeException("not allowed Imagecontroller");
+                    throw new NotAuthorizedException();
                 }
 
             } catch (Exception e) {
@@ -92,8 +92,7 @@ public class ImageController {
                     teamrep.save(t);
                 }
                 else{
-                    //todo not allowed...
-                    throw new RuntimeException("not allowed Imagecontroller");
+                    throw new NotAuthorizedException();
                 }
 
             } catch (Exception e) {
