@@ -22,6 +22,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.security.Principal;
 import java.util.*;
@@ -104,6 +105,8 @@ private LevelRepository levelRepository;
 
     @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
     public Collection<Info> deleteInfo(@PathVariable long id){
+        Info i = infoRepository.findOne(id);
+        deleteFile(i.getPath());
         infoRepository.delete(id);
         return getAllInfo();
     }
@@ -111,6 +114,9 @@ private LevelRepository levelRepository;
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public void updateInfo(@PathVariable long id,@RequestBody Info i){
         Info info = infoRepository.findOne(id);
+        if(info.getType().equals(InfoType.Document)&&!info.getPath().equals(i.getPath())){
+            deleteFile(info.getPath());
+        }
         info.setUnlockedAtLevel(i.getUnlockedAtLevel());
         info.setDescription(i.getDescription());
         info.setPath(i.getPath());
@@ -131,5 +137,9 @@ private LevelRepository levelRepository;
         Info i = infoRepository.findOne(id);
         i.addTeamToBlackList(team);
         infoRepository.save(i);
+    }
+    private boolean deleteFile(String path){
+        File f  = new File(".."+path);
+        return f.delete();
     }
 }
