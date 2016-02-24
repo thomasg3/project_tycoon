@@ -16,7 +16,6 @@ import java.util.Set;
 @Entity
 public class Info {
 
-    //todo choose which team can see it
 
     @Id
     @GeneratedValue
