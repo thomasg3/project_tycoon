@@ -7,7 +7,7 @@ angular.module('projecttycoonControllers')
         ScoreEngineTemplateAdminResource.get({id: $routeParams.id}, function(data){
             $scope.scoreEngineTemplate = data;
         });
-    }).directive('myLevel', function($http, QuestionAdminResource) {
+    }).directive('myLevel', function($http, LevelTemplateResource, LevelAdminResource) {
         return {
             restrict: 'E',
             scope: {
@@ -15,6 +15,16 @@ angular.module('projecttycoonControllers')
             },
             templateUrl: "views/game/level/level-iso.html",
             link: function ($scope) {
+
+                $scope.changeLevelName = function(id) {
+                    LevelTemplateResource.get({id : id}, function(data){
+                        data.name = $scope.my_level.name;
+                        data.$update({id : id}, function(data){
+                            $scope.my_level = data;
+                        });
+                    });
+
+                };
 
             }
         };
@@ -35,6 +45,7 @@ angular.module('projecttycoonControllers')
                         }
                     }
                 });
+
 
                 $scope.saved = false;
                 if($scope.question){
