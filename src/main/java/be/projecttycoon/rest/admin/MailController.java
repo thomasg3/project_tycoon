@@ -46,12 +46,12 @@ public class MailController {
                 }
                 gmail.sendEmail(recipients, mail.getSubject(), mail.getMessage());
             } else {
-                //todo not allowed...
+
             }
         }
         catch (Exception ex){
             ex.printStackTrace();
-            //todo send "failed" back....
+            throw new RuntimeException(ex);
         }
     }
 }

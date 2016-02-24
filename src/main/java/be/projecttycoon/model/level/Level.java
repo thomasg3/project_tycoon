@@ -213,7 +213,6 @@ public class Level{
     }
 
 
-    //todo untested
     public long getRemainingMs(){
         long msecondsToClose=this.getMinutesToClose()*60000;
         long startTime= this.getTimestampStart();
@@ -253,7 +252,6 @@ public class Level{
     }
 
 
-    //todo untested
     public void removeCloseScheduler(){
         try {
             scheduler.getScheduler().deleteJob(JobKey.jobKey("CloseLevel"+this.getTimestampStart(), "closer"));
