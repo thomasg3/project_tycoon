@@ -12,7 +12,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -34,7 +33,7 @@ public class Level{
     private String name;
 
 
-    private int minutesToClose=5;
+    private int minutesToClose=30;
     private long timestampStart;
     private long remainingMs;
 
@@ -156,8 +155,8 @@ public class Level{
             this.levelState = new Open(this);
         } else if(Finished.class.getSimpleName().equals(state)){
             this.levelState = new Finished(this);
-        } else if(Cermonie.class.getSimpleName().equals(state)){
-            this.levelState = new Cermonie(this);
+        } else if(Ceremony.class.getSimpleName().equals(state)){
+            this.levelState = new Ceremony(this);
         } else if(Concluded.class.getSimpleName().equals(state)){
             this.levelState = new Concluded(this);
         } else {
@@ -233,7 +232,7 @@ public class Level{
         return levelState instanceof Finished;
     }
     public boolean isCermonie(){
-        return levelState instanceof Cermonie;
+        return levelState instanceof Ceremony;
     }
     public boolean isConcluded(){
         return levelState instanceof Concluded;

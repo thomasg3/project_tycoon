@@ -62,6 +62,7 @@ public class LevelAdminResource extends LevelResource {
                 case "close":
                     level.closeUp();
 
+
                     ScoreEngine scoreEngine = null;
                     List<TeamLevelPrestation> teamLevelPrestations = new ArrayList<>();
 
@@ -77,7 +78,8 @@ public class LevelAdminResource extends LevelResource {
                         }
                     }
 
-                    scoreEngine.calculateScores(teamLevelPrestations, level.getLevelKnowledgeAreas());
+                    scoreEngine.calculateScores(teamLevelPrestations, level);
+
                     break;
                 case "push":
                     level.pointPush();

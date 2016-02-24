@@ -85,7 +85,7 @@ public class StartupScript {
 
         scoreEngine3.getLevels().get(0).setState(Concluded.class.getSimpleName());
         scoreEngine3.getLevels().get(1).setState(Concluded.class.getSimpleName());
-        scoreEngine3.getLevels().get(2).setState(Cermonie.class.getSimpleName());
+        scoreEngine3.getLevels().get(2).setState(Ceremony.class.getSimpleName());
         scoreEngine3.getLevels().get(3).setState(Finished.class.getSimpleName());
         scoreEngine3.getLevels().get(4).setState(Finished.class.getSimpleName());
         scoreEngine3.getLevels().get(5).setState(Open.class.getSimpleName());
@@ -171,7 +171,7 @@ public class StartupScript {
         levels.addAll(scoreTest.getLevels());
         levels.get(0).setState(Concluded.class.getSimpleName());
         levels.get(1).setState(Concluded.class.getSimpleName());
-        levels.get(2).setState(Cermonie.class.getSimpleName());
+        levels.get(2).setState(Ceremony.class.getSimpleName());
         levels.get(3).setState(Finished.class.getSimpleName());
         levels.get(4).setState(Finished.class.getSimpleName());
         levels.get(5).setState(Open.class.getSimpleName());

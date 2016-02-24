@@ -8,10 +8,10 @@ import java.util.Date;
 /**
  * Created by thomas on 17/02/16.
  */
-public class Cermonie implements LevelState {
+public class Ceremony implements LevelState {
     private final Level context;
 
-    public Cermonie(Level context){
+    public Ceremony(Level context){
 
         this.context = context;
     }
