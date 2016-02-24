@@ -159,6 +159,9 @@ public class GameAdminResource extends GameResource {
     @RequestMapping(value="/{id}/teams.txt")
     public String getTeamsInText(@PathVariable long id){
         Game game = getGame(id);
+        if(game.getTeams().stream().anyMatch(t -> t.isRegistered())){
+            return "There is one registered team, so default passwords are not an option anymore.";
+        }
         StringBuilder stringBuilder = new StringBuilder();
         game.getTeams().forEach(t -> {
             stringBuilder.append(teamDelimiter);
@@ -166,7 +169,7 @@ public class GameAdminResource extends GameResource {
             stringBuilder.append(t.getTeamname());
             stringBuilder.append("\n");
             stringBuilder.append("Password:   ");
-            stringBuilder.append("");
+            stringBuilder.append(Game.PASSWORD);
             stringBuilder.append("\n");
         });
         return stringBuilder.toString();
