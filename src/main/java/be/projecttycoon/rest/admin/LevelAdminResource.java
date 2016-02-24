@@ -1,11 +1,9 @@
 package be.projecttycoon.rest.admin;
 
-import be.projecttycoon.db.GameRepository;
-import be.projecttycoon.db.LevelRepository;
-import be.projecttycoon.db.ScoreEngineRepository;
-import be.projecttycoon.db.TeamLevelPrestationRepository;
+import be.projecttycoon.db.*;
 import be.projecttycoon.model.Game;
 import be.projecttycoon.model.ScoreEngine.ScoreEngine;
+import be.projecttycoon.model.ScoreEngineTemplate.LevelTemplate;
 import be.projecttycoon.model.Team;
 import be.projecttycoon.model.TeamLevelPrestation;
 import be.projecttycoon.model.level.Level;
@@ -29,12 +27,14 @@ public class LevelAdminResource extends LevelResource {
 
     private ScoreEngineRepository scoreEngineRepository;
     private GameRepository gameRepository;
+    private LevelTemplateRepository levelTemplateRepository;
 
     @Autowired
-    public LevelAdminResource(LevelRepository levelRepository, TeamLevelPrestationRepository teamLevelPrestationRepository, ScoreEngineRepository scoreEngineRepository, GameRepository gameRepository) {
+    public LevelAdminResource(LevelRepository levelRepository, TeamLevelPrestationRepository teamLevelPrestationRepository, ScoreEngineRepository scoreEngineRepository, GameRepository gameRepository, LevelTemplateRepository levelTemplateRepository) {
         super(levelRepository, teamLevelPrestationRepository);
         this.scoreEngineRepository = scoreEngineRepository;
         this.gameRepository = gameRepository;
+        this.levelTemplateRepository = levelTemplateRepository;
     }
 
     @RequestMapping(value="/{id}", method = RequestMethod.GET)
@@ -96,11 +96,11 @@ public class LevelAdminResource extends LevelResource {
         return levelRepository.save(level);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Level updateLevel(@PathVariable long id, @RequestBody Level level){
-        getLevel(id);
-        level.setId(id);
-        return levelRepository.save(level);
+        Level l = levelRepository.findOne(id);
+        l.setName(level.getName());
+        return levelRepository.save(l);
     }
 
     @RequestMapping(method = RequestMethod.POST)
