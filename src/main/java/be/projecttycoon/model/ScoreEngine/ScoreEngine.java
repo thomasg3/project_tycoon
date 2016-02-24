@@ -207,6 +207,14 @@ public class ScoreEngine {
         }
     }
 
+    public ScoreEngineTemplate getScoreEngineTemplate() {
+        return scoreEngineTemplate;
+    }
+
+    public void setScoreEngineTemplate(ScoreEngineTemplate scoreEngineTemplate) {
+        this.scoreEngineTemplate = scoreEngineTemplate;
+    }
+
     @Override
     public String toString() {
         return "ScoreEngine{" +
