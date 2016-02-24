@@ -55,8 +55,10 @@ public class InfoResource {
     @Produces("application/json")
     public Info findOneInfo(Principal user, @PathVariable long id){
         Team team = teamRepository.findByTeamname(user.getName());
-        Game game = gameRepository.findAll().stream().filter(g -> g.containsTeam(team)).findFirst().orElse(null);
         Info info = infoRepository.findOne(id);
+        if(team.isAdmin())
+            return info;
+        Game game = gameRepository.findAll().stream().filter(g -> g.containsTeam(team)).findFirst().orElse(null);
         if(info == null || game == null)
             throw new NotFoundException();
         if(info.getUnlockedAtLevel() <= game.openLevel())
