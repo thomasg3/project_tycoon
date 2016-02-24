@@ -55,14 +55,14 @@ angular.module('projecttycoonControllers')
         };
 
         $scope.sendChanges = function(id,info,checked){
-            console.log(id);
+
             if(checked.target.checked){
-                console.log("checked");
+
                 //remove id from blacklist
                 InfoAdminResource.removeTeamFromBlackList({id:info.id ,team:id });
             }
             else{
-                console.log("not checked");
+
                 //put id in blacklist
                 InfoAdminResource.addTeamToBlackList({id:info.id , team:id});
             }

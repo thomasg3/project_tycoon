@@ -15,9 +15,7 @@ angular.module('projecttycoonControllers')
 
         //detail page
         if($routeParams.id){
-            console.log("im here");
             InfoResource.get({id:$routeParams.id}).$promise.then(function(info){
-                console.log(info);
                 $scope.info = info;
             })
         }
@@ -27,6 +25,9 @@ angular.module('projecttycoonControllers')
                 $scope.showInfo(data);
             })
         }
+
+
+
 /*      my own search function however we can use angular filter
         if we want to write something better perhaps we can enhance this
 
