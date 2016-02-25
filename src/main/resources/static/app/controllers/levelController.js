@@ -12,15 +12,19 @@ angular.module('projecttycoonControllers')
                 for(var i = 0; i<= $scope.levels.length -1; i++){
                     if($scope.levels[i].state === "Open"){
                         $scope.activelevel = $scope.levels[i].id;
+                        $scope.level = $scope.levels[i];
                         break;
                     }
                 }
 
+                /*
                 LevelResource.get({id: $scope.activelevel}, function(level){
                     $scope.level = level;
                 });
+                */
             });
         };
+
 
         var isRouteParmIdOpen = function(){
             GameResource.get({id : $routeParams.id}, function(game){
@@ -29,14 +33,17 @@ angular.module('projecttycoonControllers')
                     if($routeParams.activelevel == $scope.levels[i].id){
                         if($scope.levels[i].state === "Open"){
                             $scope.activelevel = $scope.levels[i].id;
+                            $scope.level = $scope.levels[i];
                             break;
                         }
                     }
                 }
 
+                /*
                 LevelResource.get({id: $scope.activelevel}, function(level){
                     $scope.level = level;
                 });
+                */
             });
         };
 
@@ -45,8 +52,6 @@ angular.module('projecttycoonControllers')
         }else{
             findFirstOpenLevel();
         }
-
-
 
 
     }).directive('questioninput', function($rootScope, KnowledgeAreaScoreResource, $http) {

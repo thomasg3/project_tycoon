@@ -84,6 +84,7 @@ public class StartupScript {
         ScoreEngine scoreEngine1 = new ScoreEngine(scoreEngineTemplate1);
         ScoreEngine scoreEngine3 = new ScoreEngine(scoreEngineTemplate3);
 
+        scoreEngine1.getLevels().get(0).setState(Open.class.getSimpleName());
 
         scoreEngine3.getLevels().get(0).setState(Concluded.class.getSimpleName());
         scoreEngine3.getLevels().get(1).setState(Concluded.class.getSimpleName());
