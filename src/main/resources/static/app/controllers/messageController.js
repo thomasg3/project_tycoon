@@ -8,6 +8,7 @@ angular.module('projecttycoonControllers')
         }
         reset();
         $scope.$on('http401', function(event, args){
+            reset();
             $scope.messages.push({
                 content: "You need to be logged in to see this",
                 warning: true
