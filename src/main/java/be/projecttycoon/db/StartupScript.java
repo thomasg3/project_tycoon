@@ -240,6 +240,7 @@ public class StartupScript {
         enumanswers.add(new Answer("4-*-3", -20));
         Question enumQuestion = new Question("List vraag correct: '5-8-9':20 --- '5-8-*':10 --- '4-*-3':-20", ScoreFormat.LIST, enumanswers);
 
+
         List<Question> questions =  new ArrayList<>();
         questions.add(intQuestion);
         questions.add(rangeQuestion);
