@@ -4,9 +4,9 @@
 <table class="table table-bordered table-condensed">
     <tbody>
     <tr>
-        <td><input ng-disabled="saved" ng-model="my_levelkn.question.question" type="text" class="form-control" placeholder="Question"/></td>
+        <td><input ng-blur="addQuestion(my_levelkn)" ng-disabled="saved" ng-model="my_levelkn.question.question" type="text" class="form-control" placeholder="Question"/></td>
         <td>
-             <select ng-disabled="saved" ng-model="selected" ng-options="format.format for format in formats"  class="form-control" id="format"></select>
+             <select ng-blur="addQuestion(my_levelkn)" ng-disabled="saved" ng-model="selected" ng-options="format.format for format in formats"  class="form-control" id="format"></select>
         </td>
         <td><button ng-disabled="saved" ng-click="addQuestion(my_levelkn)" class="btn btn-default" type="button">Add</button></td>
         <td><button ng-disabled="!saved" ng-click="deleteQuestion(my_levelkn)" class="btn btn-default" type="button">Edit</button></td>
