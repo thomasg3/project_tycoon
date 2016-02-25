@@ -7,4 +7,7 @@ angular.module('projecttycoonControllers')
         GameAdminResource.getTeamsForOverview({id : $routeParams.id}, function(data){
             $scope.teams = data;
         });
+        GameAdminResource.get({id : $routeParams.id}, function(data){
+            $scope.game = data;
+        })
     });
