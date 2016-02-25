@@ -9,5 +9,12 @@ angular.module('projecttycoonControllers')
         });
         GameAdminResource.get({id : $routeParams.id}, function(data){
             $scope.game = data;
-        })
+        });
+
+        $scope.deleteTeam = function (id) {
+            GameAdminResource.deleteTeam({id : id}, function(data){
+                $scope.game = data;
+                $scope.teams = data.teams;
+            })
+        };
     });
