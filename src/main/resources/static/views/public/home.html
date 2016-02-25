@@ -1,7 +1,101 @@
 <div class="jumbotron text-center">
-    <h1>ProjectTycoon</h1>
-    <img alt="Harold, the project management king!" src="http://pbs.twimg.com/media/CayilaBWIAA-1zk.jpg" class="img-responsive center-block img-rounded" />
+    <h1 class="text-primary">ProjectTycoon</h1>
     <br>
     <br>
     <a href="#/login" class="btn btn-lg btn-primary" ng-show="!authenticated">Login</a>
+</div>
+<div class="row" ng-show="authenticated&&MainUser.admin">
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="text-center">
+            <a href="#/admin/overview">
+                <p><i class="fa fa-gamepad fa-5x"></i></p>
+                <p class="text-uppercase">Game Overview</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="text-center">
+            <a href="#/admin/scoreEngineOverview">
+                <p><i class="fa fa-tachometer fa-5x"></i></p>
+                <p class="text-uppercase">Score Engine Overview</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="text-center">
+            <a href="#/admin/knowledgeareas/edit">
+                <p><i class="fa fa-flask fa-5x"></i></p>
+                <p class="text-uppercase">Knowledge Areas</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="text-center">
+            <a href="#/admin/info">
+                <p><i class="fa fa-file fa-5x"></i></p>
+                <p class="text-uppercase">Documents</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="text-center">
+            <a href="#/admin/stakeholders">
+                <p><i class="fa fa-users fa-5x"></i></p>
+                <p class="text-uppercase">Stakeholders</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="text-center">
+            <a href="">
+                <p><i class="fa fa-book fa-5x"></i></p>
+                <p class="text-uppercase">Admin Manual</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="authenticated&&!MainUser.admin">
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="text-center">
+            <a href="#/play">
+                <p><i class="fa fa-gamepad fa-5x"></i></p>
+                <p class="text-uppercase">Play</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="text-center">
+            <a href="#/dashboard">
+                <p><i class="fa fa-trophy fa-5x"></i></p>
+                <p class="text-uppercase">Dashboard</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="text-center">
+            <a href="#/stakeholders">
+                <p><i class="fa fa-users fa-5x"></i></p>
+                <p class="text-uppercase">Stakeholders</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="text-center">
+            <a href="#/info">
+                <p><i class="fa fa-file fa-5x"></i></p>
+                <p class="text-uppercase">Documents</p>
+            </a>
+        </div>
+    </div>
 </div>

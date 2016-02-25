@@ -32,7 +32,7 @@ angular.module('projecttycoonControllers')
             $scope.freeze = true;
             $scope.game.$save(
                 function(data){
-                    $location.path('/#/adminOverview').replace();
+                    $location.path('/admin/overview').replace();
                 },
                 function(err){$scope.freeze = false;});
         };
