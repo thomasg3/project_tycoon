@@ -17,7 +17,7 @@
                 <label class="col-md-2 control-label" for="answer">Answer:</label>
                 <div class="col-md-10">
                     <div class="input-group">
-                        <input type="text" class="form-control" id="answer" placeholder="Answer" aria-describedby="basic-addon20" ng-model="knowledgearea.answer">
+                        <input ng-blur="submitAnswer()" type="text" class="form-control" id="answer" placeholder="Answer" aria-describedby="basic-addon20" ng-model="knowledgearea.answer">
                         <span class="input-group-addon" id="basic-addon2" >{{my_levelkn.question.format}}</span>
                     </div>
                 </div>
