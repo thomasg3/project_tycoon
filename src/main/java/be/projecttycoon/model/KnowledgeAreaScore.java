@@ -17,6 +17,7 @@ public class KnowledgeAreaScore {
     private String answer;
 
     public KnowledgeAreaScore() {
+        answer="";
     }
 
     public long getId() {
@@ -28,13 +29,14 @@ public class KnowledgeAreaScore {
     }
 
     public KnowledgeAreaScore(KnowledgeArea knowledgeArea) {
+        this();
         this.knowledgeArea = knowledgeArea;
     }
 
     public KnowledgeAreaScore(KnowledgeArea knowledgeArea, int score, String answer) {
         this.knowledgeArea = knowledgeArea;
         this.score = score;
-        this.answer = answer;
+        setAnswer(answer);
     }
 
     public KnowledgeArea getKnowledgeArea() {
@@ -50,7 +52,12 @@ public class KnowledgeAreaScore {
     }
 
     public void setAnswer(String answer) {
-        this.answer = answer;
+        if(answer==null){
+            this.answer="";
+        }
+        else {
+            this.answer = answer;
+        }
     }
 
     public int getScore() {

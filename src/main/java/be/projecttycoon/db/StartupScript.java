@@ -217,7 +217,7 @@ public class StartupScript {
         intanswers.add(new Answer("5", 20));
         intanswers.add(new Answer("9", 10));
         intanswers.add(new Answer("10", -20));
-        Question intQuestion = new Question("Interger vraag correct: '5':20 --- '9':10 --- '10':-20", ScoreFormat.NUMBER, intanswers);
+        Question intQuestion = new Question("Integer vraag correct: '5':20 --- '9':10 --- '10':-20", ScoreFormat.NUMBER, intanswers);
 
         //RANGE
         List<Answer> rangeanswers = new ArrayList<>();
