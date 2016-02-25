@@ -1,3 +1,6 @@
+
+
+
 <ul class="nav nav-tabs">
     <li ng-disabled="!level.open" ng-repeat="level in levels" ng-class="{'active' : level.id == $parent.activelevel, 'disabled' : !level.open}" role="presentation"><a ng-class="{'disabled' : !level.open}" class="btn btn-primary" ng-disabled="!level.open" href="" ng-click="go(level.id)" >{{level.name}}</a></li>
 </ul>
@@ -5,4 +8,53 @@
 <h2>{{level.name}}</h2>
 <div ng-repeat="levelkn in level.levelKnowledgeAreas">
     <questioninput ng-hide="!levelkn.question.question" levelknowledgearea="levelkn" my-levelid="{{activelevel}}"></questioninput>
+</div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Formats</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Format</th>
+                        <th>Example 1</th>
+                        <th>Example 2</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>WORD</td>
+                        <td>Bart</td>
+                        <td>zwanger</td>
+                    </tr>
+                    <tr>
+                        <td>LIST</td>
+                        <td>5-5-8</td>
+                        <td>1-6-3</td>
+                    </tr>
+                    <tr>
+                        <td>RANGE</td>
+                        <td>9</td>
+                        <td>32</td>
+                    </tr>
+                    <tr>
+                        <td>NUMBER</td>
+                        <td>20</td>
+                        <td>17</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
 </div>
