@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -144,6 +145,8 @@ public class Team{
     }
 
     public List<TeamLevelPrestation> getTeamLevelPrestations() {
+        teamLevelPrestations
+                .sort((o1,o2)  -> o1.getLevel().getRound() - o2.getLevel().getRound());
         return teamLevelPrestations;
     }
 

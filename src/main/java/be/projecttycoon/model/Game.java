@@ -45,7 +45,6 @@ public class Game {
 
     public Game(String name, int teams, ScoreEngine scoreEngine){
         this();
-        this.teams = new HashSet<>();
         this.scoreEngine = scoreEngine;
         setName(name);
         generateTeam(teams);

@@ -43,6 +43,7 @@ public class LevelResource {
         Level level = getLevel(id);
         List<TeamLevelPrestation> result =  teamLevelPrestationRepository.findByLevel(level);
         result.forEach(tlp -> {tlp.setKnowledgeAreaScores(tlp.getPublicKnowledgeAreaScores());});
+        result.sort((t1, t2) -> t1.getLevel().getRound() - t2.getLevel().getRound());
         return result;
     }
 
