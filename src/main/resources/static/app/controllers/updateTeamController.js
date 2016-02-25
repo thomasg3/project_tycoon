@@ -56,10 +56,14 @@ angular.module('projecttycoonControllers')
 
                         TeamResource.update({id:updateTeam.id},updateTeam).$promise.then(function(value){
                             $location.path('/');
+                            if(updateTeam.id==MainUserResource.getMainUser().id){
+                                MainUserResource.saveMainUser(updateTeam);
+                            }
                         });
                         //if the user changed its team change the team in the rootScope
-                        if($scope.MainUser.teamname ==  $routeParams.teamname)
+                       /* if($scope.MainUser.teamname ==  $routeParams.teamname)
                             $scope.MainUser = updateTeam;
+                          */
                     }
                     else{
                         $scope.error=true;
