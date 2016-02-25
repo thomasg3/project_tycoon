@@ -48,7 +48,7 @@ angular.module('projecttycoonControllers')
 
 
                 $scope.saved = false;
-                if($scope.question){
+                if($scope.my_levelkn.question.question){
                     $scope.saved = true;
                 }
                 $scope.addQuestion = function(lk) {
