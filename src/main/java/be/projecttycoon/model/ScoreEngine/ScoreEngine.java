@@ -37,13 +37,6 @@ public class ScoreEngine {
         this.levels = new ArrayList<>();
     }
 
-    /*
-    public ScoreEngine(String name, int levels, List<KnowledgeArea> knowledgeAreas) {
-        this.name = name;
-        generateLevels(levels, knowledgeAreas);
-    }
-    */
-
     public ScoreEngine(ScoreEngineTemplate scoreEngineTemplate) {
         this.name = "default";
         this.scoreEngineTemplate = scoreEngineTemplate;
@@ -130,22 +123,26 @@ public class ScoreEngine {
                     for(KnowledgeAreaScore kas: tlp.getKnowledgeAreaScores()){
                         if(kas.getKnowledgeArea().equals(lka.getKnowledgeArea())){
                             if(lka.getQuestion() != null){
-                                Question question = lka.getQuestion();
-                                if(question.getFormat().equals(ScoreFormat.RANGE) || question.getFormat().equals(ScoreFormat.AMOUNT_RANGE) || question.getFormat().equals(ScoreFormat.PERCENTAGE_RANGE)){
-                                    calculationStrategy = new RangeCalculation();
-                                }
-                                else if(question.getFormat().equals(ScoreFormat.LIST)){
-                                    calculationStrategy = new EnumeratioCalculation();
-                                }
-                                else if(question.getFormat().equals(ScoreFormat.NUMBER)){
-                                    calculationStrategy = new IntCalculation();
-                                }
-                                else{
-                                    calculationStrategy = new StringCalculation();
-                                }
+                                if(lka.getQuestion().getAnswers().size() > 0){
+                                    Question question = lka.getQuestion();
+                                    if(question.getFormat().equals(ScoreFormat.RANGE) || question.getFormat().equals(ScoreFormat.AMOUNT_RANGE) || question.getFormat().equals(ScoreFormat.PERCENTAGE_RANGE)){
+                                        calculationStrategy = new RangeCalculation();
+                                    }
+                                    else if(question.getFormat().equals(ScoreFormat.LIST)){
+                                        calculationStrategy = new EnumeratioCalculation();
+                                    }
+                                    else if(question.getFormat().equals(ScoreFormat.NUMBER)){
+                                        calculationStrategy = new IntCalculation();
+                                    }
+                                    else{
+                                        calculationStrategy = new StringCalculation();
+                                    }
 
-                                System.out.println(level.getName() + " " + lka.getKnowledgeArea().getName());
-                                calculationStrategy.calculateScore(kas, question);
+                                    System.out.println(level.getName() + " " + lka.getKnowledgeArea().getName());
+                                    calculationStrategy.calculateScore(kas, question);
+                                } else{
+                                    kas.setScore(0);
+                                }
                             }
                             else{
                                 kas.setScore(0);
