@@ -121,7 +121,7 @@ public class GameAdminResource extends GameResource {
         int count = 0;
         for(TeamLevelPrestation tlp : team.getTeamLevelPrestations()){
             for(KnowledgeAreaScore kas: tlp.getKnowledgeAreaScores()){
-                if(kas.getAnswer() != null){
+                if(kas.getAnswer() != null&&!kas.getAnswer().isEmpty()){
                     count += 1;
                 }
             }
