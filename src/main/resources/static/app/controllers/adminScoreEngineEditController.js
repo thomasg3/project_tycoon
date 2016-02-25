@@ -52,13 +52,15 @@ angular.module('projecttycoonControllers')
                     $scope.saved = true;
                 }
                 $scope.addQuestion = function(lk) {
-                    QuestionAdminResource.get({id : lk.question.id}, function(question){
-                        question.question = lk.question.question;
-                        question.format = $scope.selected;
-                        question.$update({id : question.id}, function(data){
-                            $scope.saved = true;
+                    if(lk.question.question && $scope.selected){
+                        QuestionAdminResource.get({id : lk.question.id}, function(question){
+                            question.question = lk.question.question;
+                            question.format = $scope.selected;
+                            question.$update({id : question.id}, function(data){
+                                $scope.saved = true;
+                            });
                         });
-                    });
+                    }
                 };
 
                 $scope.deleteQuestion = function(lk) {

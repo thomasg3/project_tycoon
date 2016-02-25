@@ -27,7 +27,12 @@ public class RangeCalculation implements CalculationStrategy {
             String cleanInput = Cleaner.clean(answer.getAnswer());
             String[] split = Splitter.split(cleanInput);
 
-            answers.add(new Between(Integer.valueOf(split[0]),Integer.valueOf(split[1]), answer.getScore()));
+            try{
+                answers.add(new Between(Integer.valueOf(split[0]),Integer.valueOf(split[1]), answer.getScore()));
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
 
         for (Between between: answers) {
