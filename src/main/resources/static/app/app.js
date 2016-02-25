@@ -195,6 +195,10 @@ app.config(function($routeProvider, $httpProvider) {
                 templateUrl : 'views/game/detailInfo.html',
                 controller: 'info'
             })
+            .when('/play', {
+                templateUrl : 'views/game/play.html',
+                controller : 'playController'
+            })
             .otherwise('/');
 
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';

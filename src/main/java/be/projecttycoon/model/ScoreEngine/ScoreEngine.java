@@ -6,6 +6,7 @@ import be.projecttycoon.model.ScoreEngine.CalculationStrategies.IntCalculation;
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.RangeCalculation;
 import be.projecttycoon.model.ScoreEngine.CalculationStrategies.StringCalculation;
 import be.projecttycoon.model.ScoreEngineTemplate.LevelKnowledgeAreaTemplate;
+import be.projecttycoon.model.ScoreEngineTemplate.LevelTemplate;
 import be.projecttycoon.model.ScoreEngineTemplate.ScoreEngineTemplate;
 import be.projecttycoon.model.level.Level;
 import org.hibernate.annotations.Fetch;
@@ -35,13 +36,6 @@ public class ScoreEngine {
     public ScoreEngine(){
         this.levels = new ArrayList<>();
     }
-
-    /*
-    public ScoreEngine(String name, int levels, List<KnowledgeArea> knowledgeAreas) {
-        this.name = name;
-        generateLevels(levels, knowledgeAreas);
-    }
-    */
 
     public ScoreEngine(ScoreEngineTemplate scoreEngineTemplate) {
         this.name = "default";
@@ -93,9 +87,9 @@ public class ScoreEngine {
 
     private void useTemplate(){
         this.levels = new ArrayList<>();
-        for(int i = 0; i< scoreEngineTemplate.getLevelTemplates().size(); i++){
+        for(LevelTemplate levelTemplate : scoreEngineTemplate.getLevelTemplates()){
             List<LevelKnowledgeArea> levelKnowledgeAreas = new ArrayList<>();
-            for(LevelKnowledgeAreaTemplate lkatemplate: scoreEngineTemplate.getLevelTemplates().get(i).getLevelKnowledgeAreaTemplates()){
+            for(LevelKnowledgeAreaTemplate lkatemplate: levelTemplate.getLevelKnowledgeAreaTemplates()){
                 LevelKnowledgeArea levelKnowledgeArea = new LevelKnowledgeArea();
 
                 levelKnowledgeArea.setKnowledgeArea(lkatemplate.getKnowledgeArea());
@@ -103,7 +97,7 @@ public class ScoreEngine {
 
                 levelKnowledgeAreas.add(levelKnowledgeArea);
             }
-            getLevels().add(new Level(scoreEngineTemplate.getLevelTemplates().get(i).getName(), scoreEngineTemplate.getLevelTemplates().get(i).getRound(), levelKnowledgeAreas));
+            getLevels().add(new Level(levelTemplate.getName(), levelTemplate.getRound(), levelKnowledgeAreas));
         }
     }
 
@@ -129,22 +123,26 @@ public class ScoreEngine {
                     for(KnowledgeAreaScore kas: tlp.getKnowledgeAreaScores()){
                         if(kas.getKnowledgeArea().equals(lka.getKnowledgeArea())){
                             if(lka.getQuestion() != null){
-                                Question question = lka.getQuestion();
-                                if(question.getFormat().equals(ScoreFormat.RANGE) || question.getFormat().equals(ScoreFormat.AMOUNT_RANGE) || question.getFormat().equals(ScoreFormat.PERCENT_RANGE)){
-                                    calculationStrategy = new RangeCalculation();
-                                }
-                                else if(question.getFormat().equals(ScoreFormat.ENUMERATION)){
-                                    calculationStrategy = new EnumeratioCalculation();
-                                }
-                                else if(question.getFormat().equals(ScoreFormat.INT)){
-                                    calculationStrategy = new IntCalculation();
-                                }
-                                else{
-                                    calculationStrategy = new StringCalculation();
-                                }
+                                if(lka.getQuestion().getAnswers().size() > 0){
+                                    Question question = lka.getQuestion();
+                                    if(question.getFormat().equals(ScoreFormat.RANGE) || question.getFormat().equals(ScoreFormat.AMOUNT_RANGE) || question.getFormat().equals(ScoreFormat.PERCENTAGE_RANGE)){
+                                        calculationStrategy = new RangeCalculation();
+                                    }
+                                    else if(question.getFormat().equals(ScoreFormat.LIST)){
+                                        calculationStrategy = new EnumeratioCalculation();
+                                    }
+                                    else if(question.getFormat().equals(ScoreFormat.NUMBER)){
+                                        calculationStrategy = new IntCalculation();
+                                    }
+                                    else{
+                                        calculationStrategy = new StringCalculation();
+                                    }
 
-                                System.out.println(level.getName() + " " + lka.getKnowledgeArea().getName());
-                                calculationStrategy.calculateScore(kas, question);
+                                    System.out.println(level.getName() + " " + lka.getKnowledgeArea().getName());
+                                    calculationStrategy.calculateScore(kas, question);
+                                } else{
+                                    kas.setScore(0);
+                                }
                             }
                             else{
                                 kas.setScore(0);
@@ -167,13 +165,13 @@ public class ScoreEngine {
                 Question question = levelKnowledgeAreas.get(i).getQuestion();
                 if(knowledgeAreaScore.getAnswer() != null && !knowledgeAreaScore.getAnswer().isEmpty()){
                     if(question != null){
-                        if(question.getFormat().equals(ScoreFormat.RANGE) || question.getFormat().equals(ScoreFormat.AMOUNT_RANGE) || question.getFormat().equals(ScoreFormat.PERCENT_RANGE)){
+                        if(question.getFormat().equals(ScoreFormat.RANGE) || question.getFormat().equals(ScoreFormat.AMOUNT_RANGE) || question.getFormat().equals(ScoreFormat.PERCENTAGE_RANGE)){
                             calculationStrategy = new RangeCalculation();
                         }
-                        else if(question.getFormat().equals(ScoreFormat.ENUMERATION)){
+                        else if(question.getFormat().equals(ScoreFormat.LIST)){
                             calculationStrategy = new EnumeratioCalculation();
                         }
-                        else if(question.getFormat().equals(ScoreFormat.INT)){
+                        else if(question.getFormat().equals(ScoreFormat.NUMBER)){
                             calculationStrategy = new IntCalculation();
                         }
                         else{

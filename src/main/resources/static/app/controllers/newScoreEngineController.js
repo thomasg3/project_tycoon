@@ -11,7 +11,7 @@ angular.module('projecttycoonControllers')
             $scope.freeze = true;
             $scope.scoreenginetemplate.$save(
                 function(data){
-                    $location.path('/#/admin/adminOverview').replace();
+                    $location.path('/admin/scoreEngineOverview').replace();
                 },
                 function(err){$scope.freeze = false;});
         };

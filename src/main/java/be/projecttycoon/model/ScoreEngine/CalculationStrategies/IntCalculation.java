@@ -14,15 +14,18 @@ public class IntCalculation implements CalculationStrategy{
     @Override
     public void calculateScore(KnowledgeAreaScore knowledgeAreaScore, Question question) {
         int score = 0;
-        int teamanswer = (Integer.valueOf(knowledgeAreaScore.getAnswer()));
-        for(Answer answer : question.getAnswers()){
-            int expected = Integer.valueOf(answer.getAnswer());
-            if(teamanswer == expected){
-                score = answer.getScore();
+        try{
+            int teamanswer = (Integer.valueOf(knowledgeAreaScore.getAnswer()));
+            for(Answer answer : question.getAnswers()){
+                int expected = Integer.valueOf(answer.getAnswer());
+                if(teamanswer == expected){
+                    score = answer.getScore();
 
+                }
             }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
         knowledgeAreaScore.setScore(score);
-
     }
 }
