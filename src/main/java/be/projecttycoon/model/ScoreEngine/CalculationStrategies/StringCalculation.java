@@ -18,9 +18,8 @@ public class StringCalculation implements CalculationStrategy {
     public void calculateScore(KnowledgeAreaScore knowledgeAreaScore, Question question) {
         int score = 0;
         String teamanswer = knowledgeAreaScore.getAnswer();
-        System.out.println("Teamantwoord: " + teamanswer + ", verwacht: " + question.getAnswers().get(0));
         for(Answer answer : question.getAnswers()){
-            if(answer.getAnswer().equals(knowledgeAreaScore.getAnswer())){
+            if(answer.getAnswer().equalsIgnoreCase(knowledgeAreaScore.getAnswer())){
                 score = answer.getScore();
             }
         }
