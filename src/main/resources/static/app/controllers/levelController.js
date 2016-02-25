@@ -3,7 +3,7 @@
  */
 
 angular.module('projecttycoonControllers')
-    .controller('levelController', function($rootScope, $scope, GameResource, $routeParams, LevelResource){
+    .controller('levelController', function($rootScope, $scope, GameResource, $routeParams, LevelResource, $location){
         $scope.id = $routeParams.id;
 
         var findFirstOpenLevel = function(){
@@ -28,12 +28,12 @@ angular.module('projecttycoonControllers')
 
         var isRouteParmIdOpen = function(){
             GameResource.get({id : $routeParams.id}, function(game){
-                $scope.levels = game.levels;
-                for(var i = 0; i<= $scope.levels.length -1; i++){
-                    if($routeParams.activelevel == $scope.levels[i].id){
-                        if($scope.levels[i].state === "Open"){
-                            $scope.activelevel = $scope.levels[i].id;
-                            $scope.level = $scope.levels[i];
+                for(var i = 0; i<= game.levels.length -1; i++){
+                    if($routeParams.activelevel == game.levels[i].id){
+                        if(game.levels[i].state === "Open"){
+                            $scope.activelevel = game.levels[i].id;
+                            $scope.level = game.levels[i];
+                            $scope.levels = game.levels;
                             break;
                         }
                     }
@@ -52,6 +52,10 @@ angular.module('projecttycoonControllers')
         }else{
             findFirstOpenLevel();
         }
+
+        $scope.go = function (levelid) {
+            $location.url('/games/' + $scope.id + '/levels/' + levelid);
+        };
 
 
     }).directive('questioninput', function($rootScope, KnowledgeAreaScoreResource, $http) {
