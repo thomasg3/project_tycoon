@@ -25,6 +25,7 @@ angular.module('projecttycoonControllers')
             });
         };
 
+
         var isRouteParmIdOpen = function(){
             GameResource.get({id : $routeParams.id}, function(game){
                 $scope.levels = game.levels;

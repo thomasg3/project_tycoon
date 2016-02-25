@@ -228,16 +228,16 @@ public class StartupScript {
 
         //STRING
         List<Answer> stringanswers = new ArrayList<>();
-        rangeanswers.add(new Answer("Test", 20));
-        rangeanswers.add(new Answer("Test1", 10));
-        rangeanswers.add(new Answer("meerdere woorden test", -20));
+        stringanswers.add(new Answer("Test", 20));
+        stringanswers.add(new Answer("Test1", 10));
+        stringanswers.add(new Answer("meerdere woorden test", -20));
         Question stringQuestion = new Question("String vraag correct: 'Test':20 --- 'Test1':10 --- 'meerdere woorden test':-20", ScoreFormat.WORD, stringanswers);
 
         //ENUMERATION
         List<Answer> enumanswers = new ArrayList<>();
-        rangeanswers.add(new Answer("5-8-9", 20));
-        rangeanswers.add(new Answer("5-8-*", 10));
-        rangeanswers.add(new Answer("4-*-3", -20));
+        enumanswers.add(new Answer("5-8-9", 20));
+        enumanswers.add(new Answer("5-8-*", 10));
+        enumanswers.add(new Answer("4-*-3", -20));
         Question enumQuestion = new Question("List vraag correct: '5-8-9':20 --- '5-8-*':10 --- '4-*-3':-20", ScoreFormat.LIST, enumanswers);
 
         List<Question> questions =  new ArrayList<>();

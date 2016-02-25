@@ -85,13 +85,19 @@ angular.module('projecttycoonControllers')
                 if(!$scope.levelkn.question.answers){
                     $scope.levelkn.question.answers =[];
                 }
+
+
                 $scope.levelkn.question.answers.push({answer: "", score:""});
+                $scope.elements = $scope.levelkn.question.answers.length -1;
+
                 $scope.addAnswer = function(answer) {
                     QuestionAdminResource.get({id : $scope.levelkn.question.id}, function(question){
                         question.answers = $scope.levelkn.question.answers;
                         question.$updateAnswers({id : question.id}, function(data){
                             if($scope.levelkn.question.answers[$scope.levelkn.question.answers.length - 1].answer != ""){
                                 $scope.levelkn.question.answers.push({answer: "", score:""});
+                                $scope.elements = $scope.levelkn.question.answers.length-1;
+
                             }
                         });
                     });
@@ -111,6 +117,7 @@ angular.module('projecttycoonControllers')
                         question.answers = $scope.levelkn.question.answers;
                         question.$updateAnswers({id : question.id}, function(data){
                             $scope.levelkn.question.answers.push({answer: "", score:""});
+                            $scope.elements = $scope.levelkn.question.answers.length -1;
                         });
                     });
                 }
