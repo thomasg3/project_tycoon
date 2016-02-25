@@ -17,8 +17,7 @@ public class Splitter {
             split = string.split(" ");
         }
         else {
-            split = new String[1];
-            split[0] = string;
+            split = new String[]{string};
             //throw new IllegalArgumentException("String " + string + " does not contain delimiter");
         }
         return split;
