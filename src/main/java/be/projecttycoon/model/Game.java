@@ -40,12 +40,11 @@ public class Game {
 
 
     public Game() {
-        this.teams = new HashSet<>();
+        this.teams = new TreeSet<>((t1, t2) -> (int) (t1.getId() - t2.getId()));
     }
 
     public Game(String name, int teams, ScoreEngine scoreEngine){
         this();
-        this.teams = new HashSet<>();
         this.scoreEngine = scoreEngine;
         setName(name);
         generateTeam(teams);

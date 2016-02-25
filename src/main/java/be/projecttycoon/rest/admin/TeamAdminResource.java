@@ -27,7 +27,10 @@ public class TeamAdminResource extends TeamResource{
     @RequestMapping(method = RequestMethod.GET)
     @Produces("application/json")
     public List<Team> getAllTeams(){
-        return teamRepository.findAll();
+
+        List<Team> teams = teamRepository.findAll();
+        teams.sort((t1, t2) -> (int)(t1.getId() - t2.getId()));
+        return teams;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

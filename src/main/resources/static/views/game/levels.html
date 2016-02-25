@@ -6,3 +6,40 @@
 <div ng-repeat="levelkn in level.levelKnowledgeAreas">
     <questioninput ng-hide="!levelkn.question.question" levelknowledgearea="levelkn" my-levelid="{{activelevel}}"></questioninput>
 </div>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#info">
+    <i class="fa fa-info"></i>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="info">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Answer Type Info</h4>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <th>Type</th>
+                        <th>Example</th>
+                    </tr>
+                    <tr>
+                        <th>Word</th>
+                        <td>Bart</td>
+                    </tr>
+                    <tr>
+                        <th>Word</th>
+                        <td>Bart</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

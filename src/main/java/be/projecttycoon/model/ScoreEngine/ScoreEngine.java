@@ -60,6 +60,7 @@ public class ScoreEngine {
     }
 
     public List<Level> getLevels() {
+        levels.sort((a,b) -> a.getRound() - b.getRound());
         return levels;
     }
 
