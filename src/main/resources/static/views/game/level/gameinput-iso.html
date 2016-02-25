@@ -1,4 +1,3 @@
-<h4></h4>
 
 <form ng-submit="submitAnswer()">
     <fieldset class="form-group">
@@ -18,8 +17,10 @@
                 <label class="col-md-2 control-label" for="answer">Answer:</label>
                 <div class="col-md-10">
                     <div class="input-group">
-                        <input type="text" class="form-control" id="answer" placeholder="Answer" aria-describedby="basic-addon20" ng-model="knowledgearea.answer">
-                        <span class="input-group-addon" id="basic-addon2">{{my_levelkn.question.format}}</span>
+                        <input ng-blur="submitAnswer()" type="text" class="form-control" id="answer" placeholder="Answer" aria-describedby="basic-addon20" ng-model="knowledgearea.answer">
+                        <span class="input-group-btn">
+                            <button data-toggle="modal" data-target="#myModal" class="btn btn-default" type="button">{{my_levelkn.question.format}}</button>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -29,4 +30,3 @@
         <button type="submit" class="btn btn-default">Submit</button>
     </div>
 </form>
-

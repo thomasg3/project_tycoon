@@ -8,38 +8,50 @@
 </div>
 
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#info">
-    <i class="fa fa-info"></i>
-</button>
-
 <!-- Modal -->
-<div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="info">
-    <div class="modal-dialog" role="document">
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Answer Type Info</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Formats</h4>
             </div>
             <div class="modal-body">
-                <table>
+                <table class="table">
+                    <thead>
                     <tr>
-                        <th>Type</th>
-                        <th>Example</th>
+                        <th>Format</th>
+                        <th>Example 1</th>
+                        <th>Example 2</th>
                     </tr>
+                    </thead>
+                    <tbody>
                     <tr>
-                        <th>Word</th>
+                        <td>WORD</td>
                         <td>Bart</td>
+                        <td>zwanger</td>
                     </tr>
                     <tr>
-                        <th>Word</th>
-                        <td>Bart</td>
+                        <td>LIST</td>
+                        <td>5-5-8</td>
+                        <td>1-6-3</td>
                     </tr>
+                    <tr>
+                        <td>RANGE</td>
+                        <td>9</td>
+                        <td>32</td>
+                    </tr>
+                    <tr>
+                        <td>NUMBER</td>
+                        <td>20</td>
+                        <td>17</td>
+                    </tr>
+                    </tbody>
                 </table>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
         </div>
+
     </div>
 </div>
