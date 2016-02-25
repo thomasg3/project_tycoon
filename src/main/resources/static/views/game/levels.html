@@ -1,6 +1,3 @@
-
-
-
 <ul class="nav nav-tabs">
     <li ng-disabled="!level.open" ng-repeat="level in levels" ng-class="{'active' : level.id == $parent.activelevel, 'disabled' : !level.open}" role="presentation"><a ng-class="{'disabled' : !level.open}" class="btn btn-primary" ng-disabled="!level.open" href="" ng-click="go(level.id)" >{{level.name}}</a></li>
 </ul>
