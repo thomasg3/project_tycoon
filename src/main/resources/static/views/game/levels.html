@@ -4,5 +4,5 @@
 
 <h2>{{level.name}}</h2>
 <div ng-repeat="levelkn in level.levelKnowledgeAreas">
-    <questioninput levelknowledgearea="levelkn" my-levelid="{{activelevel}}"></questioninput>
+    <questioninput ng-hide="!levelkn.question.question" levelknowledgearea="levelkn" my-levelid="{{activelevel}}"></questioninput>
 </div>
