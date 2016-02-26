@@ -3,10 +3,7 @@ package be.projecttycoon.model;
 import be.projecttycoon.model.level.Level;
 import com.google.api.client.repackaged.com.google.common.base.Strings;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +22,7 @@ public class Stakeholder {
     private String imagePath;
     private String organisation;
     private String function;
+    @Column(length=5000)
     private String description;
     private int level;
 

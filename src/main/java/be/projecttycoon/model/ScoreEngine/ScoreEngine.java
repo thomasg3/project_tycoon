@@ -139,7 +139,6 @@ public class ScoreEngine {
                                         calculationStrategy = new StringCalculation();
                                     }
 
-                                    System.out.println(level.getName() + " " + lka.getKnowledgeArea().getName());
                                     calculationStrategy.calculateScore(kas, question);
                                 } else{
                                     kas.setScore(0);
