@@ -1,6 +1,6 @@
 <div class="row" >
     <h1>ADMIN OVERVIEW</h1>
-
+    <a class="btn btn-default" href="#/admin/createGame">New</a>
     <div class="row">
         <form class="navbar-form navbar-left" role="search">
             <div class="form-group">
@@ -19,7 +19,6 @@
             <td><h4>{{game.name}}</h4></td>
             <td>
                 <a ng-click="getGame(game.id)" class="btn btn-primary"><i class="fa fa-trophy"></i> Dashboard</a>
-                <a href="#/admin/teams/{{game.id}}" class="btn btn-info"><i class="fa fa-users"></i> Teams</a>
                 <a href="#/admin/games/{{game.id}}/levels/0" class="btn btn-info"><i class="fa fa-fort-awesome"></i>  GameControlCenter</a>
                 <a ng-click="mail(game.id)" class="btn btn-default" role="button"><i class="fa fa-envelope"></i> Mail</a>
                 <button class="btn btn-danger" ng-click="deleteGame(game.id)"><i class="fa fa-remove"></i> Delete</button>

@@ -31,7 +31,7 @@ public class RangeCalculation implements CalculationStrategy {
                 answers.add(new Between(Integer.valueOf(split[0]),Integer.valueOf(split[1]), answer.getScore()));
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
         }
 
@@ -41,7 +41,7 @@ public class RangeCalculation implements CalculationStrategy {
                     score = between.getScore();
                 }
             } catch (Exception e){
-                System.out.println(e.getMessage());
+                //e.printStackTrace();
             }
 
         }

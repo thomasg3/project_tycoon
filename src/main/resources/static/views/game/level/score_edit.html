@@ -3,7 +3,7 @@
 <table class="table">
     <tr>
         <th>Team</th>
-        <th ng-repeat="ka in level.levelKnowledgeAreas">{{ka.knowledgeArea.name}}</th>
+        <th ng-repeat="kas in teamLevelPres[0][levelindex].knowledgeAreaScores">{{kas.knowledgeArea.name}}</th>
     </tr>
     <tr ng-repeat="team in game.teams track by $index">
         <td>{{team.teamname}}</td>

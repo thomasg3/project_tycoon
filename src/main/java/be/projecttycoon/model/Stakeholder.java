@@ -1,11 +1,9 @@
 package be.projecttycoon.model;
 
 import be.projecttycoon.model.level.Level;
+import com.google.api.client.repackaged.com.google.common.base.Strings;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -24,6 +22,7 @@ public class Stakeholder {
     private String imagePath;
     private String organisation;
     private String function;
+    @Column(length=5000)
     private String description;
     private int level;
 
@@ -36,15 +35,23 @@ public class Stakeholder {
     public Stakeholder() {
         forbiddenUsers = new HashSet<>();
         links = new ArrayList<>();
+        imagePath = "/hosted_resources/admin_1455635149425.png";
+        name= "Unnamed";
+        organisation = "Nowhere";
+        function = "Nobody";
     }
 
     public Stakeholder(String name, String imagePath,String description,String organisation,String function,int level) {
         this();
-        this.name = name;
-        this.imagePath = imagePath;
+        if(!Strings.isNullOrEmpty(name))
+            this.name = name;
+        if(!Strings.isNullOrEmpty(imagePath))
+            this.imagePath = imagePath;
         this.description = description;
-        this.organisation = organisation;
-        this.function = function;
+        if(!Strings.isNullOrEmpty(organisation))
+            this.organisation = organisation;
+        if(!Strings.isNullOrEmpty(function))
+            this.function = function;
         this.level = level;
     }
 

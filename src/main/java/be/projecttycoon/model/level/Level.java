@@ -91,6 +91,7 @@ public class Level{
     }
 
     public List<LevelKnowledgeArea> getLevelKnowledgeAreas() {
+        levelKnowledgeAreas.sort((k1,k2) -> k1.getKnowledgeArea().getElementNumber() - k2.getKnowledgeArea().getElementNumber());
         return levelKnowledgeAreas;
     }
 

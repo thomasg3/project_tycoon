@@ -24,7 +24,7 @@ public class IntCalculation implements CalculationStrategy{
                 }
             }
         } catch (Exception e){
-            System.out.println(e.getMessage());
+           // e.printStackTrace();
         }
         knowledgeAreaScore.setScore(score);
     }

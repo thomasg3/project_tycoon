@@ -9,7 +9,7 @@
         <h2>{{stakeholder.function}} <small>{{stakeholder.organisation}}</small></h2>
         <p ng-show="stakeholder.level > 0" class="text-info lead">Available from level <b>{{stakeholder.level}}</b></p>
         <p ng-show="stakeholder.level < 1" class="text-success lead">Always Available</p>
-        <p>{{stakeholder.description}}</p>
+        <p class="text-justify">{{stakeholder.description}}</p>
         <h3 ng-show="stakeholder.links.length != 0" >Links</h3>
         <div class="list-group">
             <a class="list-group-item" ng-repeat="link in stakeholder.links" ng-href="{{link}}"><i class="fa fa-link"></i> {{link}}</a>

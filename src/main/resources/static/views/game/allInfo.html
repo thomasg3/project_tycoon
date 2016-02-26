@@ -10,6 +10,7 @@
     </div>
     <table class="table table-responsive" id="infoTable">
         <thead>
+        <th>id</th>
         <th>Resource</th>
         <th ng-show="MainUser.admin">unlocked At Level</th>
         <th ng-show="MainUser.admin"></th>
@@ -17,6 +18,9 @@
         </thead>
         <tbody>
             <tr ng-repeat="info in infoArr | filter : searchText">
+                <td>
+                    {{info.id}}
+                </td>
                 <td >
                     <div ng-if="info.type == 'Document'">
                         <a href="{{info.path}}" download>{{info.description}}</a>
@@ -30,6 +34,9 @@
                     <div ng-if="info.type=='Link'">
                         <a href="{{info.path}}" target="_blank">{{info.description}}</a>
                     </div>
+                    <div>
+
+                    </div>
                 </td>
 
                 <td ng-if="MainUser.admin">
@@ -37,6 +44,9 @@
                 </td>
                 <td ng-if="MainUser.admin">
                     <a class="btn btn-default" href="#/admin/info/update/{{info.id}}"><i class="fa fa-edit"></i> Edit</a>
+                </td>
+                <td ng-if="MainUser.admin">
+                    <a class="btn btn-default" href="#/info/{{info.id}}"><i class="fa fa-info-circle"></i> Details</a>
                 </td>
                 <td ng-if="MainUser.admin">
                     <button class="btn btn-danger" ng-click="deleteInfo(info.id)"><i class="fa fa-remove"></i> Delete</button>

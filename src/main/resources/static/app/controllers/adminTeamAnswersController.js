@@ -21,7 +21,6 @@ angular.module('projecttycoonControllers')
             $scope.getGivenAnswer = function(levelkn){
                 for(var i =0; i< $scope.my_tlp.knowledgeAreaScores.length; i++){
                     if($scope.my_tlp.knowledgeAreaScores[i].knowledgeArea.id == levelkn.knowledgeArea.id){
-                        console.log(levelkn);
                         return $scope.my_tlp.knowledgeAreaScores[i].answer;
                     }
                 }
