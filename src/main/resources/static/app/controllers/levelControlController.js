@@ -10,9 +10,7 @@ angular.module('projecttycoonControllers')
         $scope.errors = [];
         updateList();
         if($routeParams.levelid != 0){
-            InfoAdminResource.getForLevel({level: $routeParams.levelid},function(infoArr){
-                $scope.infoArr=infoArr;
-            });
+
             LevelAdminResource.get({id: $routeParams.levelid}, function(level){
                 $scope.currentLevel = level;
                 $scope.time = level.latestStateChange;
@@ -24,7 +22,11 @@ angular.module('projecttycoonControllers')
             StakeholderAdminResource.getStakholdersOfLevel({level: $routeParams.levelid}, function(data){
                 $scope.stakeholders = data;
             });
+
         }
+        InfoAdminResource.getForLevel({level: $routeParams.levelid},function(infoArr){
+            $scope.infoArr=infoArr;
+        });
 
 
 
