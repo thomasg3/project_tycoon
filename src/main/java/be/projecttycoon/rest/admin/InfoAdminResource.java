@@ -54,7 +54,7 @@ private LevelRepository levelRepository;
     @Produces("application/json")
     public Collection<Info> getInfoFromLevel(@PathVariable long level){
        Level l =levelRepository.findOne(level);
-        if(l == null){
+        if(l == null && level == 0){
             return infoRepository.findAll().stream()
                     .filter(i -> i.getUnlockedAtLevel() == 0)
                     .collect(Collectors.toList());
