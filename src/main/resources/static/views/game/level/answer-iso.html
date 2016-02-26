@@ -1,8 +1,8 @@
 <table class="table table-bordered table-condensed">
     <tbody ng-repeat="answer in levelkn.question.answers">
         <tr>
-            <td><input ng-model="answer.answer" type="text" class="form-control" placeholder="Answer"/></td>
-            <td><input ng-model="answer.score" type="text" class="form-control" placeholder="Score"/></td>
+            <td><input ng-blur="addAnswerWithBlur(answer)" ng-model="answer.answer" type="text" class="form-control" placeholder="Answer"/></td>
+            <td><input ng-blur="addAnswerWithBlur(answer)" ng-model="answer.score" type="text" class="form-control" placeholder="Score"/></td>
             <td><button ng-click="addAnswer(answer)" class="btn btn-default" type="button">Add</button></td>
             <td><button ng-hide="elements === $index" ng-click="deleteAnswer(answer)" class="btn btn-default" type="button">Remove</button></td>
         </tr>

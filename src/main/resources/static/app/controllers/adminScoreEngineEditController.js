@@ -107,6 +107,12 @@ angular.module('projecttycoonControllers')
                     });
                 };
 
+                $scope.addAnswerWithBlur = function(answer){
+                    if(answer.answer && answer.score){
+                        $scope.addAnswer(answer);
+                    }
+                };
+
 
 
                 $scope.deleteAnswer = function(answer) {
