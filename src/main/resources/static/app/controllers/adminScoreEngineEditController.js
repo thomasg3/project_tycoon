@@ -108,6 +108,7 @@ angular.module('projecttycoonControllers')
                 };
 
 
+
                 $scope.deleteAnswer = function(answer) {
                     for(var i=0; i< $scope.levelkn.question.answers.length; i++) {
                         if($scope.levelkn.question.answers[i] === answer) {
