@@ -71,7 +71,6 @@ public class GameAdminResource extends GameResource {
     @Produces("application/json")
     public Game createGame(@Valid @RequestBody GameBean inputGame){
         ScoreEngineTemplate scoreEngineTemplate = scoreEngineTemplateRepository.findOne((long)inputGame.getScoreengineid());
-        System.out.println(inputGame.toString());
         ScoreEngine scoreEngine = new ScoreEngine(scoreEngineTemplate);
         scoreEngineRepository.save(scoreEngine);
 
