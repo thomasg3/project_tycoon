@@ -3,7 +3,7 @@
  */
 
 angular.module('projecttycoonControllers')
-    .controller('adminDashboard', function($rootScope, $scope, $http, GameAdminResource, $routeParams,TeamAdminResource){
+    .controller('adminDashboard', function($rootScope, $scope, $http, $route ,GameAdminResource, $routeParams,TeamAdminResource){
         var update = function(data){
             $scope.game = data;
             var ctx = $("#teamEvolutionGraph").get(0).getContext("2d");
@@ -53,7 +53,8 @@ angular.module('projecttycoonControllers')
                 GameAdminResource.recalculateGame({id: id}, function (data) {
                     $scope.game = data;
                     update(data);
-                })
+                    $route.reload();
+                });
             }
         };
 
