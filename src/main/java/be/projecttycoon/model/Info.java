@@ -21,7 +21,7 @@ public class Info {
     @GeneratedValue
     @JsonProperty("id")
     private long id;
-    @Min(value = 1, message = "The level must be at least 1")
+    @Min(value = 0, message = "The level must be at least 0")
     private int unlockedAtLevel;
     private String description;
     private String path;

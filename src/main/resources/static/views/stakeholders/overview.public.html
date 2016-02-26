@@ -2,10 +2,16 @@
     Stakeholders
 </h1>
 
-
+<div class="row">
+    <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search" ng-model="searchText" >
+        </div>
+    </form>
+</div>
     <div class="row">
         <h1 class="text-muted text-center" ng-show="stakeholders.length == 0">No stakeholders found</h1>
-        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="stakeholder in stakeholders">
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="stakeholder in stakeholders | filter : searchText">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <img ng-src="{{stakeholder.imagePath}}" style="max-height: 150px" class="img-responsive img-circle center-block" />
