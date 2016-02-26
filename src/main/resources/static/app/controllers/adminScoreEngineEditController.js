@@ -94,13 +94,15 @@ angular.module('projecttycoonControllers')
 
                 $scope.addAnswer = function(answer) {
                     QuestionAdminResource.get({id : $scope.levelkn.question.id}, function(question){
+                        if($scope.levelkn.question.answers[$scope.levelkn.question.answers.length -1].answer == ""){
+                            $scope.levelkn.question.answers.pop();
+                        }
+
                         question.answers = $scope.levelkn.question.answers;
                         question.$updateAnswers({id : question.id}, function(data){
-                            if($scope.levelkn.question.answers[$scope.levelkn.question.answers.length - 1].answer != ""){
-                                $scope.levelkn.question.answers.push({answer: "", score:""});
-                                $scope.elements = $scope.levelkn.question.answers.length-1;
-
-                            }
+                            $scope.levelkn.question.answers = data.answers;
+                            $scope.levelkn.question.answers.push({answer: "", score:""});
+                            $scope.elements = $scope.levelkn.question.answers.length-1;
                         });
                     });
                 };
