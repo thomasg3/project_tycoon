@@ -53,6 +53,7 @@ public class TeamLevelPrestation {
     }
 
     public List<KnowledgeAreaScore> getKnowledgeAreaScores() {
+        knowledgeAreaScores.sort((k1,k2) -> k1.getKnowledgeArea().getElementNumber() - k2.getKnowledgeArea().getElementNumber());
         return knowledgeAreaScores;
     }
 
