@@ -49,13 +49,13 @@ angular.module('projecttycoonControllers')
         };
 
         $scope.recalculate = function(id){
-            if(confirm("Are you sure you want to recalculate the entire game? It will revert manual changes of previous levels too.If you don't want this you can recalculate by level in the score details.")) {
+            //if(confirm("Are you sure you want to recalculate the entire game? It will revert manual changes of previous levels too.If you don't want this you can recalculate by level in the score details.")) {
                 GameAdminResource.recalculateGame({id: id}, function (data) {
                     $scope.game = data;
                     update(data);
                     $route.reload();
                 });
-            }
+            //}
         };
 
 
