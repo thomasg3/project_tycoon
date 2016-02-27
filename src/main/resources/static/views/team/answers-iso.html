@@ -1,6 +1,11 @@
 <div class="panel panel-default">
     <!-- Default panel contents -->
-    <div class="panel-heading"><h4>{{my_tlp.level.name}}</h4></div>
+    <div class="panel-heading"><h4>{{my_tlp.level.name}} </h4>
+        <p>
+            <span ng-class="{'label': true, 'label-default': my_tlp.level.closed, 'label-primary': my_tlp.level.concluded, 'label-success': my_tlp.level.open, 'label-info': my_tlp.level.cermonie, 'label-danger': my_tlp.level.finished}">{{my_tlp.level.state}}</span>
+        </p>
+    </div>
+
 
     <!-- Table -->
     <table class="table table-responsive">
@@ -8,7 +13,7 @@
             <th>#</th>
             <th>Knowledgearea</th>
             <th>Question</th>
-            <th>Answer</th>
+            <th>Answer <i ng-class="{'fa-check' : complete , 'fa-times' : !complete}"  class="fa"></i></th>
         </tr>
         <tr ng-repeat="levelkn in my_tlp.level.levelKnowledgeAreas">
             <td><strong>#{{$index+1}}</strong></td>

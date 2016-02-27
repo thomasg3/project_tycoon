@@ -30,7 +30,7 @@ angular.module('projecttycoonControllers')
                 labels: labels,
                 datasets: datasets
             };
-            var chart = new Chart(ctx).Line(data, {
+            $scope.chart = new Chart(ctx).Line(data, {
                 //scaleBeginAtZero : true
             });
         };
@@ -49,12 +49,10 @@ angular.module('projecttycoonControllers')
         };
 
         $scope.recalculate = function(id){
-                GameAdminResource.recalculateGame({id: id}, function (data) {
-                    $scope.game = data;
-                    update(data);
-                    $route.reload();
-                });
+            GameAdminResource.recalculateGame({id: id}, function (data) {
+                $scope.game = data;
+                update(data);
+                $route.reload();
+            });
         };
-
-
     });

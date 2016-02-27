@@ -7,20 +7,20 @@
         <a ng-href="/api/admin/games/{{game.id}}/teams.txt" class="btn btn-info"><i class="fa fa-print"></i> Default logins</a>
         <a ng-href="/#/admin/scoreEngineEdit/{{game.scoreEngine.scoreEngineTemplate.id}}" class="btn btn-info"><i class="fa fa-tachometer"></i> Edit scoreEngine</a>
 
-        <div class="row">
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
-                </div>
-            </form>
-        </div>
-
 
         <div class="row">
             <div height="400">
                 <canvas class="col-xs-10 col-xs-offset-1" id="teamEvolutionGraph"></canvas>
                 <br>
             </div>
+        </div>
+
+        <div class="row">
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+                </div>
+            </form>
         </div>
 
         <table class="table table-responsive">
