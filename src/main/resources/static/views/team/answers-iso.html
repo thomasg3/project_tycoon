@@ -14,12 +14,14 @@
             <th>Knowledgearea</th>
             <th>Question</th>
             <th>Answer <i ng-class="{'fa-check' : complete , 'fa-times' : !complete}"  class="fa"></i></th>
+            <th>Score</th>
         </tr>
         <tr ng-repeat="levelkn in my_tlp.level.levelKnowledgeAreas">
             <td><strong>#{{$index+1}}</strong></td>
             <td>{{levelkn.knowledgeArea.name}}</td>
             <td>{{levelkn.question.question}}</td>
             <td>{{getGivenAnswer(levelkn)}}</strong></td>
+            <td>{{getScore(levelkn)}}</strong></td>
         </tr>
     </table>
 </div>
