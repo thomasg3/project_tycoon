@@ -118,6 +118,7 @@ public class ScoreEngine {
     public void calculateScores(List<TeamLevelPrestation> teamLevelPrestations, Level level){
         CalculationStrategy calculationStrategy;
         resetScoresForLevel(teamLevelPrestations, level);
+
         for(LevelKnowledgeArea lka:  level.getLevelKnowledgeAreas()){
             for (TeamLevelPrestation tlp : teamLevelPrestations) {
                 if(tlp.getLevel().getId() == level.getId()){
