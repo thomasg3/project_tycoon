@@ -22,13 +22,13 @@ angular.module('projecttycoonControllers')
             $scope.getGivenAnswer = function(levelkn){
                 for(var i =0; i< $scope.my_tlp.knowledgeAreaScores.length; i++){
                     if($scope.my_tlp.knowledgeAreaScores[i].knowledgeArea.id == levelkn.knowledgeArea.id){
-                        if(!$scope.my_tlp.knowledgeAreaScores[i].answer){
+                        if(levelkn.question.question && !$scope.my_tlp.knowledgeAreaScores[i].answer){
                             $scope.complete = false;
                         }
                         return $scope.my_tlp.knowledgeAreaScores[i].answer;
                     }
                 }
-            }
+            };
 
             $scope.getScore = function(levelkn){
                 for(var i =0; i< $scope.my_tlp.knowledgeAreaScores.length; i++){
