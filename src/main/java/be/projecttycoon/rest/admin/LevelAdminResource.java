@@ -52,7 +52,7 @@ public class LevelAdminResource extends LevelResource {
 
     @RequestMapping(value="/{id}/change/{state}", method = RequestMethod.GET)
     public Level changeLevelState(@PathVariable long id, @PathVariable String state){
-        Level level = getLevel(id);
+        Level level = levelRepository.findOne(id);
         try {
             state = state.toLowerCase();
             switch (state){

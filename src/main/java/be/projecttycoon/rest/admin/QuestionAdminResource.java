@@ -43,7 +43,7 @@ public class QuestionAdminResource extends QuestionResource {
 
     @RequestMapping(value = "/answers/{id}", method = RequestMethod.PUT)
     public Question updateAnswers(@PathVariable long id, @RequestBody QuestionBean question){
-        Question q = getQuestion(id);
+        Question q = questionRepository.findOne(id);
         q.setFormat(ScoreFormat.valueOf(question.getFormat().getFormat()));
         q.setAnswers(question.getAnswers());
         return questionRepository.save(q);

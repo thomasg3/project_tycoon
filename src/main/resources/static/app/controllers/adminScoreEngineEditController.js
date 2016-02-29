@@ -65,14 +65,34 @@ angular.module('projecttycoonControllers')
 
                 $scope.deleteQuestion = function(lk) {
                     $scope.saved = false;
-                    QuestionResourceService.get({id : lk.question.id}, function(question){
-                        question.question = null;
-                        question.format = null;
+                    /*
+                    QuestionAdminResource.get({id : lk.question.id}, function(question){
+                        question.question = "";
+                        question.format = "WORD";
                         question.$update({id : question.id}, function(data){
 
                         });
-                    });
+                    });*/
                 };
+
+                $scope.clearQuestion = function(lk){
+                    $scope.saved = false;
+                    QuestionAdminResource.get({id : lk.question.id}, function(question){
+                        question.answers = [];
+                        $scope.my_levelkn.question.question = null;
+                        $scope.my_levelkn.question.format = "WORD";
+                        $scope.my_levelkn.question.answers = [];
+                        $scope.my_levelkn.question.answers.push({answer: "", score:""});
+                        question.$updateAnswers({id : question.id}, function(data){
+                            data.question = "";
+                            data.format = "WORD";
+
+                            data.$update({id : question.id}, function(data){
+
+                            });
+                        });
+                    });
+                }
 
             }
         };
@@ -106,6 +126,13 @@ angular.module('projecttycoonControllers')
                         });
                     });
                 };
+
+                $scope.addAnswerWithBlur = function(answer){
+                    if(answer.answer && answer.score){
+                        $scope.addAnswer(answer);
+                    }
+                };
+
 
 
                 $scope.deleteAnswer = function(answer) {
