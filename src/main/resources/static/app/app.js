@@ -137,7 +137,7 @@ app.config(function($routeProvider, $httpProvider) {
                     })
             //##### STAKEHOLDERS #####
                 .when('/admin/stakeholders', {
-                    templateUrl : 'views/stakeholders/admin/controlcenter.html',
+                    templateUrl : 'views/stakeholders/admin/overview.html',
                     controller : 'adminStakeholderOverviewController'
                 })
                 .when('/admin/stakeholders/new', {
@@ -157,7 +157,7 @@ app.config(function($routeProvider, $httpProvider) {
                     controller : 'adminStakeholderDeleteController'
                 })
                 .when('/stakeholders', {
-                    templateUrl : 'views/stakeholders/team/controlcenter.html',
+                    templateUrl : 'views/stakeholders/team/overview.html',
                     controller : 'stakeholderOverviewController'
                 })
                 .when('/stakeholders/:id', {
