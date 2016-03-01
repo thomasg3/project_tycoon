@@ -30,9 +30,6 @@ public class Level{
     private String name;
 
 
-    private int minutesToClose=30;
-    private long timestampStart;
-    private long remainingMs;
 
     private Date latestStateChange;
 
@@ -66,13 +63,6 @@ public class Level{
         this.id = id;
     }
 
-    public long getTimestampStart() {
-        return timestampStart;
-    }
-
-    public void setTimestampStart(long timestampTime) {
-        this.timestampStart = timestampTime;
-    }
 
     public String getName() {
         return name;
@@ -128,13 +118,6 @@ public class Level{
         this.levelKnowledgeAreas = levelKnowledgeAreas;
     }
 
-    public int getMinutesToClose() {
-        return minutesToClose;
-    }
-
-    public void setMinutesToClose(int minutesToClose) {
-        this.minutesToClose = minutesToClose;
-    }
 
     public String getState(){
         this.state = levelState.getClass().getSimpleName();
@@ -210,13 +193,7 @@ public class Level{
     }
 
 
-    public long getRemainingMs(){
-        long msecondsToClose=this.getMinutesToClose()*60000;
-        long startTime= this.getTimestampStart();
-        long endTime=startTime+msecondsToClose;
-        long currentTime= System.currentTimeMillis();
-        return endTime-currentTime;
-    }
+
 
 
     public boolean isClosed(){
