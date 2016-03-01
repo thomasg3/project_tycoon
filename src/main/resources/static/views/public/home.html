@@ -4,7 +4,7 @@
     <br>
     <a href="#/login" class="btn btn-lg btn-primary" ng-show="!authenticated">Login</a>
 </div>
-<div class="row" ng-show="authenticated&&MainUser.admin">
+<div class="row" ng-show="authenticated&&MainUser&&MainUser.admin">
 
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="text-center">
@@ -61,7 +61,7 @@
     </div>
 </div>
 
-<div class="row" ng-show="authenticated&&!MainUser.admin">
+<div class="row" ng-show="authenticated&&MainUser&&!MainUser.admin">
 
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="text-center">
