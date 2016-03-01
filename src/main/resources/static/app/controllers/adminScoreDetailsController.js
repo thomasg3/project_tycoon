@@ -7,9 +7,11 @@ angular.module('projecttycoonControllers')
             $scope.game = data;
         });
 
+
         $scope.recalculateLevel = function(levelid) {
             GameAdminResource.recalculateLevel({id: $scope.game.id, levelid: levelid}, function (data) {
                 $scope.game = data;
             });
-        }
+        };
+
     });

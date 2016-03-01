@@ -3,17 +3,9 @@
         <h1>{{game.name}}</h1>
         <a href="#/admin/games/{{game.id}}/details" class="btn btn-info"><i class="fa fa-eye"></i> Score Details</a>
         <a href="#/admin/games/{{game.id}}/levels/0" class="btn btn-info"><i class="fa fa-fort-awesome"></i> ControlCenter</a>
-        <a ng-click="recalculate(game.id)" class="btn btn-info"><i class="fa fa-calculator"></i> Recalculate Game</a>
+        <a class="btn btn-info" data-toggle="modal" data-target="#confirm-recalculate"><i class="fa fa-calculator"></i> Recalculate Game</a>
         <a ng-href="/api/admin/games/{{game.id}}/teams.txt" class="btn btn-info"><i class="fa fa-print"></i> Default logins</a>
         <a ng-href="/#/admin/scoreEngineEdit/{{game.scoreEngine.scoreEngineTemplate.id}}" class="btn btn-info"><i class="fa fa-tachometer"></i> Edit scoreEngine</a>
-
-        <div class="row">
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
-                </div>
-            </form>
-        </div>
 
 
         <div class="row">
@@ -21,6 +13,14 @@
                 <canvas class="col-xs-10 col-xs-offset-1" id="teamEvolutionGraph"></canvas>
                 <br>
             </div>
+        </div>
+
+        <div class="row">
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+                </div>
+            </form>
         </div>
 
         <table class="table table-responsive">
@@ -47,3 +47,30 @@
         </table>
     </div>
 </div>
+
+<div class="modal fade" id="confirm-recalculate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Confirm Recalculate</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>You are about to recalculate the scores of every level.</p>
+                <p>This means that even overwritten scores will be reset and recalculated by the scoreengine.</p>
+                <p>Do you want to proceed?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button ng-click="recalculate(game.id)" data-dismiss="modal" class="btn btn-danger btn-ok">Recalculate</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#confirm-recalculate').on('show.bs.modal', function(e) {});
+</script>

@@ -91,8 +91,11 @@ public class Level{
     }
 
     public List<LevelKnowledgeArea> getLevelKnowledgeAreas() {
-        levelKnowledgeAreas.sort((k1,k2) -> k1.getKnowledgeArea().getElementNumber() - k2.getKnowledgeArea().getElementNumber());
-        return levelKnowledgeAreas;
+        //levelKnowledgeAreas.sort((k1,k2) -> k1.getKnowledgeArea().getElementNumber() - k2.getKnowledgeArea().getElementNumber());
+        List<LevelKnowledgeArea> sorted = new ArrayList<LevelKnowledgeArea>();
+        sorted.addAll(levelKnowledgeAreas);
+        sorted.sort((k1,k2) -> k1.getKnowledgeArea().getElementNumber() - k2.getKnowledgeArea().getElementNumber());
+        return sorted;
     }
 
     public Date getLatestStateChange() {

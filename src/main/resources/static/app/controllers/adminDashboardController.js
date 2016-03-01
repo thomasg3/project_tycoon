@@ -30,7 +30,7 @@ angular.module('projecttycoonControllers')
                 labels: labels,
                 datasets: datasets
             };
-            var chart = new Chart(ctx).Line(data, {
+            $scope.chart = new Chart(ctx).Line(data, {
                 //scaleBeginAtZero : true
             });
         };
@@ -49,14 +49,10 @@ angular.module('projecttycoonControllers')
         };
 
         $scope.recalculate = function(id){
-            if(confirm("Are you sure you want to recalculate the entire game? It will revert manual changes of previous levels too.If you don't want this you can recalculate by level in the score details.")) {
-                GameAdminResource.recalculateGame({id: id}, function (data) {
-                    $scope.game = data;
-                    update(data);
-                    $route.reload();
-                });
-            }
+            GameAdminResource.recalculateGame({id: id}, function (data) {
+                $scope.game = data;
+                update(data);
+                $route.reload();
+            });
         };
-
-
     });
