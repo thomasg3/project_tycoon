@@ -18,6 +18,7 @@ angular.module('projecttycoonControllers')
         templateUrl: "views/team/answers-iso.html",
         link: function ($scope) {
             $scope.complete = true;
+            $scope.totaal = 0;
 
             $scope.getGivenAnswer = function(levelkn){
                 for(var i =0; i< $scope.my_tlp.knowledgeAreaScores.length; i++){
@@ -35,6 +36,15 @@ angular.module('projecttycoonControllers')
                     if($scope.my_tlp.knowledgeAreaScores[i].knowledgeArea.id == levelkn.knowledgeArea.id){
                         return $scope.my_tlp.knowledgeAreaScores[i].score;
                     }
+                }
+            };
+
+            for(var i =0; i< $scope.my_tlp.knowledgeAreaScores.length; i++){
+                $scope.totaal += $scope.my_tlp.knowledgeAreaScores[i].score;
+                if($scope.totaal >=0){
+                    $scope.color = "green";
+                }else{
+                    $scope.color = "red";
                 }
             }
 
