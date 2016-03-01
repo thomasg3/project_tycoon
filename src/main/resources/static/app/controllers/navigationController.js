@@ -53,11 +53,12 @@ angular.module('projecttycoonControllers')
         $http.post('/logout', {}).success(function(){
             MainUserResource.saveMainUser({});
             $rootScope.authenticated = false;
-            $rootScope.$broadcast('loggedIn', {});
+            $rootScope.$broadcast('loggedOut', {});
             $location.path("/");
         }).error(function(){
+            MainUserResource.saveMainUser({});
             $rootScope.authenticated = false;
-            $rootScope.$broadcast('loggedIn', {});
+            $rootScope.$broadcast('loggedOut', {});
             $location.path("/");
         });
     }

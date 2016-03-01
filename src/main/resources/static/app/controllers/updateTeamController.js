@@ -74,7 +74,7 @@ angular.module('projecttycoonControllers')
             }
         }
         else{
-            alert("you cant do this. You will be redirected to your edit page.\nMake this nice pls error handling or some shit.");
+            //alert("you cant do this. You will be redirected to your edit page.\nMake this nice pls error handling or some shit.");
             $location.path('/editTeam/'+$scope.MainUser.teamname);
         }
     });

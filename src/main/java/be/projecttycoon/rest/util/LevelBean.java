@@ -1,18 +1,37 @@
 package be.projecttycoon.rest.util;
 
+import be.projecttycoon.model.level.LevelState;
+
 /**
  * Created by kiwi on 19/02/2016.
  */
 public class LevelBean {
-    private int duration;
+    private long id;
     private String name;
+    private String state;
 
-    public int getDuration() {
-        return duration;
+    public LevelBean(){}
+
+    public LevelBean(long id, String name, String state) {
+        this.id = id;
+        this.name = name;
+        this.state = state;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -3,7 +3,6 @@
  */
 
 angular.module('projecttycoonControllers')
-.controller('home', function($scope, $rootScope,MainUserResource) {
-    $rootScope.MainUser = MainUserResource.getMainUser();
-    $scope.MainUser = MainUserResource.getMainUser();
+.controller('home', function($scope, $rootScope,$route,MainUserResource) {
+//why do i even exist :'(
 });

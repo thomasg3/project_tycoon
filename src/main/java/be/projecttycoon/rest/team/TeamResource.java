@@ -3,6 +3,7 @@ package be.projecttycoon.rest.team;
 import be.projecttycoon.auth.UserService;
 import be.projecttycoon.db.TeamRepository;
 import be.projecttycoon.model.Team;
+import be.projecttycoon.model.TeamLevelPrestation;
 import be.projecttycoon.rest.exception.NotFoundException;
 import be.projecttycoon.rest.util.TeamBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,7 @@ public class TeamResource  {
         if(team == null)
             throw new NotFoundException();
         return sanitizeTeam(user, team);
+
     }
 
     @RequestMapping(value="/search/{teamname}/registered", method = RequestMethod.GET)
@@ -79,6 +81,9 @@ public class TeamResource  {
             team.setTeamLevelPrestations(team.getOwnTeamLevelPrestations());
         } else {
             team.setTeamLevelPrestations(team.getPublicTeamLevelPrestations());
+        }
+        for(TeamLevelPrestation t : team.getTeamLevelPrestations()){
+            t.getLevel().setLevelKnowledgeAreas(new ArrayList<>());
         }
         return team;
     }

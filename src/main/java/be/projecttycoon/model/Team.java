@@ -45,7 +45,6 @@ public class Team{
     private String teamImage;
     private String email;
 
-    private int likes;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TeamLevelPrestation> teamLevelPrestations;
@@ -116,12 +115,6 @@ public class Team{
         return teamLevelPrestations.stream().map(tlp -> tlp.getLevelScore()).reduce(0, (x,y) -> x + y);
     }
 
-    public int getLikes() {
-        return likes;
-    }
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
 
 
     public boolean isRegistered(){
@@ -211,7 +204,6 @@ public class Team{
     public int hashCode() {
         int result = getTeamImage() != null ? getTeamImage().hashCode() : 0;
         result = 31 * result + getScore();
-        result = 31 * result + getLikes();
         result = 31 * result + (isRegistered() ? 1 : 0);
         return result;
     }
@@ -225,7 +217,6 @@ public class Team{
                 ", password='" + password + '\'' +
                 ", teamImage='" + teamImage + '\'' +
                 ", score=" + getScore() +
-                ", likes=" + likes +
                 ", registered=" + isRegistered() +
                 '}';
     }
