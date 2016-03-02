@@ -92,8 +92,8 @@
                     <li ng-show="authenticated">
                         <a href="javascript: void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-question"></i> Help <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li ng-show="MainUser.admin"><a href="" ><i class="fa fa-book"></i> Admin Manual</a></li>
-                            <li><a href="" ><i class="fa fa-book"></i> User Manual</a></li>
+                            <li ng-show="MainUser.admin"><a href="manuals/AdminManual.pdf" target="_blank" ><i class="fa fa-book"></i> Admin Manual</a></li>
+                            <li><a href="manuals/UserManual.pdf" target="_blank" ><i class="fa fa-book"></i> User Manual</a></li>
                         </ul>
                     </li>
                     <li ng-show="authenticated"><a href="#" ng-click="logout()"><i class="fa fa-sign-out"></i> Logout</a></li>
