@@ -58,6 +58,7 @@ angular.module('projecttycoonControllers')
                             $location.path('/');
                             if(updateTeam.id==MainUserResource.getMainUser().id){
                                 MainUserResource.saveMainUser(updateTeam);
+                                $rootScope.MainUser=updateTeam;
                             }
                         });
                         //if the user changed its team change the team in the rootScope
