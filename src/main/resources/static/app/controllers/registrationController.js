@@ -51,6 +51,7 @@ angular.module('projecttycoonControllers')
                         updateTeam.$update({id : updateTeam.id}, function(){
                             TeamResource.get({id: updateTeam.id}, function(data){
                                 MainUserResource.saveMainUser(data);
+                                $rootScope.MainUser = data;
                                 $location.path('/');
                             });
                         });
