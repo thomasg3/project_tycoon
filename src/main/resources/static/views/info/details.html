@@ -13,7 +13,7 @@
     <div ng-if="info.type=='Link'">
         <a href="{{info.path}}" target="_blank">{{info.description}}</a>
     </div>
-<div >
+<div ng-show="info.tags.length>0">
     <p>Tags:</p>
     <ul ng-repeat="tag in info.tags">
         <li>{{tag}}</li>
