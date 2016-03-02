@@ -1,4 +1,6 @@
-<td >
+<div>
+    <h2>{{info.description}}</h2>
+</div>
     <div ng-if="info.type == 'Document'">
         <a href="{{info.path}}" download>{{info.description}}</a>
     </div>
@@ -11,4 +13,9 @@
     <div ng-if="info.type=='Link'">
         <a href="{{info.path}}" target="_blank">{{info.description}}</a>
     </div>
-</td>
+<div ng-show="info.tags.length>0">
+    <p>Tags:</p>
+    <ul ng-repeat="tag in info.tags">
+        <li>{{tag}}</li>
+    </ul>
+</div>
